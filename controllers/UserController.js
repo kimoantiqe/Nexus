@@ -1,5 +1,6 @@
 const User                    = require('./../models/user');
 const authService             = require('./../services/AuthService');
+const { to, ReE, ReS }        = require('../services/util');
 
 
 const create = async function(req, res){
@@ -15,7 +16,7 @@ const create = async function(req, res){
     	[err, user] = await to(authService.createUser(body));
 
     	if(err) return ReE(res, err, 422);
-        return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);//to be changed
+        return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
     }
 }
 module.exports.create = create;
