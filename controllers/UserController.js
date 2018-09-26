@@ -3,6 +3,17 @@ const authService             = require('./../services/AuthService');
 const { to, ReE, ReS }        = require('../services/util');
 
 
+SanatizeUpdateData = function(data){
+    var blacklist = ['membership','role','createdAt','updatedAt','_id','__v'] ;
+
+    for(var i=0 ; i <blacklist.length ; i++){
+        if(data[blacklist[i]]){
+            return true;
+        }
+    }
+    return false;
+}
+
 const create = async function(req, res){
 	res.setHeader('Content-Type', 'application/json');
 	const body = req.body;
@@ -14,7 +25,6 @@ const create = async function(req, res){
     	let err, user;
 
     	[err, user] = await to(authService.createUser(body));
-
     	if(err) return ReE(res, err, 422);
         return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
     }
