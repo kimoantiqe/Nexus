@@ -1,0 +1,11 @@
+{
+  "name": "networkinc",
+  "version": "1.0.0",
+  "description": "CPEN 321 - Project\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[DUBC \u001b[2~CPEN\u001b[2~321 - Project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Network INC.",
+  "license": "MIT"
+}
