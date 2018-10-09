@@ -1,4 +1,5 @@
-# NEXUS - An app that help expand your professional network in an efficient and fun manner
+# NEXUS 
+An app that help expand your professional network in an efficient and fun manner
 
 ``` bash
 
