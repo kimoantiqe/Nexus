@@ -9,6 +9,7 @@ export default class App extends React.Component {
   };
 
   render() {
+    <StatusBar hidden />
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
