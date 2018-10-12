@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { LinearGradient } from 'expo';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -9,11 +9,13 @@ import {
   View,
   Image,
   Text,
+  Dimensions,
    KeyboardAvoidingView, Alert, TextInput,
 } from 'react-native';
 import MainTabNavigator from '../navigation/MainTabNavigator';
 import AppNavigator from '../navigation/AppNavigator';
-
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 export default class Login extends React.Component {
   static navigationOptions = {
     title: 'Login',
@@ -22,50 +24,93 @@ export default class Login extends React.Component {
   render() {
 
     return (
-      <View style = {styles1.contaier}>
-        <View style = {styles1.logoContainer}>
-            <Image
-            style = {styles1.logoImage}
-            source ={require('../images/Nexus.png')} />
-        </View>
-        <View style = {styles1.formContainer}>
-        <KeyboardAvoidingView behavior = "padding" style = {styles.containter}>
-           <View style = {styles.containter}>
-               <TextInput
-                   placeholder = "username or email"
-                   placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
-                   style = {styles.input}
-               />
-               <TextInput
-                   placeholder = "password"
-                   placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
-                   secureTextEntry
-                   style = {styles.input}
-               />
-               <Button
-                  title = "Login"
-                  color = "#659bf2"
-                  onPress = {this.signIn}
-               />
+          <View style = {styles1.contaier} >
 
-               <Text style={styles.input1}>Dont have an account?
-               </Text>
-               <Button
-                  title = "Register"
-                  color = "#659bf2"
-                  onPress = {this.Register}
-               />
-           </View>
-        </KeyboardAvoidingView>
-        </View>
+
+
+              <View style={{ backgroundColor: '#1a2a6c', flex: 0.5, opacity: 1 }} >
+
+                  <LinearGradient
+                    colors={ [ '#3c1053', '#000000']}
+                    locations={[0.0, 3.7]}
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      right: 0,
+                      top: 0,
+                      height: height,
+                    }}
+                    />
+
+
+                    <View style = {styles1.cloudcon}>
+                        <Image
+                        style = {styles1.cloud}
+                        source ={require('../images/cloud3.png')} />
+                    </View>
+
+                    <View style = {styles1.cloudcon}>
+                        <Image
+                        style = {styles1.cloud2}
+                        source ={require('../images/cloud3.png')} />
+                    </View>
+                    <View style = {styles1.cloudcon}>
+                        <Image
+                        style = {styles1.cloud3}
+                        source ={require('../images/cloud3.png')} />
+                    </View>
+
+                <View style = {styles1.logoContainer}>
+                    <Image
+                    style = {styles1.logoImage}
+                    source ={require('../images/Nexus.png')} />
+                </View>
+
+
+
+                <View style = {{flex:0.7}}>
+                    <KeyboardAvoidingView behavior = "padding" style = {styles.containter}>
+                       <View style = {styles.containter}>
+                           <TextInput
+                               placeholder = "username or email"
+                               placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
+                               style = {styles.input}
+                           />
+                           <TextInput
+                               placeholder = "password"
+                               placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
+                               secureTextEntry
+                               style = {styles.input}
+                           />
+
+                           <Button
+                              title = "Login"
+                              color = "#659bf2"
+                              onPress = {this.signIn}
+                           />
+
+                           <Text style={styles.input1}>Dont have an account?
+                           </Text>
+                           <Button
+                              title = "Register"
+                              color = "#659bf2"
+                              onPress = {this.Register}
+                           />
+                       </View>
+                    </KeyboardAvoidingView>
+                </View>
+            </View>
+
       </View>
+
+
     );
   }
   signIn = async () => {
 
      await AsyncStorage.setItem('userToken', 'abc');
      this.props.navigation.navigate('Main');
-     
+
 
    };
    Register = async () => {
@@ -76,28 +121,47 @@ export default class Login extends React.Component {
     };
 }
 
+
+
+//To make our design dynamic and compatible with all screen sizes
+//Always do this
+
+//FIRST SET WIDTH AND HEIGHT VARIABLES
+
+
+
+
 const styles = StyleSheet.create({
+//Then use them here for everything
     containter: {
-        padding: 30,
-        marginBottom:50,
+        marginTop: height*0.05,
+        marginBottom: height*0.05,
+        paddingLeft: width*0.05,
+        paddingRight: width*0.05,
+//DO NOT DO THIS
+
+//OR else this will be very big on an iphone 4 but very small on an iphone X
+//Ive been trying to fix this for >2 hours now
     },
     input: {
-        height: 50,
+        height: height*0.05,
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        marginBottom: 17,
+        marginBottom: height*0.03,
         color: '#FFF',
+        alignItems: 'center',
         paddingHorizontal: 10,
         fontSize: 20
     },
     input1: {
-        marginTop:100,
-        marginBottom:30,
-        height: 20,
+
+        marginBottom:0.03*height,
+        marginTop:height*0.2,
         backgroundColor: 'transparent',
         color: '#FFF',
-        paddingHorizontal: 10,
-        fontSize: 20,
-        marginLeft:40,
+        width:width,
+        fontSize: 22,
+        paddingLeft:width*0.14,
+        alignItems: 'center',
     }
 });
 
@@ -114,29 +178,64 @@ const loginAlert = () => {
 const styles1 = StyleSheet.create({
     contaier: {
         flex: 1,
-        backgroundColor: '#001b43'
+        backgroundColor: 'transparent',
+        flexDirection:'column',
+    },
+    container: {
+        flex: 1,
+        backgroundColor: 'rgba(255, 0, 0, 1)',
+        position:'absolute',
+
     },
     logoContainer: {
+        paddingTop:50,
+        paddingBottom:30,
         alignItems: 'center',
-        flexGrow: 1,
+        flex: 0.3,
         justifyContent: 'center',
     },
     logoImage: {
-        width: 330,
-        height: 100,
-        flex: 0.3,
-        flexDirection: "row",
-    },
-    header: {
-        marginTop: 20,
-        color: '#FFF',
-        textAlign: 'center',
-        fontStyle: 'normal',
-        fontWeight: 'bold',
-        fontSize: 25,
-        opacity: 0.6
+        width: width*0.82,
+        height: height*0.25,
+        resizeMode: 'contain'
+
     },
     formContainter: {
+      flex:0.5,
+      height:50,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    cloudcon: {
+      position: 'absolute',
+      width:width*.2,
+      height:height*.1,
+    },
+    cloud: {
+      marginTop:height*.05,
+      opacity:0.04,
+      width:width*.4,
+      height:height*1.2,
+      resizeMode:'contain',
+
+    },
+    cloud2: {
+      marginTop:height*.17,
+      marginRight:width*.4,
+      opacity:0.04,
+      width:width*0.7,
+      height:height*.07,
+      resizeMode:'contain',
+
+    },
+    cloud3: {
+      marginTop:height*.46,
+      marginLeft:width*.3,
+      opacity:0.03,
+      width:width*1.2,
+      height:height*.13,
+      resizeMode:'contain',
 
     }
 });
