@@ -24,6 +24,14 @@ const create = async function(req, res){
     }else{
     	let err, user;
 
+      //The following must only be handeled in the update function invoked by the put request
+      delete body.interests;
+      delete body.lookingFor;
+      delete body.industry;
+      delete body.matches;
+      delete body.potentialMatches;
+      delete body.likedBack;
+
     	[err, user] = await to(authService.createUser(body));
     	if(err) return ReE(res, err, 422);
         return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
@@ -52,11 +60,71 @@ module.exports.get = get;
 
 
 const update = async function(req, res){
-	let err, user, data
+	let err, user, data ;
 	user = req.user;
 	data = req.body;
+  if(SanatizeUpdateData(data)) return ReE(res,"You can't do that",403);
 
-	if(SanatizeUpdateData(data)) return ReE(res,"You can't do that",403);
+  if(data.interests){
+    interests = data.interests.split(',');
+    for(let i = 0 ; i < interests.length ; i++){
+      if(user.interests.indexOf(interests[i]) == -1 ){
+        user.interests.push(interests[i]);
+      }
+    }
+  }
+  if(data.lookingFor){
+    lookingFor = data.lookingFor.split(',');
+    for(let i = 0 ; i < lookingFor.length ; i++){
+      if(user.lookingFor.indexOf(lookingFor[i]) == -1 ){
+        user.lookingFor.push(lookingFor[i]);
+      }
+    }
+  }
+  if(data.industry){
+    industry = data.industry.split(',');
+    for(let i = 0 ; i < industry.length ; i++){
+      if(user.industry.indexOf(industry[i]) == -1 ){
+        user.industry.push(industry[i]);
+      }
+    }
+  }
+
+  if(data.matches){
+    matches = data.matches.split(',');
+    for(let i = 0 ; i < matches.length ; i++){
+      if(user.matches.indexOf(matches[i]) == -1 ){
+        user.matches.push(matches[i]);
+      }
+    }
+  }
+
+  if(data.likedBack){
+    likedBack = data.likedBack.split(',');
+    for(let i = 0 ; i < likedBack.length ; i++){
+      if(user.likedBack.indexOf(likedBack[i]) == -1 ){
+        user.likedBack.push(likedBack[i]);
+      }
+    }
+  }
+
+  if(data.potentialMatches){
+    potentialMatches = data.potentialMatches.split(',');
+    for(let i = 0 ; i < potentialMatches.length ; i++){
+      if(user.potentialMatches.indexOf(potentialMatches[i]) == -1 ){
+        user.potentialMatches.push(potentialMatches[i]);
+      }
+    }
+  }
+
+  //Deleted as they are handeled above
+  delete data.interests;
+  delete data.lookingFor;
+  delete data.industry;
+  delete data.matches;
+  delete data.potentialMatches;
+  delete data.likedBack;
+
 	user.set(data);
 
 	[err, user] = await to(user.save());

@@ -3,6 +3,7 @@ const bcrypt    = require('bcrypt');
 const bcrypt_p  = require('bcrypt-promise');
 const jwt       = require('jsonwebtoken');
 const validate  = require('mongoose-validator');
+const exists = require('mongoose-exists');
 const {TE,to}   = require('../services/util');
 const jwtConfig = require('../configurations/jwt');
 
@@ -12,6 +13,43 @@ let UserSchema = mongoose.Schema({
   },
   lastName: {
     type: String
+  },
+  bio:{
+    type: String
+  },
+  interests :[{
+    type: String,
+    enum : ['IA','IB','IC','ID']
+  }] ,
+  lookingFor :[{
+    type: String,
+    enum : ['LA','LB','LC','LD']
+  }] ,
+  industry :[{
+    type: String,
+    enum : ['INA','INB','INC','IND']
+  }] ,
+  geolocation : {
+    type : String
+  },
+  potentialMatches :[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :'User',
+    exists: true
+  }],
+  matches :[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :'User',
+    exists: true
+  }],
+  likedBack :[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :'User',
+    exists: true
+  }],
+  reLogg : {
+    type : Boolean,
+    default : false
   },
   email: {
     type: String,
@@ -33,7 +71,7 @@ let UserSchema = mongoose.Schema({
   timestamps: true
 });
 
-
+UserSchema.plugin(exists);
 UserSchema.pre('save', async function(next) {
 
   if (this.isModified('password') || this.isNew) {
@@ -78,5 +116,6 @@ UserSchema.methods.toWeb = function() {
   json.id = this._id;
   return json;
 };
+
 
 let User = module.exports = mongoose.model('User', UserSchema);

@@ -30,8 +30,12 @@ const createUser = async function(userInfo){
         userInfo.email = unique_key;
 
         [err, user] = await to(User.create(userInfo));
-        if(err) TE('User already exists with that email');
-
+        if(err) {
+          if(err.message.includes('E11000'))
+          TE('User already exists with that email');
+          else
+          TE(err.message); //Handle other errors here later
+        }
         return user;
     }else{
         TE('A valid email was not entered.');
