@@ -21,6 +21,19 @@ export default class Login extends React.Component {
     title: 'Login',
   };
 
+  state = {
+      username: '',
+      password: ''
+   };
+
+   handleUsername = (text) => {
+      this.setState({ username: text })
+   }
+
+   handlePassword = (text) => {
+      this.setState({ password: text })
+   }
+
   render() {
 
     return (
@@ -72,15 +85,17 @@ export default class Login extends React.Component {
                     <KeyboardAvoidingView behavior = "padding" style = {styles.containter}>
                        <View style = {styles.containter}>
                            <TextInput
-                               placeholder = "username or email"
+                               placeholder = "Email Address"
                                placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
                                style = {styles.input}
+                               onChangeText = {this.handleUsername}
                            />
                            <TextInput
                                placeholder = "password"
                                placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
                                secureTextEntry
                                style = {styles.input}
+                               onChangeText = {this.handlePassword}
                            />
 
                            <Button
@@ -108,16 +123,62 @@ export default class Login extends React.Component {
   }
   signIn = async () => {
 
-     await AsyncStorage.setItem('userToken', 'abc');
-     this.props.navigation.navigate('Main');
+    console.log("yup");
+
+    var settings = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/JSON'
+  },
+  body: JSON.stringify({
+    'email' : this.state.username,
+    'password' : this.state.password
+    })
+  };
+
+  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+
+fetch(apiURL + '/user/login', settings)
+.then(response => response.json())
+.then( 
+
+  response =>
+{
+    console.log(response);
+
+  if (response.success) {
+    AsyncStorage.setItem('userToken', response.token);
+    this.props.navigation.navigate('Main');
+  } else {
+
+    switch (response.error) 
+    {
+    case 'Not registered': 
+      alert("This Username is not registered\nGo to \"Register\" to make an account");
+      break;
+    case 'invalid password':
+      alert("Incorrect password");
+      break;
+    case 'Please enter a password to login':
+      alert("Please enter your password");
+      break;
+    case 'Please enter an email to login':
+      alert("Please enter your email");
+      break;
+    case 'A valid email  was not entered':
+      alert("Please enter a valid email\n(abc@xyz.com)");
+      break;
+    }
+  }
+}
+  )
+.catch(error => console.error('Error:', error));
+
 
 
    };
    Register = async () => {
-
-      await AsyncStorage.setItem('userToken', 'xyz123');
       this.props.navigation.navigate('Register');
-
     };
 }
 

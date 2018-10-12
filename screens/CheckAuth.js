@@ -25,10 +25,36 @@ export default class CheckAuth extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
 
+    if (userToken != null) {
 
-    //COMPARE USER TOKEN TO WHAT IT SHOULD BE.
+    var settings = {
+  method: 'GET',
+  headers: {
+    'Authorization': userToken
+  }
+  };
 
-    this.props.navigation.navigate(userToken ? 'Main' : 'Auth');
+  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+
+fetch(apiURL + '/user/login', settings)
+.then(response => 
+  {
+    if (response != 'Unauthorized') 
+    {
+      response.json();
+      this.props.navigation.navigate('Main');
+    } else
+    {
+      this.props.navigation.navigate('Auth');
+    }
+  }
+  )
+.catch(error => console.error('Error:', error));
+} else 
+{
+  this.props.navigation.navigate('Auth');
+}
+    
   };
 
   // Render any loading content that you like here

@@ -16,28 +16,10 @@ import MainTabNavigator from '../navigation/MainTabNavigator';
 import AppNavigator from '../navigation/AppNavigator';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-export default class Register extends React.Component {
+export default class RegCompleteProfile extends React.Component {
   static navigationOptions = {
-    title: 'Register',
+    title: 'RCP',
   };
-
-  state = {
-      username: '',
-      password: '',
-      repassword: '',
-   };
-
-   handleUsername = (text) => {
-      this.setState({ username: text })
-   }
-
-   handlePassword = (text) => {
-      this.setState({ password: text })
-   }
-
-   handleRepassword = (text) => {
-      this.setState({ repassword: text })
-   }
 
   render() {
 
@@ -121,134 +103,5 @@ export default class Register extends React.Component {
       </View>
     );
   }
-  Register = async () => {
-      //////////////////////REGISTRATION API CALL////////////////////////////
-     //await AsyncStorage.setItem('userToken', 'xyz123');
-     //this.props.navigation.navigate('Main');
-     //"url": "https://networkinc.azurewebsites.net/api/user",
-     //alert(this.state.username + this.state.password);
-
-if (this.state.password == this.state.repassword) {
-
-  var settings = {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/JSON'
-  },
-  body: JSON.stringify({
-    'email' : this.state.username,
-    'password' : this.state.password
-    })
-  };
-
-  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
-
-fetch(apiURL + '/user', settings)
-.then(response => response.json())
-.then(
-
-  response  => 
-  { 
-    AsyncStorage.setItem('userToken', response.token);
-    this.props.navigation.navigate('Main');
-  }
-
-  )
-.catch(error => console.error('Error:', error));
-
-} else {
-
-alert("Passwords do not match!\nPlease try again.");
 
 }
-   };
-}
-
-const styles = StyleSheet.create({
-    containter: {
-        padding: 30,
-    },
-    input: {
-        height: 50,
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-        marginBottom: 17,
-        color: '#FFF',
-        paddingHorizontal: 10,
-        fontSize: 20
-    }
-});
-
-const loginAlert = () => {
-    Alert.alert(
-        'Logged In',
-        'Thanks',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: true }
-    )};
-
-const styles1 = StyleSheet.create({
-    contaier: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        flexDirection:'column',
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'rgba(255, 0, 0, 1)',
-        position:'absolute',
-
-    },
-    logoContainer: {
-        paddingTop:50,
-        paddingBottom:30,
-        alignItems: 'center',
-        flex: 0.3,
-        justifyContent: 'center',
-    },
-    logoImage: {
-        width: width*0.82,
-        height: height*0.25,
-        resizeMode: 'contain'
-
-    },
-    formContainter: {
-      flex:0.5,
-      height:50,
-        justifyContent: 'center',
-        alignItems: 'center',
-
-    },
-    cloudcon: {
-      position: 'absolute',
-      width:width*.2,
-      height:height*.1,
-    },
-    cloud: {
-      marginTop:height*.05,
-      opacity:0.04,
-      width:width*.4,
-      height:height*1.2,
-      resizeMode:'contain',
-
-    },
-    cloud2: {
-      marginTop:height*.17,
-      marginRight:width*.4,
-      opacity:0.04,
-      width:width*0.7,
-      height:height*.07,
-      resizeMode:'contain',
-
-    },
-    cloud3: {
-      marginTop:height*.46,
-      marginLeft:width*.3,
-      opacity:0.03,
-      width:width*1.2,
-      height:height*.13,
-      resizeMode:'contain',
-
-    }
-});
