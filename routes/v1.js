@@ -1,6 +1,7 @@
 const passportJWT           = require("passport-jwt");
 const passport              = require('passport');
 const UserController        = require('./../controllers/UserController');
+const matchingService        = require('./../services/matchingService');
 
 module.exports = function(app, passport) {
 
@@ -9,7 +10,6 @@ module.exports = function(app, passport) {
 		res.json({message : 'Network INC' , version : 'v1.0.0'});
 		});
 		/************************************/
-
 
 		/********  Login **************/
 		app.post('/api/user/login', UserController.login);
@@ -30,5 +30,15 @@ module.exports = function(app, passport) {
     /********  remove user **************///D
     app.delete('/api/user', passport.authenticate('jwt', {session: false}),UserController.remove);
     /************************************/
+
+		/********  get user **************///R
+		app.get('/api/user/getpotconn', passport.authenticate('jwt', {session: false}), matchingService.getpotconn );
+		/************************************/
+
+		/********  get user **************///R
+		app.get('/api/user/popconn', passport.authenticate('jwt', {session: false}), matchingService.popconns );
+		/************************************/
+
+
 
 };

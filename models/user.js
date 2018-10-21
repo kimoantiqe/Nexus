@@ -42,7 +42,12 @@ let UserSchema = mongoose.Schema({
     ref :'User',
     exists: true
   }],
-  likedBack :[{
+  liked :[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :'User',
+    exists: true
+  }],
+  disliked :[{
     type:mongoose.Schema.Types.ObjectId,
     ref :'User',
     exists: true

@@ -22,5 +22,5 @@ require('./routes/v1.js')(app, passport);
 
 
 /*RunServer*/
-app.listen(appConfig.port);
-console.log('Server has successfully started on PORT: ' + appConfig.port);
+app.listen('3000' );
+console.log('Server has successfully started on PORT: 3000');

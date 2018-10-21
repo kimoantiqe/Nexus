@@ -1,6 +1,7 @@
 const User                    = require('./../models/user');
 const authService             = require('./../services/AuthService');
 const { to, ReE, ReS }        = require('../services/util');
+const matchingService         = require('./../services/matchingService');
 
 
 SanatizeUpdateData = function(data){
@@ -30,7 +31,8 @@ const create = async function(req, res){
       delete body.industry;
       delete body.matches;
       delete body.potentialMatches;
-      delete body.likedBack;
+      delete body.liked;
+      delete body.disliked;
 
     	[err, user] = await to(authService.createUser(body));
     	if(err) return ReE(res, err, 422);
@@ -58,7 +60,6 @@ const get = async function(req, res){
 }
 module.exports.get = get;
 
-
 const update = async function(req, res){
 	let err, user, data ;
 	user = req.user;
@@ -66,7 +67,7 @@ const update = async function(req, res){
   if(SanatizeUpdateData(data)) return ReE(res,"You can't do that",403);
 
   if(data.interests){
-    interests = data.interests.split(',');
+    interests = data.interests;
     for(let i = 0 ; i < interests.length ; i++){
       if(user.interests.indexOf(interests[i]) == -1 ){
         user.interests.push(interests[i]);
@@ -74,7 +75,7 @@ const update = async function(req, res){
     }
   }
   if(data.lookingFor){
-    lookingFor = data.lookingFor.split(',');
+    lookingFor = data.lookingFor;
     for(let i = 0 ; i < lookingFor.length ; i++){
       if(user.lookingFor.indexOf(lookingFor[i]) == -1 ){
         user.lookingFor.push(lookingFor[i]);
@@ -82,7 +83,7 @@ const update = async function(req, res){
     }
   }
   if(data.industry){
-    industry = data.industry.split(',');
+    industry = data.industry;
     for(let i = 0 ; i < industry.length ; i++){
       if(user.industry.indexOf(industry[i]) == -1 ){
         user.industry.push(industry[i]);
@@ -91,7 +92,7 @@ const update = async function(req, res){
   }
 
   if(data.matches){
-    matches = data.matches.split(',');
+    matches = data.matches;
     for(let i = 0 ; i < matches.length ; i++){
       if(user.matches.indexOf(matches[i]) == -1 ){
         user.matches.push(matches[i]);
@@ -99,17 +100,37 @@ const update = async function(req, res){
     }
   }
 
-  if(data.likedBack){
-    likedBack = data.likedBack.split(',');
-    for(let i = 0 ; i < likedBack.length ; i++){
-      if(user.likedBack.indexOf(likedBack[i]) == -1 ){
-        user.likedBack.push(likedBack[i]);
-      }
+  if(data.liked){
+    liked = data.liked;
+    for(let i = 0 ; i < liked.length ; i++){
+      if(user.liked.indexOf(liked[i]) == -1 ){
+        user.liked.push(liked[i]);
+        user.potentialMatches.shift();
+        User.findById(liked[i], function(err, newuser) {
+            if(newuser.liked.map(user =>user.toString()).includes(user._id.toString())){
+              newuser.matches.push(user._id);
+              user.matches.push(liked[i]);
+        			newuser.save();
+              user.save();
+          }
+      });
     }
   }
+}
+
+    if(data.disliked){
+      disliked = data.disliked;
+      for(let i = 0 ; i < disliked.length ; i++){
+        if(user.disliked.indexOf(disliked[i]) == -1 ){
+          user.disliked.push(disliked[i]);
+          user.potentialMatches.shift();
+        }
+      }
+    }
+
 
   if(data.potentialMatches){
-    potentialMatches = data.potentialMatches.split(',');
+    potentialMatches = data.potentialMatches;
     for(let i = 0 ; i < potentialMatches.length ; i++){
       if(user.potentialMatches.indexOf(potentialMatches[i]) == -1 ){
         user.potentialMatches.push(potentialMatches[i]);
@@ -123,7 +144,8 @@ const update = async function(req, res){
   delete data.industry;
   delete data.matches;
   delete data.potentialMatches;
-  delete data.likedBack;
+  delete data.liked;
+  delete data.disliked;
 
 	user.set(data);
 
