@@ -23,6 +23,8 @@ module.exports = function(app, passport) {
     app.get('/api/user', passport.authenticate('jwt', {session: false}) ,UserController.get );
     /************************************/
 
+		//use this to report a like / Dislike
+		//no need for another api call for now
     /********  update user **************///U
     app.put('/api/user', passport.authenticate('jwt', {session: false}),UserController.update);
     /************************************/
@@ -31,14 +33,12 @@ module.exports = function(app, passport) {
     app.delete('/api/user', passport.authenticate('jwt', {session: false}),UserController.remove);
     /************************************/
 
-		/********  get user **************///R
+		/********  gets 1 potential connection  **************///R
 		app.get('/api/user/getpotconn', passport.authenticate('jwt', {session: false}), matchingService.getpotconn );
 		/************************************/
 
-		/********  get user **************///R
+		/********  populates the array of potential matches for the calling user  **************///R
 		app.get('/api/user/popconn', passport.authenticate('jwt', {session: false}), matchingService.popconns );
 		/************************************/
-
-
 
 };
