@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    image : "kimoantiqe/node-mongo-test:test"
+    build : .
+    ports:
+      - "1337:1337"
+    depends_on:
+      - "mongo"
+  mongo: 
+    image : "mongo"
+    ports : 
+      - "27017:27017"
+    restart: always
