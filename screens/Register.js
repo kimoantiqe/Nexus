@@ -159,7 +159,7 @@ export default class Register extends React.Component {
                         if (response.success) 
                         {
                             AsyncStorage.setItem('userToken', response.token);
-                            this.props.navigation.navigate('Main');
+                            this.props.navigation.navigate('RCP');
                         } else 
                         {
                             switch (response.error) {
