@@ -18,7 +18,8 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 export default class Register extends React.Component {
   static navigationOptions = {
-    title: 'Register',
+    header: null,
+    title: 'register',
   };
 
   state = {
@@ -123,45 +124,68 @@ export default class Register extends React.Component {
   }
   Register = async () => {
       //////////////////////REGISTRATION API CALL////////////////////////////
-     //await AsyncStorage.setItem('userToken', 'xyz123');
-     //this.props.navigation.navigate('Main');
-     //"url": "https://networkinc.azurewebsites.net/api/user",
-     //alert(this.state.username + this.state.password);
 
-if (this.state.password == this.state.repassword) {
+    if (this.state.username == "") 
+    {
+        alert("Please enter an email to register");
+    } else 
+    {
+        if (this.state.password == "") 
+        {   
+            alert("Please enter an password to register");
+        } else 
+        {
+        
+            if (this.state.password == this.state.repassword) 
+            {
 
-  var settings = {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/JSON'
-  },
-  body: JSON.stringify({
-    'email' : this.state.username,
-    'password' : this.state.password
-    })
-  };
+                var settings = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/JSON'
+                },
+                body: JSON.stringify({
+                'email' : this.state.username,
+                'password' : this.state.password
+                })
+                };
 
-  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+                var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
-fetch(apiURL + '/user', settings)
-.then(response => response.json())
-.then(
+                fetch(apiURL + '/user', settings)
+                .then(response => response.json())
+                .then(response  => 
+                    { 
+                        if (response.success) 
+                        {
+                            AsyncStorage.setItem('userToken', response.token);
+                            this.props.navigation.navigate('Main');
+                        } else 
+                        {
+                            switch (response.error) {
+                                case "A valid email was not entered.":
+                                    alert("A valid email was not entered.");
+                                break;
+                                case "User already exists with that email":
+                                    alert("User already exists with that email");
+                                break;
+                            }
+          
+                        }
+    
+                    }
 
-  response  => 
-  { 
-    AsyncStorage.setItem('userToken', response.token);
-    this.props.navigation.navigate('Main');
-  }
+                )
+                .catch(error => console.error('Error:', error));
 
-  )
-.catch(error => console.error('Error:', error));
+            } else 
+            {
+                alert("Passwords do not match!\nPlease try again.");
+            }
+        }
+    }
+};
 
-} else {
-
-alert("Passwords do not match!\nPlease try again.");
-
-}
-   };
 }
 
 const styles = StyleSheet.create({
@@ -177,16 +201,6 @@ const styles = StyleSheet.create({
         fontSize: 20
     }
 });
-
-const loginAlert = () => {
-    Alert.alert(
-        'Logged In',
-        'Thanks',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        { cancelable: true }
-    )};
 
 const styles1 = StyleSheet.create({
     contaier: {

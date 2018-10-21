@@ -36,21 +36,44 @@ export default class CheckAuth extends React.Component {
 
   var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
-fetch(apiURL + '/user/login', settings)
-.then(response => 
-  {
-    if (response != 'Unauthorized') 
-    {
-      response.json();
-      this.props.navigation.navigate('Main');
-    } else
-    {
-      this.props.navigation.navigate('Auth');
-    }
+  try {
+    let response = await fetch(apiURL + '/user', settings)
+    .then( response => 
+      {
+        this.setState({ response });
+        if (response.status === 401)
+        {
+          this.props.navigation.navigate('Auth');
+        } else
+        {
+          response.json()
+          .then(response => console.log(response));
+          this.props.navigation.navigate('Main');
+        }
+      }
+      )
+  } catch (error) {
+    console.error(error);
   }
-  )
-.catch(error => console.error('Error:', error));
-} else 
+
+// fetch(apiURL + '/user', settings)
+// .then( response =>
+//   {
+//     this.setState({ response });
+//     if (response === "Unauthorized")
+//     {
+//       this.props.navigation.navigate('Auth');
+//     } else
+//     {
+//       response.json()
+//       .then(response => console.log(response));
+//       this.props.navigation.navigate('Main');
+//     }
+//   }
+//   )
+// .catch(error => console.error('Error:', error));
+}
+ else 
 {
   this.props.navigation.navigate('Auth');
 }

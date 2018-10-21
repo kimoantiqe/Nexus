@@ -18,6 +18,7 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 export default class Login extends React.Component {
   static navigationOptions = {
+    header: null,
     title: 'Login',
   };
 
