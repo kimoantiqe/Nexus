@@ -41,4 +41,8 @@ module.exports = function(app, passport) {
 		app.get('/api/user/popconn', passport.authenticate('jwt', {session: false}), matchingService.popconns );
 		/************************************/
 
+		/********  gets the user profile given a user id  **************///R
+		app.get('/api/user/getuser/', passport.authenticate('jwt', {session: false}), UserController.getuser );
+		/************************************/
+
 };

@@ -167,6 +167,26 @@ const update = async function(req, res){
 }
 module.exports.update = update;
 
+
+const getuser = async function(req, res){
+res.setHeader('Content-Type', 'application/json');
+let user = req.user;
+let err;
+let otheruser;
+let id = req.query.id;
+console.log(id);
+User.findById(id, function(err, newuser) {
+     if(newuser.matches.map(newuser =>newuser.toString()).includes(user._id.toString())){
+      otheruser = newuser;
+      return ReS(res, {user:newuser.toWeb()});
+    }
+    else{
+      return ReE(res, "user not in your matches");
+    }
+});
+}
+module.exports.getuser = getuser;
+
 const remove = async function(req, res){
 	let user, err;
 	user = req.user;
