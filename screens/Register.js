@@ -150,7 +150,7 @@ export default class Register extends React.Component {
                 })
                 };
 
-                var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+                var apiURL = 'http://localhost:3000/api';
 
                 fetch(apiURL + '/user', settings)
                 .then(response => response.json())
@@ -159,7 +159,7 @@ export default class Register extends React.Component {
                         if (response.success) 
                         {
                             AsyncStorage.setItem('userToken', response.token);
-                            this.props.navigation.navigate('Main');
+                            this.props.navigation.navigate('RCP');
                         } else 
                         {
                             switch (response.error) {

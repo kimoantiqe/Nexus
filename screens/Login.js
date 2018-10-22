@@ -122,6 +122,27 @@ export default class Login extends React.Component {
 
     );
   }
+
+  //Function that is used to populate when the user logs in.
+  populate = async () => { 
+    userToken = await AsyncStorage.getItem('userToken');
+
+    console.log(userToken);
+
+    var apiURL = 'http://localhost:3000/api';
+
+    if (userToken != null) {
+      var populate = {
+        method: 'GET',
+        headers: {
+          'Authorization': userToken,
+          'Content-Type': 'application/json'
+        },
+      }
+      fetch(apiURL + '/user/popconn', populate)
+    }
+  }
+  
   signIn = async () => {
 
     console.log("yup");
@@ -137,7 +158,7 @@ export default class Login extends React.Component {
     })
   };
 
-  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+  var apiURL = 'http://172.20.10.4:3000/api';
 
 fetch(apiURL + '/user/login', settings)
 .then(response => response.json())
@@ -149,6 +170,8 @@ fetch(apiURL + '/user/login', settings)
 
   if (response.success) {
     AsyncStorage.setItem('userToken', response.token);
+    AsyncStorage.setItem('userid', response.user.id);
+    this.populate();
     this.props.navigation.navigate('Main');
   } else {
 

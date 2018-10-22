@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  ActivityIndicator,
+  AsyncStorage,
   Image,
   Platform,
   ScrollView,
@@ -10,50 +12,172 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
+import { Button } from 'react-native-elements'
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
+
+var userToken;
+var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+var currapiURL = 'http://localhost:3000/api';
+
+
+var currUserID;
+var firstName;
+var bio;
+var interests;
+var industry;
+
 export default class Matches extends React.Component {
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      lastRefresh: Date(Date.now()).toString(),
+    }
+    
+    this.refreshScreen = this.refreshScreen.bind(this)
+
+    this.getUser();
+  }
+
+  //Function that grabs a user from the database.
+  getUser = async () => { 
+    userToken = await AsyncStorage.getItem('userToken');
+
+    console.log("This is get user");
+
+    if (userToken != null) {
+      var grabUser = {
+        method: 'GET',
+        headers: {
+          'Authorization': userToken
+        },
+      }
+      fetch(currapiURL + '/user/getpotconn', grabUser)
+      .then(response => response.json())
+      .then(
+        response => {
+          if(response.success){
+            currUserID = response.user.id;
+            console.log(currUserID)
+          }
+        }
+      )
+    }
+  }
+
+  //Function that is used to report a like to the server
+  likedUser = async () => { 
+    userToken = await AsyncStorage.getItem('userToken');
+
+    console.log("This is liked user");
+
+    if (userToken != null) {
+      var updateUser = {
+        method: 'PUT',
+        headers: {
+          'Authorization': userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'liked' : [currUserID]
+          })
+      }
+      fetch(apiURL + '/user/getpotconn', updateUser)
+      .then(response => 
+        console.log(response)
+        )
+    }
+    this.refreshScreen();
+  }
+
+  //Function that is used to report a dislike to the server
+  dislikedUser = async () => { 
+    userToken = await AsyncStorage.getItem('userToken');
+
+    console.log("This is disliked user");
+
+    if (userToken != null) {
+      var updateUser = {
+        method: 'PUT',
+        headers: {
+          'Authorization': userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'disliked' : [currUserID]
+          })
+      }
+      fetch(apiURL + '/user/getpotconn', updateUser)
+      .then(response => 
+        console.log("Hello" + response)
+        )
+    }
+    this.refreshScreen();
+  }
+  
   static navigationOptions = {
     header: null,
   };
+
+  //function that grabs a new user and refreshes the screen to update the
+  //parameters.
+  refreshScreen() {
+    this.getUser();
+    this.setState({ lastRefresh: Date(Date.now()).toString() })
+  }
 
   //Need to setup to receive data from our database server
   render() {
     <StatusBar hidden />
     return (
       <View style={styles.container}>
+          
+          //This is the profile image container
           <View style={styles.profilePicContainer}>
             <Image source={require("./../images/d3rs.jpg")}
             style = {styles.profilePic}
             resizeMode = "contain"
             />
           </View>
+          
+          //This is the bio box container (need to update)
           <View style={styles.bioTextContainer}>
             <Text style = {styles.bioText}>Bio</Text>
-            <Text style = {styles.bioText}>This is an initial text box. This will contain my bio and everything related to me!</Text>
+            <Text style = {styles.bioText}>this is {currUserID}</Text>
           </View>
+          
+          //This is the dislike button 
           <View style={styles.buttonCloseContainer}>
-            <TouchableOpacity style = {styles.buttonClose}>
+            <TouchableOpacity 
+            style = {styles.buttonClose}
+            onPress = {this.dislikedUser}>
             <Image source={require("./../images/2.png")}
             style = {styles.image}
             resizeMode = "contain"
             />
             </TouchableOpacity>
           </View>
+          
+          //This is the like button 
           <View style={styles.buttonThumbsContainer}>
-            <TouchableOpacity style = {styles.buttonThumbs}>
+            <TouchableOpacity 
+            style = {styles.buttonThumbs}
+            onPress = {this.likedUser}>
             <Image 
             source={require("./../images/thumbs.png")} 
             style = {styles.image}
             resizeMode = "contain"
             />
             </TouchableOpacity>
+          
           </View>
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -86,7 +210,7 @@ const styles = StyleSheet.create({
     width: 130,
     height: 5,
     position: 'absolute',
-    left: 50,
+    left: 35,
     bottom: 100
   },
 
@@ -94,7 +218,7 @@ const styles = StyleSheet.create({
     width: 130,
     height: 5,
     position: 'absolute',
-    right: 50,
+    right: 35,
     bottom: 100
   },
 
@@ -120,58 +244,6 @@ const styles = StyleSheet.create({
   bioText: {
     alignSelf: 'center',
     marginBottom: 10,
-  },
-
-  //Need to delete 
-  contentContainer: {
-    paddingTop: 30,
-  },
-  
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
   },
 
 });
