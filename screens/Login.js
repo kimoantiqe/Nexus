@@ -158,7 +158,7 @@ export default class Login extends React.Component {
     })
   };
 
-  var apiURL = 'http://172.20.10.4:3000/api';
+  var apiURL = 'http://localhost:3000/api';
 
 fetch(apiURL + '/user/login', settings)
 .then(response => response.json())

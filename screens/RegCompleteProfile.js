@@ -414,9 +414,9 @@ export default class RegCompleteProfile extends React.Component {
     const userToken = await AsyncStorage.getItem('userToken');
     i = 0;
     const ili = ['IA', 'IB', 'IC', 'ID', 'LA', 'LB', 'LC', 'LD', 'INA', 'INB', 'INC', 'IND'];
-    interest = '';
-    ind = '';
-    lf = '';
+    interest = '[';
+    ind = '[';
+    lf = '[';
 
     for (let index = 0; index < ili.length; index++) 
     {
@@ -424,7 +424,7 @@ export default class RegCompleteProfile extends React.Component {
         {
             if (this.state.toggles[index]) 
             {
-                interest += (i? ',': '') + ili[index];
+                interest += (i? ',': '') + "\"" + ili[index] + "\"";
                 i = 1;
             }
         } else
@@ -432,12 +432,13 @@ export default class RegCompleteProfile extends React.Component {
         if (index == 4) 
         {
             i = 0;
+            interest += "]";
         }
         if (index < 8) 
         {
             if (this.state.toggles[index]) 
             {
-                lf += (i? ',': '') + ili[index];
+                lf += (i? ',': '') + "\"" + ili[index] + "\"";
                 i = 1;
             }
         } else
@@ -445,18 +446,25 @@ export default class RegCompleteProfile extends React.Component {
         if (index == 8) 
         {
             i = 0;
+            lf += "]";
         }
         if (index < 12) 
         {
             if (this.state.toggles[index]) 
             {
-                ind += (i? ',': '') + ili[index];
+                ind += (i? ',': '') + "\"" + ili[index] + "\"";
                 i = 1;
             }
         }
     }
     }
     }
+
+    ind += "]";
+
+    interest = JSON.parse(interest);
+    ind = JSON.parse(ind);
+    lf = JSON.parse(lf);
 
     var settings = {
         method: 'PUT',
@@ -479,7 +487,7 @@ export default class RegCompleteProfile extends React.Component {
         fetch(apiURL + '/user', settings)
         .then(response => response.json())
         .then(response => console.log(response))
-        .then(this.populate())
+        .then(async () => this.populate())
         .then(this.props.navigation.navigate('Main'))
 
   }

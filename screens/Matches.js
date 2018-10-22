@@ -60,9 +60,12 @@ export default class Matches extends React.Component {
         response => {
           if(response.success){
             currUserID = response.user.id;
+            currUserID = "[\"" + currUserID + "\"]";
+            currUserID = JSON.parse(currUserID);
             console.log(currUserID)
           }
         }
+      ).catch(error => console.error(error)
       )
     }
   }
@@ -81,10 +84,10 @@ export default class Matches extends React.Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          'liked' : [currUserID]
+          'liked' : currUserID
           })
       }
-      fetch(apiURL + '/user/getpotconn', updateUser)
+      fetch(currapiURL + '/user', updateUser)
       .then(response => 
         console.log(response)
         )
@@ -106,10 +109,10 @@ export default class Matches extends React.Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          'disliked' : [currUserID]
+          'disliked' : currUserID
           })
       }
-      fetch(apiURL + '/user/getpotconn', updateUser)
+      fetch(currapiURL + '/user', updateUser)
       .then(response => 
         console.log("Hello" + response)
         )

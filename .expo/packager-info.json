@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 2623,
-  "expoServerNgrokUrl": "https://hu-588.ymagd.nexus.exp.direct",
-  "packagerNgrokUrl": "https://packager.hu-588.ymagd.nexus.exp.direct",
-  "ngrokPid": 2638
+  "packagerPid": 6573,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
