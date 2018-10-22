@@ -19,7 +19,6 @@ import { MonoText } from '../components/StyledText';
 
 var userToken;
 var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
-var currapiURL = 'http://localhost:3000/api';
 
 
 var currUserID;
@@ -54,11 +53,12 @@ export default class Matches extends React.Component {
           'Authorization': userToken
         },
       }
-      fetch(currapiURL + '/user/getpotconn', grabUser)
+      fetch(apiURL + '/user/getpotconn', grabUser)
       .then(response => response.json())
       .then(
         response => {
           if(response.success){
+            console.log(response);
             currUserID = response.user.id;
             currUserID = "[\"" + currUserID + "\"]";
             currUserID = JSON.parse(currUserID);
@@ -87,12 +87,9 @@ export default class Matches extends React.Component {
           'liked' : currUserID
           })
       }
-      fetch(currapiURL + '/user', updateUser)
-      .then(response => 
-        console.log(response)
-        )
+      fetch(apiURL + '/user', updateUser)
+      .then(async () => this.refreshScreen())
     }
-    this.refreshScreen();
   }
 
   //Function that is used to report a dislike to the server
@@ -112,12 +109,9 @@ export default class Matches extends React.Component {
           'disliked' : currUserID
           })
       }
-      fetch(currapiURL + '/user', updateUser)
-      .then(response => 
-        console.log("Hello" + response)
-        )
+      fetch(apiURL + '/user', updateUser)
+      .then(async () => this.refreshScreen())
     }
-    this.refreshScreen();
   }
   
   static navigationOptions = {
