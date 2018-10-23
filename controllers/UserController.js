@@ -113,6 +113,9 @@ const update = async function(req, res){
         			newuser.save();
               user.save();
           }
+          else{
+            user.save();
+          }
       });
     }
   }
