@@ -412,6 +412,8 @@ export default class RegCompleteProfile extends React.Component {
   cmp = async () => {
 
     const userToken = await AsyncStorage.getItem('userToken');
+    const first = await AsyncStorage.getItem('firstname');
+    const last = await AsyncStorage.getItem('lastname');
     i = 0;
     const ili = ['IA', 'IB', 'IC', 'ID', 'LA', 'LB', 'LC', 'LD', 'INA', 'INB', 'INC', 'IND'];
     interest = '[';
@@ -473,6 +475,8 @@ export default class RegCompleteProfile extends React.Component {
             'Content-Type': 'application/JSON'
         },
         body: JSON.stringify({
+            "firstName" : first,
+            "lastName" : last,
             "interests" : interest,
             "lookingFor": lf,
             "industry"  : ind,

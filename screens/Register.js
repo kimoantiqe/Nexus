@@ -26,6 +26,8 @@ export default class Register extends React.Component {
       username: '',
       password: '',
       repassword: '',
+      firstname: '',
+      lastname: '',
    };
 
    handleUsername = (text) => {
@@ -39,6 +41,14 @@ export default class Register extends React.Component {
    handleRepassword = (text) => {
       this.setState({ repassword: text })
    }
+
+   handleFirstname = (text) => {
+        this.setState({ firstname: text })
+    }
+
+    handleLastname = (text) => {
+    this.setState({ lastname: text })
+    }
 
   render() {
 
@@ -97,6 +107,18 @@ export default class Register extends React.Component {
                    onChangeText = {this.handleUsername}
                />
                <TextInput
+                   placeholder = "FIrst name"
+                   placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
+                   style = {styles.input}
+                   onChangeText = {this.handleFirstname}
+               />
+               <TextInput
+                   placeholder = "Last name"
+                   placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
+                   style = {styles.input}
+                   onChangeText = {this.handleLastname}
+               />
+               <TextInput
                    placeholder = "Password"
                    placeholderTextColor = 'rgba(255, 255, 255, 0.2)'
                    secureTextEntry
@@ -125,6 +147,17 @@ export default class Register extends React.Component {
   Register = async () => {
       //////////////////////REGISTRATION API CALL////////////////////////////
 
+
+    if (this.state.firstname == "") 
+    {
+        alert("Please enter your name to register");
+    } else
+    {
+        if (this.state.lastname == "") 
+        {
+            alert("Please enter your last name to register");
+        } else
+        {
     if (this.state.username == "") 
     {
         alert("Please enter an email to register");
@@ -159,6 +192,8 @@ export default class Register extends React.Component {
                         if (response.success) 
                         {
                             AsyncStorage.setItem('userToken', response.token);
+                            AsyncStorage.setItem('firstname', this.state.firstname);
+                            AsyncStorage.setItem('lastname', this.state.lastname);
                             this.props.navigation.navigate('RCP');
                         } else 
                         {
@@ -184,6 +219,8 @@ export default class Register extends React.Component {
             }
         }
     }
+}
+  }
 };
 
 }
