@@ -150,7 +150,7 @@ export default class Register extends React.Component {
                 })
                 };
 
-                var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+                var apiURL = 'http://172.20.10.4:3000/api';
 
                 fetch(apiURL + '/user', settings)
                 .then(response => response.json())

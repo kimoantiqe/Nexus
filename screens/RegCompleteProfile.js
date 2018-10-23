@@ -482,7 +482,7 @@ export default class RegCompleteProfile extends React.Component {
 
         console.log(settings);
 
-        var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+        var apiURL = 'http://172.20.10.4:3000/api';
 
         fetch(apiURL + '/user', settings)
         .then(response => response.json())
@@ -498,7 +498,7 @@ export default class RegCompleteProfile extends React.Component {
 
     console.log(userToken);
 
-    var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+    var apiURL = 'http://172.20.10.4:3000/api';
 
     if (userToken != null) {
       var populate = {

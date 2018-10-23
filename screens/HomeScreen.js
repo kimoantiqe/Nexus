@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  AsyncStorage,
   Image,
   Platform,
   ScrollView,
@@ -7,15 +8,104 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
+import { Button } from 'react-native-elements'
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
+var apiURL = 'http://172.20.10.4:3000/api';
+
+var matchesArray = [];
+var textToPrint;
+
 export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      lastRefresh: Date(Date.now()).toString(),
+    }
+    
+    this.refreshScreen = this.refreshScreen.bind(this)
+
+    this.getUserMatches();
+  }
+  
+  //function that grabs a new user and refreshes the screen to update the
+  //parameters.
+  refreshScreen() {
+    this.setState({ lastRefresh: Date(Date.now()).toString() })
+  }
+
   static navigationOptions = {
     header: null,
   };
+
+  //Function to get the matches array and store it for use afterwards.
+  getUserMatches = async () => { 
+    userToken = await AsyncStorage.getItem('userToken');
+
+    console.log("This is get userMatches");
+
+    if (userToken != null) {
+      matchesArray = [];
+      var matches = {
+        method: 'GET',
+        headers: {
+          'Authorization': userToken
+        },
+      }
+      //need to update the get request.
+      fetch(apiURL + '/user', matches)
+      .then(response => response.json())
+      .then(
+        response => {
+          console.log(response)
+          if(response.success){
+            console.log(response.user.potentialMatches)
+            for(var i = 0; i < response.user.potentialMatches.length; i++)
+              matchesArray.push(response.user.potentialMatches[i]);
+          }
+        }
+      )
+      .then(async () => this.refreshScreen())
+    }
+  }
+
+  //function to display the matches (fix to display first and last name)
+  displayMatchOnScreen () {
+    textToPrint = ""
+    for(var i = 1; i < matchesArray.length + 1; i++){
+      this.displayMatch(matchesArray[i - 1]);
+      textToPrint += i + ": " + matchesArray[i - 1] + "\n"
+    }
+  }
+
+  //need to make sure
+  displayMatch = async (userid) => {
+    userToken = await AsyncStorage.getItem('userToken');
+
+    console.log("This is display Match");
+
+    if(userToken != null){
+      var user = {
+        method: 'GET',
+        headers: {
+          'Authorization': userToken,
+          'id': userid,
+        },
+      }
+      fetch(apiURL + '/user/getuser/', user)
+      .then(response => response.json())
+      .then(
+        response => {
+          console.log(response)
+        }
+      )
+    }
+  }
 
   render() {
     return (
@@ -23,8 +113,13 @@ export default class HomeScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.getStartedContainer}>
 
-            <Text style={styles.getStartedText}>Dashboard
+            <Text style={styles.getStartedText}>{this.displayMatchOnScreen()}{textToPrint}
             </Text>
+
+            <Button
+              title='Refresh'
+              onPress = {this.getUserMatches}
+            />
 
           </View>
         </ScrollView>

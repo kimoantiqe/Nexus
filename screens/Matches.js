@@ -18,7 +18,7 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 
 var userToken;
-var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+var apiURL = 'http://172.20.10.4:3000/api';
 
 
 var currUserID;
