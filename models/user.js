@@ -8,6 +8,11 @@ const {TE,to}   = require('../services/util');
 const jwtConfig = require('../configurations/jwt');
 
 let UserSchema = mongoose.Schema({
+  image:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :'image',
+    exists: true
+  },
   firstName: {
     type: String
   },

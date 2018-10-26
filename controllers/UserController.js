@@ -190,6 +190,7 @@ User.findById(id, function(err, newuser) {
 }
 module.exports.getuser = getuser;
 
+
 const remove = async function(req, res){
 	let user, err;
 	user = req.user;
@@ -200,3 +201,15 @@ const remove = async function(req, res){
 	return ReS(res, {message:'Deleted User'}, 204);
 }
 module.exports.remove = remove;
+
+
+const setUserImage = async function(req,res){
+  var user = req.user;
+  var file = req.file;
+
+  user.set({image:file.id});
+  [err, user] = await to(user.save());
+  if(err) return ReE(res, err);
+  return ReS(res, {message :'Uploaded image for user : '+user.email} , 201);
+}
+module.exports.setUserImage = setUserImage;
