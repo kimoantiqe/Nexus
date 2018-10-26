@@ -10,9 +10,9 @@ const bodyParser       		  = require('body-parser');
 
 /*Configuration*/
 const models = require("./models");
-mongoose.set('debug', true);
+// /mongoose.set('debug', true);
 require('./configurations/passport')(passport);
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
@@ -22,5 +22,8 @@ require('./routes/v1.js')(app, passport);
 
 
 /*RunServer*/
-app.listen(appConfig.port);
+var Nexus = app.listen(appConfig.port);
 console.log('Server has successfully started on PORT: ' + appConfig.port);
+
+
+module.exports = Nexus; // for testing
