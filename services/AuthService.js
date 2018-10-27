@@ -53,10 +53,14 @@ const authUser = async function(userInfo){//returns token
     auth_info.status = 'login';
     unique_key = getUniqueKeyFromBody(userInfo);
 
-    if(!unique_key) TE('Please enter an email to login');
+    if(!unique_key){
+      TE('Please enter an email to login');
+    }
 
 
-    if(!userInfo.password) TE('Please enter a password to login');
+    if(!userInfo.password) {
+      TE('Please enter a password to login');
+    }
 
     let user;
     if(validator.isEmail(unique_key)){
