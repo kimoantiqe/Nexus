@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/kimoantiqe/Nexus.svg?branch=master)](https://travis-ci.com/kimoantiqe/Nexus)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e090f0a5cf14a5baf72145d284aa1e1)](https://www.codacy.com/app/Nexus/Nexus?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kimoantiqe/Nexus&amp;utm_campaign=Badge_Grade)
 # NEXUS 
 An app that help expand your professional network in an efficient and fun manner
 
@@ -12,4 +14,3 @@ Branches :
 └───models (contains mongoose init/configs alongside all the schemas)
 
 ```
-test
