@@ -75,7 +75,7 @@ const update = async function(req, res){
   if(data.interests){
     let interests = data.interests;
     for(let i = 0 ; i < interests.length ; i++){
-      if(user.interests.indexOf(interests[i]) == -1 ){
+      if(user.interests.indexOf(interests[i]) === -1 ){
         user.interests.push(interests[i]);
       }
     }
@@ -83,7 +83,7 @@ const update = async function(req, res){
   if(data.lookingFor){
     let lookingFor = data.lookingFor;
     for(let i = 0 ; i < lookingFor.length ; i++){
-      if(user.lookingFor.indexOf(lookingFor[i]) == -1 ){
+      if(user.lookingFor.indexOf(lookingFor[i]) === -1 ){
         user.lookingFor.push(lookingFor[i]);
       }
     }
@@ -91,7 +91,7 @@ const update = async function(req, res){
   if(data.industry){
     let industry = data.industry;
     for(let i = 0 ; i < industry.length ; i++){
-      if(user.industry.indexOf(industry[i]) == -1 ){
+      if(user.industry.indexOf(industry[i]) === -1 ){
         user.industry.push(industry[i]);
       }
     }
@@ -100,7 +100,7 @@ const update = async function(req, res){
   if(data.matches){
     let matches = data.matches;
     for(let i = 0 ; i < matches.length ; i++){
-      if(user.matches.indexOf(matches[i]) == -1 ){
+      if(user.matches.indexOf(matches[i]) === -1 ){
         user.matches.push(matches[i]);
       }
     }
@@ -109,7 +109,7 @@ const update = async function(req, res){
   if(data.liked){
     let liked = data.liked;
     for(let i = 0 ; i < liked.length ; i++){
-      if(user.liked.indexOf(liked[i]) == -1 ){
+      if(user.liked.indexOf(liked[i]) === -1 ){
         user.liked.push(liked[i]);
         user.potentialMatches.shift();
         User.findById(liked[i], function(err, newuser) {
@@ -130,7 +130,7 @@ const update = async function(req, res){
     if(data.disliked){
       let disliked = data.disliked;
       for(let i = 0 ; i < disliked.length ; i++){
-        if(user.disliked.indexOf(disliked[i]) == -1 ){
+        if(user.disliked.indexOf(disliked[i]) === -1 ){
           user.disliked.push(disliked[i]);
           user.potentialMatches.shift();
         }
@@ -141,7 +141,7 @@ const update = async function(req, res){
   if(data.potentialMatches){
     let potentialMatches = data.potentialMatches;
     for(let i = 0 ; i < potentialMatches.length ; i++){
-      if(user.potentialMatches.indexOf(potentialMatches[i]) == -1 ){
+      if(user.potentialMatches.indexOf(potentialMatches[i]) === -1 ){
         user.potentialMatches.push(potentialMatches[i]);
       }
     }
