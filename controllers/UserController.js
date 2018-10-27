@@ -13,17 +13,17 @@ SanatizeUpdateData = function(data){
         }
     }
     return false;
-}
+};
 
 const create = async function(req, res){
 	res.setHeader('Content-Type', 'application/json');
 	const body = req.body;
-    if(!body.email){
-    	return ReE(res, 'Please enter an email to register.');
+  if(!body.email){
+    return ReE(res, 'Please enter an email to register.');
     } else if(!body.password){
-    	return ReE(res, 'Please enter a password to register.');
+      return ReE(res, 'Please enter a password to register.');
     }else{
-    	let err, user;
+      let err, user;
 
       //The following must only be handeled in the update function invoked by the put request
       delete body.interests;
@@ -33,10 +33,12 @@ const create = async function(req, res){
       delete body.potentialMatches;
       delete body.liked;
       delete body.disliked;
+      [err, user] = await to(authService.createUser(body));
 
-    	[err, user] = await to(authService.createUser(body));
-    	if(err) return ReE(res, err, 422);
-        return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
+      if(err){
+        return ReE(res, err, 422);
+       }
+       return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
     }
 }
 module.exports.create = create;
@@ -64,10 +66,12 @@ const update = async function(req, res){
 	let err, user, data ;
 	user = req.user;
 	data = req.body;
-  if(SanatizeUpdateData(data)) return ReE(res,"You can't do that",403);
+  if(SanatizeUpdateData(data)) {
+    return ReE(res,"You can't do that",403);
+  }
 
   if(data.interests){
-    interests = data.interests;
+    let interests = data.interests;
     for(let i = 0 ; i < interests.length ; i++){
       if(user.interests.indexOf(interests[i]) == -1 ){
         user.interests.push(interests[i]);
@@ -75,7 +79,7 @@ const update = async function(req, res){
     }
   }
   if(data.lookingFor){
-    lookingFor = data.lookingFor;
+    let lookingFor = data.lookingFor;
     for(let i = 0 ; i < lookingFor.length ; i++){
       if(user.lookingFor.indexOf(lookingFor[i]) == -1 ){
         user.lookingFor.push(lookingFor[i]);
@@ -83,7 +87,7 @@ const update = async function(req, res){
     }
   }
   if(data.industry){
-    industry = data.industry;
+    let industry = data.industry;
     for(let i = 0 ; i < industry.length ; i++){
       if(user.industry.indexOf(industry[i]) == -1 ){
         user.industry.push(industry[i]);
@@ -92,7 +96,7 @@ const update = async function(req, res){
   }
 
   if(data.matches){
-    matches = data.matches;
+    let matches = data.matches;
     for(let i = 0 ; i < matches.length ; i++){
       if(user.matches.indexOf(matches[i]) == -1 ){
         user.matches.push(matches[i]);
@@ -101,7 +105,7 @@ const update = async function(req, res){
   }
 
   if(data.liked){
-    liked = data.liked;
+    let liked = data.liked;
     for(let i = 0 ; i < liked.length ; i++){
       if(user.liked.indexOf(liked[i]) == -1 ){
         user.liked.push(liked[i]);
@@ -122,7 +126,7 @@ const update = async function(req, res){
 }
 
     if(data.disliked){
-      disliked = data.disliked;
+      let disliked = data.disliked;
       for(let i = 0 ; i < disliked.length ; i++){
         if(user.disliked.indexOf(disliked[i]) == -1 ){
           user.disliked.push(disliked[i]);
@@ -133,7 +137,7 @@ const update = async function(req, res){
 
 
   if(data.potentialMatches){
-    potentialMatches = data.potentialMatches;
+    let potentialMatches = data.potentialMatches;
     for(let i = 0 ; i < potentialMatches.length ; i++){
       if(user.potentialMatches.indexOf(potentialMatches[i]) == -1 ){
         user.potentialMatches.push(potentialMatches[i]);
