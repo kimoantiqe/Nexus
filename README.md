@@ -2,7 +2,8 @@
 An app that help expand your professional network in an efficient and fun manner
 
 Branches : 
-- Master : for auto deployment
+- Master : BackEnd
+- ClientSide : Client
 ``` bash
 
 ├───configurations (contains all port/api key configurations in .js during dev & .env during production) 
