@@ -40,7 +40,7 @@ const create = async function(req, res){
        }
        return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
     }
-}
+};
 module.exports.create = create;
 
 const login = async function(req, res){
@@ -113,10 +113,10 @@ const update = async function(req, res){
         user.liked.push(liked[i]);
         user.potentialMatches.shift();
         User.findById(liked[i], function(err, newuser) {
-            if(newuser.liked.map(user =>user.toString()).includes(user._id.toString())){
+            if(newuser.liked.map(user => user.toString()).(includes(user._id.toString()))){
               newuser.matches.push(user._id);
               user.matches.push(liked[i]);
-        			newuser.save();
+              newuser.save();
               user.save();
           }
           else{
@@ -214,7 +214,7 @@ module.exports.remove = remove;
 const setUserImage = async function(req,res){
   var user = req.user;
   var file = req.file;
-
+  let err;
   user.set({image:file.id});
   [err, user] = await to(user.save());
   if(err) {
