@@ -9,13 +9,13 @@ const mongoose              = mongoUtil.mongoose;
 
 
 var gfs;
-conn.once('open', ()=>{
+conn.once('open', () => {
   Grid.mongo = mongoose.mongo;
   gfs = Grid(conn.db);
 });
 
 const get =  function(req,res){
-  let user = req.user
+  let user = req.user;
   gfs.collection('image');
 
   /** First check if file exists */
@@ -51,7 +51,7 @@ const removeOld =  function(req,res,next){
     }else{
       next();
     }
-    
+
   });
 };
 module.exports.removeOld = removeOld;
@@ -63,10 +63,7 @@ const uploadImage =  function(req,res,next){
     }else{
       next();
     }
-  }); 
+  });
 };
 
 module.exports.uploadImage = uploadImage;
-
-
-
