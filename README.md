@@ -1,16 +1,21 @@
-[![Build Status](https://travis-ci.com/kimoantiqe/Nexus.svg?branch=master)](https://travis-ci.com/kimoantiqe/Nexus)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9e090f0a5cf14a5baf72145d284aa1e1)](https://www.codacy.com/app/Nexus/Nexus?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kimoantiqe/Nexus&amp;utm_campaign=Badge_Grade)
-# NEXUS 
-An app that help expand your professional network in an efficient and fun manner
+<p align="center">
+  <img src="x"/>
+</p>
 
-Branches : 
-- Master : BackEnd
-- ClientSide : Client
-``` bash
+<p align="center">
+ An app that help expand your professional network in an efficient and fun manner
+</p>
 
-├───configurations (contains all port/api key configurations in .js during dev & .env during production) 
-├───controllers (contains all model controllers ex: User controller which controlls all of the users CRUD operations and so on)
-├───middleware (contains init/configs for specific/custom middlewares)  
-└───models (contains mongoose init/configs alongside all the schemas)
+<p align="center">
+  <a href="https://travis-ci.com/kimoantiqe/Nexus">
+    <img src="https://travis-ci.com/kimoantiqe/Nexus.svg?branch=master"
+      alt="Travis Build Status" />
+  </a>
 
-```
+  <a href="https://www.codacy.com/app/Nexus/Nexus?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kimoantiqe/Nexus&amp;utm_campaign=Badge_Grade">
+    <img src="https://api.codacy.com/project/badge/Grade/9e090f0a5cf14a5baf72145d284aa1e1"
+      alt="Codacy Code Grade" />
+  </a>
+</p>
+
+<br>
