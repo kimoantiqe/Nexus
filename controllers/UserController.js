@@ -48,7 +48,9 @@ const login = async function(req, res){
 	let err, user;
 
 	[err, user] = await to(authService.authUser(req.body));
-	if(err) return ReE(res, err, 422);
+	if(err) {
+    return ReE(res, err, 422);
+  }
 
 	return ReS(res, {token:user.getJWT(), user:user.toWeb()});
 }
@@ -200,7 +202,9 @@ const remove = async function(req, res){
 	user = req.user;
 
 	[err, user] = await to(user.remove());
-	if(err) return ReE(res, 'error occured trying to delete user');
+	if(err) {
+    return ReE(res, 'error occured trying to delete user');
+  }
 
 	return ReS(res, {message:'Deleted User'}, 204);
 }
@@ -213,7 +217,9 @@ const setUserImage = async function(req,res){
 
   user.set({image:file.id});
   [err, user] = await to(user.save());
-  if(err) return ReE(res, err);
+  if(err) {
+    return ReE(res, err);
+  }
   return ReS(res, {message :'Uploaded image for user : '+user.email} , 201);
 }
 module.exports.setUserImage = setUserImage;
