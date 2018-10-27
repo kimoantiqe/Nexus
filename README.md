@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/kimoantiqe/Nexus.svg?branch=master)](https://travis-ci.com/kimoantiqe/Nexus)
 # NEXUS 
 An app that help expand your professional network in an efficient and fun manner
 
