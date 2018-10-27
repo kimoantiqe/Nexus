@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
- An app that help expand your professional network in an efficient and fun manner
+ An app that helps you expand your professional network in an efficient and fun manner
 </p>
 
 <p align="center">
