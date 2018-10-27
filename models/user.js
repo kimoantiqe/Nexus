@@ -120,7 +120,7 @@ UserSchema.methods.comparePassword = async function(pw) {
   }
 
   return this;
-}
+};
 
 UserSchema.methods.getJWT = function() {
   let expiration_time = parseInt(jwtConfig.expiration);

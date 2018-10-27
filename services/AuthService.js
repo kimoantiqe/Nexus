@@ -6,35 +6,39 @@ const getUniqueKeyFromBody = function(body){
     let unique_key = body.unique_key;
     if(typeof unique_key==='undefined'){
         if(typeof body.email != 'undefined'){
-            unique_key = body.email
+            unique_key = body.email;
         }else{
             unique_key = null;
         }
     }
 
     return unique_key;
-}
+};
 module.exports.getUniqueKeyFromBody = getUniqueKeyFromBody;
 
 const createUser = async function(userInfo){
     let unique_key, auth_info, err;
 
-    auth_info={}
+    auth_info={};
     auth_info.status='create';
 
     unique_key = getUniqueKeyFromBody(userInfo);
-    if(!unique_key) TE('An email was not entered.');
+    if(!unique_key) {
+      TE('An email was not entered.');
+    }
 
     if(validator.isEmail(unique_key)){
         auth_info.method = 'email';
         userInfo.email = unique_key;
-
+        let err,user;
         [err, user] = await to(User.create(userInfo));
         if(err) {
-          if(err.message.includes('E11000'))
+          if(err.message.includes('E11000')){
           TE('User already exists with that email');
-          else
-          TE(err.message); //Handle other errors here later
+        }
+          else{
+            TE(err.message); //Handle other errors here later
+          }
         }
         return user;
     }else{
@@ -57,19 +61,24 @@ const authUser = async function(userInfo){//returns token
     let user;
     if(validator.isEmail(unique_key)){
         auth_info.method='email';
-
+        let err;
         [err, user] = await to(User.findOne({email:unique_key }));
-        if(err) TE(err.message);
-
+        if(err){
+        TE(err.message);
+        }
     }else{
         TE('A valid email  was not entered');
     }
 
-    if(!user) TE('Not registered');
-
+    if(!user) {
+      TE('Not registered');
+    }
+    let err;
     [err, user] = await to(user.comparePassword(userInfo.password));
 
-    if(err) TE(err.message);
+    if(err) {
+      TE(err.message);
+    }
 
     return user;
 
