@@ -88,10 +88,14 @@ UserSchema.pre('save', async function(next) {
 
     let err, salt, hash;
     [err, salt] = await to(bcrypt.genSalt(10));
-    if (err) TE(err.message, true);
+    if (err){
+      TE(err.message, true);
+    }
 
     [err, hash] = await to(bcrypt.hash(this.password, salt));
-    if (err) TE(err.message, true);
+    if (err) {
+      TE(err.message, true);
+    }
 
     this.password = hash;
 
@@ -102,12 +106,18 @@ UserSchema.pre('save', async function(next) {
 
 UserSchema.methods.comparePassword = async function(pw) {
   let err, pass;
-  if (!this.password) TE('password not set');
+  if (!this.password) {
+    TE('password not set');
+  }
 
   [err, pass] = await to(bcrypt_p.compare(pw, this.password));
-  if (err) TE(err);
+  if (err) {
+    TE(err);
+  }
 
-  if (!pass) TE('invalid password');
+  if (!pass) {
+    TE('invalid password');
+  }
 
   return this;
 }
