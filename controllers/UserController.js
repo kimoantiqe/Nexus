@@ -113,7 +113,7 @@ const update = async function(req, res){
         user.liked.push(liked[i]);
         user.potentialMatches.shift();
         User.findById(liked[i], function(err, newuser) {
-            if(newuser.liked.map(user => user.toString()).includes(user._id.toString())){
+            if(newuser.liked.map( (user) => user.toString()).includes(user._id.toString())){
               newuser.matches.push(user._id);
               user.matches.push(liked[i]);
               newuser.save();
@@ -185,7 +185,7 @@ let otheruser;
 let id = req.query.id;
 console.log(id);
 User.findById(id, function(err, newuser) {
-     if(newuser.matches.map(newuser =>newuser.toString()).includes(user._id.toString())){
+     if(newuser.matches.map((newuser) =>newuser.toString()).includes(user._id.toString())){
       otheruser = newuser;
       return ReS(res, {user:newuser.toWeb()});
     }
