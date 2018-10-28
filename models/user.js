@@ -123,11 +123,11 @@ UserSchema.methods.comparePassword = async function(pw) {
 };
 
 UserSchema.methods.getJWT = function() {
-  let expiration_time = parseInt(jwtConfig.expiration);
+  let expirationTime = parseInt(jwtConfig.expiration);
   return "Bearer " + jwt.sign({
     user_id: this._id
   }, jwtConfig.encryption, {
-    expiresIn: expiration_time
+    expiresIn: expirationTime
   });
 };
 

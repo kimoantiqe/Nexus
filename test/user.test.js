@@ -1,8 +1,8 @@
 //Test empty payload
 module.exports.loginFail1 = (done,chai,server) => {
 		let wrongCreds = {
-              
-        }
+
+		};
         chai.request(server)
             .post('/api/user/login')
             .set('Content-Type', 'application/json')
@@ -14,7 +14,7 @@ module.exports.loginFail1 = (done,chai,server) => {
                   res.body.should.have.property('error').eql('Please enter an email to login');
               done();
             });
-      
+
 };
 
 //Test wrong email format
@@ -34,7 +34,7 @@ module.exports.loginFail2 = (done,chai,server) => {
                   res.body.should.have.property('error').eql('A valid email  was not entered');
               done();
             });
-      
+
 };
 
 //Test missing password
@@ -53,7 +53,7 @@ module.exports.loginFail3 = (done,chai,server) => {
                   res.body.should.have.property('error').eql('Please enter a password to login');
               done();
             });
-      
+
 };
 
 //Test unregistered user
@@ -73,7 +73,7 @@ module.exports.loginFail4 = (done,chai,server) => {
                   res.body.should.have.property('error').eql('Not registered');
               done();
             });
-      
+
 };
 
 var emailCreated = "test543aawfawfaf21awfawfaafafawf@12345test.com";
@@ -96,7 +96,7 @@ module.exports.registerFail1 = (done,chai,server) => {
                   res.body.should.have.property('success').eql(false);
                   res.body.should.have.property('error').eql('Please enter an email to register.');
               done();
-            }) 
+            });
 };
 
 //Test missing password in register
@@ -115,7 +115,7 @@ module.exports.registerFail2 = (done,chai,server) => {
                   res.body.should.have.property('success').eql(false);
                   res.body.should.have.property('error').eql('Please enter a password to register.');
               done();
-            }) 
+            })
 };
 
 //Test inccorect email format
@@ -135,7 +135,7 @@ module.exports.registerFail3 = (done,chai,server) => {
                   res.body.should.have.property('success').eql(false);
                   res.body.should.have.property('error').eql('A valid email was not entered.');
               done();
-            }) 
+            })
 };
 
 //Test register user
@@ -219,7 +219,7 @@ module.exports.deleteSuccess = (done,chai,server) => {
             })
 };
 
-//Test delete user fail due to inccorect token 
+//Test delete user fail due to inccorect token
 module.exports.deletefail1 = (done,chai,server) => {
 
         chai.request(server)
