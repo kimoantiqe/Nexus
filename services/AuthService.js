@@ -17,10 +17,10 @@ const getUniqueKeyFromBody = function(body){
 module.exports.getUniqueKeyFromBody = getUniqueKeyFromBody;
 
 const createUser = async function(userInfo){
-    let uniqueKey, auth_info, err;
+    let uniqueKey, authInfo, err;
 
-    auth_info={};
-    auth_info.status='create';
+    authInfo={};
+    authInfo.status='create';
 
     uniqueKey = getUniqueKeyFromBody(userInfo);
     if(!uniqueKey) {
@@ -28,7 +28,7 @@ const createUser = async function(userInfo){
     }
 
     if(validator.isEmail(uniqueKey)){
-        auth_info.method = 'email';
+        authInfo.method = 'email';
         userInfo.email = uniqueKey;
         let err,user;
         [err, user] = await to(User.create(userInfo));
@@ -49,8 +49,8 @@ module.exports.createUser = createUser;
 
 const authUser = async function(userInfo){//returns token
     let uniqueKey;
-    let auth_info = {};
-    auth_info.status = 'login';
+    let authInfo = {};
+    authInfo.status = 'login';
     uniqueKey = getUniqueKeyFromBody(userInfo);
 
     if(!uniqueKey){
@@ -64,7 +64,7 @@ const authUser = async function(userInfo){//returns token
 
     let user;
     if(validator.isEmail(uniqueKey)){
-        auth_info.method='email';
+        authInfo.method='email';
         let err;
         [err, user] = await to(User.findOne({email:uniqueKey }));
         if(err){

@@ -13,8 +13,8 @@ var files = fs
 })
 .forEach((file) => {
 	var filename = file.split('.')[0];
-	var model_name = filename.charAt(0).toUpperCase() + filename.slice(1);
-	models[model_name] = require('./'+file);
+	var modelName = filename.charAt(0).toUpperCase() + filename.slice(1);
+	models[modelName] = require('./'+file);
 });
 
 mongoose.Promise = global.Promise; //set mongo up to use promises
@@ -32,11 +32,11 @@ module.exports.conn = conn;
 
 conn.once('open', () => {
 	console.log('Connected to mongoDB at '+dbConfig.url);
-})
+});
 
 conn.on('error', (error) => {
 	console.log("Mongo error", error);
-})
+});
 
 
 module.exports.models = models;
