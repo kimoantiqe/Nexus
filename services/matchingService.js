@@ -59,11 +59,11 @@ let results=[];
              if(otindustry.includes(OGindustry[z])){
                score+=5;
              }
-					 }
+           }
            let userOb = { "id" : otheruser._id,
            "score" : score,
            "interests" : otheruser.interests,
-					 "industry" : otheruser.industry
+           "industry" : otheruser.industry
 				 };
 				 results.push(userOb);
 			 }

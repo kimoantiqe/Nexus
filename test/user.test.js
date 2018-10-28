@@ -172,7 +172,7 @@ module.exports.loginSuccess = (done,chai,server) => {
                   res.body.should.have.property('success').eql(true);
                   dummyUser = res.body;
               done();
-            })
+            });
 };
 
 
