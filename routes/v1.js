@@ -15,7 +15,7 @@ module.exports = function(app, passport) {
 	/************************************/
 
 
-	/* USER ROUTES */ 
+	/* USER ROUTES */
 
 	/********  Login **************/
 	app.post('/api/user/login', UserController.login);
@@ -55,17 +55,16 @@ module.exports = function(app, passport) {
 
 
 	/* IMAGE ROUTES */
-
-	/************ create and connect image ***************///C
+	/************ create and connect image ***************///
 	app.post('/api/user/image',passport.authenticate('jwt', {session: false}), ImageController.uploadImage , UserController.setUserImage);
 	/********************************************/
 
- 	/************ remove old create new and connect image ***************///U & D
- 	app.put('/api/user/image', passport.authenticate('jwt', {session: false}), ImageController.removeOld, ImageController.uploadImage ,UserController.setUserImage );
- 	/********************************************/
- 	
-    /********  get user image **************///R
-    app.get('/api/user/image', passport.authenticate('jwt', {session: false}), ImageController.get);
-    /***********************************/
+	/************ remove old create new and connect image ***************///U & D
+	app.put('/api/user/image', passport.authenticate('jwt', {session: false}), ImageController.removeOld, ImageController.uploadImage ,UserController.setUserImage );
+	/********************************************/
+
+	/********  get user image **************///R
+	app.get('/api/user/image', passport.authenticate('jwt', {session: false}), ImageController.get);
+	/***********************************/
 
 };
