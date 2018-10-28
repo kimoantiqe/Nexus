@@ -64,6 +64,7 @@ let results=[];
            "score" : score,
            "interests" : otheruser.interests,
            "industry" : otheruser.industry
+
 				 };
            results.push(userOb);
          }

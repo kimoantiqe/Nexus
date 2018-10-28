@@ -41,7 +41,7 @@ module.exports.loginFail2 = (done,chai,server) => {
 module.exports.loginFail3 = (done,chai,server) => {
 		let wrongCreds = {
               email: "WrongCreds@ho.com",
-        }
+        };
         chai.request(server)
             .post('/api/user/login')
             .set('Content-Type', 'application/json')
@@ -135,7 +135,7 @@ module.exports.registerFail3 = (done,chai,server) => {
                   res.body.should.have.property('success').eql(false);
                   res.body.should.have.property('error').eql('A valid email was not entered.');
               done();
-            })
+            });
 };
 
 //Test register user

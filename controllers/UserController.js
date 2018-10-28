@@ -61,7 +61,7 @@ const get = async function(req, res){
 	let user = req.user;
 
 	return ReS(res, {user:user.toWeb()});
-}
+};
 module.exports.get = get;
 
 const update = async function(req, res){

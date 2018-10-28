@@ -86,5 +86,5 @@ const authUser = async function(userInfo){//returns token
 
     return user;
 
-}
+};
 module.exports.authUser = authUser;
