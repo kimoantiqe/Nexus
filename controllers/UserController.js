@@ -173,7 +173,7 @@ const update = async function(req, res){
 		return ReE(res, err);
 	}
 	return ReS(res, {message :'Updated User: '+user.email});
-}
+};
 module.exports.update = update;
 
 
@@ -193,7 +193,7 @@ User.findById(id, function(err, newuser) {
       return ReE(res, "user not in your matches");
     }
 });
-}
+};
 module.exports.getuser = getuser;
 
 
@@ -207,7 +207,7 @@ const remove = async function(req, res){
   }
 
 	return ReS(res, {message:'Deleted User'}, 204);
-}
+};
 module.exports.remove = remove;
 
 
@@ -221,5 +221,5 @@ const setUserImage = async function(req,res){
     return ReE(res, err);
   }
   return ReS(res, {message :'Uploaded image for user : '+user.email} , 201);
-}
+};
 module.exports.setUserImage = setUserImage;

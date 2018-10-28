@@ -61,7 +61,7 @@ module.exports.loginFail4 = (done,chai,server) => {
 		let wrongCreds = {
               email: "WrongCawffaafa4aDfa92u194912u4912uafnalfnkareds@ho.com",
               password: "wrongc12redafaw11234",
-        }
+        };
         chai.request(server)
             .post('/api/user/login')
             .set('Content-Type', 'application/json')
@@ -85,7 +85,7 @@ module.exports.registerFail1 = (done,chai,server) => {
 
 		let register = {
               password: passwordCreated
-        }
+        };
         chai.request(server)
             .post('/api/user')
             .set('Content-Type', 'application/json')
@@ -104,7 +104,7 @@ module.exports.registerFail2 = (done,chai,server) => {
 
 		let register = {
               email: emailCreated
-        }
+        };
         chai.request(server)
             .post('/api/user')
             .set('Content-Type', 'application/json')
@@ -124,7 +124,7 @@ module.exports.registerFail3 = (done,chai,server) => {
 		let register = {
               email: '1234',
               password: passwordCreated
-        }
+        };
         chai.request(server)
             .post('/api/user')
             .set('Content-Type', 'application/json')
@@ -143,7 +143,7 @@ module.exports.registerSuccess = (done,chai,server) => {
 		let register = {
               email: emailCreated,
               password: passwordCreated,
-        }
+        };
         chai.request(server)
             .post('/api/user')
             .set('Content-Type', 'application/json')
@@ -161,7 +161,7 @@ module.exports.loginSuccess = (done,chai,server) => {
 		let register = {
               email: emailCreated,
               password: passwordCreated,
-        }
+        };
         chai.request(server)
             .post('/api/user/login')
             .set('Content-Type', 'application/json')
@@ -190,7 +190,7 @@ module.exports.getSuccess = (done,chai,server) => {
                   res.body.should.have.property('success').eql(true);
                   res.body.should.have.property('user').have.property('email').eql(dummyUser.user.email);
               done();
-            })
+            });
 };
 
 //Test get fail due to inccorect token
@@ -203,7 +203,7 @@ module.exports.getFail1 = (done,chai,server) => {
             .end((err, res) => {
                   res.should.have.status(401); //unauthorized error code
               done();
-            })
+            });
 };
 
 //Test delete user
@@ -216,7 +216,7 @@ module.exports.deleteSuccess = (done,chai,server) => {
             .end((err, res) => {
                   res.should.have.status(204);
               done();
-            })
+            });
 };
 
 //Test delete user fail due to inccorect token
@@ -230,5 +230,5 @@ module.exports.deletefail1 = (done,chai,server) => {
             .end((err, res) => {
                   res.should.have.status(401); //unauthorized error code
               done();
-            })
+            });
 };
