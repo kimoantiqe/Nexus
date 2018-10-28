@@ -4,7 +4,7 @@ const { to, ReE, ReS }        = require('../services/util');
 const matchingService         = require('./../services/matchingService');
 
 
-SanatizeUpdateData = function(data){
+var SanatizeUpdateData = function(data){
     var blacklist = ['membership','role','createdAt','updatedAt','_id','__v'] ;
 
     for(var i=0 ; i <blacklist.length ; i++){
@@ -53,7 +53,7 @@ const login = async function(req, res){
   }
 
 	return ReS(res, {token:user.getJWT(), user:user.toWeb()});
-}
+};
 module.exports.login = login;
 
 const get = async function(req, res){
@@ -185,7 +185,7 @@ let otheruser;
 let id = req.query.id;
 console.log(id);
 User.findById(id, function(err, newuser) {
-     if(newuser.matches.map((newuser) =>newuser.toString()).includes(user._id.toString())){
+     if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
       otheruser = newuser;
       return ReS(res, {user:newuser.toWeb()});
     }

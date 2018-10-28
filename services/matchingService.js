@@ -64,7 +64,7 @@ let results=[];
            "score" : score,
            "interests" : otheruser.interests,
            "industry" : otheruser.industry
-           }
+				 };
            results.push(userOb);
          }
     });
@@ -78,8 +78,8 @@ let results=[];
     }
     user.potentialMatches = potentialMatches;
     user.save();
-})
+});
 
 return ReS(res, {user: user.toWeb()});
-}
+};
 module.exports.popconns = popconns;

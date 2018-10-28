@@ -44,7 +44,7 @@ const createUser = async function(userInfo){
     }else{
         TE('A valid email was not entered.');
     }
-}
+};
 module.exports.createUser = createUser;
 
 const authUser = async function(userInfo){//returns token

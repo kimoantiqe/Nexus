@@ -22,7 +22,7 @@ module.exports.loginFail2 = (done,chai,server) => {
 		let wrongCreds = {
               email: "WrongCreds",
               password: "wrongcred1234",
-        }
+        };
         chai.request(server)
             .post('/api/user/login')
             .set('Content-Type', 'application/json')
@@ -115,7 +115,7 @@ module.exports.registerFail2 = (done,chai,server) => {
                   res.body.should.have.property('success').eql(false);
                   res.body.should.have.property('error').eql('Please enter a password to register.');
               done();
-            })
+            });
 };
 
 //Test inccorect email format

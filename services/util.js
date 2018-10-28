@@ -30,15 +30,18 @@ module.exports.ReS = function(res, data, code){ // Success Web Response
         sendData = Object.assign(data, sendData);//merge the objects
     }
 
-    if(typeof code !== 'undefined') res.statusCode = code;
+    if(typeof code !== 'undefined') {
+      res.statusCode = code;
+    }
 
     return res.json(sendData);
 };
 
-module.exports.TE = TE = function(errmessage, log){ // TE stands for Throw Error
+const TE = function(errmessage, log){ // TE stands for Throw Error
     if(log === true){
         console.error(errmessage);
     }
 
     throw new Error(errmessage);
 };
+module.exports.TE = TE;
