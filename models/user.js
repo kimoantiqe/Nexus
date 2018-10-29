@@ -1,6 +1,6 @@
 const mongoose  = require('mongoose');
 const bcrypt    = require('bcrypt');
-const bcrypt_p  = require('bcrypt-promise');
+const bcryptP  = require('bcrypt-promise');
 const jwt       = require('jsonwebtoken');
 const validate  = require('mongoose-validator');
 const exists = require('mongoose-exists');
@@ -102,7 +102,7 @@ UserSchema.pre('save', async function(next) {
   } else {
     return next();
   }
-})
+});
 
 UserSchema.methods.comparePassword = async function(pw) {
   let err, pass;
@@ -110,7 +110,7 @@ UserSchema.methods.comparePassword = async function(pw) {
     TE('password not set');
   }
 
-  [err, pass] = await to(bcrypt_p.compare(pw, this.password));
+  [err, pass] = await to(bcryptP.compare(pw, this.password));
   if (err) {
     TE(err);
   }
@@ -123,11 +123,11 @@ UserSchema.methods.comparePassword = async function(pw) {
 };
 
 UserSchema.methods.getJWT = function() {
-  let expiration_time = parseInt(jwtConfig.expiration);
+  let expirationTime = parseInt(jwtConfig.expiration);
   return "Bearer " + jwt.sign({
     user_id: this._id
   }, jwtConfig.encryption, {
-    expiresIn: expiration_time
+    expiresIn: expirationTime
   });
 };
 

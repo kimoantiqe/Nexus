@@ -14,10 +14,12 @@ const getpotconn = async function(req, res){
   let potcon = user.potentialMatches[0];
   console.log(user.potentialMatches);
   User.findById(potcon, function(err, newuser) {
-      if(err) return ReE(res, err, 422);
+      if(err) {
+				return ReE(res, err, 422);
+			}
     return ReS(res, {user:newuser.toWeb()});
   });
-  }
+};
 module.exports.getpotconn = getpotconn;
 
 
@@ -34,8 +36,8 @@ let results=[];
   User.find({}, function(err, users) {
     var results =[];
     users.forEach( function(otheruser) {
-      if(!user.liked.map(user =>user.toString()).includes(otheruser._id.toString()) &&
-      !user.disliked.map(user =>user.toString()).includes(otheruser._id.toString()) &&
+      if(!user.liked.map((user) => user.toString()).includes(otheruser._id.toString()) &&
+      !user.disliked.map((user) => user.toString()).includes(otheruser._id.toString()) &&
        otheruser._id.toString() != user._id.toString() ){
            let score =0;
            let otinterests = otheruser.interests;
@@ -62,22 +64,22 @@ let results=[];
            "score" : score,
            "interests" : otheruser.interests,
            "industry" : otheruser.industry
-           }
-           results.push(userOb);
-         }
+	};
+	results.push(userOb);
+	}
     });
 
     var potentialMatches = [];
     results.sort(function(a,b){
-      return b.score-a.score
-    })
+      return b.score-a.score;
+    });
     for(let x=0; x<results.length; x++){
       potentialMatches.push(results[x].id);
     }
     user.potentialMatches = potentialMatches;
     user.save();
-})
+});
 
 return ReS(res, {user: user.toWeb()});
-}
+};
 module.exports.popconns = popconns;

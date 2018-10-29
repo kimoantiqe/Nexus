@@ -3,33 +3,33 @@ const validator     = require('validator');
 const { to, TE }    = require('../services/util');
 
 const getUniqueKeyFromBody = function(body){
-    let unique_key = body.unique_key;
-    if(typeof unique_key==='undefined'){
+    let uniqueKey = body.unique_key;
+    if(typeof uniqueKey==='undefined'){
         if(typeof body.email != 'undefined'){
-            unique_key = body.email;
+            uniqueKey = body.email;
         }else{
-            unique_key = null;
+            uniqueKey = null;
         }
     }
 
-    return unique_key;
+    return uniqueKey;
 };
 module.exports.getUniqueKeyFromBody = getUniqueKeyFromBody;
 
 const createUser = async function(userInfo){
-    let unique_key, auth_info, err;
+    let uniqueKey, authInfo, err;
 
-    auth_info={};
-    auth_info.status='create';
+    authInfo={};
+    authInfo.status='create';
 
-    unique_key = getUniqueKeyFromBody(userInfo);
-    if(!unique_key) {
+    uniqueKey = getUniqueKeyFromBody(userInfo);
+    if(!uniqueKey) {
       TE('An email was not entered.');
     }
 
-    if(validator.isEmail(unique_key)){
-        auth_info.method = 'email';
-        userInfo.email = unique_key;
+    if(validator.isEmail(uniqueKey)){
+        authInfo.method = 'email';
+        userInfo.email = uniqueKey;
         let err,user;
         [err, user] = await to(User.create(userInfo));
         if(err) {
@@ -44,16 +44,16 @@ const createUser = async function(userInfo){
     }else{
         TE('A valid email was not entered.');
     }
-}
+};
 module.exports.createUser = createUser;
 
 const authUser = async function(userInfo){//returns token
-    let unique_key;
-    let auth_info = {};
-    auth_info.status = 'login';
-    unique_key = getUniqueKeyFromBody(userInfo);
+    let uniqueKey;
+    let authInfo = {};
+    authInfo.status = 'login';
+    uniqueKey = getUniqueKeyFromBody(userInfo);
 
-    if(!unique_key){
+    if(!uniqueKey){
       TE('Please enter an email to login');
     }
 
@@ -63,10 +63,10 @@ const authUser = async function(userInfo){//returns token
     }
 
     let user;
-    if(validator.isEmail(unique_key)){
-        auth_info.method='email';
+    if(validator.isEmail(uniqueKey)){
+        authInfo.method='email';
         let err;
-        [err, user] = await to(User.findOne({email:unique_key }));
+        [err, user] = await to(User.findOne({email:uniqueKey }));
         if(err){
         TE(err.message);
         }
@@ -86,5 +86,5 @@ const authUser = async function(userInfo){//returns token
 
     return user;
 
-}
+};
 module.exports.authUser = authUser;

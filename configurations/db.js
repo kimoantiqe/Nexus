@@ -1,4 +1,4 @@
-let dbConfig = {}
+let dbConfig = {};
 
 dbConfig.dialect   = process.env.DB_DIALECT    || "mongo";
 //use this for testing, easier to use, only need to run npm start to start the server and thats it

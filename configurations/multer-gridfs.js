@@ -16,7 +16,7 @@ const storage = require("multer-gridfs-storage")({
 
 
 var upload = multer({ //multer settings for single upload
-    storage: storage
+    storage
 }).single("file");
 
 
