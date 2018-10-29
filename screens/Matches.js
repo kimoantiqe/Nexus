@@ -18,11 +18,12 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 
 var userToken;
-var apiURL = 'http://172.20.10.4:3000/api';
+var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
 
 var currUserID;
 var firstName;
+var lastName;
 var bio;
 var interests;
 var industry;
@@ -59,10 +60,13 @@ export default class Matches extends React.Component {
         response => {
           if(response.success){
             console.log(response);
+            firstName = response.user.firstName;
+            lastName = response.user.lastName;
             currUserID = response.user.id;
             currUserID = "[\"" + currUserID + "\"]";
             currUserID = JSON.parse(currUserID);
             console.log(currUserID)
+            console.log(firstName + " " + lastName)
           }
         }
       ).catch(error => console.error(error)
@@ -142,7 +146,7 @@ export default class Matches extends React.Component {
           //This is the bio box container (need to update)
           <View style={styles.bioTextContainer}>
             <Text style = {styles.bioText}>Bio</Text>
-            <Text style = {styles.bioText}>this is {currUserID}</Text>
+            <Text style = {styles.bioText}>{firstName + " " + lastName}</Text>
           </View>
           
           //This is the dislike button 

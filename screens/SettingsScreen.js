@@ -19,14 +19,15 @@ export default class SettingsScreen extends React.Component {
     return (
       <View style = {styles1.contaier}>
         <View style = {styles1.container}>
-    <Button
-       title = "Signout"
-       color = "#841584"
-       onPress = {this.signOut}
-    />
+            <Button
+                title = "Signout"
+                color = "#841584"
+                onPress = {this.signOut}
+            />
+        </View>
       </View>
-    </View>)
-  }
+      );
+    }
   signOut = async () => {
     await AsyncStorage.clear();
     this.props.navigation.navigate('Auth');

@@ -9,7 +9,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    <StatusBar hidden />
+    <StatusBar hidden />;
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -20,7 +20,7 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <View style={styles.container}>
+        <View style = {styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <AppNavigator />
         </View>
@@ -44,7 +44,7 @@ export default class App extends React.Component {
     ]);
   };
 
-  _handleLoadingError = error => {
+  _handleLoadingError = (error) => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);

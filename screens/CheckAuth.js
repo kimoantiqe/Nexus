@@ -34,7 +34,7 @@ export default class CheckAuth extends React.Component {
   }
   };
 
-  var apiURL = 'http://10.0.0.228:3000/api';
+  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)

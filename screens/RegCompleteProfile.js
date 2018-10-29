@@ -431,7 +431,7 @@ export default class RegCompleteProfile extends React.Component {
             }
         } else
         {
-        if (index == 4) 
+        if (index === 4) 
         {
             i = 0;
             interest += "]";
@@ -445,7 +445,7 @@ export default class RegCompleteProfile extends React.Component {
             }
         } else
         {
-        if (index == 8) 
+        if (index === 8) 
         {
             i = 0;
             lf += "]";
@@ -486,7 +486,7 @@ export default class RegCompleteProfile extends React.Component {
 
         console.log(settings);
 
-        var apiURL = 'http://172.20.10.4:3000/api';
+        var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
         fetch(apiURL + '/user', settings)
         .then(response => response.json())
@@ -502,7 +502,7 @@ export default class RegCompleteProfile extends React.Component {
 
     console.log(userToken);
 
-    var apiURL = 'http://172.20.10.4:3000/api';
+    var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
     if (userToken != null) {
       var populate = {
@@ -577,32 +577,32 @@ const styles1 = StyleSheet.create({
     },
     cloudcon: {
       position: 'absolute',
-      width:width*.2,
-      height:height*.1,
+      width:width*0.2,
+      height:height*0.1,
     },
     cloud: {
-      marginTop:height*.05,
+      marginTop:height*0.05,
       opacity:0.05,
-      width:width*.4,
+      width:width*0.4,
       height:height*1.2,
       resizeMode:'contain',
 
     },
     cloud2: {
-      marginTop:height*.17,
-      marginRight:width*.4,
+      marginTop:height*0.17,
+      marginRight:width*0.4,
       opacity:0.07,
       width:width*0.7,
-      height:height*.07,
+      height:height*0.07,
       resizeMode:'contain',
 
     },
     cloud3: {
-      marginTop:height*.46,
-      marginLeft:width*.3,
+      marginTop:height*0.46,
+      marginLeft:width*0.3,
       opacity:0.06,
       width:width*1.2,
-      height:height*.13,
+      height:height*0.13,
       resizeMode:'contain',
 
     }

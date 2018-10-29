@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 9149,
-  "expoServerNgrokUrl": "https://ed-g5z.ymagd.nexusclient.exp.direct",
-  "packagerNgrokUrl": "https://packager.ed-g5z.ymagd.nexusclient.exp.direct",
-  "ngrokPid": 9161
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

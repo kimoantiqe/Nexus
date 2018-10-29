@@ -15,10 +15,12 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
-var apiURL = 'http://172.20.10.4:3000/api';
+var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
 var matchesArray = [];
 var textToPrint;
+var firstName = [];
+var lastName = [];
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -36,6 +38,7 @@ export default class HomeScreen extends React.Component {
   //function that grabs a new user and refreshes the screen to update the
   //parameters.
   refreshScreen() {
+    this.displayMatchOnScreen()
     this.setState({ lastRefresh: Date(Date.now()).toString() })
   }
 
@@ -64,13 +67,14 @@ export default class HomeScreen extends React.Component {
         response => {
           console.log(response)
           if(response.success){
-            console.log(response.user.potentialMatches)
-            for(var i = 0; i < response.user.potentialMatches.length; i++)
-              matchesArray.push(response.user.potentialMatches[i]);
+            console.log(response.user.matches)
+            for(var i = 0; i < response.user.matches.length; i++)
+              matchesArray.push(response.user.matches[i]);
+
+              this.refreshScreen();
           }
         }
       )
-      .then(async () => this.refreshScreen())
     }
   }
 
@@ -79,13 +83,12 @@ export default class HomeScreen extends React.Component {
     textToPrint = ""
     for(var i = 1; i < matchesArray.length + 1; i++){
       this.displayMatch(matchesArray[i - 1]);
-      textToPrint += i + ": " + matchesArray[i - 1] + "\n"
+      textToPrint += i + ": " + firstName[i - 1] + " " + lastName[i - 1] + "\n";
     }
   }
 
   //need to make sure
-  displayMatch = async (userid) => {
-    userToken = await AsyncStorage.getItem('userToken');
+  displayMatch(userid)  {
 
     console.log("This is display Match");
 
@@ -94,14 +97,15 @@ export default class HomeScreen extends React.Component {
         method: 'GET',
         headers: {
           'Authorization': userToken,
-          'id': userid,
         },
       }
-      fetch(apiURL + '/user/getuser/', user)
+      fetch(apiURL + '/user/getuser/?id=' + userid, user)
       .then(response => response.json())
-      .then(
+      .then( 
         response => {
-          console.log(response)
+          console.log(response.user.firstName + " " + response.user.lastName + "\n")
+          firstName.push(response.user.firstName);
+          lastName.push(response.user.lastName);
         }
       )
     }
@@ -113,7 +117,7 @@ export default class HomeScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.getStartedContainer}>
 
-            <Text style={styles.getStartedText}>{this.displayMatchOnScreen()}{textToPrint}
+            <Text style={styles.getStartedText}>{textToPrint}
             </Text>
 
             <Button
