@@ -143,7 +143,7 @@ export default class Register extends React.Component {
       </View>
       </View>
     );
-  };
+  }
   Register = async () => {
       //////////////////////REGISTRATION API CALL////////////////////////////
 

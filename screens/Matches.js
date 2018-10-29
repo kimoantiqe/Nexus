@@ -53,7 +53,7 @@ export default class Matches extends React.Component {
         headers: {
           'Authorization': userToken
         },
-      }
+      };
       fetch(apiURL + '/user/getpotconn', grabUser)
       .then((response) => response.json())
       .then(
