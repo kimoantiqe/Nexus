@@ -39,7 +39,7 @@ const create = async function(req, res){
 
       if(err){
 
-      	return ReE(res, err, 422);
+	return ReE(res, err, 422);
       }
       return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
   }
@@ -101,17 +101,17 @@ const update = async function(req, res){
 
   [err, user] = await to(user.save());
   if(err){
-  	console.log(err, user);
+	console.log(err, user);
 
-  	if(err.message.includes('E11000')){
-  		if(err.message.includes('email')){
-  			err = 'This email address is already in use';
-  		}else{
-  			err = 'Duplicate Key Entry';
-  		}
-  	}
+	if(err.message.includes('E11000')){
+		if(err.message.includes('email')){
+			err = 'This email address is already in use';
+		}else{
+			err = 'Duplicate Key Entry';
+		}
+	}
 
-  	return ReE(res, err);
+	return ReE(res, err);
   }
   return ReS(res, {message :'Updated User: '+user.email});
 };
