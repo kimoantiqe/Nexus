@@ -6,14 +6,14 @@ const matchingService         = require('./../services/matchingService');
 
 
 let SanatizeUpdateData = function(data){
-    let blacklist = ['membership','role','createdAt','updatedAt','_id','__v'] ;
+	let blacklist = ['membership','role','createdAt','updatedAt','_id','__v'] ;
 
-    for(let i=0 ; i <blacklist.length ; i++){
-        if(data[blacklist[i]]){
-            return true;
-        }
-    }
-    return false;
+	for(let i=0 ; i <blacklist.length ; i++){
+		if(data[blacklist[i]]){
+			return true;
+		}
+	}
+	return false;
 
 };
 
@@ -39,10 +39,10 @@ const create = async function(req, res){
 
       if(err){
 
-        return ReE(res, err, 422);
-       }
-       return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
-    }
+      	return ReE(res, err, 422);
+      }
+      return ReS(res, {message:'Successfully created new user.', user:user.toWeb(), token:user.getJWT()}, 201);
+  }
 };
 
 module.exports.create = create;
@@ -77,46 +77,14 @@ const update = async function(req, res){
 		return ReE(res,"You can't do that",403);
 	}
 
-	//Push into user object
+	//Push into respective field into user object
 	pushIntoUser(user,data.interests);
 	pushIntoUser(user,data.lookingFor);
 	pushIntoUser(user,data.industry);
 	pushIntoUser(user,data.matches);
 	pushIntoUser(user,data.potentialMatches);
-
-
-  if(data.liked){
-    let liked = data.liked;
-    for(let i = 0 ; i < liked.length ; i++){
-      if(user.liked.indexOf(liked[i]) === -1 ){
-        user.liked.push(liked[i]);
-        user.potentialMatches.shift();
-        User.findById(liked[i], function(err, newuser) {
-            if(newuser.liked.map( (user) => user.toString()).includes(user._id.toString())){
-              newuser.matches.push(user._id);
-              user.matches.push(liked[i]);
-              newuser.save();
-              user.save();
-          }
-          else{
-            user.save();
-          }
-      });
-    }
-  }
-}
-
-
-	if(data.disliked){
-		let disliked = data.disliked;
-		for(let i = 0 ; i < disliked.length ; i++){
-			if(user.disliked.indexOf(disliked[i]) === -1 ){
-				user.disliked.push(disliked[i]);
-				user.potentialMatches.shift();
-			}
-		}
-	}
-
+	pushLikes(user, data.liked);
+	pushDislikes(user,data.disliked);
 
 
   //Deleted as they are handeled above
@@ -131,21 +99,21 @@ const update = async function(req, res){
   user.set(data);
 
 
-	[err, user] = await to(user.save());
-	if(err){
-		console.log(err, user);
+  [err, user] = await to(user.save());
+  if(err){
+  	console.log(err, user);
 
-		if(err.message.includes('E11000')){
-			if(err.message.includes('email')){
-				err = 'This email address is already in use';
-			}else{
-				err = 'Duplicate Key Entry';
-			}
-		}
+  	if(err.message.includes('E11000')){
+  		if(err.message.includes('email')){
+  			err = 'This email address is already in use';
+  		}else{
+  			err = 'Duplicate Key Entry';
+  		}
+  	}
 
-		return ReE(res, err);
-	}
-	return ReS(res, {message :'Updated User: '+user.email});
+  	return ReE(res, err);
+  }
+  return ReS(res, {message :'Updated User: '+user.email});
 };
 
 module.exports.update = update;
@@ -153,21 +121,21 @@ module.exports.update = update;
 
 const getuser = async function(req, res){
 
-res.setHeader('Content-Type', 'application/json');
-let user = req.user;
-let err;
-let otheruser;
-let id = req.query.id;
-console.log(id);
-User.findById(id, function(err, newuser) {
-     if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
-      otheruser = newuser;
-      return ReS(res, {user:newuser.toWeb()});
-    }
-    else{
-      return ReE(res, "user not in your matches");
-    }
-});
+	res.setHeader('Content-Type', 'application/json');
+	let user = req.user;
+	let err;
+	let otheruser;
+	let id = req.query.id;
+	console.log(id);
+	User.findById(id, function(err, newuser) {
+		if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
+			otheruser = newuser;
+			return ReS(res, {user:newuser.toWeb()});
+		}
+		else{
+			return ReE(res, "user not in your matches");
+		}
+	});
 };
 
 module.exports.getuser = getuser;
@@ -189,15 +157,15 @@ module.exports.remove = remove;
 
 const setUserImage = async function(req,res){
 
-  let user = req.user;
-  let file = req.file;
-  let err;
-  user.set({image:file.id});
-  [err, user] = await to(user.save());
-  if(err) {
-    return ReE(res, err);
-  }
-  return ReS(res, {message :'Uploaded image for user : '+user.email} , 201);
+	let user = req.user;
+	let file = req.file;
+	let err;
+	user.set({image:file.id});
+	[err, user] = await to(user.save());
+	if(err) {
+		return ReE(res, err);
+	}
+	return ReS(res, {message :'Uploaded image for user : '+user.email} , 201);
 };
 
 module.exports.setUserImage = setUserImage;
@@ -207,6 +175,39 @@ function pushIntoUser(user,field){
 		for(let i = 0 ; i < field.length ; i++){
 			if(user.field.indexOf(field[i]) === -1 ){
 				user.field.push(field[i]);
+			}
+		}
+	}
+}
+
+function pushLikes(user, field){
+	if(field){
+		for(let i = 0 ; i < field.length ; i++){
+			if(user.field.indexOf(field[i]) === -1 ){
+				user.field.push(field[i]);
+				user.potentialMatches.shift();
+				User.findById(field[i], function(err, newuser) {
+					if(newuser.field.map( (user) => user.toString()).includes(user._id.toString())){
+						newuser.matches.push(user._id);
+						user.matches.push(field[i]);
+						newuser.save();
+						user.save();
+					}
+					else{
+						user.save();
+					}
+				});
+			}
+		}
+	}
+}
+
+function pushDislikes (user,field){
+	if(field){
+		for(let i = 0 ; i < field.length ; i++){
+			if(user.field.indexOf(field[i]) === -1 ){
+				user.field.push(field[i]);
+				user.potentialMatches.shift();
 			}
 		}
 	}
