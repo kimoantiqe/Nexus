@@ -10,7 +10,7 @@ import {
   View,
   FlatList,
 } from 'react-native';
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-elements';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
@@ -24,13 +24,13 @@ var lastName = [];
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     
     this.state = {
       lastRefresh: Date(Date.now()).toString(),
-    }
+    };
     
-    this.refreshScreen = this.refreshScreen.bind(this)
+    this.refreshScreen = this.refreshScreen.bind(this);
 
     this.getUserMatches();
   }
@@ -38,8 +38,8 @@ export default class HomeScreen extends React.Component {
   //function that grabs a new user and refreshes the screen to update the
   //parameters.
   refreshScreen() {
-    this.displayMatchOnScreen()
-    this.setState({ lastRefresh: Date(Date.now()).toString() })
+    this.displayMatchOnScreen();
+    this.setState({ lastRefresh: Date(Date.now()).toString() });
   }
 
   static navigationOptions = {
@@ -48,7 +48,7 @@ export default class HomeScreen extends React.Component {
 
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => { 
-    userToken = await AsyncStorage.getItem('userToken');
+    let userToken = await AsyncStorage.getItem('userToken');
 
     console.log("This is get userMatches");
 
@@ -62,25 +62,25 @@ export default class HomeScreen extends React.Component {
       }
       //need to update the get request.
       fetch(apiURL + '/user', matches)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(
-        response => {
-          console.log(response)
+        (response) => {
+          console.log(response);
           if(response.success){
-            console.log(response.user.matches)
-            for(var i = 0; i < response.user.matches.length; i++)
+            console.log(response.user.matches);
+            for(var i = 0; i < response.user.matches.length; i++){
               matchesArray.push(response.user.matches[i]);
-
+            }
               this.refreshScreen();
           }
         }
-      )
+      );
     }
   }
 
   //function to display the matches (fix to display first and last name)
   displayMatchOnScreen () {
-    textToPrint = ""
+    textToPrint = "";
     for(var i = 1; i < matchesArray.length + 1; i++){
       this.displayMatch(matchesArray[i - 1]);
       textToPrint += i + ": " + firstName[i - 1] + " " + lastName[i - 1] + "\n";
@@ -90,6 +90,8 @@ export default class HomeScreen extends React.Component {
   //need to make sure
   displayMatch(userid)  {
 
+    let userToken = await AsyncStorage.getItem('userToken');
+    
     console.log("This is display Match");
 
     if(userToken != null){
@@ -100,10 +102,10 @@ export default class HomeScreen extends React.Component {
         },
       }
       fetch(apiURL + '/user/getuser/?id=' + userid, user)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then( 
-        response => {
-          console.log(response.user.firstName + " " + response.user.lastName + "\n")
+        (response) => {
+          console.log(response.user.firstName + " " + response.user.lastName + "\n");
           firstName.push(response.user.firstName);
           lastName.push(response.user.lastName);
         }

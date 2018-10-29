@@ -31,24 +31,24 @@ export default class Register extends React.Component {
    };
 
    handleUsername = (text) => {
-      this.setState({ username: text })
-   }
+      this.setState({ username: text });
+   };
 
    handlePassword = (text) => {
-      this.setState({ password: text })
-   }
+      this.setState({ password: text });
+   };
 
    handleRepassword = (text) => {
-      this.setState({ repassword: text })
-   }
+      this.setState({ repassword: text });
+   };
 
    handleFirstname = (text) => {
-        this.setState({ firstname: text })
-    }
+        this.setState({ firstname: text });
+    };
 
     handleLastname = (text) => {
-    this.setState({ lastname: text })
-    }
+    this.setState({ lastname: text });
+    };
 
   render() {
 
@@ -143,7 +143,7 @@ export default class Register extends React.Component {
       </View>
       </View>
     );
-  }
+  };
   Register = async () => {
       //////////////////////REGISTRATION API CALL////////////////////////////
 
@@ -186,8 +186,8 @@ export default class Register extends React.Component {
                 var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
                 fetch(apiURL + '/user', settings)
-                .then(response => response.json())
-                .then(response  => 
+                .then((response) => response.json())
+                .then((response)  => 
                     { 
                         if (response.success) 
                         {
@@ -211,7 +211,7 @@ export default class Register extends React.Component {
                     }
 
                 )
-                .catch(error => console.error('Error:', error));
+                .catch((error) => console.error('Error:', error));
 
             } else 
             {
@@ -223,7 +223,7 @@ export default class Register extends React.Component {
   }
 };
 
-}
+};
 
 const styles = StyleSheet.create({
     containter: {

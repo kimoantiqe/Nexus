@@ -41,91 +41,91 @@ export default class RegCompleteProfile extends React.Component {
   }
 
   handleBio = (text) => {
-    this.setState({ bio: text })
+    this.setState({ bio: text });
  }
 
   onPressIA()
   {
-      newtoggle = this.state.toggles;
+      let newtoggle = this.state.toggles;
       newtoggle[0] = !this.state.toggles[0];
-      this.setState({toggles:newtoggle})
+      this.setState({toggles:newtoggle});
   }
 
   onPressIB()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[1] = !this.state.toggles[1];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressIC()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[2] = !this.state.toggles[2];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressID()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[3] = !this.state.toggles[3];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressLA()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[4] = !this.state.toggles[4];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressLB()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[5] = !this.state.toggles[5];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressLC()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[6] = !this.state.toggles[6];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressLD()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[7] = !this.state.toggles[7];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressINA()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[8] = !this.state.toggles[8];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressINB()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[9] = !this.state.toggles[9];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressINC()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[10] = !this.state.toggles[10];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   onPressIND()
   {
-    newtoggle = this.state.toggles;
+    let newtoggle = this.state.toggles;
     newtoggle[11] = !this.state.toggles[11];
-    this.setState({toggles:newtoggle})
+    this.setState({toggles:newtoggle});
   }
 
   render() {
@@ -414,11 +414,11 @@ export default class RegCompleteProfile extends React.Component {
     const userToken = await AsyncStorage.getItem('userToken');
     const first = await AsyncStorage.getItem('firstname');
     const last = await AsyncStorage.getItem('lastname');
-    i = 0;
+    let i = 0;
     const ili = ['IA', 'IB', 'IC', 'ID', 'LA', 'LB', 'LC', 'LD', 'INA', 'INB', 'INC', 'IND'];
-    interest = '[';
-    ind = '[';
-    lf = '[';
+    let interest = '[';
+    let ind = '[';
+    let lf = '[';
 
     for (let index = 0; index < ili.length; index++) 
     {
@@ -489,16 +489,16 @@ export default class RegCompleteProfile extends React.Component {
         var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
         fetch(apiURL + '/user', settings)
-        .then(response => response.json())
-        .then(response => console.log(response))
+        .then((response) => response.json())
+        .then((response) => console.log(response))
         .then(async () => this.populate())
-        .then(this.props.navigation.navigate('Main'))
+        .then(this.props.navigation.navigate('Main'));
 
   }
 
   //Function that is used to populate when the user logs in.
   populate = async () => { 
-    userToken = await AsyncStorage.getItem('userToken');
+    let userToken = await AsyncStorage.getItem('userToken');
 
     console.log(userToken);
 
@@ -511,8 +511,8 @@ export default class RegCompleteProfile extends React.Component {
           'Authorization': userToken,
           'Content-Type': 'application/json'
         },
-      }
-      fetch(apiURL + '/user/popconn', populate)
+      };
+      fetch(apiURL + '/user/popconn', populate);
     }
   }
 

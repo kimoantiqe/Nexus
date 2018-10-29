@@ -38,7 +38,7 @@ export default class CheckAuth extends React.Component {
 
   try {
     let response = await fetch(apiURL + '/user', settings)
-    .then( response => 
+    .then( (response) => 
       {
         this.setState({ response });
         if (response.status === 401)
@@ -47,11 +47,11 @@ export default class CheckAuth extends React.Component {
         } else
         {
           response.json()
-          .then(response => console.log(response));
+          .then((response) => console.log(response));
           this.props.navigation.navigate('Main');
         }
       }
-      )
+      );
   } catch (error) {
     console.error(error);
   }

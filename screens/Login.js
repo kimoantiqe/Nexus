@@ -28,12 +28,12 @@ export default class Login extends React.Component {
    };
 
    handleUsername = (text) => {
-      this.setState({ username: text })
-   }
+      this.setState({ username: text });
+   };
 
    handlePassword = (text) => {
-      this.setState({ password: text })
-   }
+      this.setState({ password: text });
+   };
 
   render() {
 
@@ -125,7 +125,7 @@ export default class Login extends React.Component {
 
   //Function that is used to populate when the user logs in.
   populate = async () => { 
-    userToken = await AsyncStorage.getItem('userToken');
+    let userToken = await AsyncStorage.getItem('userToken');
 
     console.log(userToken);
 
@@ -138,8 +138,8 @@ export default class Login extends React.Component {
           'Authorization': userToken,
           'Content-Type': 'application/json'
         },
-      }
-      fetch(apiURL + '/user/popconn', populate)
+      };
+      fetch(apiURL + '/user/popconn', populate);
     }
   }
   
@@ -161,10 +161,10 @@ export default class Login extends React.Component {
   var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
 fetch(apiURL + '/user/login', settings)
-.then(response => response.json())
+.then((response) => response.json())
 .then( 
 
-  response =>
+  (response) =>
 {
     console.log(response);
 
@@ -196,7 +196,7 @@ fetch(apiURL + '/user/login', settings)
   }
 }
   )
-.catch(error => console.error('Error:', error));
+.catch((error) => console.error('Error:', error));
 
 
 
@@ -258,7 +258,7 @@ const loginAlert = () => {
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
         { cancelable: true }
-    )};
+    );};
 
 const styles1 = StyleSheet.create({
     contaier: {

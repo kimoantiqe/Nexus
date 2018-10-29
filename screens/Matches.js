@@ -12,7 +12,7 @@ import {
   Dimensions,
   StatusBar,
 } from 'react-native';
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-elements';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
@@ -30,13 +30,13 @@ var industry;
 
 export default class Matches extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     
     this.state = {
       lastRefresh: Date(Date.now()).toString(),
-    }
+    };
     
-    this.refreshScreen = this.refreshScreen.bind(this)
+    this.refreshScreen = this.refreshScreen.bind(this);
 
     this.getUser();
   }
@@ -55,9 +55,9 @@ export default class Matches extends React.Component {
         },
       }
       fetch(apiURL + '/user/getpotconn', grabUser)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(
-        response => {
+        (response) => {
           if(response.success){
             console.log(response);
             firstName = response.user.firstName;
@@ -65,12 +65,12 @@ export default class Matches extends React.Component {
             currUserID = response.user.id;
             currUserID = "[\"" + currUserID + "\"]";
             currUserID = JSON.parse(currUserID);
-            console.log(currUserID)
-            console.log(firstName + " " + lastName)
+            console.log(currUserID);
+            console.log(firstName + " " + lastName);
           }
         }
-      ).catch(error => console.error(error)
-      )
+      ).catch((error) => console.error(error)
+      );
     }
   }
 
@@ -92,7 +92,7 @@ export default class Matches extends React.Component {
           })
       }
       fetch(apiURL + '/user', updateUser)
-      .then(async () => this.refreshScreen())
+      .then(async () => this.refreshScreen());
     }
   }
 
@@ -114,7 +114,7 @@ export default class Matches extends React.Component {
           })
       }
       fetch(apiURL + '/user', updateUser)
-      .then(async () => this.refreshScreen())
+      .then(async () => this.refreshScreen());
     }
   }
   
@@ -126,12 +126,12 @@ export default class Matches extends React.Component {
   //parameters.
   refreshScreen() {
     this.getUser();
-    this.setState({ lastRefresh: Date(Date.now()).toString() })
+    this.setState({ lastRefresh: Date(Date.now()).toString() });
   }
 
   //Need to setup to receive data from our database server
   render() {
-    <StatusBar hidden />
+    <StatusBar hidden />;
     return (
       <View style={styles.container}>
           

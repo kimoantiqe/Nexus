@@ -56,7 +56,7 @@ const loginAlert = () => {
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
         { cancelable: true }
-    )};
+    );};
 
 const styles1 = StyleSheet.create({
   contaier: {
