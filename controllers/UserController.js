@@ -184,9 +184,13 @@ function pushLikes(user, field){
 	if(field){
 		for(let i = 0 ; i < field.length ; i++){
 			if(user.field.indexOf(field[i]) === -1 ){
+
+				//if a user liked someone, remove them from the users potentialMatches array
 				user.field.push(field[i]);
 				user.potentialMatches.shift();
 				User.findById(field[i], function(err, newuser) {
+
+					//if they were liked back, handle it as a match
 					if(newuser.field.map( (user) => user.toString()).includes(user._id.toString())){
 						newuser.matches.push(user._id);
 						user.matches.push(field[i]);
