@@ -50,7 +50,7 @@ export default class HomeScreen extends React.Component {
   getUserMatches = async () => { 
     let userToken = await AsyncStorage.getItem('userToken');
 
-    console.log("This is get userMatches");
+    //console.log("This is get userMatches");
 
     if (userToken != null) {
       matchesArray = [];
@@ -65,18 +65,18 @@ export default class HomeScreen extends React.Component {
       .then((response) => response.json())
       .then(
         (response) => {
-          console.log(response);
+         // console.log(response);
           if(response.success){
-            console.log(response.user.matches);
+            //console.log(response.user.matches);
             for(var i = 0; i < response.user.matches.length; i++){
               matchesArray.push(response.user.matches[i]);
             }
               this.refreshScreen();
           }
         }
-      );
-    }
-  }
+      )
+    };
+  };
 
   //function to display the matches (fix to display first and last name)
   displayMatchOnScreen () {
@@ -85,14 +85,14 @@ export default class HomeScreen extends React.Component {
       this.displayMatch(matchesArray[i - 1]);
       textToPrint += i + ": " + firstName[i - 1] + " " + lastName[i - 1] + "\n";
     }
-  }
+  };
 
   //need to make sure
-  displayMatch(userid)  {
+  displayMatch = async (userid) =>  {
 
     let userToken = await AsyncStorage.getItem('userToken');
     
-    console.log("This is display Match");
+    //console.log("This is display Match");
 
     if(userToken != null){
       var user = {
@@ -105,7 +105,7 @@ export default class HomeScreen extends React.Component {
       .then((response) => response.json())
       .then( 
         (response) => {
-          console.log(response.user.firstName + " " + response.user.lastName + "\n");
+          //console.log(response.user.firstName + " " + response.user.lastName + "\n");
           firstName.push(response.user.firstName);
           lastName.push(response.user.lastName);
         }

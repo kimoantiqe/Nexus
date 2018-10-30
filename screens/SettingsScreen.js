@@ -10,9 +10,17 @@ import {
   Image,
    KeyboardAvoidingView, Alert, TextInput,
 } from 'react-native';
-export default class SettingsScreen extends React.Component {
+
+import { connect } from 'react-redux';
+import { NavigationActions, StackActions } from 'react-navigation';
+import { sendbirdLogout, initMenu } from '../actions';
+
+import MainTabNavigator from '../navigation/MainTabNavigator';
+import AppNavigator from '../navigation/AppNavigator';
+
+class SettingsScreen extends React.Component {
   static navigationOptions = {
-    title: 'Settings',
+    header: null
   };
 
   render() {
@@ -28,9 +36,15 @@ export default class SettingsScreen extends React.Component {
       </View>
       );
     }
-  signOut = async () => {
+  
+    signOut = async () => {
     await AsyncStorage.clear();
+    
+    //logout of sendbird.
+    this.props.sendbirdLogout();
+
     this.props.navigation.navigate('Auth');
+
   };
 }
 
@@ -90,3 +104,10 @@ const styles1 = StyleSheet.create({
 
     }
 });
+
+function mapStateToProps({ settings }) {
+    const { isDisconnected } = settings;
+    return { isDisconnected };
+};
+
+export default connect(mapStateToProps, { sendbirdLogout, initMenu })(SettingsScreen);

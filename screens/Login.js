@@ -12,20 +12,32 @@ import {
   Dimensions,
    KeyboardAvoidingView, Alert, TextInput,
 } from 'react-native';
+
 import MainTabNavigator from '../navigation/MainTabNavigator';
 import AppNavigator from '../navigation/AppNavigator';
+
+//import actions for login and sendbird
+import { connect } from 'react-redux';
+import { sendbirdLogin } from '../actions';
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-export default class Login extends React.Component {
+
+class Login extends React.Component {
   static navigationOptions = {
     header: null,
     title: 'Login',
   };
 
-  state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       username: '',
-      password: ''
+      password: '',
+      userid: '',
+      nickname: ''
    };
+  }
 
    handleUsername = (text) => {
       this.setState({ username: text });
@@ -39,8 +51,6 @@ export default class Login extends React.Component {
 
     return (
           <View style = {styles1.contaier} >
-
-
 
               <View style={{ backgroundColor: '#1a2a6c', flex: 0.5, opacity: 1 }} >
 
@@ -127,7 +137,7 @@ export default class Login extends React.Component {
   populate = async () => { 
     let userToken = await AsyncStorage.getItem('userToken');
 
-    console.log(userToken);
+    //console.log(userToken);
 
     var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
 
@@ -145,7 +155,7 @@ export default class Login extends React.Component {
   
   signIn = async () => {
 
-    console.log("yup");
+    //console.log("yup");
 
     var settings = {
   method: 'POST',
@@ -166,13 +176,24 @@ fetch(apiURL + '/user/login', settings)
 
   (response) =>
 {
-    console.log(response);
+    //console.log(response);
 
   if (response.success) {
+    
     AsyncStorage.setItem('userToken', response.token);
     AsyncStorage.setItem('userid', response.user.id);
+    
+    //Store the userid and his name for use by sendbird.
+    this.setState({ nickname: response.user.firstName });
+    this.setState({ userid: response.user.id });
     this.populate();
+
+    //call to sendbird action to add the user to sendbird 
+    const { userid, nickname } = this.state;
+    this.props.sendbirdLogin({ userId: userid, nickname: nickname });
+
     this.props.navigation.navigate('Main');
+  
   } else {
 
     switch (response.error) 
@@ -324,3 +345,12 @@ const styles1 = StyleSheet.create({
 
     }
 });
+
+function mapStateToProps({ login }) {
+  const { error, user } = login;
+  return { error, user };
+};
+
+//Added this line to export the screen and connect to sendbird database at
+//the same time.
+export default connect(mapStateToProps, { sendbirdLogin })(Login);
