@@ -5,14 +5,18 @@ const { to, ReE, ReS }        = require('./util');
 
 
 
-
+//gets 1 potential connection for a user
 const getpotconn = async function(req, res){
 	res.setHeader('Content-Type', 'application/json');
 	let user = req.user;
   let Connection;
   console.log(user.potentialMatches);
+
+	//gets the first id in the users potential matches array
   let potcon = user.potentialMatches[0];
   console.log(user.potentialMatches);
+
+	//gets the user associated with that id
   User.findById(potcon, function(err, newuser) {
       if(err) {
 				return ReE(res, err, 422);
@@ -23,7 +27,7 @@ const getpotconn = async function(req, res){
 module.exports.getpotconn = getpotconn;
 
 
-
+//populates the potential matches array for a user
 const popconns = async function(req, res){
   res.setHeader('Content-Type', 'application/json');
 	var user = req.user;
@@ -33,6 +37,7 @@ const popconns = async function(req, res){
 
 let results=[];
 
+	//sorts all users in the database according to their score
   User.find({}, function(err, users) {
     var results =[];
     users.forEach( function(otheruser) {
@@ -45,6 +50,7 @@ let results=[];
            let otindustry = otheruser.industry;
 
 
+					 //calculate score
            for(let i=0; i<OGinterests.length ; i++ ){
              if(otinterests.includes(OGinterests[i])){
                score+=2;
@@ -68,11 +74,13 @@ let results=[];
 	results.push(userOb);
 	}
     });
-
+		//sort based on score
     var potentialMatches = [];
     results.sort(function(a,b){
       return b.score-a.score;
     });
+
+		//store in the users potential matches array
     for(let x=0; x<results.length; x++){
       potentialMatches.push(results[x].id);
     }
