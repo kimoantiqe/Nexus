@@ -80,7 +80,6 @@ module.exports.getImageSuccess = (done,chai,server) => {
             .get('/api/user/image')
 						.set('Authorization',dummyUser.token)
             .end((err, res) => {
-									console.log(res.body);
                   res.should.have.status(200);
                   res.body.should.be.a('Uint8Array');
               done();
