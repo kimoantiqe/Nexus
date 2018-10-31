@@ -78,11 +78,11 @@ const update = async function(req, res){
 	}
 
 	//Push into respective field into user object
-	pushIntoUser(user,data.interests);
-	pushIntoUser(user,data.lookingFor);
-	pushIntoUser(user,data.industry);
-	pushIntoUser(user,data.matches);
-	pushIntoUser(user,data.potentialMatches);
+	pushIntoUser(user,data.interests,'interests');
+	pushIntoUser(user,data.lookingFor,'lookingFor');
+	pushIntoUser(user,data.industry,'industry');
+	pushIntoUser(user,data.matches,'matches');
+	pushIntoUser(user,data.potentialMatches,'potentialMatches');
 	pushLikes(user, data.liked);
 	pushDislikes(user,data.disliked);
 
@@ -101,17 +101,18 @@ const update = async function(req, res){
 
   [err, user] = await to(user.save());
   if(err){
-	console.log(err, user);
 
 	if(err.message.includes('E11000')){
 		if(err.message.includes('email')){
 			err = 'This email address is already in use';
-		}else{
-			err = 'Duplicate Key Entry';
 		}
+
+		//else{ Add this to handle other duplicate entries
+			//err = 'Duplicate Key Entry';
+		//}
 	}
 
-	return ReE(res, err);
+	return ReE(res, err , 400);
   }
   return ReS(res, {message :'Updated User: '+user.email});
 };
@@ -170,11 +171,11 @@ const setUserImage = async function(req,res){
 
 module.exports.setUserImage = setUserImage;
 
-function pushIntoUser(user,field){
+function pushIntoUser(user,field,fieldType){
 	if(field){
 		for(let i = 0 ; i < field.length ; i++){
-			if(user.field.indexOf(field[i]) === -1 ){
-				user.field.push(field[i]);
+			if(user[fieldType].indexOf(field[i]) === -1 ){
+				user[fieldType].push(field[i]);
 			}
 		}
 	}
@@ -183,11 +184,11 @@ function pushIntoUser(user,field){
 function pushLikes(user, field){
 	if(field){
 		for(let i = 0 ; i < field.length ; i++){
-			if(user.field.indexOf(field[i]) === -1 ){
-				user.field.push(field[i]);
+			if(user.liked.indexOf(field[i]) === -1 ){
+				user.liked.push(field[i]);
 				user.potentialMatches.shift();
 				User.findById(field[i], function(err, newuser) {
-					if(newuser.field.map( (user) => user.toString()).includes(user._id.toString())){
+					if(newuser.liked.map( (user) => user.toString()).includes(user._id.toString())){
 						newuser.matches.push(user._id);
 						user.matches.push(field[i]);
 						newuser.save();
@@ -205,8 +206,8 @@ function pushLikes(user, field){
 function pushDislikes (user,field){
 	if(field){
 		for(let i = 0 ; i < field.length ; i++){
-			if(user.field.indexOf(field[i]) === -1 ){
-				user.field.push(field[i]);
+			if(user.disliked.indexOf(field[i]) === -1 ){
+				user.disliked.push(field[i]);
 				user.potentialMatches.shift();
 			}
 		}

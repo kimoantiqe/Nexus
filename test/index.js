@@ -1,6 +1,7 @@
 const chai        = require('chai');
 const landing      = require('./landing.test');
 const user      = require('./user.test');
+const image      = require('./image.test');
 const chaiHttp = require('chai-http');
 const server =  require('../');
 
@@ -44,11 +45,19 @@ describe('Nexus API test', () => {
   });
 
   describe('/POST /api/user', () => {
-      it('it should register new user', (done) => user.registerSuccess(done,chai,server));
+      it('it should register new user 1', (done) => user.registerSuccess(done,chai,server));
+  });
+
+  describe('/POST /api/user', () => {
+      it('it should register new user 2', (done) => user.registerSuccess2(done,chai,server));
   });
 
   describe('/POST /api/user/login', () => {
-      it('it should login the just registered user', (done) => user.loginSuccess(done,chai,server));
+      it('it should login the just registered user 1', (done) => user.loginSuccess(done,chai,server));
+  });
+
+  describe('/POST /api/user/login', () => {
+      it('it should login the just registered user 2', (done) => user.loginSuccess2(done,chai,server));
   });
 
   describe('/GET /api/user', () => {
@@ -59,12 +68,52 @@ describe('Nexus API test', () => {
       it('it should fail : inccorect token ', (done) => user.getFail1(done,chai,server));
   });
 
+  describe('/PUT /api/user', () => {
+      it('it should update the user ', (done) => user.putSuccess(done,chai,server));
+  });
+
+  describe('/PUT /api/user', () => {
+      it('it should fail : blacklisted property entered ', (done) => user.putFail1(done,chai,server));
+  });
+
+  describe('/PUT /api/user', () => {
+      it('it should fail : email alreadt exists', (done) => user.putFail2(done,chai,server));
+  });
+
   describe('/DELETE /api/user', () => {
-      it('it should delete registered user', (done) => user.deleteSuccess(done,chai,server));
+      it('it should delete registered user 1', (done) => user.deleteSuccess(done,chai,server));
+  });
+
+  describe('/DELETE /api/user', () => {
+      it('it should delete registered user 2', (done) => user.deleteSuccess2(done,chai,server));
   });
 
   describe('/DELETE /api/user', () => {
       it('it should fail : inccorect token', (done) => user.deletefail1(done,chai,server));
+  });
+
+  describe('/POST /api/user', () => {
+      it('it should register a new user', (done) => image.registerSuccess(done,chai,server));
+  });
+
+  describe('/POST /api/user/login', () => {
+      it('it should login new user', (done) => image.loginSuccess(done,chai,server));
+  });
+
+  describe('/POST /api/user/image', () => {
+      it('it should upload image to user', (done) => image.uploadImageSuccess(done,chai,server));
+  });
+
+  describe('/PUT /api/user/image', () => {
+      it('it should update user image', (done) => image.changeImageSuccess(done,chai,server));
+  });
+
+  describe('/GET /api/user/image', () => {
+      it('it should get user image', (done) => image.getImageSuccess(done,chai,server));
+  });
+
+  describe('/DELETE /api/user', () => {
+      it('it should delete registered user', (done) => image.deleteSuccess(done,chai,server));
   });
 
 });

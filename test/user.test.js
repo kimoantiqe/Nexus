@@ -76,9 +76,15 @@ module.exports.loginFail4 = (done,chai,server) => {
 
 };
 
-var emailCreated = "test543aawfawfaf21awfawfaafafawf@12345test.com";
+//Dummy user 1
+var emailCreated = "test543aawfawfaf21awfawfaafafawf"+Date.now()+"@12345test.com";
 var passwordCreated = "test123";
 var dummyUser = {};
+
+//Dummy user 2
+var emailCreated2 = "test543awf123"+Date.now()+"@12345test.com";
+var passwordCreated2 = "test123";
+var dummyUser2 = {};
 
 //Test missing email in register
 module.exports.registerFail1 = (done,chai,server) => {
@@ -156,11 +162,28 @@ module.exports.registerSuccess = (done,chai,server) => {
             });
 };
 
+module.exports.registerSuccess2 = (done,chai,server) => {
+		let register = {
+              email: emailCreated2,
+              password: passwordCreated2,
+        };
+        chai.request(server)
+            .post('/api/user')
+            .set('Content-Type', 'application/json')
+            .send(register)
+            .end((err, res) => {
+                  res.should.have.status(201);
+                  res.body.should.be.a('object');
+                  res.body.should.have.property('success').eql(true);
+              done();
+            });
+};
+
 //Test login user
 module.exports.loginSuccess = (done,chai,server) => {
 		let register = {
               email: emailCreated,
-              password: passwordCreated,
+              password: passwordCreated
         };
         chai.request(server)
             .post('/api/user/login')
@@ -175,7 +198,73 @@ module.exports.loginSuccess = (done,chai,server) => {
             });
 };
 
+module.exports.loginSuccess2 = (done,chai,server) => {
+		let register = {
+              email: emailCreated2,
+              password: passwordCreated2
+        };
+        chai.request(server)
+            .post('/api/user/login')
+            .set('Content-Type', 'application/json')
+            .send(register)
+            .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.should.be.a('object');
+                  res.body.should.have.property('success').eql(true);
+                  dummyUser2 = res.body;
+              done();
+            });
+};
+//Test put user
+module.exports.putSuccess = (done,chai,server) => {
+		let newDetails = {
+              firstName: 'DummyNewName',
+							interests : ['IA']
+        };
+        chai.request(server)
+            .put('/api/user')
+            .set('Content-Type', 'application/json')
+						.set('Authorization',dummyUser.token)
+            .send(newDetails)
+            .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.should.be.a('object');
+                  res.body.should.have.property('success').eql(true);
+              done();
+            });
+};
+//Test fail put user (blacklist input)
+module.exports.putFail1 = (done,chai,server) => {
+		let newDetails = {
+              firstName: 'DummyNewName',
+							_id: 'blahblahblah'
+        };
+        chai.request(server)
+            .put('/api/user')
+            .set('Content-Type', 'application/json')
+						.set('Authorization',dummyUser.token)
+            .send(newDetails)
+            .end((err, res) => {
+                  res.should.have.status(403); //unauthorized
+              done();
+            });
+};
 
+//Test email already exists
+module.exports.putFail2 = (done,chai,server) => {
+		let newDetails = {
+              email : emailCreated2
+        };
+        chai.request(server)
+            .put('/api/user')
+            .set('Content-Type', 'application/json')
+						.set('Authorization',dummyUser.token)
+            .send(newDetails)
+            .end((err, res) => {
+                  res.should.have.status(400); //unauthorized
+              done();
+            });
+};
 
 //Test get user
 module.exports.getSuccess = (done,chai,server) => {
@@ -219,6 +308,18 @@ module.exports.deleteSuccess = (done,chai,server) => {
             });
 };
 
+//Test delete user
+module.exports.deleteSuccess2 = (done,chai,server) => {
+
+        chai.request(server)
+            .delete('/api/user')
+            .set('Content-Type', 'application/json')
+            .set('Authorization',dummyUser2.token)
+            .end((err, res) => {
+                  res.should.have.status(204);
+              done();
+            });
+};
 //Test delete user fail due to inccorect token
 module.exports.deletefail1 = (done,chai,server) => {
 
