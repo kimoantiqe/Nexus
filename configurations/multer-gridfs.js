@@ -4,6 +4,7 @@ const dbConfig      = require("../configurations/db.js");
 
 const storage = require("multer-gridfs-storage")({
     url: dbConfig.url,
+    options: { useNewUrlParser: true } ,
     file: (req, file) => {
 
         return {
