@@ -7,10 +7,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "jest"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "verbose": true
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
@@ -25,6 +26,13 @@
     "sendbird": "^3.0.84"
   },
   "devDependencies": {
-    "jest-expo": "30.0.0"
+    "enzyme": "^3.7.0",
+    "eslint": "^5.8.0",
+    "eslint-config-rmotr": "0.0.8",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
+    "jest-expo": "30.0.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.6.0"
   }
 }
