@@ -39,8 +39,8 @@ export default class Splash extends React.Component {
       <View style={styles1.container}>
         <View style={{ flex: 0.5, opacity: 1 }}>
           <LinearGradient
-            colors={["#16131d", "#734b6d"]}
-            locations={[0.0, height * 0.0095]}
+            colors={["#000000", "#734b6d"]}
+            locations={[0.0, height * 0.495]}
             style={{
               position: "absolute",
               left: 0,
@@ -50,12 +50,26 @@ export default class Splash extends React.Component {
             }}
           />
 
-          <View style={styles1.cloudcon}>
+          <View style={styles1.starcon}>
             <Image
-              style={styles1.cloud}
-              source={require("../images/cloud3.png")}
+              style={styles1.star}
+              source={require("../images/stars4.png")}
             />
           </View>
+
+          <View style={styles1.starcon}>
+            <Image
+              style={styles1.star2}
+              source={require("../images/stars4.png")}
+            />
+          </View>
+          <View style={styles1.starcon}>
+            <Image
+              style={styles1.star3}
+              source={require("../images/stars4.png")}
+            />
+          </View>
+
 
           <View style={styles1.cloudcon}>
             <Image
@@ -63,9 +77,16 @@ export default class Splash extends React.Component {
               source={require("../images/cloud3.png")}
             />
           </View>
+
           <View style={styles1.cloudcon}>
             <Image
-              style={styles1.cloud3}
+              style={styles1.cloud4}
+              source={require("../images/cloud3.png")}
+            />
+          </View>
+          <View style={styles1.cloudcon}>
+            <Image
+              style={styles1.cloud5}
               source={require("../images/cloud3.png")}
             />
           </View>
@@ -152,27 +173,76 @@ const styles1 = StyleSheet.create({
     width: width * 0.2,
     height: height * 0.1
   },
+  starcon: {
+    position: "absolute",
+    left:0,
+    top:0,
+    bottom:0,
+    right:0,
+    backgroundColor: 'rgba(0,0,0,.6)'
+  },
+  star: {
+    opacity: 0,
+    width: height,
+    height: width,
+    transform: [{ rotate: '90deg'}],
+    //resizeMode: "contain"
+  },
+  star2: {
+    opacity: 0.35,
+    width: height,
+    height: width*0.8,
+    left:0,
+    //resizeMode: "contain"
+  },
+  star3: {
+    opacity: 0.14,
+    width: height*0.6,
+    height: width*1.1,
+    left:0,
+    marginTop:height*0.5,
+    marginRight:0,
+    right:0,
+    transform: [{ rotate: '180deg'}],
+    //resizeMode: "contain"
+  },
   cloud: {
     marginTop: height * 0.05,
-    opacity: 0.04,
+    opacity: 0.08,
     width: width * 0.4,
     height: height * 1.2,
     resizeMode: "contain"
   },
   cloud2: {
-    marginTop: height * 0.17,
-    marginRight: width * 0.4,
-    opacity: 0.04,
-    width: width * 0.7,
-    height: height * 0.07,
+    marginTop: height * 0.1,
+    marginRight: width * 1.1,
+    opacity: 0.08,
+    width: width * 0.4,
+    height: height * 0.12,
     resizeMode: "contain"
   },
   cloud3: {
     marginTop: height * 0.46,
     marginLeft: width * 0.3,
-    opacity: 0.03,
+    opacity: 0.08,
     width: width * 1.2,
     height: height * 0.13,
+    resizeMode: "contain"
+  },
+  cloud4: {
+    marginTop: height * 0.2,
+    marginLeft: width * 0.2,
+    opacity: 0.08,
+    width: width * 1.2,
+    height: height * 0.13,
+    resizeMode: "contain"
+  },
+  cloud5: {
+    marginTop: height * 0.35,
+    marginLeft: 0,
+    opacity: 0.08,
+    width: width * 0.45,
+    height: height * 0.3,
     resizeMode: "contain"
   }
 });
