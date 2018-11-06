@@ -25,7 +25,7 @@ export default class RegCompleteProfile extends React.Component {
 
   state = {
       toggles:[
-      false, 
+      false,
      false,
      false,
        false,
@@ -162,10 +162,10 @@ export default class RegCompleteProfile extends React.Component {
                 style = {styles1.cloud3}
                 source ={require('../images/cloud3.png')} />
             </View>
-    
-       
-            
-            
+
+
+
+
 
             <View style = {{flex:0.7}}>
                     <View style = {styles.containter}>
@@ -173,7 +173,7 @@ export default class RegCompleteProfile extends React.Component {
                     <Text style = {styles.input}>Please Choose your interest:</Text>
                         <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true}>
                                 <View style = {{ flexDirection: 'row',  }}>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressIA()}
                                             style = {{
                                                 backgroundColor: toggles[0]? 'fuchsia' : '#00ffff',
@@ -190,7 +190,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Interest A</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressIB()}
                                             style = {{
                                                 backgroundColor: toggles[1]? 'fuchsia' : '#00ffff',
@@ -207,7 +207,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Interest B</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressIC()}
                                             style = {{
                                                 backgroundColor: toggles[2]? 'fuchsia' : '#00ffff',
@@ -224,7 +224,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Interest C</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressID()}
                                             style = {{
                                                 backgroundColor: toggles[3]? 'fuchsia' : '#00ffff',
@@ -246,7 +246,7 @@ export default class RegCompleteProfile extends React.Component {
                                 <Text style = {styles.input}>Please Choose what you're looking for:</Text>
                         <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true}>
                                 <View style = {{ flexDirection: 'row',  }}>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressLA()}
                                             style = {{
                                                 backgroundColor: toggles[4]? 'fuchsia' : '#00ffff',
@@ -263,7 +263,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Looking for A</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressLB()}
                                             style = {{
                                                 backgroundColor: toggles[5]? 'fuchsia' : '#00ffff',
@@ -280,7 +280,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Looking for B</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressLC()}
                                             style = {{
                                                 backgroundColor: toggles[6]? 'fuchsia' : '#00ffff',
@@ -297,7 +297,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Looking for C</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressLD()}
                                             style = {{
                                                 backgroundColor: toggles[7]? 'fuchsia' : '#00ffff',
@@ -319,7 +319,7 @@ export default class RegCompleteProfile extends React.Component {
                                 <Text style = {styles.input}>Please Choose your industry:</Text>
                         <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true}>
                                 <View style = {{ flexDirection: 'row',  }}>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressINA()}
                                             style = {{
                                                 backgroundColor: toggles[8]? 'fuchsia' : '#00ffff',
@@ -336,7 +336,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Industry A</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressINB()}
                                             style = {{
                                                 backgroundColor: toggles[9]? 'fuchsia' : '#00ffff',
@@ -353,7 +353,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Industry B</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressINC()}
                                             style = {{
                                                 backgroundColor: toggles[10]? 'fuchsia' : '#00ffff',
@@ -370,7 +370,7 @@ export default class RegCompleteProfile extends React.Component {
                                             }}>
                                             <Text style = {{color: 'white', fontWeight: '700'}}>Industry C</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity 
+                                        <TouchableOpacity
                                             onPress = {() => this.onPressIND()}
                                             style = {{
                                                 backgroundColor: toggles[11]? 'fuchsia' : '#00ffff',
@@ -389,7 +389,7 @@ export default class RegCompleteProfile extends React.Component {
                                         </TouchableOpacity>
                                     </View>
                                 </ScrollView>
-                                
+
                                 <Text style = {styles.input}>Please enter a brief Bio:</Text>
                                 <TextInput
                                     style = {styles.input1}
@@ -420,39 +420,39 @@ export default class RegCompleteProfile extends React.Component {
     let ind = '[';
     let lf = '[';
 
-    for (let index = 0; index < ili.length; index++) 
+    for (let index = 0; index < ili.length; index++)
     {
-        if (index < 4) 
+        if (index < 4)
         {
-            if (this.state.toggles[index]) 
+            if (this.state.toggles[index])
             {
                 interest += (i? ',': '') + "\"" + ili[index] + "\"";
                 i = 1;
             }
         } else
         {
-        if (index === 4) 
+        if (index === 4)
         {
             i = 0;
             interest += "]";
         }
-        if (index < 8) 
+        if (index < 8)
         {
-            if (this.state.toggles[index]) 
+            if (this.state.toggles[index])
             {
                 lf += (i? ',': '') + "\"" + ili[index] + "\"";
                 i = 1;
             }
         } else
         {
-        if (index === 8) 
+        if (index === 8)
         {
             i = 0;
             lf += "]";
         }
-        if (index < 12) 
+        if (index < 12)
         {
-            if (this.state.toggles[index]) 
+            if (this.state.toggles[index])
             {
                 ind += (i? ',': '') + "\"" + ili[index] + "\"";
                 i = 1;
@@ -486,7 +486,7 @@ export default class RegCompleteProfile extends React.Component {
 
         console.log(settings);
 
-        var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+        var apiURL = 'http://localhost:1337/api';
 
         fetch(apiURL + '/user', settings)
         .then((response) => response.json())
@@ -497,7 +497,7 @@ export default class RegCompleteProfile extends React.Component {
   }
 
   //Function that is used to populate when the user logs in.
-  populate = async () => { 
+  populate = async () => {
     let userToken = await AsyncStorage.getItem('userToken');
 
     console.log(userToken);

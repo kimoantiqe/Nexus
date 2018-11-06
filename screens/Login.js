@@ -219,7 +219,7 @@ class Login extends React.Component {
 
     //console.log(userToken);
 
-    var apiURL = "https://nexus-restapi.azurewebsites.net/api";
+    var apiURL = "http://localhost:1337/api";
 
     if (userToken != null) {
       var populate = {
@@ -247,13 +247,11 @@ class Login extends React.Component {
       })
     };
 
-    var apiURL = "https://nexus-restapi.azurewebsites.net/api";
+    var apiURL = "http://localhost:1337/api";
 
     fetch(apiURL + "/user/login", settings)
       .then(response => response.json())
       .then(response => {
-        //console.log(response);
-
         if (response.success) {
           AsyncStorage.setItem("userToken", response.token);
           AsyncStorage.setItem("userid", response.user.id);

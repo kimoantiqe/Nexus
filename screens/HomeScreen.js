@@ -15,7 +15,7 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
-var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+var apiURL = 'http://localhost:1337/api';
 
 var matchesArray = [];
 var textToPrint;
@@ -25,16 +25,16 @@ var lastName = [];
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       lastRefresh: Date(Date.now()).toString(),
     };
-    
+
     this.refreshScreen = this.refreshScreen.bind(this);
 
     this.getUserMatches();
   }
-  
+
   //function that grabs a new user and refreshes the screen to update the
   //parameters.
   refreshScreen() {
@@ -47,7 +47,7 @@ export default class HomeScreen extends React.Component {
   };
 
   //Function to get the matches array and store it for use afterwards.
-  getUserMatches = async () => { 
+  getUserMatches = async () => {
     let userToken = await AsyncStorage.getItem('userToken');
 
     //console.log("This is get userMatches");
@@ -91,7 +91,7 @@ export default class HomeScreen extends React.Component {
   displayMatch = async (userid) =>  {
 
     let userToken = await AsyncStorage.getItem('userToken');
-    
+
     //console.log("This is display Match");
 
     if(userToken != null){
@@ -103,7 +103,7 @@ export default class HomeScreen extends React.Component {
       }
       fetch(apiURL + '/user/getuser/?id=' + userid, user)
       .then((response) => response.json())
-      .then( 
+      .then(
         (response) => {
           //console.log(response.user.firstName + " " + response.user.lastName + "\n");
           firstName.push(response.user.firstName);

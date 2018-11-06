@@ -1,25 +1,14 @@
-import React from 'react';
-import {
-  ActivityIndicator,
+import React, { Component }  from 'react';
+import { Image,   ActivityIndicator,
   AsyncStorage,
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-  StatusBar,
-} from 'react-native';
-import { Button } from 'react-native-elements';
+  StatusBar} from 'react-native';
+import { Container, Button, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Right,  Body, Icon } from 'native-base';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
 var userToken;
-var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
-
+var apiURL = 'http://localhost:1337/api';
 
 var currUserID;
 var firstName;
@@ -28,57 +17,61 @@ var bio;
 var interests;
 var industry;
 
+var cards = [{
+  "firstName": "Anas" ,
+  "lastName": "Desouky"
+}];
+
 export default class Matches extends React.Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       lastRefresh: Date(Date.now()).toString(),
     };
-    
-    this.refreshScreen = this.refreshScreen.bind(this);
-
     this.getUser();
   }
 
+  componentWillMount(){
+    this.getUser;
+  }
+
   //Function that grabs a user from the database.
-  getUser = async () => { 
+  getUser = async () => {
     userToken = await AsyncStorage.getItem('userToken');
 
-    console.log("This is get user");
-
     if (userToken != null) {
+
       var grabUser = {
         method: 'GET',
         headers: {
           'Authorization': userToken
         },
       };
+
       fetch(apiURL + '/user/getpotconn', grabUser)
       .then((response) => response.json())
       .then(
         (response) => {
           if(response.success){
-            console.log(response);
-            firstName = response.user.firstName;
-            lastName = response.user.lastName;
-            currUserID = response.user.id;
-            currUserID = "[\"" + currUserID + "\"]";
-            currUserID = JSON.parse(currUserID);
-            console.log(currUserID);
-            console.log(firstName + " " + lastName);
+            //console.log(response.array);
+            var array = JSON.parse(response.array);
+            console.log(array.length);
+            for(let i=0; i< array.length; i++){
+              cards.push(array[i]);
+              //console.log(cards[4]);
+            }
           }
         }
       ).catch((error) => console.error(error)
       );
     }
-  }
+  };
 
   //Function that is used to report a like to the server
-  likedUser = async () => { 
+  likedUser = async (currUserID) => {
     userToken = await AsyncStorage.getItem('userToken');
 
-    console.log("This is liked user");
+    console.log("This is liked user " + currUserID);
 
     if (userToken != null) {
       var updateUser = {
@@ -88,21 +81,22 @@ export default class Matches extends React.Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          'liked' : currUserID
+          'liked' : [currUserID]
           })
       }
       fetch(apiURL + '/user', updateUser)
-      .then(async () => this.refreshScreen());
     }
   }
 
   //Function that is used to report a dislike to the server
-  dislikedUser = async () => { 
+   dislikedUser = async (currUserID) => {
+
     userToken = await AsyncStorage.getItem('userToken');
 
-    console.log("This is disliked user");
+    console.log("This is disliked user" + currUserID);
 
     if (userToken != null) {
+      console.log("This is disliked user" + currUserID);
       var updateUser = {
         method: 'PUT',
         headers: {
@@ -110,141 +104,76 @@ export default class Matches extends React.Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          'disliked' : currUserID
+          'disliked' : [currUserID]
           })
       }
       fetch(apiURL + '/user', updateUser)
-      .then(async () => this.refreshScreen());
     }
   }
-  
+
   static navigationOptions = {
     header: null,
   };
 
-  //function that grabs a new user and refreshes the screen to update the
-  //parameters.
-  refreshScreen() {
-    this.getUser();
-    this.setState({ lastRefresh: Date(Date.now()).toString() });
-  }
 
   //Need to setup to receive data from our database server
   render() {
-    <StatusBar hidden />;
-    return (
-      <View style={styles.container}>
-          
-          //This is the profile image container
-          <View style={styles.profilePicContainer}>
-            <Image source={require("./../images/d3rs.jpg")}
-            style = {styles.profilePic}
-            resizeMode = "contain"
-            />
-          </View>
-          
-          //This is the bio box container (need to update)
-          <View style={styles.bioTextContainer}>
-            <Text style = {styles.bioText}>Bio</Text>
-            <Text style = {styles.bioText}>{firstName + " " + lastName}</Text>
-          </View>
-          
-          //This is the dislike button 
-          <View style={styles.buttonCloseContainer}>
-            <TouchableOpacity 
-            style = {styles.buttonClose}
-            onPress = {this.dislikedUser}>
-            <Image source={require("./../images/2.png")}
-            style = {styles.image}
-            resizeMode = "contain"
-            />
-            </TouchableOpacity>
-          </View>
-          
-          //This is the like button 
-          <View style={styles.buttonThumbsContainer}>
-            <TouchableOpacity 
-            style = {styles.buttonThumbs}
-            onPress = {this.likedUser}>
-            <Image 
-            source={require("./../images/thumbs.png")} 
-            style = {styles.image}
-            resizeMode = "contain"
-            />
-            </TouchableOpacity>
-          
-          </View>
+  return (
+    <Container>
+      <Header />
+      <View>
+        <DeckSwiper
+          ref={(c) => this._deckSwiper = c}
+          dataSource={cards}
+          onSwipeLeft ={item=> this.likedUser(item._id)}
+          onSwiperRight = {item => {
+            this.dislikedUser(item._id);
+            this.getUser;
+          }}
+          renderEmpty={() =>{
+            this.getUser;
+            return
+            {
+              <View style={{ alignSelf: "center" }}>
+                <Text>Over</Text>
+              </View>
+            }
+          }
+
+          }
+          renderItem={item =>
+            <Card style={{ elevation: 10 }}>
+              <CardItem>
+                <Left>
+                  <Thumbnail source={require("./../images/d3rs.jpg")} />
+                  <Body>
+                    <Text>{item.firstName + " " + item.lastName}</Text>
+                    <Text note>NativeBase</Text>
+                  </Body>
+                </Left>
+              </CardItem>
+              <CardItem cardBody>
+                <Image style={{ height: 300, flex: 1 }} source={require("./../images/d3rs.jpg")} />
+              </CardItem>
+              <CardItem>
+                <Icon name="heart" style={{ color: '#ED4A6A' }} />
+              <Text>{item.firstName + " " + item.lastName}</Text>
+              </CardItem>
+            </Card>
+          }
+        />
       </View>
-    );
-  }
+      <View style={{ flexDirection: "row", flex: 1, position: "absolute", bottom: 50, left: 0, right: 0, justifyContent: 'space-between', padding: 15 }}>
+        <Button iconLeft onPress={() => this._deckSwiper._root.swipeLeft()}>
+          <Icon name="arrow-back" />
+          <Text>Swipe Left</Text>
+        </Button>
+        <Button iconRight onPress={() => this._deckSwiper._root.swipeRight()}>
+          <Icon name="arrow-forward" />
+          <Text>Swipe Right</Text>
+        </Button>
+      </View>
+    </Container>
+);
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f1f2f8',
-  },
-
-  image:{
-    height: 40,
-    width: 40,
-  },
-
-  buttonClose: {
-    backgroundColor: 'rgba(224, 82, 87, 1)',
-    borderRadius: 50,
-    padding: 10,
-    marginBottom: 60,
-    alignItems: 'center',
-  },
-
-  buttonThumbs: {
-    backgroundColor: 'rgba(111, 122, 213, 1)',
-    borderRadius: 100,
-    padding: 10,
-    marginBottom: 60,
-    alignItems: 'center',
-  },
-
-  buttonCloseContainer: {
-    width: 130,
-    height: 5,
-    position: 'absolute',
-    left: 35,
-    bottom: 100
-  },
-
-  buttonThumbsContainer: {
-    width: 130,
-    height: 5,
-    position: 'absolute',
-    right: 35,
-    bottom: 100
-  },
-
-  profilePicContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap'
-  },
-
-  profilePic: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').width,
-  },
-
-  bioTextContainer: {
-    backgroundColor: '#ffffff',
-    width: (Dimensions.get('window').width)/2 + 100,
-    alignSelf: 'center',
-    position: 'absolute',
-    padding: 20,
-    top: Dimensions.get('window').width - 50,
-  },
-
-  bioText: {
-    alignSelf: 'center',
-    marginBottom: 10,
-  },
-
-});
+}

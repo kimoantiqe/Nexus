@@ -148,28 +148,28 @@ export default class Register extends React.Component {
       //////////////////////REGISTRATION API CALL////////////////////////////
 
 
-    if (this.state.firstname == "") 
+    if (this.state.firstname == "")
     {
         alert("Please enter your name to register");
     } else
     {
-        if (this.state.lastname == "") 
+        if (this.state.lastname == "")
         {
             alert("Please enter your last name to register");
         } else
         {
-    if (this.state.username == "") 
+    if (this.state.username == "")
     {
         alert("Please enter an email to register");
-    } else 
+    } else
     {
-        if (this.state.password == "") 
-        {   
-            alert("Please enter an password to register");
-        } else 
+        if (this.state.password == "")
         {
-        
-            if (this.state.password == this.state.repassword) 
+            alert("Please enter an password to register");
+        } else
+        {
+
+            if (this.state.password == this.state.repassword)
             {
 
                 var settings = {
@@ -183,19 +183,19 @@ export default class Register extends React.Component {
                 })
                 };
 
-                var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+                var apiURL = 'http://localhost:1337/api';
 
                 fetch(apiURL + '/user', settings)
                 .then((response) => response.json())
-                .then((response)  => 
-                    { 
-                        if (response.success) 
+                .then((response)  =>
+                    {
+                        if (response.success)
                         {
                             AsyncStorage.setItem('userToken', response.token);
                             AsyncStorage.setItem('firstname', this.state.firstname);
                             AsyncStorage.setItem('lastname', this.state.lastname);
                             this.props.navigation.navigate('RCP');
-                        } else 
+                        } else
                         {
                             switch (response.error) {
                                 case "A valid email was not entered.":
@@ -205,15 +205,15 @@ export default class Register extends React.Component {
                                     alert("User already exists with that email");
                                 break;
                             }
-          
+
                         }
-    
+
                     }
 
                 )
                 .catch((error) => console.error('Error:', error));
 
-            } else 
+            } else
             {
                 alert("Passwords do not match!\nPlease try again.");
             }

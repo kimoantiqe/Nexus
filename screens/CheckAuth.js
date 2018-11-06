@@ -34,11 +34,11 @@ export default class CheckAuth extends React.Component {
   }
   };
 
-  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+  var apiURL = 'http://localhost:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)
-    .then( (response) => 
+    .then( (response) =>
       {
         this.setState({ response });
         if (response.status === 401)
@@ -73,11 +73,11 @@ export default class CheckAuth extends React.Component {
 //   )
 // .catch(error => console.error('Error:', error));
 }
- else 
+ else
 {
   this.props.navigation.navigate('Auth');
 }
-    
+
   };
 
   // Render any loading content that you like here
