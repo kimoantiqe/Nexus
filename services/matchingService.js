@@ -4,26 +4,46 @@ const { to, ReE, ReS }        = require('./util');
 
 
 
+function getUser(element, callback) {
+	 User.findById(element, function(err, newuser) {
+	 	if(err) {
+	 		return ReE(res, err, 422);
+	 	}
+	 	callback(newuser);
+	 	});
+ };
 
-//gets 1 potential connection for a user
+function get10users(arr, callback) {
+	let userarr2= [];
+	let ids=0;
+	arr.forEach( function(element){
+		getUser(element,function(newuser){ userarr2.push(newuser);
+			ids++;
+			if(ids == arr.length){
+			callback(userarr2);
+		}
+	});
+});
+};
+
+
+
+//gets 10 potential connection for a user
 const getpotconn = async function(req, res){
 	res.setHeader('Content-Type', 'application/json');
-	let user = req.user;
-  let Connection;
-  console.log(user.potentialMatches);
-
-	//gets the first id in the users potential matches array
-  let potcon = user.potentialMatches[0];
-  console.log(user.potentialMatches);
-
-	//gets the user associated with that id
-  User.findById(potcon, function(err, newuser) {
-      if(err) {
-				return ReE(res, err, 422);
-			}
-    return ReS(res, {user:newuser.toWeb()});
-  });
-};
+		let user = req.user;
+		let arr=[];
+		//gets the first id in the users potential matches array
+		for(let i=0; i<3; i++){
+			let potcon = user.potentialMatches[i];
+			arr.push(potcon);
+		}
+		get10users(arr,
+			function(userarr2){
+				console.log(userarr2);
+				return ReS(res, {array:JSON.stringify(userarr2)});
+			});
+		};
 module.exports.getpotconn = getpotconn;
 
 
