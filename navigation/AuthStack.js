@@ -7,6 +7,7 @@ import Login from '../screens/Login';
 import Splash from '../screens/SplashScreen';
 import Register from '../screens/Register';
 import RegCompleteProfile from '../screens/RegCompleteProfile';
+import ChatScreen from '../screens/ChatScreen'
 
 
 export default createStackNavigator({
@@ -14,6 +15,7 @@ export default createStackNavigator({
   Register: Register,
   Splash : Splash,
   RCP: RegCompleteProfile,
+  ChatScreen: ChatScreen
 },
 {
   initialRouteName: 'Splash',

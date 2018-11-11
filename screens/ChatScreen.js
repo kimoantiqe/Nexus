@@ -1,11 +1,14 @@
 import React from 'react';
-import { AsyncStorage, Button, StyleSheet, View, Alert,
+import {
+  Button,
+  StyleSheet,
+  View,
 } from 'react-native';
 
-export default class ChattingScreen extends React.Component {
+export default class ChatScreen extends React.Component {
   static navigationOptions = {
-    title: 'Chat',
-    header: null,
+    title: 'chatScreen',
+    header: null
   };
 
   render() {
@@ -13,13 +16,20 @@ export default class ChattingScreen extends React.Component {
       <View style = {styles1.contaier}>
         <View style = {styles1.container}>
             <Button
-                title = "Chat"
+                title = "Return"
                 color = "#841584"
+                onPress = {this.returnBack}
             />
         </View>
       </View>
       );
     }
+  
+    returnBack = () => {
+
+    this.props.navigation.navigate("Main");
+
+  };
 }
 
 const styles1 = StyleSheet.create({

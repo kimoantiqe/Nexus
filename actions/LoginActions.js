@@ -10,7 +10,7 @@ export const sendbirdLogin = ({ userId, nickname }) => {
         sbConnect(userId, nickname)
         .then((user) => {
             //If connection is successful
-            console.log("Success");
+            console.log("Login Success");
             dispatch({
                 type: LOGIN_SUCCESS, 
                 payload: user 
