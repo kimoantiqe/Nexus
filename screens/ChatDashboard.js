@@ -72,8 +72,8 @@ class ChatDashboard extends React.Component {
     _onListItemPress = (channelUrl) => {
         this.props.navigation.navigate(
             'ChatScreen', 
-            { channelUrl: channelUrl, 
-              userID: userID 
+            { channelUrl: channelUrl,
+              userID: userID
             }
         );
     }
