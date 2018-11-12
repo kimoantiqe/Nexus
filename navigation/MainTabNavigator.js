@@ -70,9 +70,14 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+
 export default createBottomTabNavigator({
   HomeStack,
   MatchesStack,
   ChatStack,
   SettingsStack,
-});
+},{tabBarOptions:{
+  labelStyle: {
+  color:'#918c90'
+}
+}});
