@@ -10,7 +10,7 @@ import {
   FlatList,
   Dimensions
 } from "react-native";
-import { WebBrowser } from "expo";
+import { WebBrowser} from "expo";
 
 import { MonoText } from "../components/StyledText";
 
@@ -28,6 +28,7 @@ import {
   Right,
   Body,
   List,
+  Title,
   ListItem
 } from "native-base";
 
@@ -39,7 +40,9 @@ var firstName = [];
 var lastName = [];
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
+
 export default class HomeScreen extends React.Component {
+
   constructor(props) {
     super(props);
 
@@ -48,7 +51,6 @@ export default class HomeScreen extends React.Component {
     };
 
     this.refreshScreen = this.refreshScreen.bind(this);
-
     this.getUserMatches();
   }
 
@@ -62,6 +64,7 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+
 
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => {
@@ -127,24 +130,17 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-      // <View style={styles.container}>
-      //   <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      //     <View style={styles.getStartedContainer}>
-      //
-      //       <Text style={styles.getStartedText}>{textToPrint}
-      //       </Text>
-      //
-      //       <Button
-      //         title='Refresh'
-      //         onPress = {this.getUserMatches}
-      //       />
-      //
-      //     </View>
-      //   </ScrollView>
-      // </View>
 
       <Container>
+
         <Content>
+        <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
+          <Left/>
+          <Body>
+            <Title style={styles.headerTitle}>DASHBOARD</Title>
+          </Body>
+          <Right />
+        </Header>
         <FlatList
           horizontal
           data={items}
@@ -159,7 +155,7 @@ export default class HomeScreen extends React.Component {
               </CardItem>
               <CardItem style={{marginTop:0,paddingTop:0}}>
               <Body style={styles.centerText}>
-                <Text>Sherif</Text>
+                <Text style={styles.avatarText}>Sherif</Text>
               </Body>
               </CardItem>
             </Card>
@@ -175,8 +171,11 @@ export default class HomeScreen extends React.Component {
                     style={styles.cardImg}
                   />
                   <Body style={styles.centerText}>
-                    <Text>37 Matches</Text>
-                    <Text>in the past month</Text>
+                    <View style={styles.rowContainer}>
+                    <Text style={styles.numberText}>37</Text>
+                    <Text style={styles.titleText}>Matches</Text>
+                    </View>
+                    <Text style={styles.subTitleText}>in the past month!</Text>
                   </Body>
                 </Left>
               </CardItem>
@@ -186,12 +185,15 @@ export default class HomeScreen extends React.Component {
               <CardItem>
                 <Left>
                   <Image
-                    source={require("../images/events.png")}
+                    source={require("../images/meeting.png")}
                     style={styles.cardImg}
                   />
                   <Body style={styles.centerText}>
-                    <Text>3 Events</Text>
-                    <Text>Coming up</Text>
+                  <View style={styles.rowContainer}>
+                  <Text style={styles.numberText}>3</Text>
+                  <Text style={styles.titleText}>Meetings</Text>
+                  </View>
+                  <Text style={styles.subTitleText}>coming up!</Text>
                   </Body>
                 </Left>
               </CardItem>
@@ -201,12 +203,15 @@ export default class HomeScreen extends React.Component {
               <CardItem>
                 <Left>
                   <Image
-                    source={require("../images/tasks.png")}
+                    source={require("../images/qr.png")}
                     style={styles.cardImg}
                   />
                   <Body style={styles.centerText}>
-                    <Text>4 Tasks due</Text>
-                    <Text>During the next week</Text>
+                  <View style={styles.rowContainer}>
+                  <Text style={styles.numberText}>2</Text>
+                  <Text style={styles.titleText}>Taps</Text>
+                  </View>
+                  <Text style={styles.subTitleText}>so far!</Text>
                   </Body>
                 </Left>
               </CardItem>
@@ -245,13 +250,46 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   avatarImg: {
-    width: 80,
-    height: 80
+    width: 75,
+    height: 75
   },
   avatarCard:{
-    marginTop: 40,
+    marginTop: 20,
     marginBottom : 24,
     flex: 1,
-    width: 110
+    width: 100
+  },
+  header:{
+    backgroundColor: '#2c2638',
+  },
+  headerTitle:{
+    fontFamily: 'BebasNeue',
+    fontSize : 25,
+    color: '#ffffff'
+  },
+  numberText:{
+    fontSize:19,
+    color:'#463143',
+    marginRight: 5,
+    fontFamily: 'Poppins-Bold'
+  },
+  titleText:{
+    fontSize:19,
+    color:'#414345',
+    fontFamily: 'Poppins'
+  },
+  subTitleText:{
+    fontSize:14,
+    color: 'grey',
+    fontFamily: 'Poppins'
+  },
+  rowContainer: {
+    flex:0,
+    justifyContent: 'center',
+    alignItems:'center',
+    flexDirection: 'row'
+  },
+  avatarText:{
+    fontFamily: 'Poppins'
   }
 });

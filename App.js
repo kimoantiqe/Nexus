@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
+import { Audio,AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 
 //These are her for now, will be used later.
@@ -8,12 +8,13 @@ import { Provider } from 'react-redux';
 import store from './store';
 
 export default class App extends React.Component {
+
   state = {
     isLoadingComplete: false,
   };
 
   render() {
-    <StatusBar hidden />;
+
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -26,7 +27,7 @@ export default class App extends React.Component {
       return (
         <Provider store={store}>
           <View style = {styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
             <AppNavigator />
           </View>
         </Provider>
@@ -46,6 +47,10 @@ export default class App extends React.Component {
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        'BebasNeue': require('./assets/fonts/BebasNeue-Regular.ttf'),
+        'Poppins': require('./assets/fonts/Poppins-Regular.ttf'),
+        'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf')
+
       }),
     ]);
   };
