@@ -17,26 +17,37 @@ var bio;
 var interests;
 var industry;
 
-var cards = [{
-  "firstName": "Anas" ,
-  "lastName": "Desouky"
-}];
+var cards = [{"firstName":"Swipe",
+"lastName":"Right"}];
 
 export default class Matches extends React.Component {
   constructor(props) {
     super(props);
+    this.refreshScreen = this.refreshScreen.bind(this);
+    
     this.state = {
       lastRefresh: Date(Date.now()).toString(),
     };
     this.getUser();
   }
 
-  componentWillMount(){
-    this.getUser;
+  componentDidMount(){
+    //this.getUser();
+    this.refreshScreen();
   }
+  refreshScreen() {
+    if(cards.length ==0 ){
+      this.getUser();
+    }
+    this.setState({ lastRefresh: Date(Date.now()).toString() });
+  }
+
+  
+
 
   //Function that grabs a user from the database.
   getUser = async () => {
+    console.log("this is getUser");
     userToken = await AsyncStorage.getItem('userToken');
 
     if (userToken != null) {
@@ -55,16 +66,18 @@ export default class Matches extends React.Component {
           if(response.success){
             //console.log(response.array);
             var array = JSON.parse(response.array);
-            console.log(array.length);
+            //console.log(array.length);
             for(let i=0; i< array.length; i++){
               cards.push(array[i]);
-              //console.log(cards[4]);
             }
+            //console.log(cards);
           }
         }
+
       ).catch((error) => console.error(error)
       );
     }
+    return cards;
   };
 
   //Function that is used to report a like to the server
@@ -125,13 +138,26 @@ export default class Matches extends React.Component {
         <DeckSwiper
           ref={(c) => this._deckSwiper = c}
           dataSource={cards}
-          onSwipeLeft ={item=> this.likedUser(item._id)}
-          onSwiperRight = {item => {
-            this.dislikedUser(item._id);
-            this.getUser;
+          looping={false}
+          onSwipeLeft ={item=> {
+            cards.shift();
+            this.likedUser(item._id);
+            if(cards.length ==1 ){
+              this.getUser();
+            }
+            console.log(cards);
+        }
+          }
+          
+          onSwipeRight = {item => {
+            //this.dislikedUser(item._id);
+            cards.shift();
+            console.log(cards);
+            
           }}
           renderEmpty={() =>{
-            this.getUser;
+           
+           console.log("IM HERE");
             return
             {
               <View style={{ alignSelf: "center" }}>

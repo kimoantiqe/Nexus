@@ -45,7 +45,6 @@ export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       lastRefresh: Date(Date.now()).toString()
     };
@@ -93,6 +92,25 @@ export default class HomeScreen extends React.Component {
             this.refreshScreen();
           }
         });
+    }
+  };
+   //Function that is used to populate when the user logs in.
+   populate = async () => {
+    let userToken = await AsyncStorage.getItem("userToken");
+
+    //console.log(userToken);
+
+    var apiURL = "http://localhost:1337/api";
+
+    if (userToken != null) {
+      var populate = {
+        method: "GET",
+        headers: {
+          Authorization: userToken,
+          "Content-Type": "application/json"
+        }
+      };
+      fetch(apiURL + "/user/popconn", populate);
     }
   };
 
