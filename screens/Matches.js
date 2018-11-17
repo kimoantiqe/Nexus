@@ -2,12 +2,14 @@ import React, { Component }  from 'react';
 import { Image,   ActivityIndicator,
   AsyncStorage,
   StatusBar} from 'react-native';
+  import {userToken} from './Login'
 import { Container, Button, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Right,  Body, Icon } from 'native-base';
 import { WebBrowser } from 'expo';
-
+import {user2Token} from './HomeScreen'
 import { MonoText } from '../components/StyledText';
 
-var userToken;
+
+
 var apiURL = 'http://localhost:1337/api';
 
 var currUserID;
@@ -16,9 +18,10 @@ var lastName;
 var bio;
 var interests;
 var industry;
+var index;
 
-var cards = [{"firstName":"Swipe",
-"lastName":"Right"}];
+var cards = [];
+var cards2 =[];
 
 export default class Matches extends React.Component {
   constructor(props) {
@@ -32,7 +35,6 @@ export default class Matches extends React.Component {
   }
 
   componentDidMount(){
-    //this.getUser();
     this.refreshScreen();
   }
   refreshScreen() {
@@ -48,8 +50,9 @@ export default class Matches extends React.Component {
   //Function that grabs a user from the database.
   getUser = async () => {
     console.log("this is getUser");
-    userToken = await AsyncStorage.getItem('userToken');
+    //userToken = await AsyncStorage.getItem('userToken');
 
+    //let userToken = user2token;
     if (userToken != null) {
 
       var grabUser = {
@@ -68,7 +71,7 @@ export default class Matches extends React.Component {
             var array = JSON.parse(response.array);
             //console.log(array.length);
             for(let i=0; i< array.length; i++){
-              cards.push(array[i]);
+              cards[i] = (array[i]);
             }
             //console.log(cards);
           }
@@ -82,9 +85,9 @@ export default class Matches extends React.Component {
 
   //Function that is used to report a like to the server
   likedUser = async (currUserID) => {
-    userToken = await AsyncStorage.getItem('userToken');
+    //userToken = await AsyncStorage.getItem('userToken');
 
-    console.log("This is liked user " + currUserID);
+    console.log("This is liked user " + userToken);
 
     if (userToken != null) {
       var updateUser = {
@@ -97,14 +100,14 @@ export default class Matches extends React.Component {
           'liked' : [currUserID]
           })
       }
-      fetch(apiURL + '/user', updateUser)
+      await fetch(apiURL + '/user', updateUser)
     }
   }
 
   //Function that is used to report a dislike to the server
    dislikedUser = async (currUserID) => {
 
-    userToken = await AsyncStorage.getItem('userToken');
+    //userToken = await AsyncStorage.getItem('userToken');
 
     console.log("This is disliked user" + currUserID);
 
@@ -139,25 +142,23 @@ export default class Matches extends React.Component {
           ref={(c) => this._deckSwiper = c}
           dataSource={cards}
           looping={false}
-          onSwipeLeft ={item=> {
+          onSwipeLeft ={async(item) =>  {
+            await this.likedUser(item._id);
             cards.shift();
-            this.likedUser(item._id);
             if(cards.length ==1 ){
               this.getUser();
             }
-            console.log(cards);
-        }
+            //console.log(cards);
+          }
           }
           
           onSwipeRight = {item => {
             //this.dislikedUser(item._id);
             cards.shift();
-            console.log(cards);
+            //console.log(cards);
             
           }}
           renderEmpty={() =>{
-           
-           console.log("IM HERE");
             return
             {
               <View style={{ alignSelf: "center" }}>
@@ -165,7 +166,6 @@ export default class Matches extends React.Component {
               </View>
             }
           }
-
           }
           renderItem={item =>
             <Card style={{ elevation: 10 }}>
@@ -190,7 +190,14 @@ export default class Matches extends React.Component {
         />
       </View>
       <View style={{ flexDirection: "row", flex: 1, position: "absolute", bottom: 50, left: 0, right: 0, justifyContent: 'space-between', padding: 15 }}>
-        <Button iconLeft onPress={() => this._deckSwiper._root.swipeLeft()}>
+        <Button iconLeft onPress={async(item) => {await this.likedUser(item._id);
+            cards.shift();
+            if(cards.length ==1 ){
+              this.getUser();
+            }
+          }
+        }
+            >
           <Icon name="arrow-back" />
           <Text>Swipe Left</Text>
         </Button>

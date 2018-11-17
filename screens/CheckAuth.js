@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
   },
 });
 
+var userToken1; 
+export {userToken1};
+
+
 export default class CheckAuth extends React.Component {
   constructor(props) {
     super(props);
@@ -24,12 +28,12 @@ export default class CheckAuth extends React.Component {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
-
+      userToken1 = userToken;
     if (userToken != null) {
 
     var settings = {
-  method: 'GET',
-  headers: {
+    method: 'GET',
+    headers: {
     'Authorization': userToken
   }
   };

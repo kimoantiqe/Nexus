@@ -24,6 +24,9 @@ import { sendbirdLogin } from "../actions";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
+var userToken3;
+export {userToken3};
+
 class Login extends React.Component {
   static navigationOptions = {
     header: null,
@@ -251,10 +254,11 @@ class Login extends React.Component {
 
     fetch(apiURL + "/user/login", settings)
       .then(response => response.json())
-      .then(response => {
+      .then(async(response) => {
         if (response.success) {
           AsyncStorage.setItem("userToken", response.token);
           AsyncStorage.setItem("userid", response.user.id);
+          userToken3 = response.token;
 
           //Store the userid and his name for use by sendbird.
           this.setState({ nickname: response.user.firstName });

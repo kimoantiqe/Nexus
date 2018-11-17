@@ -35,6 +35,12 @@ import {
 var apiURL = "http://localhost:1337/api";
 
 var matchesArray = [];
+
+
+export const user2Token = async() => {
+  let token = await AsyncStorage.getItem("userToken");
+  return token;
+};
 var textToPrint;
 var firstName = [];
 var lastName = [];
@@ -105,6 +111,7 @@ export default class HomeScreen extends React.Component {
     if (userToken != null) {
       var populate = {
         method: "GET",
+        
         headers: {
           Authorization: userToken,
           "Content-Type": "application/json"
@@ -279,8 +286,10 @@ const styles = StyleSheet.create({
   },
   header:{
     backgroundColor: '#2c2638',
+    height: height*0.1
   },
   headerTitle:{
+    paddingTop:height*0.03,
     fontFamily: 'BebasNeue',
     fontSize : 25,
     color: '#ffffff'

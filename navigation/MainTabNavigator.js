@@ -4,9 +4,11 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import Matches from '../screens/Matches';
+import Matches from '../screens/DeckSwiper';
 import SettingsScreen from '../screens/SettingsScreen';
 import ChatDashboard from '../screens/ChatDashboard';
+import AddButton from "../screens/TabBarIcon";
+
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -74,10 +76,22 @@ SettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
   HomeStack,
   MatchesStack,
+  // Adding: {
+  //     screen: () => null,
+  //     navigationOptions: (navigation) => ({
+  //         tabBarIcon: <AddButton navigation = {navigation}/>
+  //     })
+  // },
   ChatStack,
   SettingsStack,
-},{tabBarOptions:{
-  labelStyle: {
-  color:'#918c90'
-}
-}});
+}, {
+  tabBarOptions: {
+      showLabel: false,
+      activeTintColor: '#F8F8F8',
+      inactiveTintColor: '#586589',
+      style: {
+          backgroundColor: '#2c2638'
+      },
+      tabStyle: {}
+  }
+});

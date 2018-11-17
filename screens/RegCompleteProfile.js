@@ -17,12 +17,17 @@ import MainTabNavigator from '../navigation/MainTabNavigator';
 import AppNavigator from '../navigation/AppNavigator';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
+var userToken2;
+export {userToken2};
+
 export default class RegCompleteProfile extends React.Component {
   static navigationOptions = {
     header: null,
     title: 'RCP',
   };
-
+ 
+  
   state = {
       toggles:[
       false,
@@ -412,6 +417,7 @@ export default class RegCompleteProfile extends React.Component {
   cmp = async () => {
 
     const userToken = await AsyncStorage.getItem('userToken');
+    userToken2 = userToken;
     const first = await AsyncStorage.getItem('firstname');
     const last = await AsyncStorage.getItem('lastname');
     let i = 0;
@@ -502,7 +508,7 @@ export default class RegCompleteProfile extends React.Component {
 
     console.log(userToken);
 
-    var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+    var apiURL = 'http://localhost:1337/api';
 
     if (userToken != null) {
       var populate = {
