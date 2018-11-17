@@ -26,5 +26,8 @@
     "ios": {
       "supportsTablet": true
     }
-  }
+  },
+  "facebookScheme":"fb1220787098061912",
+  "facebookAppId":"1220787098061912",
+  "facebookDisplayName":"Nexus"
 }

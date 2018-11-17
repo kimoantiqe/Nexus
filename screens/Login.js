@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,WebView
 } from "react-native";
 import { Text, Button, Icon } from "native-base";
 import MainTabNavigator from "../navigation/MainTabNavigator";
@@ -38,6 +38,7 @@ class Login extends React.Component {
       userid: "",
       nickname: ""
     };
+    //this. = this.modal.bind(this);
   }
 
   handleUsername = text => {
@@ -49,6 +50,38 @@ class Login extends React.Component {
   };
 
   render() {
+    const renderButton = () => {
+          return (
+            <Button
+              onPress={() => this.modal.open()}
+              iconLeft
+              bordered
+              activeOpacity={0.5}
+              style={{
+                width: (width * 37) / 100,
+                height: height / 14,
+                borderColor: "grey",
+                marginLeft: 10
+              }}
+            >
+              <Icon
+                style={{ fontSize: 30, color: "grey" }}
+                name="logo-linkedin"
+              />
+              <Text
+                uppercase={false}
+                style={{
+                  fontSize: 18,
+                  fontWeight: "500",
+                  color: "grey",
+                  paddingLeft: width / 30
+                }}
+              >
+                LinkedIn
+              </Text>
+            </Button>
+          );
+    };
     return (
       <View style={styles1.contaier}>
         <View style={{ backgroundColor: "#1a2a6c", flex: 0.5, opacity: 1 }}>
@@ -153,6 +186,7 @@ class Login extends React.Component {
                   <Button
                     iconLeft
                     bordered
+                    onPress = {loginFb}
                     activeOpacity={0.5}
                     style={{
                       width: (width * 38) / 100,
@@ -176,42 +210,16 @@ class Login extends React.Component {
                       Facebook
                     </Text>
                   </Button>
-
-                  <Button
-                    iconLeft
-                    bordered
-                    activeOpacity={0.5}
-                    style={{
-                      width: (width * 37) / 100,
-                      height: height / 14,
-                      borderColor: "grey",
-                      marginLeft: 10
-                    }}
-                  >
-                    <Icon
-                      style={{ fontSize: 30, color: "grey" }}
-                      name="logo-linkedin"
-                    />
-                    <Text
-                      uppercase={false}
-                      style={{
-                        fontSize: 18,
-                        fontWeight: "500",
-                        color: "grey",
-                        paddingLeft: width / 30
-                      }}
-                    >
-                      LinkedIn
-                    </Text>
-                  </Button>
                 </View>
               </View>
+
             </KeyboardAvoidingView>
           </View>
         </View>
       </View>
     );
   }
+
 
   //Function that is used to populate when the user logs in.
   populate = async () => {
@@ -417,6 +425,29 @@ const styles1 = StyleSheet.create({
     resizeMode: "contain"
   }
 });
+
+const loginFb = async function logIn() {
+  try {
+    const {
+      type,
+      token,
+      expires,
+      permissions,
+      declinedPermissions,
+    } = await Expo.Facebook.logInWithReadPermissionsAsync('1220787098061912', {
+      permissions: ['public_profile'],
+    });
+    if (type === 'success') {
+      // Get the user's name using Facebook's Graph API
+      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+      Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+    } else {
+      // type === 'cancel'
+    }
+  } catch ({ message }) {
+    alert(`Facebook Login Error: ${message}`);
+  }
+}
 
 function mapStateToProps({ login }) {
   const { error, user } = login;
