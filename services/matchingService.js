@@ -5,6 +5,9 @@ const { to, ReE, ReS }        = require('./util');
 
 
 function getUser(element, callback) {
+  if(!element){
+    return ReE(res, err, 422);
+  }
 	 User.findById(element, function(err, newuser) {
 	 	if(err) {
 	 		return ReE(res, err, 422);

@@ -129,6 +129,10 @@ const getuser = async function(req, res){
 	let id = req.query.id;
 	console.log(id);
 	User.findById(id, function(err, newuser) {
+		if(!newuser){
+			console.log("FUnck")
+			return ReE(res, "user not in your matches");
+		}
 		if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
 			otheruser = newuser;
 			return ReS(res, {user:newuser.toWeb()});
