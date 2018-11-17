@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
-import * as Keychain from 'react-native-keychain';
+
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -122,7 +122,7 @@ export default class Matches extends React.Component {
     console.log("this is getUser ");
     
 
-  //userToken = await Keychain.getGenericPassword();
+
   
     if(userToken1 != null){
       userToken = userToken1;
