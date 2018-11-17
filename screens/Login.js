@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Expo from 'expo' 
 import { LinearGradient } from "expo";
 import {
   ActivityIndicator,
@@ -240,7 +241,7 @@ class Login extends React.Component {
           "Content-Type": "application/json"
         }
       };
-      fetch(apiURL + "/user/popconn", populate);
+      await fetch(apiURL + "/user/popconn", populate);
     }
   };
 
@@ -266,6 +267,7 @@ class Login extends React.Component {
         if (response.success) {
           AsyncStorage.setItem("userToken", response.token);
           AsyncStorage.setItem("userid", response.user.id);
+          Expo.SecureStore.setItemAsync("userToken", response.token);
           userToken3 = response.token;
 
           //Store the userid and his name for use by sendbird.

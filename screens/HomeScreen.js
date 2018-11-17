@@ -33,6 +33,7 @@ import {
 } from "native-base";
 
 
+
 var apiURL = "http://localhost:1337/api";
 
 var matchesArray = [];
@@ -89,15 +90,44 @@ export default class HomeScreen extends React.Component {
       //need to update the get request.
       fetch(apiURL + "/user", matches)
         .then(response => response.json())
-        .then(response => {
+        .then(async response => {
           // console.log(response);
           if (response.success) {
-            //console.log(response.user.matches);
+            console.log(response.user.matches);
             for (var i = 0; i < response.user.matches.length; i++) {
-              matchesArray.push(response.user.matches[i]);
+             await this.getUser(response.user.matches[i]);
             }
+            console.log(matchesArray);
             this.refreshScreen();
           }
+        });
+    }
+  };
+
+  
+  //need to make sure
+  getUser = async userid => {
+    let userToken = await AsyncStorage.getItem("userToken");
+
+   
+    
+    if (userToken != null) {
+      console.log("This is display Match");
+      var user = {
+        method: "GET",
+        headers: {
+          Authorization: userToken
+        }
+      };
+      await fetch(apiURL + "/user/getuser/?id=" + userid, user)
+        .then(response => response.json())
+        .then( (response) => {
+          // var obj;
+          // obj.firstName= response.user.firstName;
+          // obj.lastName = response.user.lastName;
+          console.log(response.user.firstName + "\n");
+          matchesArray.push(response.user);
+          //console.log(matchesArray);
         });
     }
   };
@@ -169,11 +199,11 @@ export default class HomeScreen extends React.Component {
         </Header>
         <FlatList
           horizontal
-          data={items}
+          data={matchesArray}
           showsHorizontalScrollIndicator={false}
             renderItem={({item}) =>
             <Card style={styles.avatarCard} >
-              <CardItem button onPress={() => alert('Yacta')}>
+              <CardItem button onPress={(item) => item.firstName }>
                   <Thumbnail
                     source={require("../images/sherif.png")}
                     style={styles.avatarImg}
@@ -181,7 +211,7 @@ export default class HomeScreen extends React.Component {
               </CardItem>
               <CardItem style={{marginTop:0,paddingTop:0}}>
               <Body style={styles.centerText}>
-                <Text style={styles.avatarText}>Sherif</Text>
+                <Text style={styles.avatarText}>{item.firstName}</Text>
               </Body>
               </CardItem>
             </Card>
@@ -198,10 +228,10 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                    <Text style={styles.numberText}>37</Text>
+                    <Text style={styles.numberText}>{matchesArray.length}</Text>
                     <Text style={styles.titleText}>Matches</Text>
                     </View>
-                    <Text style={styles.subTitleText}>in the past month!</Text>
+                    <Text style={styles.subTitleText}>since joining!</Text>
                   </Body>
                 </Left>
               </CardItem>

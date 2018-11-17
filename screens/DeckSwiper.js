@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
-
-
+import Expo from 'expo' 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 var image = require('./../images/d3rs.jpg')
@@ -11,6 +10,7 @@ import {userToken1} from './CheckAuth'
 import {userToken2} from './RegCompleteProfile'
 
 var userToken;
+//var userToken2;
 var apiURL = 'http://localhost:1337/api';
 const Users = [
   {  uri: require('./../images/d3rs.jpg') },
@@ -75,6 +75,8 @@ export default class Matches extends React.Component {
    likedUser = async (currUserID) => {
     if (userToken != null) {
       console.log("This is liked user " + currUserID);
+
+      
       var updateUser = {
         method: 'PUT',
         headers: {
@@ -121,21 +123,21 @@ export default class Matches extends React.Component {
    getUser = async () => {
     console.log("this is getUser ");
     
-
+    userToken= await Expo.SecureStore.getItemAsync("userToken");
 
   
-    if(userToken1 != null){
-      userToken = userToken1;
-      console.log("userToken1");
-    }
-    else if(userToken2 != null){
-      userToken = userToken2;
-      console.log("userToken2");
-    }
-    else if(userToken3 != null){
-      userToken = userToken3;
-      console.log("userToken3");
-    }
+    // if(userToken1 != null){
+    //   userToken = userToken1;
+    //   console.log("userToken1");
+    // }
+    // else if(userToken2 != null){
+    //   userToken = userToken2;
+    //   console.log("userToken2");
+    // }
+    // else if(userToken3 != null){
+    //   userToken = userToken3;
+    //   console.log("userToken3");
+    // }
     
     //let userToken = user2token;
     if (userToken != null) {
