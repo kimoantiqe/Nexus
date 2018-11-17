@@ -194,6 +194,7 @@ export default class Register extends React.Component {
                             AsyncStorage.setItem('userToken', response.token);
                             AsyncStorage.setItem('firstname', this.state.firstname);
                             AsyncStorage.setItem('lastname', this.state.lastname);
+                            Expo.SecureStore.setItemAsync("userToken", response.token);
                             this.props.navigation.navigate('RCP');
                         } else
                         {
