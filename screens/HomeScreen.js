@@ -131,58 +131,7 @@ export default class HomeScreen extends React.Component {
         });
     }
   };
-   //Function that is used to populate when the user logs in.
-   populate = async () => {
-    let userToken = await AsyncStorage.getItem("userToken");
-
-    //console.log(userToken);
-
-    var apiURL = "http://localhost:1337/api";
-
-    if (userToken != null) {
-      var populate = {
-        method: "GET",
-
-        headers: {
-          Authorization: userToken,
-          "Content-Type": "application/json"
-        }
-      };
-      fetch(apiURL + "/user/popconn", populate);
-    }
-  };
-
-  //function to display the matches (fix to display first and last name)
-  displayMatchOnScreen() {
-    textToPrint = "";
-    for (var i = 1; i < matchesArray.length + 1; i++) {
-      this.displayMatch(matchesArray[i - 1]);
-      textToPrint += i + ": " + firstName[i - 1] + " " + lastName[i - 1] + "\n";
-    }
-  }
-
-  //need to make sure
-  displayMatch = async userid => {
-    let userToken = await AsyncStorage.getItem("userToken");
-
-    //console.log("This is display Match");
-
-    if (userToken != null) {
-      var user = {
-        method: "GET",
-        headers: {
-          Authorization: userToken
-        }
-      };
-      fetch(apiURL + "/user/getuser/?id=" + userid, user)
-        .then(response => response.json())
-        .then(response => {
-          //console.log(response.user.firstName + " " + response.user.lastName + "\n");
-          firstName.push(response.user.firstName);
-          lastName.push(response.user.lastName);
-        });
-    }
-  };
+ 
 
   render() {
     return (
