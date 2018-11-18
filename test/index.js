@@ -2,6 +2,7 @@ const chai        = require('chai');
 const landing      = require('./landing.test');
 const user      = require('./user.test');
 const image      = require('./image.test');
+const task      = require('./task.test');
 const chaiHttp = require('chai-http');
 const server =  require('../');
 
@@ -12,10 +13,12 @@ chai.use(chaiHttp);
 
 describe('Nexus API test', () => {
 
+  //Landing
   describe('/GET api', () => {
       it('it should GET the api version', (done) => landing(done,chai,server));
   });
 
+  //Users
   describe('/POST /api/user/login', () => {
       it('it should fail : missing payload', (done) => user.loginFail1(done,chai,server));
   });
@@ -92,6 +95,7 @@ describe('Nexus API test', () => {
       it('it should fail : inccorect token', (done) => user.deletefail1(done,chai,server));
   });
 
+  //Images
   describe('/POST /api/user', () => {
       it('it should register a new user', (done) => image.registerSuccess(done,chai,server));
   });
@@ -115,5 +119,35 @@ describe('Nexus API test', () => {
   describe('/DELETE /api/user', () => {
       it('it should delete registered user', (done) => image.deleteSuccess(done,chai,server));
   });
+  describe('/POST /api/user', () => {
+      it('it should register a new user', (done) => image.registerSuccess(done,chai,server));
+  });
+
+
+  //TASKS
+  describe('/POST /api/user', () => {
+      it('it should register a new user', (done) => task.registerSuccess(done,chai,server));
+  });
+
+  describe('/POST /api/user/login', () => {
+      it('it should login new user', (done) => task.loginSuccess(done,chai,server));
+  });
+
+  describe('/POST /api/user/task', () => {
+      it('it should fail incomplete task body', (done) => task.createTaskFail1(done,chai,server));
+  });
+  describe('/POST /api/user/task', () => {
+      it('it should create a task and insert into user', (done) => task.createTaskSuccess(done,chai,server));
+  });
+
+  describe('/GET /api/user/task', () => {
+      it('it should get all of the user tasks', (done) => task.getTaskSuccess(done,chai,server));
+  });
+
+  describe('/DELETE /api/user', () => {
+      it('it should delete registered user', (done) => task.deleteSuccess(done,chai,server));
+  });
+
+
 
 });

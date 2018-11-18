@@ -86,24 +86,37 @@ module.exports = function(app, passport) {
   /************ create task for a user ***************/ //C
   app.post('/api/user/task',  passport.authenticate('jwt', {
     session: false
-  }) ,TaskController.create);
+  }) ,TaskController.create , UserController.setTask);
   /************************************/
 
-  /********  get all user tasks **************/ //R
+  /********  get all tasks for given user **************/ //R
   app.get('/api/user/task', passport.authenticate('jwt', {
     session: false
   }), TaskController.get);
   /************************************/
 
-  /********  update a task for a user **************/ //U
-  app.put('/api/user/task', passport.authenticate('jwt', {
-    session: false
-  }), TaskController.update);
-  /************************************/
+  // /********  update a task for a user **************/ //U
+  // app.put('/api/user/task', passport.authenticate('jwt', {
+  //   session: false
+  // }), TaskController.update);
+  // /************************************/
+  //
+  // /********  subscribe Users to a task **************/ //U
+  // app.put('/api/user/task/subscribe', passport.authenticate('jwt', {
+  //   session: false
+  // }), TaskController.update);
+  // /************************************/
+  //
+  // /********  unsubscribe Users to a task **************/ //U
+  // app.put('/api/user/task/unsubscribe', passport.authenticate('jwt', {
+  //   session: false
+  // }), TaskController.update);
+  // /************************************/
+  //
 
-  /********  remove a task for a user **************/ //D
-  app.delete('/api/user/task', passport.authenticate('jwt', {
-    session: false
-  }), TaskController.remove);
-  /************************************/
+  // /********  remove a task for a user **************/ //D
+  // app.delete('/api/user/task', passport.authenticate('jwt', {
+  //   session: false
+  // }), TaskController.remove);
+  // /************************************/
 };

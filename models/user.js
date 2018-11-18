@@ -76,6 +76,11 @@ let UserSchema = mongoose.Schema({
   password: {
     type: String
   },
+  tasks :[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :'Task',
+    exists: true
+  }],
 
 }, {
   timestamps: true

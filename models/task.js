@@ -5,6 +5,10 @@ let taskSchema = mongoose.Schema({
   taskTitle: {
     type: String
   },
+  taskType:{
+    type: String,
+    enum : ['Meeting']
+  },
   taskInfo: {
     type: String
   },
@@ -16,7 +20,11 @@ let taskSchema = mongoose.Schema({
     ref :'User',
     exists: true
   }],
-
+  taskOwner :{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :'User',
+    exists: true
+  }
 }, {
   timestamps: true
 });
