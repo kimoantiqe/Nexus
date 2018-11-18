@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 15612,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
   "expoServerNgrokUrl": "https://tv-vay.kimoantiqe.nexus.exp.direct",
   "packagerNgrokUrl": "https://packager.tv-vay.kimoantiqe.nexus.exp.direct",
-  "ngrokPid": 20124
+  "ngrokPid": 14316
 }

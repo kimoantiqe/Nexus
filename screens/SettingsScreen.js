@@ -36,10 +36,10 @@ class SettingsScreen extends React.Component {
       </View>
       );
     }
-  
+
     signOut = async () => {
     await AsyncStorage.clear();
-    
+
     //logout of sendbird.
     this.props.sendbirdLogout();
 

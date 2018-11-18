@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
-import Expo from 'expo' 
+import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder,Button } from 'react-native';
+import Expo from 'expo'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 var image = require('./../images/d3rs.jpg')
@@ -72,14 +72,14 @@ export default class Matches extends React.Component {
       outputRange: [1, 0.8, 1],
       extrapolate: 'clamp'
     })
-    
+
   }
 
    likedUser = async (currUserID) => {
     if (userToken != null) {
       console.log("This is liked user " + currUserID);
 
-      
+
       var updateUser = {
         method: 'PUT',
         headers: {
@@ -125,8 +125,9 @@ export default class Matches extends React.Component {
    //Function that grabs a user from the database.
    getUser = async () => {
     console.log("this is getUser ");
-    
+
     userToken= await Expo.SecureStore.getItemAsync("userToken");
+
 
     if (userToken != null) {
       console.log(userToken);
@@ -186,7 +187,7 @@ export default class Matches extends React.Component {
             })
           }
           })
-          
+
         }
         else if (gestureState.dx < -120) {
           Animated.spring(this.position, {
@@ -333,6 +334,11 @@ export default class Matches extends React.Component {
         <View style={{ height: 0 }}>
 
         </View>
+        <Button
+            title = "Instant Match"
+            color = "black"
+            onPress = {()=>{ this.props.navigation.navigate('InstantMatches');}}
+        />
       </View>
       
       </Container>
@@ -488,4 +494,5 @@ const styles = StyleSheet.create({
   avatarText:{
     fontFamily: 'Poppins'
   }
+
 });
