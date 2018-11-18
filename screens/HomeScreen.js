@@ -104,13 +104,13 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  
+
   //need to make sure
   getUser = async userid => {
     let userToken = await AsyncStorage.getItem("userToken");
 
-   
-    
+
+
     if (userToken != null) {
       console.log("This is display Match");
       var user = {
@@ -142,7 +142,7 @@ export default class HomeScreen extends React.Component {
     if (userToken != null) {
       var populate = {
         method: "GET",
-        
+
         headers: {
           Authorization: userToken,
           "Content-Type": "application/json"
@@ -323,6 +323,7 @@ const styles = StyleSheet.create({
   },
   headerTitle:{
     paddingTop:height*0.03,
+    paddingBottom:50,
     fontFamily: 'BebasNeue',
     fontSize : 25,
     color: '#ffffff'
