@@ -15,11 +15,22 @@ import {
 import moment from 'moment'
 import SendBird from 'sendbird'
 
+import {
+    Header,
+    Left,
+    Right,
+    Body,
+    Title
+  } from "native-base";
+
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
+
 console.disableYellowBox = true
 
 var sb;
 
-const themeColor = '#44bec7'
+const themeColor = '#2f1959'
 const themeDarkColor = '#287277'
 
 var channelUrl;
@@ -46,13 +57,13 @@ export default class ChatScreen extends Component {
         this.getGroupChannel();
         const ChannelHandler = new sb.ChannelHandler()
         ChannelHandler.onMessageReceived = (receivedChannel, message) => {
-            if (receivedChannel.url === channel.url) {
+            if (receivedChannel.url === groupChannel.url) {
                 const messages = []
                 messages.push(message)
                 const newMessages = messages.concat(this.state.messages)
                 this.setState({ messages: newMessages })
-                if (channel.channelType == 'group') {
-                    channel.markAsRead()
+                if (groupChannel.channelType == 'group') {
+                    groupChannel.markAsRead()
                 }
             }
         }
@@ -160,9 +171,13 @@ export default class ChatScreen extends Component {
     render() {
         return (
         <React.Fragment>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>{friendName}</Text>
-            </View>
+            <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
+                    <Left/>
+                        <Body>
+                            <Title style={styles.headerTitle}>{friendName}</Title>
+                        </Body>
+                    <Right />
+            </Header>
             <FlatList
                 inverted
                 onEndReached={() => this.getChannelMessage(false)}
@@ -192,22 +207,20 @@ export default class ChatScreen extends Component {
 }
 
 const styles = {
-  header: {
-    height: 80,
-    backgroundColor: themeColor,
-    borderColor: 'lightgray',
-    borderTopWidth: StyleSheet.hairlineWidth
-  },
-  headerText: {
-    marginTop: 40,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: 'white',
-    lineHeight: 44,
-    fontSize: 18
-  },
+    header:{
+        backgroundColor: '#2c2638',
+        height: height*0.1
+      },
+      headerTitle:{
+        textTransform: 'capitalize',
+        paddingTop:height*0.03,
+        paddingBottom:50,
+        fontFamily: 'BebasNeue',
+        fontSize : 25,
+        color: '#ffffff'
+    },
   textInput: {
-    height: 60,
+    height: 40,
     borderColor: 'lightgray',
     borderTopWidth: StyleSheet.hairlineWidth,
     flex: 1,
@@ -217,7 +230,7 @@ const styles = {
   sendButton: {
     width: 80,
     backgroundColor: themeColor,
-    height: 60,
+    height: 40,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderColor: 'lightgray',
     marginTop: 10

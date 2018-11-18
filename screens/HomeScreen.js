@@ -32,7 +32,7 @@ import {
   ListItem
 } from "native-base";
 
-
+import { sbCreateChannel } from '../sendbirdActions/groupChannel';
 
 var apiURL = "http://localhost:1337/api";
 
@@ -49,6 +49,8 @@ var lastName = [];
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
+var USERID;
+
 export default class HomeScreen extends React.Component {
 
   constructor(props) {
@@ -58,6 +60,7 @@ export default class HomeScreen extends React.Component {
     };
 
     this.refreshScreen = this.refreshScreen.bind(this);
+    this.getUserID();
     this.getUserMatches();
   }
 
@@ -72,6 +75,9 @@ export default class HomeScreen extends React.Component {
     header: null
   };
 
+  getUserID = async() => {
+    USERID = await AsyncStorage.getItem("userid");
+  }
 
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => {
@@ -108,8 +114,6 @@ export default class HomeScreen extends React.Component {
   //need to make sure
   getUser = async userid => {
     let userToken = await AsyncStorage.getItem("userToken");
-
-
 
     if (userToken != null) {
       console.log("This is display Match");
@@ -155,7 +159,13 @@ export default class HomeScreen extends React.Component {
   //function to display the matches (fix to display first and last name)
   displayMatchOnScreen() {
     textToPrint = "";
+    let useridsArray;
     for (var i = 1; i < matchesArray.length + 1; i++) {
+      useridsArray = [];
+      useridsArray.push(matchesArray[i - 1]._id);
+      useridsArray.push(USERID);
+      //Add the function below when all users are registered.
+      //sbCreateChannel(useridsArray, "GroupChannel");
       this.displayMatch(matchesArray[i - 1]);
       textToPrint += i + ": " + firstName[i - 1] + " " + lastName[i - 1] + "\n";
     }

@@ -1,23 +1,27 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, View, Alert, ListView, TouchableHighlight, Button} from 'react-native';
+import { AsyncStorage, StyleSheet, View, Alert, ListView, TouchableHighlight, Button, Dimensions} from 'react-native';
 import { Avatar, ListItem} from 'react-native-elements'
 import { connect } from 'react-redux'
 import { sbCreateGroupChannelListQuery, sbCreateChannel } from '../sendbirdActions/groupChannel';
 import { getGroupChannelList, addGroupChannel } from '../actions';
 
+
+import {
+    Header,
+    Left,
+    Right,
+    Body,
+    Title
+  } from "native-base";
+
 var userID;
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 
 class ChatDashboard extends React.Component {
     
     static navigationOptions = {
-        title: 'Chat Dashboard',
-        headerRight: (
-            <Button
-              onPress={addGroupChannel(['5be87e6a83201b4a4ff7d609', '5bcf97fd4a5aa600150cc338'], 'MyChannel')}
-              title="Add"
-              color="#000"
-            />
-          ),
+        header: null
     };
 
     constructor(props) {
@@ -109,6 +113,13 @@ class ChatDashboard extends React.Component {
     render() {
         return (
             <View>
+                <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
+                    <Left/>
+                        <Body>
+                            <Title style={styles.headerTitle}>CHAT</Title>
+                        </Body>
+                    <Right />
+                </Header>
                 <ListView
                     enableEmptySections={true}
                     renderRow={this._renderList}
@@ -123,6 +134,17 @@ class ChatDashboard extends React.Component {
 }
 
 const styles = {
+    header:{
+        backgroundColor: '#2c2638',
+        height: height*0.1
+      },
+      headerTitle:{
+        paddingTop:height*0.03,
+        paddingBottom:50,
+        fontFamily: 'BebasNeue',
+        fontSize : 25,
+        color: '#ffffff'
+      },
 };
 
 const ds = new ListView.DataSource({

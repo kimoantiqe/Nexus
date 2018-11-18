@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder,Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
 import Expo from 'expo'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
