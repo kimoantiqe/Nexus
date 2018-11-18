@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import {userToken3} from './Login'
 import {userToken1} from './CheckAuth'
 import {userToken2} from './RegCompleteProfile'
+import {Header, Title,Button, Left, Right, Body, Content, Container} from "native-base";
 
 var userToken;
 //var userToken2;
@@ -19,6 +20,8 @@ const Users = [
   { uri: require('./../images/d3rs.jpg') },
   { uri: require('./../images/d3rs.jpg') },
 ]
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
 //var userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWJlZjUxNTM3YjQ0NTg3YzlmM2ZmMDRmIiwiaWF0IjoxNTQyNDI1NjM0LCJleHAiOjE1NDI0MzI4MzR9.yj8_g1Vd43fR_6-AciWbjFzPZOZSrlLw0JylSteBz8o"
 export default class Matches extends React.Component {
 
@@ -125,21 +128,6 @@ export default class Matches extends React.Component {
     
     userToken= await Expo.SecureStore.getItemAsync("userToken");
 
-  
-    // if(userToken1 != null){
-    //   userToken = userToken1;
-    //   console.log("userToken1");
-    // }
-    // else if(userToken2 != null){
-    //   userToken = userToken2;
-    //   console.log("userToken2");
-    // }
-    // else if(userToken3 != null){
-    //   userToken = userToken3;
-    //   console.log("userToken3");
-    // }
-    
-    //let userToken = user2token;
     if (userToken != null) {
       console.log(userToken);
       var grabUser = {
@@ -153,7 +141,8 @@ export default class Matches extends React.Component {
       .then(
         (response) => {
           if(response.success){
-            //console.log(response.array);
+            console.log(response);
+            if(response.array){
             var array = JSON.parse(response.array);
             console.log(array.length);
             for(let i=0; i< array.length; i++){
@@ -162,7 +151,7 @@ export default class Matches extends React.Component {
             console.log(Users);
           }
         }
-
+        }
       ).catch((error) => console.error(error)
       );
     }
@@ -240,25 +229,44 @@ export default class Matches extends React.Component {
       else if (i == this.state.currentIndex) {
 
         return (
+         
           <Animated.View
             {...this.PanResponder.panHandlers}
-            key={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT - 400, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
+            key={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT*0.75, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
+          
+              <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.Name}>
+            <Left/>
+            <Body>
+            <Text style={styles.NameText}>{item.firstName + " " + item.lastName}</Text>
+            </Body>
+            <Right />
+            </Header>
+            
             <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
               <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
-
             </Animated.View>
 
             <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
               <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
             </Animated.View>
-
+           
+           <Container style={styles.Image}>
             <Image
-              style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
+              style={{ flex: 1, height: null, width: width*0.85, resizeMode: 'cover', borderRadius: 20, backgroundColor: 'black' }}
               source={image} />
-              <Text>
-             {item.firstName}
-              </Text>
+            </Container>
+
+            {/* <Container style={styles.Tags}>
+            <Text style = {styles.Tag}>IA</Text>
+            <Text style = {styles.Tag}>IB</Text>
+            </Container>  */}
+
+            <Container style= {styles.BIO}>
+            <Text style={styles.BIOText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed mi ex. Proin luctus, purus non faucibus bibendum, ligula justo blandit quam, interdum elementum dui eros sed erat. Aliquam consectetur massa id augue viverra facilisis.  </Text>
+            </Container>
+          
           </Animated.View>
+          
         )
       }
       else {
@@ -267,8 +275,15 @@ export default class Matches extends React.Component {
             key={item.id} style={[{
               opacity: this.nextCardOpacity,
               transform: [{ scale: this.nextCardScale }],
-              height: SCREEN_HEIGHT - 420, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
+              height: SCREEN_HEIGHT*0.75, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
             }]}>
+             <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.Name}>
+            <Left/>
+            <Body>
+            <Text style={styles.NameText}>{item.firstName + " " + item.lastName}</Text>
+            </Body>
+            <Right />
+            </Header>
             <Animated.View style={{ opacity: 0, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
               <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
 
@@ -279,9 +294,15 @@ export default class Matches extends React.Component {
 
             </Animated.View>
 
+             <Container style={styles.Image}>
             <Image
-              style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
+              style={{ flex: 1, height: null, width: width*0.85, resizeMode: 'cover', borderRadius: 20, backgroundColor: 'black' }}
               source={image} />
+            </Container>
+
+            <Container style= {styles.BIO}>
+            <Text style={styles.BIOText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed mi ex. Proin luctus, purus non faucibus bibendum, ligula justo blandit quam, interdum elementum dui eros sed erat. Aliquam consectetur massa id augue viverra facilisis.  </Text>
+            </Container>
             
           </Animated.View>
         )
@@ -291,21 +312,36 @@ export default class Matches extends React.Component {
 
   render() {
     return (
+      <Container>
+      
+      <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
+            <Left/>
+            <Body>
+            <Title style={styles.headerTitle}>Matching</Title>
+            </Body>
+            <Right />
+            </Header>
       <View style={{ flex: 1 }}>
-        <View style={{ height: 60 }}>
-
+        <View style={{ height: 0 }}>
+       
+            
+          
         </View>
         <View style={{ flex: 1 }}>
           {this.renderUsers()}
         </View>
-        <View style={{ height: 60 }}>
+        <View style={{ height: 0 }}>
 
         </View>
       </View>
+      
+      </Container>
 
     );
   }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -314,5 +350,142 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 100
+  },centerCards: {
+    flex: 1,
+    width: width,
+    justifyContent: "center",
+    alignItems: "center"
   },
+  card: {
+    flex: 1,
+    width: width * 0.8
+  },
+  cardImg: {
+    width: 85,
+    height: 85
+  },
+  centerText: {
+    flex: 1,
+    width: width,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  avatarImg: {
+    width: 75,
+    height: 75
+  },
+  avatarCard:{
+    marginTop: 20,
+    marginBottom : 24,
+    flex: 1,
+    width: 100
+  },
+  header:{
+    backgroundColor: '#2c2638',
+    height: height*0.1
+  },
+  headerTitle:{
+    paddingTop:height*0.03,
+    fontFamily: 'BebasNeue',
+    fontSize : 25,
+    textAlign: 'center',
+    color: '#ffffff',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  Name:{
+    backgroundColor: '#2c2638',
+    height: height*0.07,
+    
+    marginBottom: height*0.03,
+    marginTop: height*0.02,
+    width: width*0.9,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    borderRadius:10,
+    opacity: 0.9
+  },
+  Image:{
+    Flex:1,
+    backgroundColor: 'transparent',
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  Tags:{
+    height: height*0.05,
+    paddingTop: height*0.02,
+    backgroundColor: 'transparent',
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    flexDirection: 'row',
+  },
+  Tag:{
+    Flex:0.3,
+    backgroundColor: 'transparent',
+    textAlign: 'center',
+    height: 0.001*height,
+  },
+  NameText:{
+    fontFamily: 'BebasNeue',
+    fontSize : 23,
+    textAlign: 'center',
+    color: '#ffffff',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  BIO:{
+    marginTop: height*0.04,
+    flex: 0.4,
+    height: height*0.4,
+    flexDirection:'row',
+    paddingTop:15,
+    paddingLeft: 15,
+    paddingRight: 5,
+    backgroundColor: '#2c2638',
+    marginBottom: height*0.03,
+    
+    width: width*0.9,
+    alignSelf: 'center',
+    borderRadius:10,
+    opacity: 0.9,
+  },
+  BIOText:{
+    flex: 1,
+    flexDirection:'row',
+    marginTop: 0,
+    fontFamily: 'BebasNeue',
+    fontSize : 19,
+    color: '#ffffff',
+    textAlign: "left",
+    flexWrap: "wrap",
+    resizeMode: 'contain',
+  },
+  numberText:{
+    fontSize:19,
+    color:'#463143',
+    marginRight: 5,
+    fontFamily: 'Poppins-Bold'
+  },
+  titleText:{
+    fontSize:19,
+    color:'#414345',
+    fontFamily: 'Poppins'
+  },
+  subTitleText:{
+    fontSize:14,
+    color: 'grey',
+    fontFamily: 'Poppins'
+  },
+  rowContainer: {
+    flex:0,
+    justifyContent: 'center',
+    alignItems:'center',
+    flexDirection: 'row'
+  },
+  avatarText:{
+    fontFamily: 'Poppins'
+  }
 });
