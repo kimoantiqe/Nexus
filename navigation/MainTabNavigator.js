@@ -7,6 +7,7 @@ import HomeScreen from '../screens/HomeScreen';
 import Matches from '../screens/DeckSwiper';
 import SettingsScreen from '../screens/SettingsScreen';
 import ChatDashboard from '../screens/ChatDashboard';
+import ChatScreen from '../screens/ChatScreen'
 import AddButton from "../screens/TabBarIcon";
 import QR from "../screens/instantMatch"
 
@@ -32,7 +33,8 @@ HomeStack.navigationOptions = {
 };
 
 const ChatStack = createStackNavigator({
-  Chat: ChatDashboard,
+  ChatDashboard: ChatDashboard,
+  ChatScreen: ChatScreen
 });
 
 ChatStack.navigationOptions = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder,Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
 import Expo from 'expo'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import {userToken3} from './Login'
 import {userToken1} from './CheckAuth'
 import {userToken2} from './RegCompleteProfile'
-import {Header, Title, Left, Right, Body, Content, Container} from "native-base";
+import {Header, Title, Left, Right, Body, Content, Container, Button} from "native-base";
 
 const APIcall      = require("../API_calls/APIs");
 

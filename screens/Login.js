@@ -20,10 +20,6 @@ import AppNavigator from "../navigation/AppNavigator";
 
 import Background from '../components/Background';
 
-//import actions for login and sendbird
-import { connect } from "react-redux";
-import { sendbirdLogin } from "../actions";
-
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
@@ -32,7 +28,7 @@ const APIcall      = require("../API_calls/APIs");
 var userToken3;
 export {userToken3};
 
-class Login extends React.Component {
+export default class Login extends React.Component {
   static navigationOptions = {
     header: null,
     title: "Login"
@@ -240,14 +236,3 @@ const loginFb = async function logIn() {
   }
 }
 
-function mapStateToProps({ login }) {
-  const { error, user } = login;
-  return { error, user };
-}
-
-//Added this line to export the screen and connect to sendbird database at
-//the same time.
-export default connect(
-  mapStateToProps,
-  { sendbirdLogin }
-)(Login);

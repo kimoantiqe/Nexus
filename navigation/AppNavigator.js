@@ -10,11 +10,10 @@ export default createSwitchNavigator({
   AuthLoading: CheckAuth,
   Main: MainTabNavigator,
   Auth: AuthStack,
-
   },
   {
 
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'Auth',
 
   }
 

@@ -1,8 +1,11 @@
-import {AsyncStorage} from "react-native";
+import {AsyncStorage} from "react-native"
+import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://192.168.1.115:1337/api";
+const apiURL = "http://localhost:1337/api";
 module.exports.apiURL = apiURL;
+
+var regUserID;
 
 const _bootstrapAsync = async (props) => {
     const userToken = await AsyncStorage.getItem('userToken');
@@ -16,7 +19,7 @@ const _bootstrapAsync = async (props) => {
   }
   };
 
-  var apiURL = 'http://192.168.1.115:1337/api';
+  var apiURL = 'http://localhost:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)
@@ -71,9 +74,8 @@ const _bootstrapAsync = async (props) => {
   
               populate();
     
-              // call to sendbird action to add the user to sendbird
-              props.sendbirdLogin({ userId: response.user.id, nickname: response.user.firstName });
-    
+              sbConnect(response.user.id, response.user.firstName);
+
               props.navigation.navigate("Main");
             } else {
               switch (response.error) {
@@ -161,8 +163,9 @@ const Register = async (inputs, props) =>
                             { 
                                 if (response.success) 
                                 {
-                                    console.log(inputs);
+                                    AsyncStorage.setItem("userid", response.user.id);
                                     AsyncStorage.setItem('userToken', response.token);
+                                    regUserID = response.user.id;
                                     props.navigation.navigate('RCP');
                                 } else 
                                 {
@@ -257,9 +260,16 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
         fetch(apiURL + '/user', settings)
         .then((response) => response.json())
-        .then((response) => console.log(response))
-        .then(async () => populate())
-        .then(props.navigation.navigate('Main'));
+        .then((response) => {
+            Expo.SecureStore.setItemAsync("userToken", response.token);
+
+            populate();
+  
+            sbConnect(regUserID, first);
+
+            props.navigation.navigate("Main");
+
+        })
 
     }
 

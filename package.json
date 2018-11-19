@@ -7,11 +7,14 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "node_modules/.bin/jest"
   },
   "jest": {
     "preset": "jest-expo",
-    "verbose": true
+    "verbose": true,
+    "transformIgnorePatterns": [
+      "/node_modules/(?!native-base)/"
+    ]
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
@@ -35,13 +38,19 @@
     "yarn": "^1.12.3"
   },
   "devDependencies": {
+    "babel-jest": "^23.6.0",
     "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^5.8.0",
     "eslint-config-rmotr": "0.0.8",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.6.0",
     "jest-expo": "30.0.0",
+    "jest-serializer-enzyme": "^1.0.0",
     "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^16.6.0"
+    "react-dom": "^16.6.3",
+    "react-test-renderer": "^16.6.3",
+    "redux-mock-store": "^1.5.3"
   }
 }
