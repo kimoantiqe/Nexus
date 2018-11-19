@@ -8,9 +8,9 @@ import { WebBrowser } from 'expo';
 import {user2Token} from './HomeScreen'
 import { MonoText } from '../components/StyledText';
 
+const APIcall      = require("../API_calls/APIs");
 
-
-var apiURL = 'http://localhost:1337/api';
+var apiURL = APIcall.apiURL;
 
 var currUserID;
 var firstName;

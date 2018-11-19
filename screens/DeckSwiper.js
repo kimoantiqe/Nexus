@@ -8,11 +8,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import {userToken3} from './Login'
 import {userToken1} from './CheckAuth'
 import {userToken2} from './RegCompleteProfile'
-import {Header, Title,Button, Left, Right, Body, Content, Container} from "native-base";
+import {Header, Title, Left, Right, Body, Content, Container, Button} from "native-base";
+
+const APIcall      = require("../API_calls/APIs");
 
 var userToken;
 //var userToken2;
-var apiURL = 'http://localhost:1337/api';
+var apiURL = APIcall.apiURL;
 const Users = [
   {  uri: require('./../images/d3rs.jpg') },
   { uri: require('./../images/d3rs.jpg') },
@@ -75,49 +77,7 @@ export default class Matches extends React.Component {
 
   }
 
-   likedUser = async (currUserID) => {
-    if (userToken != null) {
-      console.log("This is liked user " + currUserID);
-
-
-      var updateUser = {
-        method: 'PUT',
-        headers: {
-          'Authorization': userToken,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          'liked' : [currUserID]
-          })
-      };
-      await fetch(apiURL + '/user', updateUser).then(response => response.json())
-      .then(async(response) => {console.log(response);})
-    }
-  }
-
-
-  //Function that is used to report a dislike to the server
-  dislikedUser = async (currUserID) => {
-
-    //userToken = await AsyncStorage.getItem('userToken');
-
-    console.log("This is disliked user" + currUserID);
-
-    if (userToken != null) {
-      console.log("This is disliked user" + currUserID);
-      var updateUser = {
-        method: 'PUT',
-        headers: {
-          'Authorization': userToken,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          'disliked' : [currUserID]
-          })
-      }
-      fetch(apiURL + '/user', updateUser)
-    }
-  }
+   
 
   static navigationOptions = {
     header: null,
@@ -174,7 +134,7 @@ export default class Matches extends React.Component {
           Animated.spring(this.position, {
             toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
           }).start(() => {
-            this.likedUser(Users[this.state.currentIndex]._id);
+            APIcall.likedUser(Users[this.state.currentIndex]._id);
            if(this.state.currentIndex ==2){
              this.getUser();
             this.setState({ currentIndex: 0}, () => {
@@ -193,7 +153,7 @@ export default class Matches extends React.Component {
           Animated.spring(this.position, {
             toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
           }).start(() => {
-            this.dislikedUser(Users[this.state.currentIndex]._id);
+            APIcall.dislikedUser(Users[this.state.currentIndex]._id);
             console.log("shshshsh");
             if(this.state.currentIndex ==2){
               this.getUser();

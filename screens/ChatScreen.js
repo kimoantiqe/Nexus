@@ -23,6 +23,7 @@ import {
     Title
   } from "native-base";
 
+import {Icon} from 'react-native-elements'
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
@@ -196,9 +197,14 @@ export default class ChatScreen extends Component {
                         onChangeText={(text) => this.setState({ text })}
                         value={this.state.text}
                     />
-                    <TouchableHighlight onPress={this.sendMessage} style={styles.sendButton} underlayColor={themeDarkColor}>
-                       <Text style={styles.sendButtonText}>Send</Text>
-                    </TouchableHighlight>
+                   <Icon
+                        raised
+                        name='send'
+                        type='font-awesome'
+                        color= {themeColor}
+                        size = '20'
+                        onPress={this.sendMessage} 
+                    />
                 </View>
             </KeyboardAvoidingView>
         </React.Fragment>

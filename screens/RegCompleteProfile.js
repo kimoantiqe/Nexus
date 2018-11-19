@@ -3,613 +3,299 @@ import { LinearGradient } from 'expo';
 import {
   ActivityIndicator,
   AsyncStorage,
-  Button,
   StatusBar,
   StyleSheet,
   ScrollView,
-  View,
   Image,
-  Text,
   Dimensions,
    KeyboardAvoidingView, Alert, TextInput, TouchableOpacity,
 } from 'react-native';
+import {Badge, Container, Content, Text, Item, Header, View, Tabs, Tab, Button, TabHeading, Input, Form, Textarea} from 'native-base'
+import Background from '../components/Background';
 import MainTabNavigator from '../navigation/MainTabNavigator';
 import AppNavigator from '../navigation/AppNavigator';
+const API = require("../API_calls/APIs");
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
-
-var userToken2;
-export {userToken2};
-
 export default class RegCompleteProfile extends React.Component {
   static navigationOptions = {
     header: null,
     title: 'RCP',
   };
- 
-  
+
   state = {
-      toggles:[
-      false,
-     false,
-     false,
-       false,
-      false,
-       false,
-  false,
-      false,
-       false,
-      false,
-      false,
-  false],
+  interests: {},
+  LF: {},
+  industry: {},
   bio: "",
+  firstName: "",
+  lastName: ""
   }
 
   handleBio = (text) => {
     this.setState({ bio: text });
  }
 
-  onPressIA()
+ handleFirstname = (text) => {
+  this.setState({ firstName: text });
+}
+
+handleLastname = (text) => {
+  this.setState({ lastName: text });
+}
+
+  onPressInterests(interest)
   {
-      let newtoggle = this.state.toggles;
-      newtoggle[0] = !this.state.toggles[0];
-      this.setState({toggles:newtoggle});
+    if(this.state.interests[interest])
+    {
+        let interesttemp = this.state.interests;
+        interesttemp[interest] = false;
+        this.setState({interests:interesttemp});
+    } else 
+    {
+        let interesttemp = this.state.interests;
+        interesttemp[interest] = true;
+        this.setState({interests:interesttemp});
+    }
   }
 
-  onPressIB()
+  onPressLF(lf)
   {
-    let newtoggle = this.state.toggles;
-    newtoggle[1] = !this.state.toggles[1];
-    this.setState({toggles:newtoggle});
+    if(this.state.LF[lf])
+    {
+        let LFtemp = this.state.LF;
+        LFtemp[lf] = false;
+        this.setState({LF:LFtemp});
+    } else 
+    {
+        let LFtemp = this.state.LF;
+        LFtemp[lf] = true;
+        this.setState({LF:LFtemp});
+    }
   }
 
-  onPressIC()
+  onPressIndustry(ind)
   {
-    let newtoggle = this.state.toggles;
-    newtoggle[2] = !this.state.toggles[2];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressID()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[3] = !this.state.toggles[3];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressLA()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[4] = !this.state.toggles[4];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressLB()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[5] = !this.state.toggles[5];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressLC()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[6] = !this.state.toggles[6];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressLD()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[7] = !this.state.toggles[7];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressINA()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[8] = !this.state.toggles[8];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressINB()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[9] = !this.state.toggles[9];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressINC()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[10] = !this.state.toggles[10];
-    this.setState({toggles:newtoggle});
-  }
-
-  onPressIND()
-  {
-    let newtoggle = this.state.toggles;
-    newtoggle[11] = !this.state.toggles[11];
-    this.setState({toggles:newtoggle});
+    if(this.state.industry[ind])
+    {
+        let industrytemp = this.state.industry;
+        industrytemp[ind] = false;
+        this.setState({industry:industrytemp});
+    } else 
+    {
+        let industrytemp = this.state.industry;
+        industrytemp[ind] = true;
+        this.setState({industry:industrytemp});
+    }
   }
 
   render() {
 
-    const {toggles} = this.state;
+    const {industry, interests, LF} = this.state;
 
     return (
 
-<View style = {styles1.contaier} >
-<LinearGradient
-                    colors={ [ '#3c1053', '#000000']}
-                    locations={[0.0, 3.7]}
-                    style={{
-                      position: 'absolute',
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      height: height,
-                    }}
-            />
-            <View style = {styles1.cloudcon}>
-                <Image
-                style = {styles1.cloud}
-                source ={require('../images/cloud3.png')} />
-            </View>
-
-            <View style = {styles1.cloudcon}>
-                <Image
-                style = {styles1.cloud2}
-                source ={require('../images/cloud3.png')} />
-            </View>
-            <View style = {styles1.cloudcon}>
-                <Image
-                style = {styles1.cloud3}
-                source ={require('../images/cloud3.png')} />
-            </View>
-
-
-
-
-
-            <View style = {{flex:0.7}}>
-                    <View style = {styles.containter}>
-                    <KeyboardAvoidingView behavior = "padding">
-                    <Text style = {styles.input}>Please Choose your interest:</Text>
-                        <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true}>
-                                <View style = {{ flexDirection: 'row',  }}>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressIA()}
-                                            style = {{
-                                                backgroundColor: toggles[0]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Interest A</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressIB()}
-                                            style = {{
-                                                backgroundColor: toggles[1]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Interest B</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressIC()}
-                                            style = {{
-                                                backgroundColor: toggles[2]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Interest C</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressID()}
-                                            style = {{
-                                                backgroundColor: toggles[3]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Interest D</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </ScrollView>
-                                <Text style = {styles.input}>Please Choose what you're looking for:</Text>
-                        <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true}>
-                                <View style = {{ flexDirection: 'row',  }}>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressLA()}
-                                            style = {{
-                                                backgroundColor: toggles[4]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Looking for A</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressLB()}
-                                            style = {{
-                                                backgroundColor: toggles[5]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Looking for B</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressLC()}
-                                            style = {{
-                                                backgroundColor: toggles[6]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Looking for C</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressLD()}
-                                            style = {{
-                                                backgroundColor: toggles[7]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Looking for D</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </ScrollView>
-                                <Text style = {styles.input}>Please Choose your industry:</Text>
-                        <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true}>
-                                <View style = {{ flexDirection: 'row',  }}>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressINA()}
-                                            style = {{
-                                                backgroundColor: toggles[8]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Industry A</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressINB()}
-                                            style = {{
-                                                backgroundColor: toggles[9]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Industry B</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressINC()}
-                                            style = {{
-                                                backgroundColor: toggles[10]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Industry C</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress = {() => this.onPressIND()}
-                                            style = {{
-                                                backgroundColor: toggles[11]? 'fuchsia' : '#00ffff',
-                                                height: height*0.10,
-                                                width: width*0.35,
-                                                justifyContent: 'space-evenly',
-                                                borderRadius: 30,
-                                                paddingTop: height*0.01,
-                                                paddingBottom: height*0.01,
-                                                paddingLeft: width*0.079,
-                                                paddingRight: width*0.079,
-                                                borderColor: 'fuchsia',
-                                                borderWidth: width*0.005,
-                                            }}>
-                                            <Text style = {{color: 'white', fontWeight: '700'}}>Industry D</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </ScrollView>
-
-                                <Text style = {styles.input}>Please enter a brief Bio:</Text>
-                                <TextInput
-                                    style = {styles.input1}
-                                    onChangeText = {this.handleBio}
-                                    placeholder = {this.state.bio}
-                                />
-                                <Button
-                                    title = "Complete Profile!"
-                                    color = "#659bf2"
-                                    onPress = {this.cmp}
-                                />
-                                </KeyboardAvoidingView>
-                            </View>
-                        </View>
-                    </View>
+        <Container style={{backgroundColor: '#16131d'}}>
+          <Tabs style={{paddingTop: height*0.025}}>
+            <Tab heading= {<TabHeading style={{backgroundColor: '#16131d'}}><Text style={{color: '#c75e9a', fontSize: 18}}>PERSONAL DETAILS</Text></TabHeading>} >
+            <Background logo= {false}/>
+            <Content contentContainerStyle={{paddingHorizontal: width*0.05, }}>
+            <Form>
+              <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300', padding: width*0.02}}>First Name</Text>
+            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+            <Input placeholder="e.g., Alex" style={{color: '#f2f2f2', fontSize: 22, fontWeight: '400'}} onChangeText = {this.handleFirstname}/>
+            </Item>
+            <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300', padding: width*0.02}}>Last Name</Text>
+            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+            <Input placeholder="e.g., Elliot" style={{color: '#f2f2f2', fontSize: 22, fontWeight: '400'}} onChangeText = {this.handleLastname}/>
+            </Item>
+            <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300', padding: width*0.02}}>Bio</Text>
+            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+            <Textarea rowSpan={6} rounded placeholder="Please enter a brief bio"  style={{color: '#f2f2f2', fontSize: 22, fontWeight: '400'}} onChangeText = {this.handleBio}/>
+            </Item>
+            </Form>
+            </Content>
+            </Tab>
+            <Tab heading= {<TabHeading style={{backgroundColor: '#16131d'}}><Text style={{color: '#c75e9a', fontSize: 20}}> PASSION </Text></TabHeading>} >
+            <Background logo= {false}/>
+        <Content>
+        
+        <Text style={{color: '#c75e9a', fontSize: 22, paddingLeft: width*0.05}}>INTERESTS</Text>
+            <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true} contentContainerStyle={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Item style={{borderColor: 'transparent'}}>
+          <Badge style={{   backgroundColor: interests["IA"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: interests["IA"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressInterests("IA")}>
+            <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300'}}>Interest A</Text>
+            </Button>
+          </Badge>
+          </Item>
+          <Item style={{borderColor: 'transparent'}}> 
+          
+          </Item>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: interests["IB"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: interests["IB"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressInterests("IB")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Interest B</Text>
+            </Button>
+          </Badge>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: interests["IC"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: interests["IC"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressInterests("IC")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Interest C</Text>
+            </Button>
+          </Badge>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: interests["ID"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: interests["ID"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressInterests("ID")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Interest D</Text>
+            </Button>
+          </Badge>
+          </Form>
+          
+        </ScrollView>
+        <Text style={{color: '#c75e9a', paddingTop: height*0.03, paddingLeft: width*0.05, fontSize: 22}}>LOOKING FOR</Text>
+            <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true} contentContainerStyle={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
+            <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+            <Item style={{borderColor: 'transparent'}}> 
+          <Badge style={{ backgroundColor: LF["LA"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: LF["LA"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressLF("LA")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Looking for A</Text>
+            </Button>
+          </Badge>
+          </Item>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: LF["LB"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: LF["LB"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressLF("LB")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Looking for B</Text>
+            </Button>
+          </Badge>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: LF["LC"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: LF["LC"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressLF("LC")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Looking for C</Text>
+            </Button>
+          </Badge>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: LF["LD"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: LF["LD"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressLF("LD")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Looking for D</Text>
+            </Button>
+          </Badge>
+          </Form>
+        
+        </ScrollView>
+        <Text style={{color: '#c75e9a', paddingTop: height*0.03, paddingLeft: width*0.05, fontSize: 22}}>INDUSTRY</Text>
+            <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true} style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
+            <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+            <Item style={{borderColor: 'transparent'}}> 
+          <Badge style={{ backgroundColor: industry["INA"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: industry["INA"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressIndustry("INA")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Industry A</Text>
+            </Button>
+          </Badge>
+          </Item>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: industry["INB"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: industry["INB"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressIndustry("INB")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Industry B</Text>
+            </Button>
+          </Badge>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: industry["INC"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: industry["INC"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressIndustry("INC")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Industry C</Text>
+            </Button>
+          </Badge>
+          </Form>
+          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
+          <Badge style={{ backgroundColor: industry["IND"]? '#c75e9a' : '#16131d',
+                            minHeight: height*0.055,
+                            borderWidth: width*0.0015, 
+                            borderColor: industry["IND"]? '#c75e9a' : '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+          <Button transparent light onPress = {() => this.onPressIndustry("IND")}>
+            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Industry D</Text>
+            </Button>
+          </Badge>
+          </Form>
+        </ScrollView>
+        <Content scrollEnabled={false} contentContainerStyle={{flexDirection: 'row', justifyContent: 'center', padding: width*0.05}}>
+        <Button rounded style={{backgroundColor: '#16131d', borderWidth: width*0.003, borderColor: 'white', paddingHorizontal: width*0.05}} 
+                onPress = {()=>API.CompleteProfile(this.state.firstName, this.state.lastName, this.state.interests, this.state.industry, this.state.LF, this.state.bio, this.props)}>
+            <Text style={{color: '#f2f2f2', fontSize: 20, fontWeight: '300'}}>Finalize Profile</Text>
+          </Button>
+          </Content>
+        </Content>
+        </Tab>
+        </Tabs>
+      </Container>
 
 );
   }
 
-  cmp = async () => {
-
-    const userToken = await AsyncStorage.getItem('userToken');
-    userToken2 = userToken;
-    const first = await AsyncStorage.getItem('firstname');
-    const last = await AsyncStorage.getItem('lastname');
-    let i = 0;
-    const ili = ['IA', 'IB', 'IC', 'ID', 'LA', 'LB', 'LC', 'LD', 'INA', 'INB', 'INC', 'IND'];
-    let interest = '[';
-    let ind = '[';
-    let lf = '[';
-
-    for (let index = 0; index < ili.length; index++)
-    {
-        if (index < 4)
-        {
-            if (this.state.toggles[index])
-            {
-                interest += (i? ',': '') + "\"" + ili[index] + "\"";
-                i = 1;
-            }
-        } else
-        {
-        if (index === 4)
-        {
-            i = 0;
-            interest += "]";
-        }
-        if (index < 8)
-        {
-            if (this.state.toggles[index])
-            {
-                lf += (i? ',': '') + "\"" + ili[index] + "\"";
-                i = 1;
-            }
-        } else
-        {
-        if (index === 8)
-        {
-            i = 0;
-            lf += "]";
-        }
-        if (index < 12)
-        {
-            if (this.state.toggles[index])
-            {
-                ind += (i? ',': '') + "\"" + ili[index] + "\"";
-                i = 1;
-            }
-        }
-    }
-    }
-    }
-
-    ind += "]";
-
-    interest = JSON.parse(interest);
-    ind = JSON.parse(ind);
-    lf = JSON.parse(lf);
-
-    var settings = {
-        method: 'PUT',
-        headers: {
-            'Authorization': userToken,
-            'Content-Type': 'application/JSON'
-        },
-        body: JSON.stringify({
-            "firstName" : first,
-            "lastName" : last,
-            "interests" : interest,
-            "lookingFor": lf,
-            "industry"  : ind,
-            "bio" : this.state.bio
-        })
-        };
-
-        console.log(settings);
-
-        var apiURL = 'http://localhost:1337/api';
-
-        fetch(apiURL + '/user', settings)
-        .then((response) => response.json())
-        .then((response) => console.log(response))
-        .then(async () => this.populate())
-        .then(this.props.navigation.navigate('Main'));
-
-  }
-
-  //Function that is used to populate when the user logs in.
-  populate = async () => {
-    let userToken = await AsyncStorage.getItem('userToken');
-
-    console.log(userToken);
-
-    var apiURL = 'http://localhost:1337/api';
-
-    if (userToken != null) {
-      var populate = {
-        method: 'GET',
-        headers: {
-          'Authorization': userToken,
-          'Content-Type': 'application/json'
-        },
-      };
-      fetch(apiURL + '/user/popconn', populate);
-    }
-  }
-
 }
-
-const styles = StyleSheet.create({
-    containter: {
-        paddingTop: height*0.03,
-    },
-    input: {
-        marginTop: height*0.03,
-        marginBottom:0.02*height,
-        backgroundColor: 'transparent',
-        color: '#fff',
-        width:width,
-        fontSize: 22,
-        paddingLeft:width*0.01,
-    },
-    input1: {
-        height: height*0.14,
-        backgroundColor: '#fff',
-        color: '#000',
-        marginRight: width*0.03,
-        marginLeft: width*0.03,
-        paddingLeft: width*0.03,
-        paddingRight: width*0.03,
-        fontSize: 20,
-    }
-});
-
-const styles1 = StyleSheet.create({
-    contaier: {
-        flex: 1,
-        backgroundColor: 'transparent',
-        flexDirection:'column',
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'rgba(255, 0, 0, 1)',
-        position:'absolute',
-
-    },
-    logoContainer: {
-        paddingTop:50,
-        paddingBottom:30,
-        alignItems: 'center',
-        flex: 0.3,
-        justifyContent: 'center',
-    },
-    logoImage: {
-        width: width*0.82,
-        height: height*0.25,
-        resizeMode: 'contain'
-
-    },
-    formContainter: {
-      flex:0.5,
-      height:50,
-        justifyContent: 'center',
-        alignItems: 'center',
-
-    },
-    cloudcon: {
-      position: 'absolute',
-      width:width*0.2,
-      height:height*0.1,
-    },
-    cloud: {
-      marginTop:height*0.05,
-      opacity:0.05,
-      width:width*0.4,
-      height:height*1.2,
-      resizeMode:'contain',
-
-    },
-    cloud2: {
-      marginTop:height*0.17,
-      marginRight:width*0.4,
-      opacity:0.07,
-      width:width*0.7,
-      height:height*0.07,
-      resizeMode:'contain',
-
-    },
-    cloud3: {
-      marginTop:height*0.46,
-      marginLeft:width*0.3,
-      opacity:0.06,
-      width:width*1.2,
-      height:height*0.13,
-      resizeMode:'contain',
-
-    }
-});
