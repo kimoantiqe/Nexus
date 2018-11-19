@@ -16,7 +16,7 @@ An app that helps you expand your professional network in an efficient and fun m
     <img src="https://api.codacy.com/project/badge/Grade/9e090f0a5cf14a5baf72145d284aa1e1"
       alt="Codacy Code Grade" />
   </a>
-  [![Coverage Status](https://coveralls.io/repos/github/kimoantiqe/Nexus/badge.svg?branch=master)](https://coveralls.io/github/kimoantiqe/Nexus?branch=master) 
 </p>
+ [![Coverage Status](https://coveralls.io/repos/github/kimoantiqe/Nexus/badge.svg?branch=master)](https://coveralls.io/github/kimoantiqe/Nexus?branch=master) 
 
 <br>
