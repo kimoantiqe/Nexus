@@ -144,6 +144,7 @@ module.exports.getUser1 = (done,chai,server) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               res.body.should.have.property('success').eql(true);
+              console.log(res.body);
               res.body.should.have.property('user').have.property('email').eql(dummyUser.user.email);
               res.body.should.have.property('user').have.property('interests').include('IA');
               res.body.should.have.property('user').have.property('interests').include('IB');
@@ -214,7 +215,7 @@ module.exports.putLike1 = (done,chai,server) => {
     chai.request(server)
         .put('/api/user')
         .set('Content-Type', 'application/json')
-                    .set('Authorization',dummyUser.token)
+        .set('Authorization',dummyUser.token)
         .send(newDetails)
         .end((err, res) => {
               res.should.have.status(200);
