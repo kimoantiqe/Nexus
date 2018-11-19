@@ -20,7 +20,7 @@ function get10users(arr, callback) {
 	let userarr2= [];
 	let ids=0;
 	arr.forEach( function(element){
-		getUser(element,function(newuser){ userarr2.push(newuser);
+		  getUser(element,function(newuser){ userarr2.push(newuser);
 			ids++;
 			if(ids == arr.length){
 			callback(userarr2);
@@ -61,9 +61,9 @@ const popconns = async function(req, res){
   let results=[];
   console.log("IM HERE");
 	//sorts all users in the database according to their score
-  await User.find({}, async function(err, users) {
+  await User.find({},  async function(err, users) {
     var results =[];
-    await users.forEach( function(otheruser) {
+     await users.forEach( function(otheruser) {
       if(!user.liked.map((user) => user.toString()).includes(otheruser._id.toString()) &&
       !user.disliked.map((user) => user.toString()).includes(otheruser._id.toString()) &&
        otheruser._id.toString() != user._id.toString() ){
@@ -106,13 +106,11 @@ const popconns = async function(req, res){
 
 		//store in the users potential matches array
     for(let x=0; x<results.length; x++){
-      await potentialMatches.push(results[x].id);
+    await potentialMatches.push(results[x].id);
     }
     user.potentialMatches = potentialMatches;
     await user.save();
-    console.log("IM HERE");
+    return ReS(res, {user: user.toWeb()});
 });
-
-return ReS(res, {user: user.toWeb()});
 };
 module.exports.popconns = popconns;

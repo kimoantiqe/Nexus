@@ -183,44 +183,57 @@ describe('Nexus API test', async () => {
         it('should pass ', (done) => matching.getUser2(done,chai,server));
     });
 
-    //  describe('/GET /api/user/popconn', () => {
-    //     it('populate potential connections of user2', function( done ) { 
-    //         setTimeout( function () {
-    //             matching.popconn(done,chai,server)
-    //         }, 500 );
-    //     });
-    // });
-    describe('/GET /api/user/popconn', () => {
-        it('populate potential connections of user2', (done) => matching.popconn(done,chai,server));
+     describe('/GET /api/user/popconn', () => {
+        it('populate potential connections of user2', function( done ) { 
+            setTimeout( function () {
+                matching.popconn(done,chai,server)
+            }, 500 );
         });
+    });
+
+      describe('/GET /api/user', () => {
+        it('should pass ', (done) => matching.getUser2(done,chai,server));
+    });
     
+     describe('/api/user/getpotconn', () => {
+        it('should pass ', function( done ) { 
+            setTimeout( function () {
+                matching.getpotcon(done,chai,server)
+            }, 500 );
+        });
+    });
+
+    describe('/GET /api/user', () => {
+        it('should pass ', (done) => matching.getUser1(done,chai,server));
+    });
+
+    describe('/PUT /api/user', () => {
+        it('it should update the user ', (done) => matching.putLike1(done,chai,server));
+    });
+    describe('/PUT /api/user', () => {
+        it('it should update the user ', (done) => matching.putLike3(done,chai,server));
+    });
+
+    describe('/PUT /api/user', () => {
+        it('it should update the user ', (done) => matching.putLike2(done,chai,server));
+    });
+
+    describe('/PUT /api/user', () => {
+        it('it should update the user ', (done) => matching.putDislike(done,chai,server));
+    });
+
+    describe('/GET /api/user', () => {
+        it('should pass ', (done) => matching.getUserByID(done,chai,server));
+    });
+
 
     describe('/GET /api/user/popconn', () => {
-        it('populate potential connections of user2', (done) => matching.getpotcon(done,chai,server));
+        it('populate potential connections of user2', function( done ) { 
+            setTimeout( function () {
+                matching.popconn1(done,chai,server)
+            }, 500 );
         });
-    
-
-
-
-    //   describe('/GET /api/user', () => {
-    //     it('should pass ', (done) => matching.getUser2(done,chai,server));
-    // });
-    
-    //  describe('/api/user/getpotconn', () => {
-    //     it('should pass ', function( done ) { 
-    //         setTimeout( function () {
-    //             matching.getpotcon(done,chai,server)
-    //         }, 500 );
-    //     });
-    // });
-
-    // describe('/GET /api/user', () => {
-    //     it('should pass ', (done) => matching.getUser1(done,chai,server));
-    // });
-
-    // describe('/PUT /api/user', () => {
-    //     it('it should update the user ', (done) => matching.putLike1(done,chai,server));
-    // });
+    });
 
 
 });

@@ -173,7 +173,6 @@ module.exports.getUser2 = (done,chai,server) => {
 
 //Test populate connections
 module.exports.popconn = (done,chai,server) => {
-
     chai.request(server)
         .get('/api/user/popconn')
         .set('Content-Type', 'application/json')
@@ -189,7 +188,7 @@ module.exports.popconn = (done,chai,server) => {
 
 
 //Test populate connections
-module.exports.getpotcon = async(done,chai,server) => {
+module.exports.getpotcon = (done,chai,server) => {
 
     chai.request(server)
         .get('/api/user/getpotconn')
@@ -210,8 +209,9 @@ module.exports.getpotcon = async(done,chai,server) => {
 //Put User 1
 module.exports.putLike1 = (done,chai,server) => {
     let newDetails = {
-        liked: [ dummyUser2._id ]
+        liked: [ dummyUser2.user._id ]
     };
+    console.log(newDetails);
     chai.request(server)
         .put('/api/user')
         .set('Content-Type', 'application/json')
@@ -224,3 +224,102 @@ module.exports.putLike1 = (done,chai,server) => {
           done();
         });
 };
+
+
+//Put User 1
+module.exports.putLike2 = (done,chai,server) => {
+    let newDetails = {
+        liked: [ dummyUser.user._id ]
+    };
+    console.log(newDetails);
+    chai.request(server)
+        .put('/api/user')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser2.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+
+//Put User 1
+module.exports.putLike3 = (done,chai,server) => {
+    let newDetails = {
+        liked: [ dummyUser._id ]
+    };
+    console.log(newDetails);
+    chai.request(server)
+        .put('/api/user')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser2.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+
+//Put User 1
+module.exports.putDislike = (done,chai,server) => {
+    let newDetails = {
+        disliked: [ dummyUser2.user._id ]
+    };
+    
+    chai.request(server)
+        .put('/api/user')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+
+
+//Test populate connections
+module.exports.getUserByID = (done,chai,server) => {
+    chai.request(server)
+        .get('/api/user/getuser/?id=' + dummyUser2.user._id)
+        .set('Content-Type', 'application/json')
+        .set('Authorization', dummyUser.token)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+
+
+//Test populate connections
+module.exports.popconn1 = (done,chai,server) => {
+    chai.request(server)
+        .get('/api/user/popconn')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', dummyUser.token)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+              done();
+        });
+        
+};
+
+
+
+
+
+
