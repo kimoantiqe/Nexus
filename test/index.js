@@ -183,25 +183,19 @@ describe('Nexus API test', async () => {
         it('should pass ', (done) => matching.getUser2(done,chai,server));
     });
 
-     describe('/GET /api/user/popconn', () => {
-        it('populate potential connections of user2', function( done ) { 
-            setTimeout( function () {
-                matching.popconn(done,chai,server)
-            }, 500 );
-        });
+    describe('/GET /api/user', () => {
+        it('should pass ', (done) =>   matching.popconn(done,chai,server));
     });
+
 
       describe('/GET /api/user', () => {
         it('should pass ', (done) => matching.getUser2(done,chai,server));
     });
     
-     describe('/api/user/getpotconn', () => {
-        it('should pass ', function( done ) { 
-            setTimeout( function () {
-                matching.getpotcon(done,chai,server)
-            }, 500 );
-        });
+    describe('/GET /api/user', () => {
+        it('should pass ', (done) =>  matching.getpotcon(done,chai,server));
     });
+    
 
     describe('/GET /api/user', () => {
         it('should pass ', (done) => matching.getUser1(done,chai,server));
@@ -226,15 +220,10 @@ describe('Nexus API test', async () => {
         it('should pass ', (done) => matching.getUserByID(done,chai,server));
     });
 
-
-    describe('/GET /api/user/popconn', () => {
-        it('populate potential connections of user2', function( done ) { 
-            setTimeout( function () {
-                matching.popconn1(done,chai,server)
-            }, 500 );
-        });
+      
+    describe('/GET /api/user', () => {
+        it('should pass ', (done) =>  matching.popconn1(done,chai,server));
     });
-
 
 });
 
