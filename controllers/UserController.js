@@ -87,24 +87,24 @@ const update = async function(req, res){
 	pushDislikes(user,data.disliked);
 
 
-  //Deleted as they are handeled above
-  delete data.interests;
-  delete data.lookingFor;
-  delete data.industry;
-  delete data.matches;
-  delete data.potentialMatches;
-  delete data.liked;
-  delete data.disliked;
+ 	 //Deleted as they are handeled above
+  	delete data.interests;
+  	delete data.lookingFor;
+ 	delete data.industry;
+ 	delete data.matches;
+  	delete data.potentialMatches;
+  	delete data.liked;
+  	delete data.disliked;
 
-  user.set(data);
+  	user.set(data);
 
 
-  [err, user] = await to(user.save());
-  if(err){
+  	[err, user] = await to(user.save());
+  	if(err){
 
-	if(err.message.includes('E11000')){
-		if(err.message.includes('email')){
-			err = 'This email address is already in use';
+		if(err.message.includes('E11000')){
+			if(err.message.includes('email')){
+				err = 'This email address is already in use';
 		}
 
 		//else{ Add this to handle other duplicate entries
@@ -206,14 +206,19 @@ function pushLikes(user, field){
 				user.liked.push(field[i]);
 				user.potentialMatches.shift();
 				User.findById(field[i], function(err, newuser) {
-					if(newuser.liked.map( (user) => user.toString()).includes(user._id.toString())){
+					if(!newuser){
+						return -1;
+					}
+					else if(newuser.liked.map( (user) => user.toString()).includes(user._id.toString())){
 						newuser.matches.push(user._id);
 						user.matches.push(field[i]);
 						newuser.save();
 						user.save();
+						return 0;
 					}
 					else{
 						user.save();
+						return 0;
 					}
 				});
 			}

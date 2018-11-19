@@ -58,12 +58,12 @@ const popconns = async function(req, res){
   let OGlookingFor = user.lookingFor;
   let OGindustry = user.industry;
 
-let results=[];
-
+  let results=[];
+  console.log("IM HERE");
 	//sorts all users in the database according to their score
-  User.find({}, function(err, users) {
+  await User.find({}, async function(err, users) {
     var results =[];
-    users.forEach( function(otheruser) {
+    await users.forEach( function(otheruser) {
       if(!user.liked.map((user) => user.toString()).includes(otheruser._id.toString()) &&
       !user.disliked.map((user) => user.toString()).includes(otheruser._id.toString()) &&
        otheruser._id.toString() != user._id.toString() ){
@@ -93,22 +93,24 @@ let results=[];
            "score" : score,
            "interests" : otheruser.interests,
            "industry" : otheruser.industry
-	};
-	results.push(userOb);
-	}
-    });
+	        };
+          results.push(userOb);
+          
+          }
+      });
 		//sort based on score
     var potentialMatches = [];
     results.sort(function(a,b){
       return b.score-a.score;
-    });
+    }); 
 
 		//store in the users potential matches array
     for(let x=0; x<results.length; x++){
-      potentialMatches.push(results[x].id);
+      await potentialMatches.push(results[x].id);
     }
     user.potentialMatches = potentialMatches;
-    user.save();
+    await user.save();
+    console.log("IM HERE");
 });
 
 return ReS(res, {user: user.toWeb()});
