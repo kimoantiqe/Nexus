@@ -17,6 +17,5 @@ An app that helps you expand your professional network in an efficient and fun m
       alt="Codacy Code Grade" />
   </a>
 </p>
- [![Coverage Status](https://coveralls.io/repos/github/kimoantiqe/Nexus/badge.svg?branch=master)](https://coveralls.io/github/kimoantiqe/Nexus?branch=master) 
-
 <br>
+ [![Coverage Status](https://coveralls.io/repos/github/kimoantiqe/Nexus/badge.svg?branch=master)](https://coveralls.io/github/kimoantiqe/Nexus?branch=master) 
