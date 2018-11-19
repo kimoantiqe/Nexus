@@ -8,6 +8,7 @@ import Matches from '../screens/DeckSwiper';
 import SettingsScreen from '../screens/SettingsScreen';
 import ChatDashboard from '../screens/ChatDashboard';
 import AddButton from "../screens/TabBarIcon";
+import QR from "../screens/instantMatch"
 
 
 const HomeStack = createStackNavigator({
@@ -61,6 +62,9 @@ MatchesStack.navigationOptions = {
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
 });
+const QRStack = createStackNavigator({
+  QR: QR,
+});
 
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Profile',
@@ -72,16 +76,18 @@ SettingsStack.navigationOptions = {
   ),
 };
 
+QRStack.navigationOptions = () => ({
+  tabBarLabel: 'InstantMatches',
+  tabBarIcon: <AddButton />
+});
+
+
+
 
 export default createBottomTabNavigator({
   HomeStack,
   MatchesStack,
-  // Adding: {
-  //     screen: () => null,
-  //     navigationOptions: (navigation) => ({
-  //         tabBarIcon: <AddButton navigation = {navigation}/>
-  //     })
-  // },
+  QRStack,
   ChatStack,
   SettingsStack,
 }, {
