@@ -32,7 +32,7 @@ export default class Matches extends React.Component {
 
     this.position = new Animated.ValueXY()
     this.state = {
-      currentIndex: 0
+      currentIndex: -1
     }
 
     this.rotate = this.position.x.interpolate({
@@ -110,6 +110,9 @@ export default class Matches extends React.Component {
               Users[i] = (array[i]);
             }
             console.log(Users);
+            this.setState({ currentIndex: 0}, () => {
+              this.position.setValue({ x: 0, y: 0 })
+           });
           }
         }
         }
@@ -131,15 +134,18 @@ export default class Matches extends React.Component {
       onPanResponderRelease: (evt, gestureState) => {
 
         if (gestureState.dx > 120) {
-          Animated.spring(this.position, {
-            toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
-          }).start(() => {
+          console.log(20);
+           Animated.spring(this.position, {
+            toValue: { x: SCREEN_WIDTH + 500, y: gestureState.dy },
+            speed:200,
+          }).start(async() => {
+              console.log(40);
             APIcall.likedUser(Users[this.state.currentIndex]._id);
            if(this.state.currentIndex ==2){
-             this.getUser();
-            this.setState({ currentIndex: 0}, () => {
-              this.position.setValue({ x: 0, y: 0 })
-           });
+            console.log(50);
+            this.getUser();
+            console.log(60);
+            
           }
           else {
               this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
@@ -151,7 +157,8 @@ export default class Matches extends React.Component {
         }
         else if (gestureState.dx < -120) {
           Animated.spring(this.position, {
-            toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
+            toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy },
+            speed:200,
           }).start(() => {
             APIcall.dislikedUser(Users[this.state.currentIndex]._id);
             console.log("shshshsh");
@@ -182,12 +189,16 @@ export default class Matches extends React.Component {
   renderUsers = () => {
 
     return Users.map((item, i) => {
-
+      if(this.state.currentIndex == -1){
+        return(
+          <Text>LOADING</Text>
+        )
+      }
 
       if (i < this.state.currentIndex) {
         return null
       }
-      else if (i == this.state.currentIndex) {
+      else if (i == this.state.currentIndex ) {
 
         return (
          
@@ -203,11 +214,11 @@ export default class Matches extends React.Component {
             <Right />
             </Header>
             
-            <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
+            <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 300 }}>
               <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
             </Animated.View>
 
-            <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
+            <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 300 }}>
               <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
             </Animated.View>
            
@@ -241,7 +252,8 @@ export default class Matches extends React.Component {
              <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.Name}>
             <Left/>
             <Body>
-            <Text style={styles.NameText}>{item.firstName + " " + item.lastName}</Text>
+             
+            <Text style={styles.NameText}>{ item.firstname? item.firstName + " " + item.lastName : " "}</Text>
             </Body>
             <Right />
             </Header>

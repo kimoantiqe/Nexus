@@ -1,7 +1,7 @@
 import {AsyncStorage} from "react-native";
 import Expo from 'expo';
 
-const apiURL = "http://10.0.0.228:1337/api";
+const apiURL = "http://192.168.1.115:1337/api";
 module.exports.apiURL = apiURL;
 
 const _bootstrapAsync = async (props) => {
@@ -16,7 +16,7 @@ const _bootstrapAsync = async (props) => {
   }
   };
 
-  var apiURL = 'http://10.0.0.228:1337/api';
+  var apiURL = 'http://192.168.1.115:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)
@@ -267,6 +267,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
   module.exports.CompleteProfile = CompleteProfile;
 
   const likedUser = async (currUserID) => {
+    userToken= await Expo.SecureStore.getItemAsync("userToken");
     if (userToken != null) {
       console.log("This is liked user " + currUserID);
 
@@ -290,6 +291,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
   //Function that is used to report a dislike to the server
   const dislikedUser = async (currUserID) => {
 
+    userToken= await Expo.SecureStore.getItemAsync("userToken");
     //userToken = await AsyncStorage.getItem('userToken');
 
     console.log("This is disliked user" + currUserID);
