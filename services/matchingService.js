@@ -43,7 +43,7 @@ const getpotconn = async function(req, res){
 		}
 		get10users(arr,
 			function(userarr2){
-				console.log(userarr2);
+			
 				return ReS(res, {array:JSON.stringify(userarr2)});
 			});
 		};
@@ -59,7 +59,7 @@ const popconns = async function(req, res){
   let OGindustry = user.industry;
 
   let results=[];
-  console.log("IM HERE");
+  
 	//sorts all users in the database according to their score
   await User.find({},  async function(err, users) {
     var results =[];

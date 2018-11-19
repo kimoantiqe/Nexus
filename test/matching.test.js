@@ -107,7 +107,7 @@ module.exports.putUser1 = (done,chai,server) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               res.body.should.have.property('success').eql(true);
-              console.log(res.body);
+            
           done();
         });
 };
@@ -129,7 +129,7 @@ module.exports.putUser2 = (done,chai,server) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               res.body.should.have.property('success').eql(true);
-              console.log(res.body);
+             
           done();
         });
 };
@@ -144,7 +144,7 @@ module.exports.getUser1 = (done,chai,server) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               res.body.should.have.property('success').eql(true);
-              console.log(res.body);
+             
               res.body.should.have.property('user').have.property('email').eql(dummyUser.user.email);
               res.body.should.have.property('user').have.property('interests').include('IA');
               res.body.should.have.property('user').have.property('interests').include('IB');
@@ -211,7 +211,7 @@ module.exports.putLike1 = (done,chai,server) => {
     let newDetails = {
         liked: [ dummyUser2.user._id ]
     };
-    console.log(newDetails);
+   
     chai.request(server)
         .put('/api/user')
         .set('Content-Type', 'application/json')
@@ -231,7 +231,7 @@ module.exports.putLike2 = (done,chai,server) => {
     let newDetails = {
         liked: [ dummyUser.user._id ]
     };
-    console.log(newDetails);
+    
     chai.request(server)
         .put('/api/user')
         .set('Content-Type', 'application/json')
@@ -251,7 +251,6 @@ module.exports.putLike3 = (done,chai,server) => {
     let newDetails = {
         liked: [ dummyUser._id ]
     };
-    console.log(newDetails);
     chai.request(server)
         .put('/api/user')
         .set('Content-Type', 'application/json')
