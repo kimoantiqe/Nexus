@@ -2,6 +2,10 @@
  <img width=200 src="images/logo.png"/>
 </p>
 
+<h2 align="center">
+Frontend
+</h2>
+
 <p align="center">
 An app that helps you expand your professional network in an efficient and fun manner
 </p>
