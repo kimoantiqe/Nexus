@@ -10,7 +10,6 @@ export const getGroupChannelList = (groupChannelListQuery) => {
     return (dispatch) => {
         groupChannelListQuery.includeEmpty = true;
         if(groupChannelListQuery.hasNext){
-            console.log(groupChannelListQuery);
             sbGetChannels(groupChannelListQuery)
             .then((channels) => dispatch({
                 type: GROUP_CHANNEL_LIST_SUCCESS,

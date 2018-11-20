@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { sbCreateGroupChannelListQuery, sbCreateChannel } from '../sendbirdActions/groupChannel';
 import { getGroupChannelList, addGroupChannel } from '../actions';
 
-
 import {
     Header,
     Left,
