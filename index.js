@@ -6,7 +6,7 @@ const mongoose	        	  = require('mongoose');
 const passport          		= require('passport');
 const morgan            		= require('morgan');
 const bodyParser       		  = require('body-parser');
-
+const pe            = require('parse-error');
 
 /*Configuration*/
 const models = require("./models");
@@ -25,5 +25,17 @@ require('./routes/v1.js')(app, passport);
 var Nexus = app.listen(appConfig.port);
 console.log('Server has successfully started on PORT: ' + appConfig.port);
 
+
+/*****  HANDLE REJECTIONS AND ERRORS*****/
+process.on('unhandledRejection', (error) => {
+    console.error('Encountered an error', pe(error));
+});
+
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+/***************************************/
 
 module.exports = Nexus; // for testing
