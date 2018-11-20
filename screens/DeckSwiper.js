@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
+import { StyleSheet, ActivityIndicator,Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
 import Expo from 'expo'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -26,10 +26,7 @@ export default class Matches extends React.Component {
     super()
 
     this.position = new Animated.ValueXY()
-    this.state = {
-      currentIndex: -1
-    }
-
+    
     this.rotate = this.position.x.interpolate({
       inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
       outputRange: ['-10deg', '0deg', '10deg'],
@@ -42,10 +39,6 @@ export default class Matches extends React.Component {
       },
       ...this.position.getTranslateTransform()
       ]
-    }
-    this.likehandler = (itemid) => {
-      if(this.position.x < SCREEN_WIDTH / 2){
-      }
     }
     this.likeOpacity= this.position.x.interpolate({
         inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
@@ -68,17 +61,22 @@ export default class Matches extends React.Component {
       outputRange: [1, 0.8, 1],
       extrapolate: 'clamp'
     })
+    this.refreshScreen = this.refreshScreen.bind(this);
 
   }
 
-   
+  refreshScreen() {
+    this.setState({ lastRefresh: Date(Date.now()).toString() });
+  }
 
   static navigationOptions = {
     header: null,
   };
    //Function that grabs a user from the database.
    getUser = async () => {
+     console.log("im here");
     userToken= await Expo.SecureStore.getItemAsync("userToken");
+    console.log("im after");
 
     if (userToken != null) {
       console.log(userToken);
@@ -109,6 +107,9 @@ export default class Matches extends React.Component {
 
 
   componentWillMount() {
+    this.setState({ currentIndex: -1 }, () => {
+      this.position.setValue({ x: 0, y: 0 })});
+    
     this.PanResponder = PanResponder.create({
 
       onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -122,14 +123,17 @@ export default class Matches extends React.Component {
           console.log(20);
            Animated.spring(this.position, {
             toValue: { x: SCREEN_WIDTH + 500, y: gestureState.dy },
-            speed:200,
+            speed:1000,
           }).start(async() => {
            await APIcall.likedUser(Users[this.state.currentIndex]._id);
-           if(this.state.currentIndex ==NumUsers-1){
-            await this.getUser();
-            }
+           if(this.state.currentIndex == NumUsers-1){
+             await this.getUser();
+            this.setState({ currentIndex: 0}, () => {
+            this.position.setValue({ x: 0, y: 0 })
+            });
+          }
             else {
-             await this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+            await this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
             this.position.setValue({ x: 0, y: 0 })
             })
           }
@@ -139,17 +143,14 @@ export default class Matches extends React.Component {
         else if (gestureState.dx < -120) {
           Animated.spring(this.position, {
             toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy },
-            speed:200,
-          }).start(() => {
-            APIcall.dislikedUser(Users[this.state.currentIndex]._id);
-            if(this.state.currentIndex ==0){
-              this.getUser();
-             this.setState({ currentIndex: NumUsers-1 }, () => {
-               this.position.setValue({ x: 0, y: 0 })
-            });
+            speed:1000,
+          }).start(async () => {
+            await APIcall.dislikedUser(Users[this.state.currentIndex]._id);
+            if(this.state.currentIndex == NumUsers-1){
+               await this.getUser();
            }
            else {
-            this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+             await this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
               this.position.setValue({ x: 0, y: 0 })
             })
           }
@@ -163,22 +164,39 @@ export default class Matches extends React.Component {
         }
       }
     })
-    this.getUser();
+  }
+
+  async componentDidMount() {
+   await this.getUser();
   }
 
   renderUsers = () => {
 
-    return Users.map((item, i) => {
+    while(!Users.length){ 
+      this.getUser();
+      return(
+        <View style={[styles.container1, styles.horizontal1]}>
+        <ActivityIndicator size="large" color="#2c2638" />
+       
+      </View>
+      )
+    }
+   
+    
+     return Users.map((item, i) => {
       if(this.state.currentIndex == -1){
         return(
-          <Text key={item._id} >LOADING</Text>
+          <View style={[styles.container, styles.horizontal]}>
+        <ActivityIndicator size="large" color="#2c2638" />
+       
+      </View>
         )
       }
 
       if (i < this.state.currentIndex) {
-        return null
+        console.log("FUCK");
       }
-      else if (i == this.state.currentIndex ) {
+      else if (i == this.state.currentIndex) {
 
         return (
          
@@ -222,7 +240,6 @@ export default class Matches extends React.Component {
         )
       }
       else {
-        console.log(item);
         return (
           <Animated.View
             key={item._id} style={[{
@@ -234,7 +251,7 @@ export default class Matches extends React.Component {
             <Left/>
             <Body>
              
-            <Text style={styles.NameText}>{ Users[this.state.currentIndex].firstname? Users[this.state.currentIndex].firstName + " " + Users[this.state.currentIndex].lastName : " "}</Text>
+            <Text style={styles.NameText}>{item.firstName + " " + item.lastName}</Text>
             </Body>
             <Right />
             </Header>
@@ -445,6 +462,15 @@ const styles = StyleSheet.create({
   },
   avatarText:{
     fontFamily: 'Poppins'
+  },
+  container1: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  horizontal1: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10
   }
 
 });

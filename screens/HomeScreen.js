@@ -135,7 +135,7 @@ export default class HomeScreen extends React.Component {
 
     //console.log(userToken);
 
-    var apiURL = "http://localhost:1337/api";
+    var apiURL = "http://192.168.1.115:1337/api";
 
     if (userToken != null) {
       var populate = {
