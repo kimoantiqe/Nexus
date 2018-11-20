@@ -13,7 +13,7 @@ An app that helps you expand your professional network in an efficient and fun m
   </a>
 
   <a href="https://www.codacy.com/app/Nexus/Nexus?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=kimoantiqe/Nexus&amp;utm_campaign=Badge_Grade">
-    <img src="https://api.codacy.com/project/badge/Grade/9e090f0a5cf14a5baf72145d284aa1e1"
+    <img src="https://api.codacy.com/project/badge/Grade/9e090f0a5cf14a5baf72145d284aa1e1?branch=ClientSide"
       alt="Codacy Code Grade" />
   </a>
 </p>
