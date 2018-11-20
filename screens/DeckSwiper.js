@@ -71,7 +71,7 @@ export default class Matches extends React.Component {
 
   }
 
-   
+
 
   static navigationOptions = {
     header: null,
@@ -81,7 +81,6 @@ export default class Matches extends React.Component {
     userToken= await Expo.SecureStore.getItemAsync("userToken");
 
     if (userToken != null) {
-      console.log(userToken);
       var grabUser = {
         method: 'GET',
         headers: {
@@ -103,7 +102,7 @@ export default class Matches extends React.Component {
       .then( this.setState({ currentIndex: 0}, () => {
         this.position.setValue({ x: 0, y: 0 })
      }));
-              
+
   };
 }
 
@@ -119,17 +118,16 @@ export default class Matches extends React.Component {
       onPanResponderRelease: (evt, gestureState) => {
 
         if (gestureState.dx > 120) {
-          console.log(20);
            Animated.spring(this.position, {
             toValue: { x: SCREEN_WIDTH + 500, y: gestureState.dy },
             speed:200,
           }).start(async() => {
-           await APIcall.likedUser(Users[this.state.currentIndex]._id);
+            APIcall.likedUser(Users[this.state.currentIndex]._id);
            if(this.state.currentIndex ==NumUsers-1){
-            await this.getUser();
+             this.getUser();
             }
             else {
-             await this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+              this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
             this.position.setValue({ x: 0, y: 0 })
             })
           }
@@ -163,7 +161,7 @@ export default class Matches extends React.Component {
         }
       }
     })
-    this.getUser();
+     this.getUser();
   }
 
   renderUsers = () => {
@@ -181,11 +179,11 @@ export default class Matches extends React.Component {
       else if (i == this.state.currentIndex ) {
 
         return (
-         
+
           <Animated.View
             {...this.PanResponder.panHandlers}
             key={item._id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT*0.75, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
-          
+
               <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.Name}>
             <Left/>
             <Body>
@@ -193,7 +191,7 @@ export default class Matches extends React.Component {
             </Body>
             <Right />
             </Header>
-            
+
             <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 300 }}>
               <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
             </Animated.View>
@@ -201,7 +199,7 @@ export default class Matches extends React.Component {
             <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 300 }}>
               <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
             </Animated.View>
-           
+
            <Container style={styles.Image}>
             <Image
               style={{ flex: 1, height: null, width: width*0.85, resizeMode: 'cover', borderRadius: 20, backgroundColor: 'black' }}
@@ -216,13 +214,13 @@ export default class Matches extends React.Component {
             <Container style= {styles.BIO}>
             <Text style={styles.BIOText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed mi ex. Proin luctus, purus non faucibus bibendum, ligula justo blandit quam, interdum elementum dui eros sed erat. Aliquam consectetur massa id augue viverra facilisis.  </Text>
             </Container>
-          
+
           </Animated.View>
-          
+
         )
       }
       else {
-        console.log(item);
+
         return (
           <Animated.View
             key={item._id} style={[{
@@ -233,8 +231,8 @@ export default class Matches extends React.Component {
              <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.Name}>
             <Left/>
             <Body>
-             
-            <Text style={styles.NameText}>{ Users[this.state.currentIndex].firstname? Users[this.state.currentIndex].firstName + " " + Users[this.state.currentIndex].lastName : " "}</Text>
+
+            <Text style={styles.NameText}>{item.firstName + " " + item.lastName}</Text>
             </Body>
             <Right />
             </Header>
@@ -257,7 +255,7 @@ export default class Matches extends React.Component {
             <Container style= {styles.BIO}>
             <Text style={styles.BIOText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sed mi ex. Proin luctus, purus non faucibus bibendum, ligula justo blandit quam, interdum elementum dui eros sed erat. Aliquam consectetur massa id augue viverra facilisis.  </Text>
             </Container>
-            
+
           </Animated.View>
         )
       }
@@ -267,7 +265,7 @@ export default class Matches extends React.Component {
   render() {
     return (
       <Container>
-      
+
       <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
             <Left/>
             <Body>
@@ -277,9 +275,9 @@ export default class Matches extends React.Component {
             </Header>
       <View style={{ flex: 1 }}>
         <View style={{ height: 0 }}>
-       
-            
-          
+
+
+
         </View>
         <View style={{ flex: 1 }}>
           {this.renderUsers()}
@@ -293,7 +291,7 @@ export default class Matches extends React.Component {
             onPress = {()=>{ this.props.navigation.navigate('InstantMatches');}}
         />
       </View>
-      
+
       </Container>
 
     );
@@ -355,7 +353,7 @@ const styles = StyleSheet.create({
   Name:{
     backgroundColor: '#2c2638',
     height: height*0.07,
-    
+
     marginBottom: height*0.03,
     marginTop: height*0.02,
     width: width*0.9,
@@ -405,7 +403,7 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     backgroundColor: '#2c2638',
     marginBottom: height*0.03,
-    
+
     width: width*0.9,
     alignSelf: 'center',
     borderRadius:10,

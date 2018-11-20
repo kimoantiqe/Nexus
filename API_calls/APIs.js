@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://192.168.1.115:1337/api";
+const apiURL = "https://nexus-restapi.azurewebsites.net/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -19,10 +19,10 @@ const _bootstrapAsync = async (props) => {
   }
   };
 
-  var apiURL = 'http://192.168.1.115:1337/api';
+  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
   try {
     let response = await fetch(apiURL + '/user', settings)
-    .then( (response) => 
+    .then( (response) =>
       {
         if (response.status === 401)
         {
@@ -30,7 +30,7 @@ const _bootstrapAsync = async (props) => {
         } else
         {
           response.json()
-          .then((response) => console.log(response));
+          .then((response) => console.log(" "));
           props.navigation.navigate('Main');
         }
       }
@@ -40,16 +40,17 @@ const _bootstrapAsync = async (props) => {
   }
 
 }
- else 
+ else
 {
   props.navigation.navigate('Auth');
 }
-    
+
   };
   module.exports._bootstrapAsync = _bootstrapAsync;
 
-  const login = async function(username, password, props) 
+  const login = async function(username, password, props)
   {
+      console.log("ABD");
       const settings =    {
                               method: "POST",
                               headers: {
@@ -60,19 +61,19 @@ const _bootstrapAsync = async (props) => {
                                                       password: password
                                                   })
                           };
-    
+
         fetch(apiURL + "/user/login", settings)
           .then(response => response.json())
           .then(response => {
             //console.log(response);
-    
+
             if (response.success) {
               AsyncStorage.setItem("userToken", response.token);
               AsyncStorage.setItem("userid", response.user.id);
               Expo.SecureStore.setItemAsync("userToken", response.token);
-  
+
               populate();
-    
+
               sbConnect(response.user.id, response.user.firstName);
 
               props.navigation.navigate("Main");
@@ -103,7 +104,7 @@ const _bootstrapAsync = async (props) => {
   module.exports.login = login;
 
 //Function that is used to populate when the user logs in.
-populate = async () => 
+populate = async () =>
 {
     userToken = await AsyncStorage.getItem("userToken");
 
@@ -124,26 +125,26 @@ populate = async () =>
 };
   module.exports.populate = populate;
 
-const Register = async (inputs, props) => 
+const Register = async (inputs, props) =>
 {
     //////////////////////REGISTRATION API CALL////////////////////////////
 
 
-    
-            if (inputs["Username"] == "" || inputs["Username"] == undefined) 
+
+            if (inputs["Username"] == "" || inputs["Username"] == undefined)
             {
                 alert("Please enter an email to register");
-            } else 
+            } else
             {
-                if (inputs["Password"] == "" || inputs["Password"] == undefined) 
-                {   
-                    alert("Please enter an password to register");
-                } else 
+                if (inputs["Password"] == "" || inputs["Password"] == undefined)
                 {
-                    if (inputs["Password"] == inputs["Repassword"]) 
+                    alert("Please enter an password to register");
+                } else
+                {
+                    if (inputs["Password"] == inputs["Repassword"])
                     {
 
-                        var settings = 
+                        var settings =
                         {
                             method: 'POST',
                             headers: {
@@ -158,18 +159,18 @@ const Register = async (inputs, props) =>
                         console.log(inputs);
                         fetch(apiURL + '/user', settings)
                         .then((response) => response.json())
-                        .then((response)  => 
-                            { 
-                                if (response.success) 
+                        .then((response)  =>
+                            {
+                                if (response.success)
                                 {
                                     AsyncStorage.setItem("userid", response.user.id);
                                     AsyncStorage.setItem('userToken', response.token);
                                     Expo.SecureStore.setItemAsync("userToken", response.token);
                                     regUserID = response.user.id;
                                     props.navigation.navigate('RCP');
-                                } else 
+                                } else
                                 {
-                                    switch (response.error) 
+                                    switch (response.error)
                                     {
                                         case "A valid email was not entered.":
                                             alert("A valid email was not entered.");
@@ -183,7 +184,7 @@ const Register = async (inputs, props) =>
                         )
                         .catch((error) => console.error('Error:', error));
 
-                    } else 
+                    } else
                     {
                         alert("Passwords do not match!\nPlease try again.");
                     }
@@ -194,10 +195,10 @@ module.exports.Register = Register;
 
 const CompleteProfile = async (first, last, interests, industry, LF, bio, props) => {
 
-    if (first == "" || last == "") 
+    if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
-    } else 
+    } else
     {
 
     const userToken = await AsyncStorage.getItem('userToken');
@@ -263,7 +264,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
         .then(() => populate())
         .then(() => sbConnect(regUserID, first))
         .then(() =>  props.navigation.navigate("Main"))
-           
+
     }
 
   };
