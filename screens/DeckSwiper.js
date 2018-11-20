@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } fro
 import Expo from 'expo'
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
+const NumUsers = 7
 var image = require('./../images/d3rs.jpg')
 import Icon from 'react-native-vector-icons/Ionicons'
 import {userToken3} from './Login'
@@ -15,13 +16,7 @@ const APIcall      = require("../API_calls/APIs");
 var userToken;
 //var userToken2;
 var apiURL = APIcall.apiURL;
-const Users = [
-  {  uri: require('./../images/d3rs.jpg') },
-  { uri: require('./../images/d3rs.jpg') },
-  { uri: require('./../images/d3rs.jpg') },
-  { uri: require('./../images/d3rs.jpg') },
-  { uri: require('./../images/d3rs.jpg') },
-]
+const Users = []
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 //var userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWJlZjUxNTM3YjQ0NTg3YzlmM2ZmMDRmIiwiaWF0IjoxNTQyNDI1NjM0LCJleHAiOjE1NDI0MzI4MzR9.yj8_g1Vd43fR_6-AciWbjFzPZOZSrlLw0JylSteBz8o"
@@ -50,7 +45,6 @@ export default class Matches extends React.Component {
     }
     this.likehandler = (itemid) => {
       if(this.position.x < SCREEN_WIDTH / 2){
-        console.log("shhshs");
       }
     }
     this.likeOpacity= this.position.x.interpolate({
@@ -84,10 +78,7 @@ export default class Matches extends React.Component {
   };
    //Function that grabs a user from the database.
    getUser = async () => {
-    console.log("this is getUser ");
-
     userToken= await Expo.SecureStore.getItemAsync("userToken");
-
 
     if (userToken != null) {
       console.log(userToken);
@@ -97,30 +88,24 @@ export default class Matches extends React.Component {
           'Authorization': userToken
         },
       };
-      fetch(apiURL + '/user/getpotconn', grabUser)
+      await fetch(apiURL + '/user/getpotconn', grabUser)
       .then((response) => response.json())
-      .then(
-        (response) => {
+      .then((response) => {
           if(response.success){
-            console.log(response);
             if(response.array){
             var array = JSON.parse(response.array);
-            console.log(array.length);
             for(let i=0; i< array.length; i++){
               Users[i] = (array[i]);
             }
-            console.log(Users);
-            this.setState({ currentIndex: 0}, () => {
-              this.position.setValue({ x: 0, y: 0 })
-           });
           }
         }
-        }
-      ).catch((error) => console.error(error)
-      );
-    }
-    return cards;
+      })
+      .then( this.setState({ currentIndex: 0}, () => {
+        this.position.setValue({ x: 0, y: 0 })
+     }));
+              
   };
+}
 
 
   componentWillMount() {
@@ -139,17 +124,13 @@ export default class Matches extends React.Component {
             toValue: { x: SCREEN_WIDTH + 500, y: gestureState.dy },
             speed:200,
           }).start(async() => {
-              console.log(40);
-            APIcall.likedUser(Users[this.state.currentIndex]._id);
-           if(this.state.currentIndex ==2){
-            console.log(50);
-            this.getUser();
-            console.log(60);
-            
-          }
-          else {
-              this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
-              this.position.setValue({ x: 0, y: 0 })
+           await APIcall.likedUser(Users[this.state.currentIndex]._id);
+           if(this.state.currentIndex ==NumUsers-1){
+            await this.getUser();
+            }
+            else {
+             await this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+            this.position.setValue({ x: 0, y: 0 })
             })
           }
           })
@@ -161,10 +142,9 @@ export default class Matches extends React.Component {
             speed:200,
           }).start(() => {
             APIcall.dislikedUser(Users[this.state.currentIndex]._id);
-            console.log("shshshsh");
-            if(this.state.currentIndex ==2){
+            if(this.state.currentIndex ==0){
               this.getUser();
-             this.setState({ currentIndex: 0}, () => {
+             this.setState({ currentIndex: NumUsers-1 }, () => {
                this.position.setValue({ x: 0, y: 0 })
             });
            }
@@ -191,7 +171,7 @@ export default class Matches extends React.Component {
     return Users.map((item, i) => {
       if(this.state.currentIndex == -1){
         return(
-          <Text>LOADING</Text>
+          <Text key={item._id} >LOADING</Text>
         )
       }
 
@@ -204,7 +184,7 @@ export default class Matches extends React.Component {
          
           <Animated.View
             {...this.PanResponder.panHandlers}
-            key={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT*0.75, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
+            key={item._id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT*0.75, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
           
               <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.Name}>
             <Left/>
@@ -242,9 +222,10 @@ export default class Matches extends React.Component {
         )
       }
       else {
+        console.log(item);
         return (
           <Animated.View
-            key={item.id} style={[{
+            key={item._id} style={[{
               opacity: this.nextCardOpacity,
               transform: [{ scale: this.nextCardScale }],
               height: SCREEN_HEIGHT*0.75, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
@@ -253,7 +234,7 @@ export default class Matches extends React.Component {
             <Left/>
             <Body>
              
-            <Text style={styles.NameText}>{ item.firstname? item.firstName + " " + item.lastName : " "}</Text>
+            <Text style={styles.NameText}>{ Users[this.state.currentIndex].firstname? Users[this.state.currentIndex].firstName + " " + Users[this.state.currentIndex].lastName : " "}</Text>
             </Body>
             <Right />
             </Header>
@@ -385,7 +366,7 @@ const styles = StyleSheet.create({
     opacity: 0.9
   },
   Image:{
-    Flex:1,
+    flex:1,
     backgroundColor: 'transparent',
     justifyContent: "center",
     alignItems: "center",
@@ -401,7 +382,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   Tag:{
-    Flex:0.3,
+    flex:0.3,
     backgroundColor: 'transparent',
     textAlign: 'center',
     height: 0.001*height,
@@ -439,7 +420,6 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     textAlign: "left",
     flexWrap: "wrap",
-    resizeMode: 'contain',
   },
   numberText:{
     fontSize:19,

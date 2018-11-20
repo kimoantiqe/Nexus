@@ -2,13 +2,13 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://localhost:10018/api";
+const apiURL = "http://192.168.1.115:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
 
 const _bootstrapAsync = async (props) => {
-    const userToken = await AsyncStorage.getItem('userToken');
+  const userToken= await Expo.SecureStore.getItemAsync("userToken");
 
     if (userToken != null) {
 
@@ -19,8 +19,7 @@ const _bootstrapAsync = async (props) => {
   }
   };
 
-  var apiURL = 'http://localhost:10018/api';
-
+  var apiURL = 'http://192.168.1.115:1337/api';
   try {
     let response = await fetch(apiURL + '/user', settings)
     .then( (response) => 
@@ -106,7 +105,7 @@ const _bootstrapAsync = async (props) => {
 //Function that is used to populate when the user logs in.
 populate = async () => 
 {
-    userToken = AsyncStorage.getItem("userToken");
+    userToken = await AsyncStorage.getItem("userToken");
 
     console.log(userToken + "testing ya basha");
 
@@ -119,7 +118,7 @@ populate = async () =>
                                     }
                         };
 
-      fetch(apiURL + "/user/popconn", populate);
+      await fetch(apiURL + "/user/popconn", populate);
     }
 
 };
@@ -165,6 +164,7 @@ const Register = async (inputs, props) =>
                                 {
                                     AsyncStorage.setItem("userid", response.user.id);
                                     AsyncStorage.setItem('userToken', response.token);
+                                    Expo.SecureStore.setItemAsync("userToken", response.token);
                                     regUserID = response.user.id;
                                     props.navigation.navigate('RCP');
                                 } else 
@@ -258,19 +258,12 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
         console.log(settings);
 
-        fetch(apiURL + '/user', settings)
+        await fetch(apiURL + '/user', settings)
         .then((response) => response.json())
-        .then((response) => {
-            Expo.SecureStore.setItemAsync("userToken", response.token);
-
-            populate();
-  
-            sbConnect(regUserID, first);
-
-            props.navigation.navigate("Main");
-
-        })
-
+        .then(() => populate())
+        .then(() => sbConnect(regUserID, first))
+        .then(() =>  props.navigation.navigate("Main"))
+           
     }
 
   };
@@ -318,7 +311,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
           'disliked' : [currUserID]
           })
       }
-      fetch(apiURL + '/user', updateUser)
+      await fetch(apiURL + '/user', updateUser)
     }
   };
   module.exports.dislikedUser = dislikedUser;

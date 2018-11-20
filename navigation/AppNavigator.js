@@ -13,7 +13,7 @@ export default createSwitchNavigator({
   },
   {
 
-    initialRouteName: 'Auth',
+    initialRouteName: 'AuthLoading',
 
   }
 
