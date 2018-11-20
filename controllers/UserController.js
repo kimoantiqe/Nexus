@@ -83,7 +83,7 @@ const update = async function(req, res){
 	pushIntoUser(user,data.industry,'industry');
 	pushIntoUser(user,data.matches,'matches');
 	pushIntoUser(user,data.potentialMatches,'potentialMatches');
-	pushLikes(user, data.liked);
+	await pushLikes(user, data.liked);
 	pushDislikes(user,data.disliked);
 
 
@@ -127,10 +127,8 @@ const getuser = async function(req, res){
 	let err;
 	let otheruser;
 	let id = req.query.id;
-	console.log(id);
 	User.findById(id, function(err, newuser) {
 		if(!newuser){
-			console.log("FUnck")
 			return ReE(res, "user not in your matches");
 		}
 		if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
@@ -199,28 +197,29 @@ function pushIntoUser(user,field,fieldType){
 	}
 }
 
-function pushLikes(user, field){
+async function pushLikes(user, field){
+
 	if(field){
+		let newuser,err;
 		for(let i = 0 ; i < field.length ; i++){
-			if(user.liked.indexOf(field[i]) === -1 ){
+			if(field[i] != null && user.liked.indexOf(field[i]) === -1 ){
 				user.liked.push(field[i]);
-				user.potentialMatches.shift();
-				User.findById(field[i], function(err, newuser) {
+				user.potentialMatches.shift();		
+				[err, newuser] = await to(User.findById(field[i]));
 					if(!newuser){
 						return -1;
 					}
 					else if(newuser.liked.map( (user) => user.toString()).includes(user._id.toString())){
 						newuser.matches.push(user._id);
 						user.matches.push(field[i]);
-						newuser.save();
-						user.save();
+						await newuser.save();
+						await user.save();
 						return 0;
 					}
 					else{
-						user.save();
+						await user.save();
 						return 0;
 					}
-				});
 			}
 		}
 	}

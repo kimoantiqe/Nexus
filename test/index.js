@@ -219,9 +219,6 @@ describe('Nexus API test', async () => {
     describe('/GET /api/user/getuser gets user by id', () => {
         it('should pass ', (done) => matching.getUserByID(done,chai,server));
     });
-
-      
-  s
 });
 
 
