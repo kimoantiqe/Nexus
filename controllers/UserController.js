@@ -122,16 +122,18 @@ module.exports.update = update;
 
 const getuser = async function(req, res){
 
-	res.setHeader('Content-Type', 'application/json');
+	await res.setHeader('Content-Type', 'application/json');
 	let user = req.user;
 	let err;
 	let otheruser;
 	let id = req.query.id;
-	User.findById(id, function(err, newuser) {
-		if(!newuser){
+	
+	await User.findById(id, function(err, newuser) {
+		if( !newuser ){
+			
 			return ReE(res, "user not in your matches");
 		}
-		if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
+		else if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
 			otheruser = newuser;
 			return ReS(res, {user:newuser.toWeb()});
 		}
@@ -202,14 +204,17 @@ async function pushLikes(user, field){
 	if(field){
 		let newuser,err;
 		for(let i = 0 ; i < field.length ; i++){
+			if(user.liked.indexOf(field[i]) != -1){
+				console.log('A7A');
+			}
 			if(field[i] != null && user.liked.indexOf(field[i]) === -1 ){
 				user.liked.push(field[i]);
-				user.potentialMatches.shift();		
+				await user.potentialMatches.shift();		
 				[err, newuser] = await to(User.findById(field[i]));
-					if(!newuser){
+					if(!newuser || newuser == null || newuser.liked.includes(null)){
 						return -1;
 					}
-					else if(newuser.liked.map( (user) => user.toString()).includes(user._id.toString())){
+					else if(newuser.liked.map((user) => user.toString()).includes(user._id.toString())){
 						newuser.matches.push(user._id);
 						user.matches.push(field[i]);
 						await newuser.save();

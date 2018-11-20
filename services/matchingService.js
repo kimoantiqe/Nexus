@@ -5,16 +5,15 @@ const { to, ReE, ReS }        = require('./util');
 
 
 function getUser(element, callback) {
-  if(!element){
-    return ReE(res, err, 422);
-  }
+  if(element){
 	 User.findById(element, function(err, newuser) {
-	 	if(err) {
-	 		return ReE(res, err, 422);
-	 	}
+	 	if(!err) {
 	 	callback(newuser);
-	 	});
+     }
+    });
+  }
  };
+
 
 function get10users(arr, callback) {
 	let userarr2= [];
@@ -37,7 +36,7 @@ const getpotconn = async function(req, res){
 		let user = req.user;
 		let arr=[];
 		//gets the first id in the users potential matches array
-		for(let i=0; i<3; i++){
+		for(let i=0; i<7; i++){
 			let potcon = user.potentialMatches[i];
 			arr.push(potcon);
 		}
