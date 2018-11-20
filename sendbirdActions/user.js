@@ -37,7 +37,7 @@ export const sbDisconnect = () => {
                 resolve(null);
             });
         } else {
-            resolve(null);
+            reject('Could not get instance');
         }
     })
 }

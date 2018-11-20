@@ -34,10 +34,7 @@ var sb;
 const themeColor = '#2f1959'
 const themeDarkColor = '#287277'
 
-var channelUrl;
-var groupChannel;
-var friendName;
-var userId;
+var messageQuery;
 
 export default class ChatScreen extends Component {
     
@@ -50,73 +47,75 @@ export default class ChatScreen extends Component {
         super(props)
         this.getGroupChannel = this.getGroupChannel.bind(this)
         this.sendMessage = this.sendMessage.bind(this)
-        this.state = { text: '', messages: [] }
-        sb = SendBird.getInstance();
+        this.state = { text: '', messages: [] , groupChannel: Object, friendName: '', userId: '', channelUrl: '', sb: Object }
+        this.state.sb = SendBird.getInstance();
     }
 
     componentDidMount() {
         this.getGroupChannel();
-        const ChannelHandler = new sb.ChannelHandler()
+        const ChannelHandler = new this.state.sb.ChannelHandler()
         ChannelHandler.onMessageReceived = (receivedChannel, message) => {
             if (receivedChannel.url === groupChannel.url) {
                 const messages = []
                 messages.push(message)
                 const newMessages = messages.concat(this.state.messages)
                 this.setState({ messages: newMessages })
-                if (groupChannel.channelType == 'group') {
-                    groupChannel.markAsRead()
+                if (this.state.groupChannel.channelType == 'group') {
+                    this.state.groupChannel.markAsRead()
                 }
             }
         }
-        sb.addChannelHandler('ChatScreen', ChannelHandler)
+        this.state.sb.addChannelHandler('ChatScreen', ChannelHandler)
 
-        const ConnectionHandler = new sb.ConnectionHandler()
+        const ConnectionHandler = new this.state.sb.ConnectionHandler()
         ConnectionHandler.onReconnectSucceeded = () => {
             this.getChannelMessage(true)
             channel.refresh()
         }
-        sb.addConnectionHandler('ChatView', ConnectionHandler)
+        this.state.sb.addConnectionHandler('ChatView', ConnectionHandler)
     }
 
     getGroupChannel() {
-        channelUrl = this.props.navigation.getParam('channelUrl', null);
-        userId = this.props.navigation.getParam('userID', null);
+        this.state.channelUrl = this.props.navigation.getParam('channelUrl', null);
+        this.state.userId = this.props.navigation.getParam('userID', null);
         //get groupchannel
-        sb.GroupChannel.getChannel(channelUrl, function(channel, error){
+        this.state.sb.GroupChannel.getChannel(this.state.channelUrl, (channel, error) => {
             //add alert and go back on press
             if(error){
                 console.log('Could not get channel');
                 console.log(error);
             }
-        
-            groupChannel = channel;
-            //Get friend Name
-            if(userId === null)
-                friendName = channel.name;
-            else 
-                friendName = channel.members[0].userId === userId ? channel.members[1].nickname : channel.members[0].nickname;
             
-                messageQuery = channel.createPreviousMessageListQuery();
-        });
-        this.getChannelMessage(true);
+            messageQuery = channel.createPreviousMessageListQuery();
+            
+            this.state.groupChannel = channel;
+            
+            if(this.state.userId === null)
+                this.state.friendName = channel.name;            
+            else 
+                this.state.friendName = channel.members[0].userId === this.state.userId ? channel.members[1].nickname : channel.members[0].nickname;
+               
+            this.getChannelMessage(false);
+        })
     }
 
     sendMessage() {
         if(this.state.text === "")
             return
-        groupChannel.sendUserMessage(this.state.text, '', (message, error) => {
+        this.state.groupChannel.sendUserMessage(this.state.text, '', (message, error) => {
             if (error) {
                 console.error(error)
                 return
             }
             const messages = [].concat([message]).concat(this.state.messages)
-            this.setState({ text: '', messages })
+            this.state.text = "";
+            this.state.messages = messages;
         })
     }
 
     getChannelMessage(refresh) {
         if (refresh) {
-            messageQuery = groupChannel.createPreviousMessageListQuery()
+            messageQuery = this.state.groupChannel.createPreviousMessageListQuery()
             this.state.messages = []
         }
 
@@ -143,7 +142,7 @@ export default class ChatScreen extends Component {
 
     renderMessage(msg) {
         const createdAt = moment(msg.createdAt).format('H:mm')
-        if (msg._sender.userId === userId) {
+        if (msg._sender.userId === this.state.userId) {
             return (
                 <View style={[styles.messageContainer, { paddingLeft: 50 }]}>
                 <View style={{ justifyContent: 'flex-end' }}>
@@ -175,7 +174,7 @@ export default class ChatScreen extends Component {
             <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
                     <Left/>
                         <Body>
-                            <Title style={styles.headerTitle}>{friendName}</Title>
+                            <Title style={styles.headerTitle}>{this.state.friendName}</Title>
                         </Body>
                     <Right />
             </Header>
@@ -202,8 +201,8 @@ export default class ChatScreen extends Component {
                         name='send'
                         type='font-awesome'
                         color= {themeColor}
-                        size = '20'
-                        onPress={this.sendMessage} 
+                        size = {20}
+                        onPress={() => this.sendMessage()} 
                     />
                 </View>
             </KeyboardAvoidingView>

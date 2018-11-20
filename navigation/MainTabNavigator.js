@@ -64,9 +64,6 @@ MatchesStack.navigationOptions = {
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
 });
-const QRStack = createStackNavigator({
-  QR: QR,
-});
 
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Profile',
@@ -77,6 +74,10 @@ SettingsStack.navigationOptions = {
     />
   ),
 };
+
+const QRStack = createStackNavigator({
+  QR: QR,
+});
 
 QRStack.navigationOptions = () => ({
   tabBarLabel: 'InstantMatches',

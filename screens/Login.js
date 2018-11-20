@@ -15,8 +15,6 @@ import {
   TouchableOpacity,WebView
 } from "react-native";
 import { Text, Button, Icon } from "native-base";
-import MainTabNavigator from "../navigation/MainTabNavigator";
-import AppNavigator from "../navigation/AppNavigator";
 
 import Background from '../components/Background';
 

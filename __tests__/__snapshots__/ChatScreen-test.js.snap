@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<Fragment>
+  <Styled(Header)
+    androidStatusBarColor="#ffffff"
+    iosBarStyle="light-content"
+    style={
+      Object {
+        "backgroundColor": "#2c2638",
+        "height": 133.4,
+      }
+    }
+  >
+    <Styled(Left) />
+    <Styled(Body)>
+      <Styled(Title)
+        style={
+          Object {
+            "color": "#ffffff",
+            "fontFamily": "BebasNeue",
+            "fontSize": 25,
+            "paddingBottom": 50,
+            "paddingTop": 40.019999999999996,
+            "textTransform": "capitalize",
+          }
+        }
+      />
+    </Styled(Body)>
+    <Styled(Right) />
+  </Styled(Header)>
+  <FlatList
+    data={Array []}
+    disableVirtualization={false}
+    horizontal={false}
+    initialNumToRender={10}
+    inverted={true}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
+    onEndReached={[Function]}
+    onEndReachedThreshold={2}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+    updateCellsBatchingPeriod={50}
+    windowSize={21}
+  />
+  <KeyboardAvoidingView
+    behavior="padding"
+    enabled={true}
+    keyboardVerticalOffset={0}
+  >
+    <Component
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <TextInput
+        allowFontScaling={true}
+        onChangeText={[Function]}
+        placeholder="Text Message"
+        style={
+          Object {
+            "borderColor": "lightgray",
+            "borderTopWidth": 0.5,
+            "flex": 1,
+            "height": 40,
+            "marginTop": 10,
+            "paddingHorizontal": 8,
+          }
+        }
+        value=""
+      />
+      <Icon
+        color="#2f1959"
+        name="send"
+        onPress={[Function]}
+        raised={true}
+        reverse={false}
+        reverseColor="white"
+        size={20}
+        type="font-awesome"
+        underlayColor="white"
+      />
+    </Component>
+  </KeyboardAvoidingView>
+</Fragment>
+`;
