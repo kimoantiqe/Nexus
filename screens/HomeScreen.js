@@ -34,7 +34,7 @@ import {
 
 import { sbCreateChannel } from '../sendbirdActions/groupChannel';
 
-var apiURL = "http://192.168.1.115:1337/api";
+var apiURL = "https://nexus-restapi.azurewebsites.net/api";
 
 var matchesArray = [];
 
@@ -93,11 +93,11 @@ export default class HomeScreen extends React.Component {
         .then(async response => {
           // console.log(response);
           if (response.success) {
-            console.log(response.user.matches);
+            //console.log(response.user.matches);
             for (var i = 0; i < response.user.matches.length; i++) {
              await this.getUser(response.user.matches[i]);
             }
-            console.log(matchesArray);
+            //console.log(matchesArray);
             this.refreshScreen();
           }
         });
@@ -110,7 +110,7 @@ export default class HomeScreen extends React.Component {
     let userToken = await AsyncStorage.getItem("userToken");
 
     if (userToken != null) {
-      console.log("This is display Match");
+      //console.log("This is display Match");
       var user = {
         method: "GET",
         headers: {
@@ -123,7 +123,7 @@ export default class HomeScreen extends React.Component {
           // var obj;
           // obj.firstName= response.user.firstName;
           // obj.lastName = response.user.lastName;
-          console.log(response.user.firstName + "\n");
+          //console.log(response.user.firstName + "\n");
           matchesArray.push(response.user);
           //console.log(matchesArray);
         });
@@ -135,7 +135,11 @@ export default class HomeScreen extends React.Component {
 
     //console.log(userToken);
 
+<<<<<<< HEAD
     var apiURL = "http://192.168.1.115:1337/api";
+=======
+    var apiURL = "https://nexus-restapi.azurewebsites.net/api";
+>>>>>>> 08910eb376fbdc85172642ad7e95cafe358ac14c
 
     if (userToken != null) {
       var populate = {
