@@ -135,11 +135,7 @@ export default class HomeScreen extends React.Component {
 
     //console.log(userToken);
 
-<<<<<<< HEAD
-    var apiURL = "http://192.168.1.115:1337/api";
-=======
     var apiURL = "https://nexus-restapi.azurewebsites.net/api";
->>>>>>> 08910eb376fbdc85172642ad7e95cafe358ac14c
 
     if (userToken != null) {
       var populate = {

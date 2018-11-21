@@ -65,13 +65,9 @@ export default class Matches extends React.Component {
 
   }
 
-<<<<<<< HEAD
   refreshScreen() {
     this.setState({ lastRefresh: Date(Date.now()).toString() });
   }
-=======
-
->>>>>>> 08910eb376fbdc85172642ad7e95cafe358ac14c
 
   static navigationOptions = {
     header: null,
@@ -127,24 +123,12 @@ export default class Matches extends React.Component {
             toValue: { x: SCREEN_WIDTH + 500, y: gestureState.dy },
             speed:1000,
           }).start(async() => {
-<<<<<<< HEAD
-           await APIcall.likedUser(Users[this.state.currentIndex]._id);
-           if(this.state.currentIndex == NumUsers-1){
-             await this.getUser();
-            this.setState({ currentIndex: 0}, () => {
-            this.position.setValue({ x: 0, y: 0 })
-            });
-          }
-            else {
-            await this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
-=======
             APIcall.likedUser(Users[this.state.currentIndex]._id);
            if(this.state.currentIndex ==NumUsers-1){
              this.getUser();
             }
             else {
               this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
->>>>>>> 08910eb376fbdc85172642ad7e95cafe358ac14c
             this.position.setValue({ x: 0, y: 0 })
             })
           }
@@ -175,14 +159,7 @@ export default class Matches extends React.Component {
         }
       }
     })
-<<<<<<< HEAD
-  }
-
-  async componentDidMount() {
-   await this.getUser();
-=======
      this.getUser();
->>>>>>> 08910eb376fbdc85172642ad7e95cafe358ac14c
   }
 
   renderUsers = () => {
@@ -255,10 +232,6 @@ export default class Matches extends React.Component {
         )
       }
       else {
-<<<<<<< HEAD
-=======
-
->>>>>>> 08910eb376fbdc85172642ad7e95cafe358ac14c
         return (
           <Animated.View
             key={item._id} style={[{
@@ -269,11 +242,6 @@ export default class Matches extends React.Component {
              <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.Name}>
             <Left/>
             <Body>
-<<<<<<< HEAD
-             
-=======
-
->>>>>>> 08910eb376fbdc85172642ad7e95cafe358ac14c
             <Text style={styles.NameText}>{item.firstName + " " + item.lastName}</Text>
             </Body>
             <Right />
