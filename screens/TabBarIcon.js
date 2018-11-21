@@ -57,7 +57,7 @@ width:50,
                     source={require("../images/qr.png")}
                     style = {{resizeMode:'contain',
                     flex:1,
-                    width:50,
+                    width:40,
                     }}
                     />
                    

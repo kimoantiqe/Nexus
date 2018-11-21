@@ -34,7 +34,7 @@ import {
 
 import { sbCreateChannel } from '../sendbirdActions/groupChannel';
 
-var apiURL = "http://localhost:1337/api";
+var apiURL = "https://nexus-restapi.azurewebsites.net/api";
 
 var matchesArray = [];
 
@@ -60,24 +60,18 @@ export default class HomeScreen extends React.Component {
     };
 
     this.refreshScreen = this.refreshScreen.bind(this);
-    this.getUserID();
     this.getUserMatches();
   }
 
   //function that grabs a new user and refreshes the screen to update the
   //parameters.
   refreshScreen() {
-    this.displayMatchOnScreen();
     this.setState({ lastRefresh: Date(Date.now()).toString() });
   }
 
   static navigationOptions = {
     header: null
   };
-
-  getUserID = async() => {
-    USERID = await AsyncStorage.getItem("userid");
-  }
 
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => {
@@ -94,16 +88,16 @@ export default class HomeScreen extends React.Component {
         }
       };
       //need to update the get request.
-      fetch(apiURL + "/user", matches)
+      await fetch(apiURL + "/user", matches)
         .then(response => response.json())
         .then(async response => {
           // console.log(response);
           if (response.success) {
-            console.log(response.user.matches);
+            //console.log(response.user.matches);
             for (var i = 0; i < response.user.matches.length; i++) {
              await this.getUser(response.user.matches[i]);
             }
-            console.log(matchesArray);
+            //console.log(matchesArray);
             this.refreshScreen();
           }
         });
@@ -116,7 +110,7 @@ export default class HomeScreen extends React.Component {
     let userToken = await AsyncStorage.getItem("userToken");
 
     if (userToken != null) {
-      console.log("This is display Match");
+      //console.log("This is display Match");
       var user = {
         method: "GET",
         headers: {
@@ -129,7 +123,7 @@ export default class HomeScreen extends React.Component {
           // var obj;
           // obj.firstName= response.user.firstName;
           // obj.lastName = response.user.lastName;
-          console.log(response.user.firstName + "\n");
+          //console.log(response.user.firstName + "\n");
           matchesArray.push(response.user);
           //console.log(matchesArray);
         });
@@ -141,7 +135,11 @@ export default class HomeScreen extends React.Component {
 
     //console.log(userToken);
 
-    var apiURL = "http://localhost:1337/api";
+<<<<<<< HEAD
+    var apiURL = "http://192.168.1.115:1337/api";
+=======
+    var apiURL = "https://nexus-restapi.azurewebsites.net/api";
+>>>>>>> 08910eb376fbdc85172642ad7e95cafe358ac14c
 
     if (userToken != null) {
       var populate = {
@@ -153,44 +151,6 @@ export default class HomeScreen extends React.Component {
         }
       };
       fetch(apiURL + "/user/popconn", populate);
-    }
-  };
-
-  //function to display the matches (fix to display first and last name)
-  displayMatchOnScreen() {
-    textToPrint = "";
-    let useridsArray;
-    for (var i = 1; i < matchesArray.length + 1; i++) {
-      useridsArray = [];
-      useridsArray.push(matchesArray[i - 1]._id);
-      useridsArray.push(USERID);
-      //Add the function below when all users are registered.
-      //sbCreateChannel(useridsArray, "GroupChannel");
-      this.displayMatch(matchesArray[i - 1]);
-      textToPrint += i + ": " + firstName[i - 1] + " " + lastName[i - 1] + "\n";
-    }
-  }
-
-  //need to make sure
-  displayMatch = async userid => {
-    let userToken = await AsyncStorage.getItem("userToken");
-
-    //console.log("This is display Match");
-
-    if (userToken != null) {
-      var user = {
-        method: "GET",
-        headers: {
-          Authorization: userToken
-        }
-      };
-      fetch(apiURL + "/user/getuser/?id=" + userid, user)
-        .then(response => response.json())
-        .then(response => {
-          //console.log(response.user.firstName + " " + response.user.lastName + "\n");
-          firstName.push(response.user.firstName);
-          lastName.push(response.user.lastName);
-        });
     }
   };
 
@@ -210,9 +170,10 @@ export default class HomeScreen extends React.Component {
         <FlatList
           horizontal
           data={matchesArray}
+          keyExtractor={item => item._id}
           showsHorizontalScrollIndicator={false}
             renderItem={({item}) =>
-            <Card style={styles.avatarCard} >
+            <Card  style={styles.avatarCard} >
               <CardItem button onPress={(item) => item.firstName }>
                   <Thumbnail
                     source={require("../images/sherif.png")}

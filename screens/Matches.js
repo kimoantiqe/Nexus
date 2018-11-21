@@ -27,7 +27,7 @@ export default class Matches extends React.Component {
   constructor(props) {
     super(props);
     this.refreshScreen = this.refreshScreen.bind(this);
-    
+
     this.state = {
       lastRefresh: Date(Date.now()).toString(),
     };
@@ -44,7 +44,7 @@ export default class Matches extends React.Component {
     this.setState({ lastRefresh: Date(Date.now()).toString() });
   }
 
-  
+
 
 
   //Function that grabs a user from the database.
@@ -151,12 +151,12 @@ export default class Matches extends React.Component {
             //console.log(cards);
           }
           }
-          
+
           onSwipeRight = {item => {
             //this.dislikedUser(item._id);
             cards.shift();
             //console.log(cards);
-            
+
           }}
           renderEmpty={() =>{
             return
