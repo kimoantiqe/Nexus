@@ -1,10 +1,6 @@
 import React from 'react';
 import ChatScreen from '../screens/ChatScreen'
 
-import renderer from 'react-test-renderer';
-
-import SendBird from 'sendbird'
-
 import {sbConnect, sbDisconnect} from '../sendbirdActions'
 
 import { shallow } from 'enzyme';

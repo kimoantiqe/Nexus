@@ -2,8 +2,9 @@ import React from 'react';
 import { AsyncStorage, StyleSheet, View, Alert, ListView, TouchableHighlight, Button, Dimensions} from 'react-native';
 import { Avatar, ListItem} from 'react-native-elements'
 import { connect } from 'react-redux'
-import { sbCreateGroupChannelListQuery, sbCreateChannel } from '../sendbirdActions/groupChannel';
-import { getGroupChannelList, addGroupChannel } from '../actions';
+import { sbCreateGroupChannelListQuery } from '../sendbirdActions/groupChannel';
+import { getGroupChannelList } from '../actions';
+
 
 import {
     Header,
@@ -151,8 +152,8 @@ const ds = new ListView.DataSource({
 });
 
 function mapStateToProps({ chatdashboard })  {
-    const { list } = chatdashboard;
+    const { list } =  chatdashboard ;
     return { list };
 }
 
-export default connect(mapStateToProps, { getGroupChannelList, addGroupChannel })(ChatDashboard);
+export default connect(mapStateToProps, { getGroupChannelList })(ChatDashboard);

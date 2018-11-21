@@ -31,16 +31,6 @@ export default class InstantMatch extends React.Component {
           </Button>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonContainer}>
-          <Button
-            onPress={() => {
-              this.props.navigation.navigate("Main");
-            }}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Cancel</Text>
-          </Button>
-        </TouchableOpacity>
       </View>
     );
   }

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1542756253621" clover="3.2.0">
+  <project timestamp="1542756253621" name="All files">
+    <metrics statements="308" coveredstatements="105" conditionals="85" coveredconditionals="5" methods="87" coveredmethods="30" elements="480" coveredelements="140" complexity="0" loc="308" ncloc="308" packages="5" files="14" classes="14">
+      <package name="API_calls">
+        <metrics statements="122" coveredstatements="16" conditionals="41" coveredconditionals="0" methods="22" coveredmethods="0"/>
+        <file name="APIs.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/API_calls/APIs.js">
+          <metrics statements="122" coveredstatements="16" conditionals="41" coveredconditionals="0" methods="22" coveredmethods="0"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="10" count="2" type="stmt"/>
+          <line num="11" count="0" type="stmt"/>
+          <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="15" count="0" type="stmt"/>
+          <line num="22" count="0" type="stmt"/>
+          <line num="24" count="0" type="stmt"/>
+          <line num="25" count="0" type="stmt"/>
+          <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="30" count="0" type="stmt"/>
+          <line num="33" count="0" type="stmt"/>
+          <line num="34" count="0" type="stmt"/>
+          <line num="35" count="0" type="stmt"/>
+          <line num="40" count="0" type="stmt"/>
+          <line num="46" count="0" type="stmt"/>
+          <line num="50" count="2" type="stmt"/>
+          <line num="52" count="2" type="stmt"/>
+          <line num="54" count="0" type="stmt"/>
+          <line num="65" count="0" type="stmt"/>
+          <line num="66" count="0" type="stmt"/>
+          <line num="70" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="71" count="0" type="stmt"/>
+          <line num="72" count="0" type="stmt"/>
+          <line num="73" count="0" type="stmt"/>
+          <line num="75" count="0" type="stmt"/>
+          <line num="77" count="0" type="stmt"/>
+          <line num="79" count="0" type="stmt"/>
+          <line num="81" count="0" type="cond" truecount="0" falsecount="5"/>
+          <line num="83" count="0" type="stmt"/>
+          <line num="86" count="0" type="stmt"/>
+          <line num="88" count="0" type="stmt"/>
+          <line num="89" count="0" type="stmt"/>
+          <line num="91" count="0" type="stmt"/>
+          <line num="92" count="0" type="stmt"/>
+          <line num="94" count="0" type="stmt"/>
+          <line num="95" count="0" type="stmt"/>
+          <line num="97" count="0" type="stmt"/>
+          <line num="98" count="0" type="stmt"/>
+          <line num="102" count="0" type="stmt"/>
+          <line num="104" count="2" type="stmt"/>
+          <line num="107" count="2" type="stmt"/>
+          <line num="109" count="0" type="stmt"/>
+          <line num="111" count="0" type="stmt"/>
+          <line num="113" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="114" count="0" type="stmt"/>
+          <line num="122" count="0" type="stmt"/>
+          <line num="126" count="2" type="stmt"/>
+          <line num="128" count="2" type="stmt"/>
+          <line num="134" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="136" count="0" type="stmt"/>
+          <line num="139" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="141" count="0" type="stmt"/>
+          <line num="144" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="148" count="0" type="stmt"/>
+          <line num="159" count="0" type="stmt"/>
+          <line num="160" count="0" type="stmt"/>
+          <line num="161" count="0" type="stmt"/>
+          <line num="164" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="166" count="0" type="stmt"/>
+          <line num="167" count="0" type="stmt"/>
+          <line num="168" count="0" type="stmt"/>
+          <line num="169" count="0" type="stmt"/>
+          <line num="172" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="175" count="0" type="stmt"/>
+          <line num="176" count="0" type="stmt"/>
+          <line num="178" count="0" type="stmt"/>
+          <line num="179" count="0" type="stmt"/>
+          <line num="184" count="0" type="stmt"/>
+          <line num="188" count="0" type="stmt"/>
+          <line num="193" count="2" type="stmt"/>
+          <line num="195" count="2" type="stmt"/>
+          <line num="197" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="199" count="0" type="stmt"/>
+          <line num="203" count="0" type="stmt"/>
+          <line num="204" count="0" type="stmt"/>
+          <line num="205" count="0" type="stmt"/>
+          <line num="206" count="0" type="stmt"/>
+          <line num="207" count="0" type="stmt"/>
+          <line num="209" count="0" type="stmt"/>
+          <line num="211" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="212" count="0" type="stmt"/>
+          <line num="216" count="0" type="stmt"/>
+          <line num="217" count="0" type="stmt"/>
+          <line num="219" count="0" type="stmt"/>
+          <line num="221" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="222" count="0" type="stmt"/>
+          <line num="226" count="0" type="stmt"/>
+          <line num="227" count="0" type="stmt"/>
+          <line num="229" count="0" type="stmt"/>
+          <line num="231" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="232" count="0" type="stmt"/>
+          <line num="236" count="0" type="stmt"/>
+          <line num="237" count="0" type="stmt"/>
+          <line num="239" count="0" type="stmt"/>
+          <line num="240" count="0" type="stmt"/>
+          <line num="241" count="0" type="stmt"/>
+          <line num="243" count="0" type="stmt"/>
+          <line num="259" count="0" type="stmt"/>
+          <line num="261" count="0" type="stmt"/>
+          <line num="262" count="0" type="stmt"/>
+          <line num="264" count="0" type="stmt"/>
+          <line num="266" count="0" type="stmt"/>
+          <line num="268" count="0" type="stmt"/>
+          <line num="270" count="0" type="stmt"/>
+          <line num="277" count="2" type="stmt"/>
+          <line num="279" count="2" type="stmt"/>
+          <line num="280" count="0" type="stmt"/>
+          <line num="281" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="282" count="0" type="stmt"/>
+          <line num="285" count="0" type="stmt"/>
+          <line num="295" count="0" type="stmt"/>
+          <line num="296" count="0" type="stmt"/>
+          <line num="299" count="2" type="stmt"/>
+          <line num="302" count="2" type="stmt"/>
+          <line num="304" count="0" type="stmt"/>
+          <line num="307" count="0" type="stmt"/>
+          <line num="309" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="310" count="0" type="stmt"/>
+          <line num="311" count="0" type="stmt"/>
+          <line num="321" count="0" type="stmt"/>
+          <line num="324" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="actions">
+        <metrics statements="32" coveredstatements="11" conditionals="2" coveredconditionals="0" methods="15" coveredmethods="0"/>
+        <file name="ChatDashActions.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/actions/ChatDashActions.js">
+          <metrics statements="14" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="8" coveredmethods="0"/>
+          <line num="9" count="2" type="stmt"/>
+          <line num="10" count="0" type="stmt"/>
+          <line num="11" count="0" type="stmt"/>
+          <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="13" count="0" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="22" count="0" type="stmt"/>
+          <line num="27" count="2" type="stmt"/>
+          <line num="28" count="0" type="stmt"/>
+          <line num="29" count="0" type="stmt"/>
+          <line num="30" count="0" type="stmt"/>
+          <line num="32" count="0" type="stmt"/>
+          <line num="36" count="0" type="stmt"/>
+        </file>
+        <file name="LoginActions.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/actions/LoginActions.js">
+          <metrics statements="7" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="9" count="0" type="stmt"/>
+          <line num="10" count="0" type="stmt"/>
+          <line num="13" count="0" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="21" count="0" type="stmt"/>
+          <line num="22" count="0" type="stmt"/>
+        </file>
+        <file name="SettingsActions.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/actions/SettingsActions.js">
+          <metrics statements="4" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="0" type="stmt"/>
+          <line num="7" count="0" type="stmt"/>
+          <line num="8" count="0" type="stmt"/>
+        </file>
+        <file name="index.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/actions/index.js">
+          <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        </file>
+        <file name="types.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/actions/types.js">
+          <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
+          <line num="10" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="components">
+        <metrics statements="4" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <file name="Background.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/components/Background.js">
+          <metrics statements="4" coveredstatements="3" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="5" count="3" type="stmt"/>
+          <line num="6" count="3" type="stmt"/>
+          <line num="10" count="0" type="stmt"/>
+          <line num="60" count="3" type="stmt"/>
+        </file>
+      </package>
+      <package name="screens">
+        <metrics statements="109" coveredstatements="59" conditionals="26" coveredconditionals="3" methods="35" coveredmethods="24"/>
+        <file name="ChatScreen.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/screens/ChatScreen.js">
+          <metrics statements="73" coveredstatements="31" conditionals="24" coveredconditionals="3" methods="16" coveredmethods="8"/>
+          <line num="27" count="1" type="stmt"/>
+          <line num="28" count="1" type="stmt"/>
+          <line num="30" count="1" type="stmt"/>
+          <line num="34" count="1" type="stmt"/>
+          <line num="35" count="1" type="stmt"/>
+          <line num="47" count="8" type="stmt"/>
+          <line num="48" count="8" type="stmt"/>
+          <line num="49" count="8" type="stmt"/>
+          <line num="50" count="8" type="stmt"/>
+          <line num="51" count="8" type="stmt"/>
+          <line num="55" count="8" type="stmt"/>
+          <line num="56" count="8" type="stmt"/>
+          <line num="57" count="8" type="stmt"/>
+          <line num="58" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="59" count="0" type="stmt"/>
+          <line num="60" count="0" type="stmt"/>
+          <line num="61" count="0" type="stmt"/>
+          <line num="62" count="0" type="stmt"/>
+          <line num="63" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="64" count="0" type="stmt"/>
+          <line num="68" count="8" type="stmt"/>
+          <line num="70" count="8" type="stmt"/>
+          <line num="71" count="8" type="stmt"/>
+          <line num="72" count="0" type="stmt"/>
+          <line num="73" count="0" type="stmt"/>
+          <line num="75" count="8" type="stmt"/>
+          <line num="79" count="8" type="stmt"/>
+          <line num="80" count="8" type="stmt"/>
+          <line num="82" count="8" type="stmt"/>
+          <line num="84" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="85" count="0" type="stmt"/>
+          <line num="86" count="0" type="stmt"/>
+          <line num="89" count="0" type="stmt"/>
+          <line num="91" count="0" type="stmt"/>
+          <line num="93" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="94" count="0" type="stmt"/>
+          <line num="96" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="98" count="0" type="stmt"/>
+          <line num="103" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="104" count="1" type="stmt"/>
+          <line num="105" count="1" type="stmt"/>
+          <line num="107" count="0" type="stmt"/>
+          <line num="108" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="109" count="0" type="stmt"/>
+          <line num="110" count="0" type="stmt"/>
+          <line num="112" count="0" type="stmt"/>
+          <line num="113" count="0" type="stmt"/>
+          <line num="114" count="0" type="stmt"/>
+          <line num="119" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="120" count="0" type="stmt"/>
+          <line num="121" count="0" type="stmt"/>
+          <line num="124" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="125" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="126" count="0" type="stmt"/>
+          <line num="128" count="0" type="stmt"/>
+          <line num="129" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="130" count="0" type="stmt"/>
+          <line num="131" count="0" type="stmt"/>
+          <line num="134" count="0" type="stmt"/>
+          <line num="135" count="0" type="stmt"/>
+          <line num="136" count="0" type="stmt"/>
+          <line num="139" count="0" type="stmt"/>
+          <line num="140" count="0" type="stmt"/>
+          <line num="146" count="2" type="stmt"/>
+          <line num="147" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="148" count="1" type="stmt"/>
+          <line num="160" count="1" type="stmt"/>
+          <line num="174" count="9" type="stmt"/>
+          <line num="185" count="0" type="stmt"/>
+          <line num="187" count="0" type="stmt"/>
+          <line num="198" count="1" type="stmt"/>
+          <line num="207" count="2" type="stmt"/>
+          <line num="216" count="1" type="stmt"/>
+        </file>
+        <file name="Login.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/screens/Login.js">
+          <metrics statements="17" coveredstatements="11" conditionals="2" coveredconditionals="0" methods="7" coveredmethods="6"/>
+          <line num="21" count="1" type="stmt"/>
+          <line num="22" count="1" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+          <line num="36" count="7" type="stmt"/>
+          <line num="37" count="7" type="stmt"/>
+          <line num="47" count="2" type="stmt"/>
+          <line num="51" count="2" type="stmt"/>
+          <line num="55" count="11" type="stmt"/>
+          <line num="74" count="1" type="stmt"/>
+          <line num="118" count="1" type="stmt"/>
+          <line num="149" count="0" type="stmt"/>
+          <line num="156" count="0" type="stmt"/>
+          <line num="159" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="161" count="0" type="stmt"/>
+          <line num="162" count="0" type="stmt"/>
+          <line num="167" count="0" type="stmt"/>
+          <line num="173" count="1" type="stmt"/>
+        </file>
+        <file name="Register.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/screens/Register.js">
+          <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
+          <line num="23" count="4" type="stmt"/>
+          <line num="28" count="6" type="stmt"/>
+          <line num="36" count="1" type="stmt"/>
+          <line num="40" count="1" type="stmt"/>
+          <line num="44" count="1" type="stmt"/>
+          <line num="47" count="1" type="stmt"/>
+          <line num="60" count="2" type="stmt"/>
+        </file>
+        <file name="SplashScreen.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/screens/SplashScreen.js">
+          <metrics statements="9" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4"/>
+          <line num="11" count="2" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+          <line num="21" count="2" type="stmt"/>
+          <line num="25" count="2" type="stmt"/>
+          <line num="32" count="1" type="stmt"/>
+          <line num="37" count="1" type="stmt"/>
+          <line num="49" count="0" type="stmt"/>
+          <line num="53" count="0" type="stmt"/>
+          <line num="57" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="sendbirdActions">
+        <metrics statements="41" coveredstatements="16" conditionals="14" coveredconditionals="2" methods="14" coveredmethods="6"/>
+        <file name="groupChannel.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/sendbirdActions/groupChannel.js">
+          <metrics statements="23" coveredstatements="3" conditionals="8" coveredconditionals="0" methods="7" coveredmethods="0"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="0" type="stmt"/>
+          <line num="6" count="0" type="stmt"/>
+          <line num="7" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="8" count="0" type="stmt"/>
+          <line num="9" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="10" count="0" type="stmt"/>
+          <line num="11" count="0" type="stmt"/>
+          <line num="12" count="0" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="15" count="0" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="24" count="2" type="stmt"/>
+          <line num="25" count="0" type="stmt"/>
+          <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="27" count="0" type="stmt"/>
+          <line num="29" count="0" type="stmt"/>
+          <line num="33" count="2" type="stmt"/>
+          <line num="34" count="0" type="stmt"/>
+          <line num="35" count="0" type="stmt"/>
+          <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="37" count="0" type="stmt"/>
+          <line num="39" count="0" type="stmt"/>
+        </file>
+        <file name="index.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/sendbirdActions/index.js">
+          <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        </file>
+        <file name="user.js" path="/Users/mohamadasaker/Desktop/CPEN321/Nexus/Nexus/sendbirdActions/user.js">
+          <metrics statements="18" coveredstatements="13" conditionals="6" coveredconditionals="2" methods="7" coveredmethods="6"/>
+          <line num="3" count="4" type="stmt"/>
+          <line num="6" count="4" type="stmt"/>
+          <line num="7" count="8" type="stmt"/>
+          <line num="9" count="8" type="stmt"/>
+          <line num="11" count="8" type="stmt"/>
+          <line num="13" count="8" type="cond" truecount="1" falsecount="1"/>
+          <line num="14" count="8" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="21" count="0" type="stmt"/>
+          <line num="23" count="0" type="stmt"/>
+          <line num="32" count="4" type="stmt"/>
+          <line num="33" count="8" type="stmt"/>
+          <line num="34" count="8" type="stmt"/>
+          <line num="35" count="8" type="cond" truecount="1" falsecount="1"/>
+          <line num="36" count="8" type="stmt"/>
+          <line num="37" count="8" type="stmt"/>
+          <line num="40" count="0" type="stmt"/>
+        </file>
+      </package>
+    </metrics>
+  </project>
+</coverage>

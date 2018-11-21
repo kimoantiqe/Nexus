@@ -3,9 +3,6 @@ import {StyleSheet, Dimensions} from 'react-native';
 import Background from '../components/Background';
 import { Container, Content, Form, Input, Button, Item, Text } from 'native-base';
 
-import MainTabNavigator from '../navigation/MainTabNavigator';
-import AppNavigator from '../navigation/AppNavigator';
-
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 

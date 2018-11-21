@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import {StyleSheet, Dimensions} from "react-native";
 import {Text, Button, Container, Content, Form} from "native-base";
 
-import MainTabNavigator from "../navigation/MainTabNavigator";
-import AppNavigator from "../navigation/AppNavigator";
-
 import Background from '../components/Background';
 
 //import actions for login and sendbird
@@ -32,12 +29,12 @@ export default class Splash extends React.Component {
         <Content scrollEnabled={false} contentContainerStyle={styles.ButtonGroup}>
         <Form>
         <Form style={styles.buttonContainer}>
-            <Button rounded style={styles.Button} onPress={this.Login}>
+            <Button rounded style={styles.Button} onPress={() => this.Login()}>
                 <Text style={{ fontWeight: 'bold'}}>LOGIN</Text>
             </Button>
             </Form>
             <Form style={styles.buttonContainer}>
-            <Button rounded style={styles.Button} onPress={this.Register}>
+            <Button rounded style={styles.Button} onPress={() => this.Register()}>
                 <Text style={{ fontWeight: 'bold'}}>SIGN UP</Text>
             </Button>
             </Form>

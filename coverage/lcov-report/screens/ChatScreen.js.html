@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for screens/ChatScreen.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">screens</a> ChatScreen.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">42.47% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>31/73</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">12.5% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>3/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">42.47% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>31/73</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { Component } from 'react'
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  TextInput,
+  TouchableHighlight,
+  FlatList,
+  Dimensions,
+  KeyboardAvoidingView
+} from 'react-native'
+import moment from 'moment'
+import SendBird from 'sendbird'
+&nbsp;
+import {
+    Header,
+    Left,
+    Right,
+    Body,
+    Title
+  } from "native-base";
+&nbsp;
+import {Icon} from 'react-native-elements'
+const width = Dimensions.get("window").width;
+const height = Dimensions.get("window").height;
+&nbsp;
+console.disableYellowBox = true
+&nbsp;
+var sb;
+&nbsp;
+const themeColor = '#2f1959'
+const themeDarkColor = '#287277'
+&nbsp;
+var messageQuery;
+&nbsp;
+export default class ChatScreen extends Component {
+    
+    static navigationOptions = {
+        title: 'ChatScreen',
+        header: null,
+    };
+    
+    constructor(props) {
+        super(props)
+        this.getGroupChannel = this.getGroupChannel.bind(this)
+        this.sendMessage = this.sendMessage.bind(this)
+        this.state = { text: '', messages: [] , groupChannel: Object, friendName: '', userId: '', channelUrl: '', sb: Object }
+        this.state.sb = SendBird.getInstance();
+    }
+&nbsp;
+    componentDidMount() {
+        this.getGroupChannel();
+        const ChannelHandler = new this.state.sb.ChannelHandler()
+        ChannelHandler.onMessageReceived = <span class="fstat-no" title="function not covered" >(r</span>eceivedChannel, message) =&gt; {
+<span class="cstat-no" title="statement not covered" >            if (receivedChannel.url === groupChannel.url) {</span>
+                const messages = <span class="cstat-no" title="statement not covered" >[]</span>
+<span class="cstat-no" title="statement not covered" >                messages.push(message)</span>
+                const newMessages = <span class="cstat-no" title="statement not covered" >messages.concat(this.state.messages)</span>
+<span class="cstat-no" title="statement not covered" >                this.setState({ messages: newMessages })</span>
+<span class="cstat-no" title="statement not covered" >                if (this.state.groupChannel.channelType == 'group') {</span>
+<span class="cstat-no" title="statement not covered" >                    this.state.groupChannel.markAsRead()</span>
+                }
+            }
+        }
+        this.state.sb.addChannelHandler('ChatScreen', ChannelHandler)
+&nbsp;
+        const ConnectionHandler = new this.state.sb.ConnectionHandler()
+        ConnectionHandler.onReconnectSucceeded = <span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >            this.getChannelMessage(true)</span>
+<span class="cstat-no" title="statement not covered" >            channel.refresh()</span>
+        }
+        this.state.sb.addConnectionHandler('ChatView', ConnectionHandler)
+    }
+&nbsp;
+    getGroupChannel() {
+        this.state.channelUrl = this.props.navigation.getParam('channelUrl', null);
+        this.state.userId = this.props.navigation.getParam('userID', null);
+        //get groupchannel
+        this.state.sb.GroupChannel.getChannel(this.state.channelUrl, <span class="fstat-no" title="function not covered" >(c</span>hannel, error) =&gt; {
+            //add alert and go back on press
+<span class="cstat-no" title="statement not covered" >            if(error){</span>
+<span class="cstat-no" title="statement not covered" >                console.log('Could not get channel');</span>
+<span class="cstat-no" title="statement not covered" >                console.log(error);</span>
+            }
+            
+<span class="cstat-no" title="statement not covered" >            messageQuery = channel.createPreviousMessageListQuery();</span>
+            
+<span class="cstat-no" title="statement not covered" >            this.state.groupChannel = channel;</span>
+            
+<span class="cstat-no" title="statement not covered" >            if(this.state.userId === null)</span>
+<span class="cstat-no" title="statement not covered" >                this.state.friendName = channel.name;            </span>
+            else 
+<span class="cstat-no" title="statement not covered" >                this.state.friendName = channel.members[0].userId === this.state.userId ? channel.members[1].nickname : channel.members[0].nickname;</span>
+               
+<span class="cstat-no" title="statement not covered" >            this.getChannelMessage(false);</span>
+        })
+    }
+&nbsp;
+    sendMessage() {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(this.state.text === ""){
+            console.log("return");
+            return
+        }
+<span class="cstat-no" title="statement not covered" >        this.state.groupChannel.sendUserMessage(this.state.text, '', <span class="fstat-no" title="function not covered" >(m</span>essage, error) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            if (error) {</span>
+<span class="cstat-no" title="statement not covered" >                console.error(error)</span>
+<span class="cstat-no" title="statement not covered" >                return</span>
+            }
+<span class="cstat-no" title="statement not covered" >            console.log("Hello");</span>
+            const messages = <span class="cstat-no" title="statement not covered" >[].concat([message]).concat(this.state.messages)</span>
+<span class="cstat-no" title="statement not covered" >            this.setState({ text: '', messages })</span>
+        })
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    ge</span>tChannelMessage(refresh) {
+<span class="cstat-no" title="statement not covered" >        if (refresh) {</span>
+<span class="cstat-no" title="statement not covered" >            messageQuery = this.state.groupChannel.createPreviousMessageListQuery()</span>
+<span class="cstat-no" title="statement not covered" >            this.state.messages = []</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (messageQuery) {</span>
+<span class="cstat-no" title="statement not covered" >            if (!messageQuery.hasMore) {</span>
+<span class="cstat-no" title="statement not covered" >                return</span>
+            }
+<span class="cstat-no" title="statement not covered" >            messageQuery.load(20, false, <span class="fstat-no" title="function not covered" >(r</span>esponse, error) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            if (error) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('Get Message List Fail.', error)</span>
+<span class="cstat-no" title="statement not covered" >                return</span>
+            }
+&nbsp;
+            const messages = <span class="cstat-no" title="statement not covered" >[]</span>
+<span class="cstat-no" title="statement not covered" >            for (let i = 0; i &lt; response.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >                messages.push(response[i])</span>
+            }
+&nbsp;
+            const newMessageList = <span class="cstat-no" title="statement not covered" >this.state.messages.concat(messages.reverse())</span>
+<span class="cstat-no" title="statement not covered" >            this.setState({ messages: newMessageList })</span>
+            })
+        }
+    }
+&nbsp;
+    renderMessage(msg) {
+        const createdAt = moment(msg.createdAt).format('H:mm')
+        if (msg._sender.userId === this.state.userId) {
+            return (
+                &lt;View style={[styles.messageContainer, { paddingLeft: 50 }]}&gt;
+                &lt;View style={{ justifyContent: 'flex-end' }}&gt;
+                &lt;Text style={styles.createdAt}&gt;{createdAt}&lt;/Text&gt;
+                &lt;/View&gt;
+                &lt;View style={[styles.messageBody, { backgroundColor: themeColor }]}&gt;
+                &lt;Text style={{ color: 'white' }}&gt;{msg.message}&lt;/Text&gt;
+                &lt;/View&gt;
+                &lt;Image source={{ uri: msg._sender.profileUrl }} style={[styles.profile, { marginLeft: 10 }]} /&gt;
+                &lt;/View&gt;
+            )
+        }
+        return (
+            &lt;View style={[styles.messageContainer, { paddingRight: 50 }]}&gt;
+                &lt;Image source={{ uri: msg._sender.profileUrl }} style={[styles.profile, { marginRight: 10 }]} /&gt;
+                &lt;View style={[styles.messageBody, { backgroundColor: '#efefef' }]}&gt;
+                    &lt;Text style={{ color: 'black' }}&gt;{msg.message}&lt;/Text&gt;
+                &lt;/View&gt;
+                &lt;View style={{ justifyContent: 'flex-end' }}&gt;
+                    &lt;Text style={styles.createdAt}&gt;{createdAt}&lt;/Text&gt;
+                &lt;/View&gt;
+            &lt;/View&gt;
+        )
+    }
+&nbsp;
+    render() {
+        return (
+        &lt;React.Fragment&gt;
+            &lt;Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}&gt;
+                    &lt;Left/&gt;
+                        &lt;Body&gt;
+                            &lt;Title style={styles.headerTitle}&gt;{this.state.friendName}&lt;/Title&gt;
+                        &lt;/Body&gt;
+                    &lt;Right /&gt;
+            &lt;/Header&gt;
+            &lt;FlatList
+                inverted
+                onEndReached={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >this.getChannelMessage(false)}</span>
+                data={this.state.messages}
+                renderItem={<span class="fstat-no" title="function not covered" >({</span> item }) =&gt; <span class="cstat-no" title="statement not covered" >this.renderMessage(item)}</span>
+                style={{ flex: 1 }}
+                /&gt;
+            &lt;KeyboardAvoidingView
+                style={styles.container}
+                behavior="padding"
+            &gt;
+                &lt;View style={{ flexDirection: 'row' }}&gt;
+                    &lt;TextInput
+                        style={styles.textInput}
+                        placeholder="Text Message"
+                        onChangeText={(text) =&gt; this.setState({ text })}
+                        value={this.state.text}
+                    /&gt;
+                   &lt;Icon
+                        raised
+                        name='send'
+                        type='font-awesome'
+                        color= {themeColor}
+                        size = {20}
+                        onPress={() =&gt; this.sendMessage()} 
+                    /&gt;
+                &lt;/View&gt;
+            &lt;/KeyboardAvoidingView&gt;
+        &lt;/React.Fragment&gt;
+        )
+    }
+}
+&nbsp;
+const styles = {
+    header:{
+        backgroundColor: '#2c2638',
+        height: height*0.1
+      },
+      headerTitle:{
+        textTransform: 'capitalize',
+        paddingTop:height*0.03,
+        paddingBottom:50,
+        fontFamily: 'BebasNeue',
+        fontSize : 25,
+        color: '#ffffff'
+    },
+  textInput: {
+    height: 40,
+    borderColor: 'lightgray',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    flex: 1,
+    paddingHorizontal: 8,
+    marginTop: 10
+  },
+  sendButton: {
+    width: 80,
+    backgroundColor: themeColor,
+    height: 40,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderColor: 'lightgray',
+    marginTop: 10
+  },
+  sendButtonText: {
+    fontSize: 16,
+    color: 'white',
+    lineHeight: 30,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
+  messageContainer: {
+    flexDirection: 'row',
+    padding: 10
+  },
+  messageBody: {
+    flex: 1,
+    padding: 8,
+    borderRadius: 5
+  },
+  profile: {
+    width: 40,
+    height: 40,
+    borderRadius: 20
+  },
+  createdAt: {
+    color: 'gray',
+    fontSize: 12,
+    marginHorizontal: 5
+  }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Nov 20 2018 15:24:13 GMT-0800 (Pacific Standard Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

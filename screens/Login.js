@@ -52,38 +52,6 @@ export default class Login extends React.Component {
   };
 
   render() {
-    const renderButton = () => {
-          return (
-            <Button
-              onPress={() => this.modal.open()}
-              iconLeft
-              bordered
-              activeOpacity={0.5}
-              style={{
-                width: (width * 37) / 100,
-                height: height / 14,
-                borderColor: "grey",
-                marginLeft: 10
-              }}
-            >
-              <Icon
-                style={{ fontSize: 30, color: "grey" }}
-                name="logo-linkedin"
-              />
-              <Text
-                uppercase={false}
-                style={{
-                  fontSize: 18,
-                  fontWeight: "500",
-                  color: "grey",
-                  paddingLeft: width / 30
-                }}
-              >
-                LinkedIn
-              </Text>
-            </Button>
-          );
-    };
     return (
       <View>
       <Background logo= {true}/>
@@ -147,7 +115,7 @@ export default class Login extends React.Component {
                   <Button
                     iconLeft
                     bordered
-                    onPress = {loginFb}
+                    onPress = {() => this.loginFb()}
                     activeOpacity={0.5}
                     style={{
                       width: (width * 38) / 100,
@@ -176,6 +144,30 @@ export default class Login extends React.Component {
           </View>
     );
   }
+
+  loginFb = async () => {
+    try {
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Expo.Facebook.logInWithReadPermissionsAsync('1220787098061912', {
+        permissions: ['public_profile'],
+      });
+      if (type === 'success') {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -210,27 +202,4 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-
-const loginFb = async function logIn() {
-  try {
-    const {
-      type,
-      token,
-      expires,
-      permissions,
-      declinedPermissions,
-    } = await Expo.Facebook.logInWithReadPermissionsAsync('1220787098061912', {
-      permissions: ['public_profile'],
-    });
-    if (type === 'success') {
-      // Get the user's name using Facebook's Graph API
-      const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-      Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-    } else {
-      // type === 'cancel'
-    }
-  } catch ({ message }) {
-    alert(`Facebook Login Error: ${message}`);
-  }
-}
 

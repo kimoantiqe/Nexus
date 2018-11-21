@@ -14,7 +14,20 @@ test('login button works', () => {
     const clickMock = jest.fn();
 
     wrapper.instance().Login = clickMock;
+    wrapper.update();
     wrapper.find(Button).at(0).props().onPress();
 
-    expect(wrapper.instance().Login).toHaveBeenCalled();
+    expect(clickMock).toHaveBeenCalled();
+});
+
+test('login button works', () => {
+    const wrapper = shallow(<Splash/>);
+    const clickMock = jest.fn();
+    clickMock.mockReturnValue("Hello");
+
+    wrapper.instance().Register = clickMock;
+    wrapper.update();
+    wrapper.find(Button).at(1).props().onPress();
+
+    expect(clickMock).toHaveBeenCalled();
 });

@@ -100,16 +100,18 @@ export default class ChatScreen extends Component {
     }
 
     sendMessage() {
-        if(this.state.text === "")
+        if(this.state.text === ""){
+            console.log("return");
             return
+        }
         this.state.groupChannel.sendUserMessage(this.state.text, '', (message, error) => {
             if (error) {
                 console.error(error)
                 return
             }
+            console.log("Hello");
             const messages = [].concat([message]).concat(this.state.messages)
-            this.state.text = "";
-            this.state.messages = messages;
+            this.setState({ text: '', messages })
         })
     }
 
