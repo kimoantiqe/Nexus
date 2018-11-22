@@ -180,6 +180,67 @@ module.exports.deleteTask = (done,chai,server) => {
             });
 };
 
+module.exports.putTask = (done,chai,server) => {
+			let newDetails = {
+				taskTitle: 'task title12 new',
+				taskInfo: 'info blah blah new',
+				taskDueDate: Date.now(),
+				taskType: 'Meeting'
+			};
+			chai.request(server)
+					.put('/api/user/task/'+createdTaskId)
+					.set('Content-Type', 'application/json')
+					.set('Authorization',dummyUser.token)
+					.send(newDetails)
+					.end((err, res) => {
+								res.should.have.status(200);
+								res.body.should.be.a('object');
+								res.body.should.have.property('success').eql(true);
+								res.body.should.have.property('message').include('Updated task: task title12 new');
+						done();
+					});
+};
+
+module.exports.putTaskFail1 = (done,chai,server) => {
+			let newDetails = {
+				taskInfo: 'info blah blah new',
+				taskDueDate: Date.now(),
+				taskType: 'Meeting'
+			};
+			chai.request(server)
+					.put('/api/user/task/'+createdTaskId)
+					.set('Content-Type', 'application/json')
+					.set('Authorization',dummyUser.token)
+					.send(newDetails)
+					.end((err, res) => {
+								res.should.have.status(200);
+								res.body.should.be.a('object');
+								res.body.should.have.property('success').eql(false);
+								res.body.should.have.property('error').include('Please enter taskTitle to create task');
+						done();
+					});
+};
+
+module.exports.putTaskFail2 = (done,chai,server) => {
+			let newDetails = {
+				taskTitle: 'task title12 new',
+				taskInfo: 'info blah blah new',
+				taskDueDate: Date.now(),
+				taskType: 'Meeting'
+			};
+			chai.request(server)
+					.put('/api/user/task/'+'5bdf94320e35f80015e91d0a')
+					.set('Content-Type', 'application/json')
+					.set('Authorization',dummyUser.token)
+					.send(newDetails)
+					.end((err, res) => {
+								res.should.have.status(200);
+								res.body.should.be.a('object');
+								res.body.should.have.property('success').eql(false);
+								res.body.should.have.property('error').include('Cannot update non existent task');
+						done();
+					});
+};
 module.exports.deleteTaskFail1 = (done,chai,server) => {
 
         chai.request(server)

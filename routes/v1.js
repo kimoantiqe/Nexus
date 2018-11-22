@@ -105,6 +105,12 @@ module.exports = function(app, passport) {
   }), TaskController.get);
   /************************************/
 
+  /********  update a task of a given user **************/ //R
+  app.put('/api/user/task/:taskId', passport.authenticate('jwt', {
+    session: false
+  }), TaskController.update);
+  /************************************/
+
   /********  soft delete a task  **************/ //R
   app.delete('/api/user/task/:taskId', passport.authenticate('jwt', {
     session: false
@@ -113,10 +119,5 @@ module.exports = function(app, passport) {
 
 
 
-  // /********  update a task of a given user **************/ //R
-  // app.put('/api/user/task', passport.authenticate('jwt', {
-  //   session: false
-  // }), TaskController.get);
-  // /************************************/
 
 };
