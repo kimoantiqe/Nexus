@@ -1,25 +1,14 @@
 import React, { Component } from 'react';
-import { LinearGradient } from 'expo';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  StyleSheet,
-  ScrollView,
-  Image,
-  Dimensions, 
-   KeyboardAvoidingView, Alert, TextInput, TouchableOpacity, Slider
-} from 'react-native';
-import {Badge, Container, Content, Text, Item, Header, View, Tabs, Tab, Button, TabHeading, Input, Form, Textarea} from 'native-base'
+import { Dimensions, Slider } from 'react-native';
+import {Badge, Container, Content, Text, Item, Header, View, Button, Input, Form, Textarea} from 'native-base'
 import { Pages } from 'react-native-pages';
+
 import Background from '../components/Background';
-// import SliderBadge from '../components/sliderBadge';
-import MainTabNavigator from '../navigation/MainTabNavigator';
-import AppNavigator from '../navigation/AppNavigator';
-// import { Slider } from 'react-native-elements';
+
 const API = require("../API_calls/APIs");
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
 export default class RegCompleteProfile extends React.Component {
   static navigationOptions = {
     header: null,
@@ -166,10 +155,10 @@ handleLFValue = (val, lf) => {
 
             <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
             
-            <SliderBadge displayName={"Looking for A"} flag={LF["LA"]} toCall = {() => this.onPressInterests("LA")} toSetVal = {(value) => this.sliding(value, 1, "LAval")}/>
-            <SliderBadge displayName={"Looking for B"} flag={LF["LB"]} toCall = {() => this.onPressInterests("LB")} toSetVal = {(value) => this.sliding(value, 1, "LBval")}/>
-            <SliderBadge displayName={"Looking for C"} flag={LF["LC"]} toCall = {() => this.onPressInterests("LC")} toSetVal = {(value) => this.sliding(value, 1, "LCval")}/>
-            <SliderBadge displayName={"Looking for D"} flag={LF["LD"]} toCall = {() => this.onPressInterests("LD")} toSetVal = {(value) => this.sliding(value, 1, "LDval")}/>
+            <SliderBadge displayName={"Looking for A"} flag={LF["LA"]} toCall = {() => this.onPressLF("LA")} toSetVal = {(value) => this.sliding(value, 1, "LAval")}/>
+            <SliderBadge displayName={"Looking for B"} flag={LF["LB"]} toCall = {() => this.onPressLF("LB")} toSetVal = {(value) => this.sliding(value, 1, "LBval")}/>
+            <SliderBadge displayName={"Looking for C"} flag={LF["LC"]} toCall = {() => this.onPressLF("LC")} toSetVal = {(value) => this.sliding(value, 1, "LCval")}/>
+            <SliderBadge displayName={"Looking for D"} flag={LF["LD"]} toCall = {() => this.onPressLF("LD")} toSetVal = {(value) => this.sliding(value, 1, "LDval")}/>
         
             </View>
             </Content>
@@ -179,10 +168,10 @@ handleLFValue = (val, lf) => {
 
             <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
 
-            <SliderBadge displayName={"Industry A"} flag={industry["INA"]} toCall = {() => this.onPressInterests("INA")} toSetVal = {(value) => this.sliding(value, 2, "INAval")}/>
-            <SliderBadge displayName={"Industry B"} flag={industry["INB"]} toCall = {() => this.onPressInterests("INB")} toSetVal = {(value) => this.sliding(value, 2, "INBval")}/>
-            <SliderBadge displayName={"Industry C"} flag={industry["INC"]} toCall = {() => this.onPressInterests("INC")} toSetVal = {(value) => this.sliding(value, 2, "INCval")}/>
-            <SliderBadge displayName={"Industry D"} flag={industry["IND"]} toCall = {() => this.onPressInterests("IND")} toSetVal = {(value) => this.sliding(value, 2, "INDval")}/>
+            <SliderBadge displayName={"Industry A"} flag={industry["INA"]} toCall = {() => this.onPressIndustry("INA")} toSetVal = {(value) => this.sliding(value, 2, "INAval")}/>
+            <SliderBadge displayName={"Industry B"} flag={industry["INB"]} toCall = {() => this.onPressIndustry("INB")} toSetVal = {(value) => this.sliding(value, 2, "INBval")}/>
+            <SliderBadge displayName={"Industry C"} flag={industry["INC"]} toCall = {() => this.onPressIndustry("INC")} toSetVal = {(value) => this.sliding(value, 2, "INCval")}/>
+            <SliderBadge displayName={"Industry D"} flag={industry["IND"]} toCall = {() => this.onPressIndustry("IND")} toSetVal = {(value) => this.sliding(value, 2, "INDval")}/>
             
             </View>
         <Content scrollEnabled={false} contentContainerStyle={{flexDirection: 'row', justifyContent: 'center', padding: width*0.05}}>

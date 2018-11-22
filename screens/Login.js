@@ -2,20 +2,14 @@ import React, { Component } from "react";
 import Expo from 'expo' 
 import { LinearGradient } from "expo";
 import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
   StyleSheet,
   View,
-  Image,
   Dimensions,
-  KeyboardAvoidingView,
   Alert,
   TextInput,
-  TouchableOpacity,WebView
+  TouchableOpacity
 } from "react-native";
 import { Text, Button, Icon } from "native-base";
-import Spinner from 'react-native-loading-spinner-overlay';
 
 import Background from '../components/Background';
 
@@ -23,9 +17,6 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const APIcall      = require("../API_calls/APIs");
-
-var userToken3;
-export {userToken3};
 
 export default class Login extends React.Component {
   static navigationOptions = {
@@ -41,7 +32,7 @@ export default class Login extends React.Component {
       userid: "",
       nickname: ""
     };
-    //this. = this.modal.bind(this);
+    
   }
 
   handleUsername = text => {
