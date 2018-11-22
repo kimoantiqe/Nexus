@@ -42,47 +42,25 @@ export default class Matches extends React.Component {
   constructor(props){
     super(props);
     this.params = this.props.navigation.state.params;
+    this.state= {
+      user: this.params.user
+    }
      }
 
-  static navigationOptions = {
-    header: null
-  };
-  //Function that grabs a user from the database.
-  getUser = async () => {
-    console.log("im here");
-    userToken = await Expo.SecureStore.getItemAsync("userToken");
-    console.log("im after");
-
-    if (userToken != null) {
-      var grabUser = {
-        method: "GET",
-        headers: {
-          Authorization: userToken
-        }
-      };
-      await fetch(apiURL + "/user/getpotconn", grabUser)
-        .then(response => response.json())
-        .then(response => {
-          if (response.success) {
-            if (response.array) {
-              var array = JSON.parse(response.array);
-              for (let i = 0; i < array.length; i++) {
-                Users[i] = array[i];
-              }
-            }
-          }
-        })
-        .then(
-          this.setState({ currentIndex: 0 }, () => {
-            this.position.setValue({ x: 0, y: 0 });
-          })
-        );
-    }
-  };
-
+     static navigationOptions = {
+      header: null
+    };
+  
+  
+  componentWillMount(){
+    this.params = this.props.navigation.state.params;
+    this.setState({
+      user: this.params.user
+    })
+  }
 
   renderUsers = () => {
-    while (!this.params.user) {
+    while (!this.state.user) {
       return (
         <View style={[styles.container1, styles.horizontal1]}>
           <ActivityIndicator size="large" color="#2c2638" />
@@ -131,6 +109,7 @@ export default class Matches extends React.Component {
   };
 
   render() {
+    const { params } = this.props.navigation.state;
     return (
       <Container>
         <Header
@@ -140,7 +119,7 @@ export default class Matches extends React.Component {
         >
           <Left />
           <Body>
-            <Title style={styles.headerTitle}>{this.params.user.firstName + " " + this.params.user.lastName}</Title>
+            <Title style={styles.headerTitle}>{params.user.firstName + " " + params.user.lastName}</Title>
           </Body>
           <Right />
         </Header>

@@ -18,7 +18,8 @@ import Profile from '../screens/UserProfile';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-  Calendar: Calendar
+  Calendar: Calendar,
+  UProfile: Profile
 });
 
 

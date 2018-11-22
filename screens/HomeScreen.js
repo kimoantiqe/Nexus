@@ -205,7 +205,7 @@ export default class HomeScreen extends React.Component {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
               <Card style={styles.avatarCard}>
-                <CardItem button onPress={ () => this.props.navigation.navigate("Profile", {
+                <CardItem button onPress={ () => this.props.navigation.navigate("UProfile", {
       user: item
     }
     )
