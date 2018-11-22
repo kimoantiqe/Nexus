@@ -120,10 +120,6 @@ describe('Nexus API test', async () => {
   describe('/DELETE /api/user', () => {
       it('it should delete registered user', (done) => image.deleteSuccess(done,chai,server));
   });
-  describe('/POST /api/user', () => {
-      it('it should register a new user', (done) => image.registerSuccess(done,chai,server));
-  });
-
 
   //TASKS
   describe('/POST /api/user', () => {
@@ -174,73 +170,73 @@ describe('Nexus API test', async () => {
   });
 
 
-    //Matching
-     describe('/POST /api/user REGISTER USER 1', () => {
-    it('it should register new user 1', (done) => matching.registerUser1(done,chai,server));
-    });
-
-     describe('/POST /api/user REGISTER USER 2', () => {
-    it('it should register new user 2', (done) => matching.registerUser2(done,chai,server));
-    });
-
-     describe('/POST /api/user/login LOGIN USER 1', () => {
-        it('it should login the just registered user 1', (done) => matching.loginUser1(done,chai,server));
-    });
-
-     describe('/POST /api/user/login LOGIN USER 2', () => {
-        it('it should login the just registered user 2', (done) => matching.loginUser2(done,chai,server));
-    });
-
-     describe('/PUT /api/user UPDATE USER 1', () => {
-        it('it should update the user ', (done) => matching.putUser1(done,chai,server));
-    });
-
-     describe('/PUT /api/user UPDATE USER 2', () => {
-        it('it should update the user ', (done) => matching.putUser2(done,chai,server));
-    });
-
-     describe('/GET /api/user GET USER 1', () => {
-        it('should pass ', (done) => matching.getUser1(done,chai,server));
-    });
-
-     describe('/GET /api/user GET USER 2', () => {
-        it('should pass ', (done) => matching.getUser2(done,chai,server));
-    });
-
-    describe('/GET /api/user/popconn POPULATES USER 2 ARRAY', () => {
-        it('should pass ', (done) =>   matching.popconn(done,chai,server)).timeout(0);
-    });
-
-
-      describe('/GET /api/user GETS USER 2', () => {
-        it('should pass ', (done) => matching.getUser2(done,chai,server));
-    });
-
-    describe('/GET /api/user/getpotconn GETS USER2 POT CONNS', () => {
-        it('should pass ', (done) =>  matching.getpotcon(done,chai,server));
-    });
-
-
-    describe('/GET /api/user GETS USER 1', () => {
-        it('should pass ', (done) => matching.getUser1(done,chai,server));
-    });
-
-    describe('/PUT /api/user SETS LIKE USER 1', () => {
-        it('it should update the user ', (done) => matching.putLike1(done,chai,server));
-    });
-    describe('/PUT /api/user SETS LIKE USER 2', () => {
-        it('it should update the user ', (done) => matching.putLike3(done,chai,server));
-    });
-
-    describe('/PUT /api/user SETS LIKE for no user ', () => {
-        it('it should fail ', (done) => matching.putLike2(done,chai,server));
-    });
-
-    describe('/PUT /api/user SETS DISLIKE', () => {
-        it('it should update the user ', (done) => matching.putDislike(done,chai,server));
-    });
-
-    describe('/GET /api/user/getuser gets user by id', () => {
-        it('should pass ', (done) => matching.getUserByID(done,chai,server));
-    });
+    // //Matching
+    //  describe('/POST /api/user REGISTER USER 1', () => {
+    // it('it should register new user 1', (done) => matching.registerUser1(done,chai,server));
+    // });
+    //
+    //  describe('/POST /api/user REGISTER USER 2', () => {
+    // it('it should register new user 2', (done) => matching.registerUser2(done,chai,server));
+    // });
+    //
+    //  describe('/POST /api/user/login LOGIN USER 1', () => {
+    //     it('it should login the just registered user 1', (done) => matching.loginUser1(done,chai,server));
+    // });
+    //
+    //  describe('/POST /api/user/login LOGIN USER 2', () => {
+    //     it('it should login the just registered user 2', (done) => matching.loginUser2(done,chai,server));
+    // });
+    //
+    //  describe('/PUT /api/user UPDATE USER 1', () => {
+    //     it('it should update the user ', (done) => matching.putUser1(done,chai,server));
+    // });
+    //
+    //  describe('/PUT /api/user UPDATE USER 2', () => {
+    //     it('it should update the user ', (done) => matching.putUser2(done,chai,server));
+    // });
+    //
+    //  describe('/GET /api/user GET USER 1', () => {
+    //     it('should pass ', (done) => matching.getUser1(done,chai,server));
+    // });
+    //
+    //  describe('/GET /api/user GET USER 2', () => {
+    //     it('should pass ', (done) => matching.getUser2(done,chai,server));
+    // });
+    //
+    // describe('/GET /api/user/popconn POPULATES USER 2 ARRAY', () => {
+    //     it('should pass ', (done) =>   matching.popconn(done,chai,server)).timeout(0);
+    // });
+    //
+    //
+    //   describe('/GET /api/user GETS USER 2', () => {
+    //     it('should pass ', (done) => matching.getUser2(done,chai,server));
+    // });
+    //
+    // describe('/GET /api/user/getpotconn GETS USER2 POT CONNS', () => {
+    //     it('should pass ', (done) =>  matching.getpotcon(done,chai,server));
+    // });
+    //
+    //
+    // describe('/GET /api/user GETS USER 1', () => {
+    //     it('should pass ', (done) => matching.getUser1(done,chai,server));
+    // });
+    //
+    // describe('/PUT /api/user SETS LIKE USER 1', () => {
+    //     it('it should update the user ', (done) => matching.putLike1(done,chai,server));
+    // });
+    // describe('/PUT /api/user SETS LIKE USER 2', () => {
+    //     it('it should update the user ', (done) => matching.putLike3(done,chai,server));
+    // });
+    //
+    // describe('/PUT /api/user SETS LIKE for no user ', () => {
+    //     it('it should fail ', (done) => matching.putLike2(done,chai,server));
+    // });
+    //
+    // describe('/PUT /api/user SETS DISLIKE', () => {
+    //     it('it should update the user ', (done) => matching.putDislike(done,chai,server));
+    // });
+    //
+    // describe('/GET /api/user/getuser gets user by id', () => {
+    //     it('should pass ', (done) => matching.getUserByID(done,chai,server));
+    // });
 });

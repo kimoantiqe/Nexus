@@ -62,7 +62,7 @@ const get = async function(req, res){
 module.exports.get = get;
 
 const remove = async function(req, res){
-	let taskId, err , user , task;
+	let taskId, err , user ,pUser, task;
 	taskId = req.params.taskId;
 	user = req.user;
 
@@ -78,6 +78,27 @@ const remove = async function(req, res){
 	if(!(user._id.equals( task.taskOwner))){
 		return ReE(res, 'Only task owner can delete a task');
 	}
+
+
+	//GET P user
+	[err, pUser] = await to(User.findById(task.subscribedUsers[0]));
+	if(err) {
+		return ReE(res,'error occured trying to get p user');
+	}
+
+	//Delete from user 1
+	[err, user] = await to ( User.update({_id: user._id}, { $pullAll: {tasks: [taskId] } })) ;
+	if(err) {
+		return ReE(res,'error occured trying to unlink task from owner');
+	}
+
+
+	//Delete from user 2
+	[err, user] = await to ( User.update({_id: pUser._id}, { $pullAll: {tasks: [taskId] } })) ;
+	if(err) {
+		return ReE(res,'error occured trying to unlink task from participating User');
+	}
+
 
 	[err, taskId] = await to(Task.findOneAndRemove({_id:taskId}));
 	if(err) {

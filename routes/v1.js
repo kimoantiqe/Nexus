@@ -105,7 +105,7 @@ module.exports = function(app, passport) {
   }), TaskController.get);
   /************************************/
 
-  /********  hard delete a task  **************/ //R
+  /********  soft delete a task  **************/ //R
   app.delete('/api/user/task/:taskId', passport.authenticate('jwt', {
     session: false
   }),TaskController.remove);
