@@ -14,10 +14,19 @@ module.exports = function(app, passport) {
       version: 'v1.0.0'
     });
   });
+
   /************************************/
+
+
   /* USER ROUTES */
-  /********  Login **************/
+  /********  Regular Login **************/
   app.post('/api/user/login', UserController.login);
+  /************************************/
+
+  /********  Facebook Login **************/
+  app.post('/api/user/login/facebook', passport.authenticate('facebook-token', {
+    session: false
+  }), UserController.facebookHandler);
   /************************************/
 
   /************ create user ***************/ //C
@@ -41,6 +50,7 @@ module.exports = function(app, passport) {
     session: false
   }), UserController.remove);
   /************************************/
+
 
 
   /* MATCHING ROUTES */

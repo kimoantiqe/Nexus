@@ -36,6 +36,7 @@
     "multer-gridfs-storage": "^3.2.3",
     "parse-error": "^0.2.0",
     "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0",
     "passport-jwt": "^4.0.0",
     "validator": "^10.8.0"
   },

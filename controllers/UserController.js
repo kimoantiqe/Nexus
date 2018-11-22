@@ -47,6 +47,31 @@ const create = async function(req, res){
 
 module.exports.create = create;
 
+const facebookHandler = async function(req, res) {
+  res.setHeader("Content-Type", "application/json");
+
+  let err, user;
+  if (req.user.status =="Unregistered user") {
+    [err, user] = await to(User.create({ facebookId: req.user.profileId , password: " " }));
+    if (err) {
+      return ReE(res, err, 422);
+    }
+    return ReS(
+      res,
+      {
+        message: "Successfully created new user.",
+        user: user.toWeb(),
+        token: user.getJWT()
+      },
+      201
+    );
+  } else {
+    return ReS(res, { token: req.user.getJWT(), user: req.user.toWeb() });
+  }
+};
+module.exports.facebookHandler = facebookHandler;
+
+
 const login = async function(req, res){
 	const body = req.body;
 	let err, user;
@@ -127,10 +152,10 @@ const getuser = async function(req, res){
 	let err;
 	let otheruser;
 	let id = req.query.id;
-	
+
 	await User.findById(id, function(err, newuser) {
 		if( !newuser ){
-			
+
 			return ReE(res, "user not in your matches");
 		}
 		else if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
@@ -209,7 +234,7 @@ async function pushLikes(user, field){
 			}
 			if(field[i] != null && user.liked.indexOf(field[i]) === -1 ){
 				user.liked.push(field[i]);
-				await user.potentialMatches.shift();		
+				await user.potentialMatches.shift();
 				[err, newuser] = await to(User.findById(field[i]));
 					if(!newuser || newuser == null || newuser.liked.includes(null)){
 						return -1;

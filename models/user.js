@@ -8,6 +8,9 @@ const {TE,to}   = require('../services/util');
 const jwtConfig = require('../configurations/jwt');
 
 let UserSchema = mongoose.Schema({
+  facebookId:{
+    type:String
+  },
   image:{
     type:mongoose.Schema.Types.ObjectId,
     ref :'image',
@@ -89,7 +92,7 @@ let UserSchema = mongoose.Schema({
 UserSchema.plugin(exists);
 UserSchema.pre('save', async function(next) {
 
-  if (this.isModified('password') || this.isNew) {
+  if (this.isModified('password') || (this.isNew)) {
 
     let err, salt, hash;
     [err, salt] = await to(bcrypt.genSalt(10));
