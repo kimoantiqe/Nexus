@@ -233,14 +233,14 @@ export default class Matches extends React.Component {
               <Text
                 style={{
                   borderWidth: 1,
-                  borderColor: "#665b7c",
-                  color: "#665b7c",
+                  borderColor: "#915781",
+                  color: "#915781",
                   fontSize: 32,
                   fontWeight: "800",
                   padding: 10
                 }}
               >
-                MATCH
+                LIKE
               </Text>
             </Animated.View>
 
@@ -257,8 +257,8 @@ export default class Matches extends React.Component {
               <Text
                 style={{
                   borderWidth: 1,
-                  borderColor: "#915781",
-                  color: "#915781",
+                  borderColor: "#db72be",
+                  color: "#db72be",
                   fontSize: 32,
                   fontWeight: "800",
                   padding: 10
@@ -325,14 +325,14 @@ export default class Matches extends React.Component {
             <Text
               style={{
                 borderWidth: 1,
-                borderColor: "#665b7c",
-                color: "#665b7c",
+                borderColor: "#915781",
+                color: "#915781",
                 fontSize: 32,
                 fontWeight: "800",
                 padding: 10
               }}
             >
-              MATCH
+              LIKE
             </Text>
           </Animated.View>
 
@@ -349,8 +349,8 @@ export default class Matches extends React.Component {
             <Text
               style={{
                 borderWidth: 1,
-                borderColor: "#915781",
-                color: "#915781",
+                borderColor: "#db72be",
+                color: "#db72be",
                 fontSize: 32,
                 fontWeight: "800",
                 padding: 10
