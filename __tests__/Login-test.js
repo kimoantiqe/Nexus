@@ -73,15 +73,9 @@ test('Login With Facebook logo', () => {
 
 test('Login With Facebook button', () => {
 
+  const wrapper = shallow(<Login/>);
   let clickMock = jest.fn();
-  clickMock.mockReturnValue('Send Button Pressed');
-  
-  const wrapper = shallow(<Login />);
-
-  wrapper.instance().loginFb = clickMock;
-  wrapper.update();
-
-  wrapper.find(Button).at(1).props().onPress();
-
+  APIcall.loginfb = clickMock;
+  wrapper.find(Button).first().props().onPress();
   expect(clickMock).toHaveBeenCalled();
 });
