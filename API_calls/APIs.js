@@ -423,7 +423,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
       await fetch(apiURL + "/user/getuser/?id=" + userid, user)
         .then(response => response.json())
         .then(response => {
-          console.log("USER IS" + response.user)
+          console.log(response.user)
           return(response.user)
         });
     }

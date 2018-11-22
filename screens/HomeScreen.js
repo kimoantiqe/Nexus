@@ -92,30 +92,30 @@ export default class HomeScreen extends React.Component {
           Authorization: userToken
         }
       };
-      //need to update the get request.
+      
       await fetch(apiURL + "/user", matches)
         .then(response => response.json())
         .then(async response => {
-          // console.log(response);
+        
           if (response.success) {
-            //console.log(response.user.matches);
+        
             for (var i = 0; i < response.user.matches.length; i++) {
               if(response.user.matches[i])
               await this.getUser(response.user.matches[i]);
             }
-            //console.log(matchesArray);
+            
             this.refreshScreen();
           }
         });
     }
   };
 
-  //need to make sure
+  
   getUser = async userid => {
     let userToken = await AsyncStorage.getItem("userToken");
 
     if (userToken != null) {
-      //console.log("This is display Match");
+      
       var user = {
         method: "GET",
         headers: {
@@ -131,11 +131,10 @@ export default class HomeScreen extends React.Component {
         });
     }
   };
+
   //Function that is used to populate when the user logs in.
   populate = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
-
-    //console.log(userToken);
 
     if (userToken != null) {
       var populate = {
@@ -206,7 +205,11 @@ export default class HomeScreen extends React.Component {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
               <Card style={styles.avatarCard}>
-                <CardItem button onPress={item => item.firstName}>
+                <CardItem button onPress={ () => this.props.navigation.navigate("Profile", {
+      user: item
+    }
+    )
+                  }>
                   <Thumbnail
                     source={require("../images/sherif.png")}
                     style={styles.avatarImg}
