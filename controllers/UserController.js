@@ -203,15 +203,27 @@ const setTask = async function(req,res){
 
 	let user = req.user;
 	let task = req.taskCreated;
-	let err;
+	let err , pUser;
+
+	//Add task to owner
 	user.tasks.push(task);
 	[err, user] = await to(user.save());
 	if(err) {
 		return ReE(res, err);
 	}
-	return ReS(res, {message :'Successfuly created task for user : '+user.email} , 201);
-};
 
+	//Add task to participatingUser
+	[err, pUser] = await to(User.findById(task.subscribedUsers[0]));
+	if(err) {
+		return ReE(res, err);
+	}
+	pUser.tasks.push(task);
+	[err, pUser] = await to(pUser.save());
+	if(err) {
+		return ReE(res, err);
+	}
+	return ReS(res, {message :'Successfuly created task for users : ['+user.email +","+pUser.email+']'} , 201);
+};
 module.exports.setTask = setTask;
 
 function pushIntoUser(user,field,fieldType){

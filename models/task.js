@@ -7,7 +7,7 @@ let taskSchema = mongoose.Schema({
   },
   taskType:{
     type: String,
-    enum : ['Meeting']
+    enum : ['Meeting','Task']
   },
   taskInfo: {
     type: String

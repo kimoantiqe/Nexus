@@ -19,7 +19,7 @@ const { to, ReE, ReS }        = require('../services/util');
 const create = async function(req, res,next){
 	res.setHeader('Content-Type', 'application/json');
 
-	const taskSchema = ['taskInfo', 'taskType' , 'taskTitle','taskDueDate'];
+	const taskSchema = ['taskInfo', 'taskType' , 'taskTitle','taskDueDate','participatingUser'];
 
 	const body = req.body;
 	const user = req.user;
@@ -30,13 +30,20 @@ const create = async function(req, res,next){
 
 		let err, task;
     //The following must only be handeled in the update function invoked by the put request
-    delete body.subscribedUsers;
+
+
 
 		//Add to user as owner
 		body['taskOwner'] = user._id;
 
     [err, task] = await to(Task.create(body));
     if(err){return ReE(res, err, 422);}
+
+		task.subscribedUsers.push(body['participatingUser']);
+		task.subscribedUsers.push(user._id);
+
+		[err, task] = await to(task.save());
+		if(err){return ReE(res, err, 422);}
 
 		//Add req to body
 		req.taskCreated = task;

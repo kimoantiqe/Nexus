@@ -32,7 +32,7 @@ process.on('unhandledRejection', (error) => {
 });
 
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('You are trying to access a non-existent route');
   err.status = 404;
   next(err);
 });
