@@ -314,7 +314,7 @@ export default class Matches extends React.Component {
 
           <Animated.View
             style={{
-              opacity: this.likeOpacity,
+              opacity: 0,
               transform: [{ rotate: "-30deg" }],
               position: "absolute",
               top: 50,
@@ -338,7 +338,7 @@ export default class Matches extends React.Component {
 
           <Animated.View
             style={{
-              opacity: this.dislikeOpacity,
+              opacity: 0,
               transform: [{ rotate: "30deg" }],
               position: "absolute",
               top: 50,
