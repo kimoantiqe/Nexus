@@ -105,6 +105,14 @@ module.exports = function(app, passport) {
   }), TaskController.get);
   /************************************/
 
+  /********  hard delete a task  **************/ //R
+  app.delete('/api/user/task/:taskId', passport.authenticate('jwt', {
+    session: false
+  }),TaskController.remove);
+  /************************************/
+
+
+
   // /********  update a task of a given user **************/ //R
   // app.put('/api/user/task', passport.authenticate('jwt', {
   //   session: false

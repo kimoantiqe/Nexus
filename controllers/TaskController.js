@@ -61,6 +61,34 @@ const get = async function(req, res){
 };
 module.exports.get = get;
 
+const remove = async function(req, res){
+	let taskId, err , user , task;
+	taskId = req.params.taskId;
+	user = req.user;
+
+	[err, task] = await to(Task.findOne({_id:taskId}));
+	if(err) {
+		return ReE(res, 'error occured trying to find task');
+	}
+
+	if(!task){
+		return ReE(res, 'Task does not exist');
+	}
+
+	if(!(user._id.equals( task.taskOwner))){
+		return ReE(res, 'Only task owner can delete a task');
+	}
+
+	[err, taskId] = await to(Task.findOneAndRemove({_id:taskId}));
+	if(err) {
+		return ReE(res, 'error occured trying to delete task');
+	}
+
+	return ReS(res, {message:'Deleted task'}, 204);
+};
+module.exports.remove = remove;
+
+
 // const update = async function(req, res){
 // 	let err, user, data ;
 // 	user = req.user;
@@ -114,17 +142,4 @@ module.exports.get = get;
 //
 // module.exports.getuser = getuser;
 //
-//
-// const remove = async function(req, res){
-// 	let user, err;
-// 	user = req.user;
-//
-// 	[err, user] = await to(user.remove());
-// 	if(err) {
-// 		return ReE(res, 'error occured trying to delete user');
-// 	}
-//
-// 	return ReS(res, {message:'Deleted User'}, 204);
-// };
-// module.exports.remove = remove;
 //

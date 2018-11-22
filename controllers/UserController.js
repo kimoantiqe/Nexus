@@ -222,7 +222,7 @@ const setTask = async function(req,res){
 	if(err) {
 		return ReE(res, err);
 	}
-	return ReS(res, {message :'Successfuly created task for users : ['+user.email +","+pUser.email+']'} , 201);
+	return ReS(res, {message :'Successfuly created task for users : ['+user.email +","+pUser.email+']',taskId:task._id} , 201);
 };
 module.exports.setTask = setTask;
 
