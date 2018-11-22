@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Expo from 'expo' 
+import Expo from 'expo'
 import { LinearGradient } from "expo";
 import {
   StyleSheet,
@@ -32,7 +32,7 @@ export default class Login extends React.Component {
       userid: "",
       nickname: ""
     };
-    
+
   }
 
   handleUsername = text => {
@@ -107,7 +107,7 @@ export default class Login extends React.Component {
                   <Button
                     iconLeft
                     bordered
-                    onPress = {() => this.loginFb()}
+                    onPress = {() => APIcall.loginfb()}
                     activeOpacity={0.5}
                     style={{
                       width: (width * 38) / 100,
@@ -135,29 +135,6 @@ export default class Login extends React.Component {
               </View>
           </View>
     );
-  }
-
-  loginFb = async () => {
-    try {
-      const {
-        type,
-        token,
-        expires,
-        permissions,
-        declinedPermissions,
-      } = await Expo.Facebook.logInWithReadPermissionsAsync('1220787098061912', {
-        permissions: ['public_profile'],
-      });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
   }
 
 }
@@ -194,4 +171,3 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-

@@ -326,3 +326,45 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
     }
   };
   module.exports.dislikedUser = dislikedUser;
+
+  const loginfb = async () => {
+    try {
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Expo.Facebook.logInWithReadPermissionsAsync('1220787098061912', {
+        permissions: ['public_profile'],
+      });
+      if (type === 'success') {
+
+        const payload = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'access_token' : token
+            })
+        }
+
+        const response = await fetch(apiURL+"/user/login/facebook",payload);
+        response = await response.json();
+        if(response.message == "Successfully created new user." && response.success){ // Means it was a new user need to complete profile
+          console.log("New user");
+        }else if(response.success){//Loged in Successfuly
+          console.log("Logged in:");
+        }else{//Means an error has occoured
+          console.log("An error has occourd in facebook back end call");
+        }
+
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  }
+  module.exports.loginfb = loginfb;
