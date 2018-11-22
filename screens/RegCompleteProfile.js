@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Dimensions, Slider, StyleSheet } from 'react-native';
-import {Badge, Container, Content, Text, Item, Header, View, Button, Input, Form, Textarea, Footer, Left, Right, Body, Title} from 'native-base'
+import { Container, Content, Text, Item, Header, View, Button, Input, Form, Textarea, Footer, Left, Right, Body, Title} from 'native-base'
 import { Pages } from 'react-native-pages';
 import { WaveIndicator } from "react-native-indicators";
-import Background from '../components/Background';
+import SliderBadge from '../components/SliderBadge'
+
 const API = require("../API_calls/APIs");
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -197,14 +198,14 @@ handleLFValue = (val, lf) => {
         <Content>
         
         <Text style={styles.Qtext}>Out of the following, choose what you are interested in and the emphasis of interest.</Text>
-            <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01, flex: 1, flexDirection: 'row'}}>
+            <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01, flex: 1, flexDirection: 'column'}}>
           
-            <Form>
+            <Form style={{flex: 1, flexDirection: 'row'}}>
               <SliderBadge displayName={"Interest A"} flag={interests["IA"]} toCall = {() => this.onPressInterests("IA")} toSetVal = {(value) => this.sliding(value, 0, "IAval")}/>
               <SliderBadge displayName={"Interest C"} flag={interests["IC"]} toCall = {() => this.onPressInterests("IC")} toSetVal = {(value) => this.sliding(value, 0, "ICval")}/>
             </Form>
 
-            <Form>
+            <Form style={{flex: 1, flexDirection: 'row'}}>
               <SliderBadge displayName={"Interest B"} flag={interests["IB"]} toCall = {() => this.onPressInterests("IB")} toSetVal = {(value) => this.sliding(value, 0, "IBval")}/>
               <SliderBadge displayName={"Interest D"} flag={interests["ID"]} toCall = {() => this.onPressInterests("ID")} toSetVal = {(value) => this.sliding(value, 0, "IDval")}/>
             </Form>
@@ -255,44 +256,6 @@ handleLFValue = (val, lf) => {
   }
 
 }
-
-class SliderBadge extends React.Component {
-
-  render() {
-    const {flag} = this.props;
-      return(
-        <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}>
-<Item style={{borderBottomColor: 'transparent', paddingBottom: flag? 0 : height*0.015}}>
-        <Badge style={{   backgroundColor: flag? '#c75e9a' : '#16131d',
-                          minHeight: height*0.055,
-                          borderWidth: width*0.0015, 
-                          borderColor: flag? '#c75e9a' : '#f2f2f2' ,
-                          borderRadius: 30,
-                          }}>
-        <Button transparent light onPress={this.props.toCall}>
-          <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300'}}>{this.props.displayName}</Text>
-          </Button>
-        </Badge>
-        </Item> 
-        { 
-          flag?
-          <Item style={{borderBottomColor: 'transparent', paddingBottom: flag? height*0.015 : 0}}>
-            <Badge style={{   backgroundColor: '#16131d',
-                  backgroundColor: flag? '#c75e9a' : '#16131d',
-                  borderColor: flag? '#c75e9a' : '#f2f2f2' ,
-                  minHeight: height*0.055,
-                  borderWidth: width*0.0015, 
-                  borderRadius: 30,
-                  minWidth: width*0.3,
-                  }}>
-            <Slider onSlidingComplete={this.props.toSetVal}/>
-            </Badge>
-              </Item> : null
-                  }
-                  </Form>
-      )
-                      };
-                  }
 
 const styles = StyleSheet.create({
                   header: {
