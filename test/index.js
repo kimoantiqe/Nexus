@@ -120,10 +120,6 @@ describe('Nexus API test', async () => {
   describe('/DELETE /api/user', () => {
       it('it should delete registered user', (done) => image.deleteSuccess(done,chai,server));
   });
-  describe('/POST /api/user', () => {
-      it('it should register a new user', (done) => image.registerSuccess(done,chai,server));
-  });
-
 
   //TASKS
   describe('/POST /api/user', () => {
@@ -132,6 +128,14 @@ describe('Nexus API test', async () => {
 
   describe('/POST /api/user/login', () => {
       it('it should login new user', (done) => task.loginSuccess(done,chai,server));
+  });
+
+  describe('/POST /api/user', () => {
+      it('it should register a new user', (done) => task.registerSuccess1(done,chai,server));
+  });
+
+  describe('/POST /api/user/login', () => {
+      it('it should login new user', (done) => task.loginSuccess1(done,chai,server));
   });
 
   describe('/POST /api/user/task', () => {
@@ -145,8 +149,38 @@ describe('Nexus API test', async () => {
       it('it should get all of the user tasks', (done) => task.getTaskSuccess(done,chai,server));
   });
 
+  describe('/PUT /api/user/task', () => {
+      it('it should update task', (done) => task.putTask(done,chai,server));
+  });
+
+  describe('/PUT /api/user/task', () => {
+      it('it should fail missing params', (done) => task.putTaskFail1(done,chai,server));
+  });
+
+  describe('/PUT /api/user/task', () => {
+      it('it should fail non existent task', (done) => task.putTaskFail2(done,chai,server));
+  });
+
+
+  describe('/DELETE /api/user/task', () => {
+      it('it should fail delete non existing task ', (done) => task.deleteTaskFail1(done,chai,server));
+  });
+
+  describe('/DELETE /api/user/task', () => {
+      it('it should fail not owner deleting task', (done) => task.deleteTaskFail2(done,chai,server));
+  });
+
+  describe('/DELETE /api/user/task', () => {
+      it('it should delete task', (done) => task.deleteTask(done,chai,server));
+  });
+
   describe('/DELETE /api/user', () => {
       it('it should delete registered user', (done) => task.deleteSuccess(done,chai,server));
+  });
+
+
+  describe('/DELETE /api/user', () => {
+      it('it should delete registered user 2', (done) => task.deleteSuccess1(done,chai,server));
   });
 
 
@@ -162,7 +196,7 @@ describe('Nexus API test', async () => {
      describe('/POST /api/user/login LOGIN USER 1', () => {
         it('it should login the just registered user 1', (done) => matching.loginUser1(done,chai,server));
     });
-  
+
      describe('/POST /api/user/login LOGIN USER 2', () => {
         it('it should login the just registered user 2', (done) => matching.loginUser2(done,chai,server));
     });
@@ -191,11 +225,11 @@ describe('Nexus API test', async () => {
       describe('/GET /api/user GETS USER 2', () => {
         it('should pass ', (done) => matching.getUser2(done,chai,server));
     });
-    
+
     describe('/GET /api/user/getpotconn GETS USER2 POT CONNS', () => {
         it('should pass ', (done) =>  matching.getpotcon(done,chai,server));
     });
-    
+
 
     describe('/GET /api/user GETS USER 1', () => {
         it('should pass ', (done) => matching.getUser1(done,chai,server));
@@ -220,6 +254,3 @@ describe('Nexus API test', async () => {
         it('should pass ', (done) => matching.getUserByID(done,chai,server));
     });
 });
-
-
-
