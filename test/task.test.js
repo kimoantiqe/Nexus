@@ -55,7 +55,8 @@ var dummyTask = {
 taskTitle: 'task title12',
 taskInfo: 'info blah blah',
 taskDueDate: Date.now(),
-taskType: 'Meeting'
+taskType: 'Meeting',
+participatingUser: dummyUser._id
 };
 //Test register user
 module.exports.createTaskSuccess = (done,chai,server) => {
