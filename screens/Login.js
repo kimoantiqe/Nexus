@@ -107,7 +107,7 @@ export default class Login extends React.Component {
                   <Button
                     iconLeft
                     bordered
-                    onPress = {() => APIcall.loginfb()}
+                    onPress = {() => APIcall.loginfb(this.props)}
                     activeOpacity={0.5}
                     style={{
                       width: (width * 38) / 100,

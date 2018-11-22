@@ -336,7 +336,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
   };
   module.exports.dislikedUser = dislikedUser;
 
-  const loginfb = async () => {
+  const loginfb = async (props) => {
     try {
       const {
         type,
