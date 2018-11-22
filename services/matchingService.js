@@ -42,7 +42,6 @@ const getpotconn = async function(req, res){
 		}
 		get10users(arr,
 			function(userarr2){
-			
 				return ReS(res, {array:JSON.stringify(userarr2)});
 			});
 		};
@@ -113,3 +112,34 @@ const popconns = async function(req, res){
 });
 };
 module.exports.popconns = popconns;
+
+
+
+//gets 10 potential connection for a user
+const match = async function(req, res){
+  let err, user, data;
+  user = req.user;
+  data = req.body;
+
+	let otheruser;
+	let id = data.id;
+
+  [err, newuser] = await to(User.findById(id));
+		if( !newuser ){
+			return ReE(res, "user not in your matches");
+		}
+		else if(newuser.InstantMatches.map((newuser) => newuser.toString()).includes(user._id.toString())){
+			return ReS(res, {message: 'already matches'});
+		}
+		else{
+			newuser.InstantMatches.push(user._id);
+			user.InstantMatches.push(id);
+			[err, otheruser] = await to(newuser.save());
+      [err, user] = await to(user.save());
+      if(err){
+        return ReE(res, err , 400);
+      }
+			return ReS(res, {message :'Updated User: '+user.email});
+		}
+  };
+module.exports.match = match;

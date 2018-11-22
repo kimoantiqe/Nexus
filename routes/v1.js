@@ -72,6 +72,16 @@ module.exports = function(app, passport) {
   }), UserController.getuser);
   /************************************/
 
+  /********  Instant Match **************/ 
+  app.put('/api/user/match', passport.authenticate('jwt', {
+    session: false
+  }), matchingService.match);
+  /************************************/
+
+
+
+
+
 
   /* IMAGE ROUTES */
   /************ create and connect image ***************/ //

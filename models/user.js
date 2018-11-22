@@ -50,6 +50,11 @@ let UserSchema = mongoose.Schema({
     ref :'User',
     exists: true
   }],
+  InstantMatches :[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref :'User',
+    exists: true
+  }],
   liked :[{
     type:mongoose.Schema.Types.ObjectId,
     ref :'User',
