@@ -19,7 +19,6 @@ const _bootstrapAsync = async (props) => {
   }
   };
 
-  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
   try {
     let response = await fetch(apiURL + '/user', settings)
     .then( (response) =>
@@ -48,8 +47,9 @@ const _bootstrapAsync = async (props) => {
   };
   module.exports._bootstrapAsync = _bootstrapAsync;
 
-  const login = async function(username, password, props)
+  const login = async function(username, password, props, reload)
   {
+    props.navigation.navigate("Loading");
       console.log("ABD");
       const settings =    {
                               method: "POST",
@@ -80,21 +80,24 @@ const _bootstrapAsync = async (props) => {
             } else {
               switch (response.error) {
                 case "Not registered":
-                  alert(
-                    'This Username is not registered\nGo to "Register" to make an account'
-                  );
+                  alert('This Username is not registered\nGo to "Register" to make an account');
+                  props.navigation.navigate("Login");
                   break;
                 case "invalid password":
                   alert("Incorrect password");
+                  props.navigation.navigate("Login");
                   break;
                 case "Please enter a password to login":
                   alert("Please enter your password");
+                  props.navigation.navigate("Login");
                   break;
                 case "Please enter an email to login":
                   alert("Please enter your email");
+                  props.navigation.navigate("Login");
                   break;
                 case "A valid email  was not entered":
                   alert("Please enter a valid email\n(abc@xyz.com)");
+                  props.navigation.navigate("Login");
                   break;
               }
             }
@@ -129,16 +132,18 @@ const Register = async (inputs, props) =>
 {
     //////////////////////REGISTRATION API CALL////////////////////////////
 
-
+    props.navigation.navigate("Loading");
 
             if (inputs["Username"] == "" || inputs["Username"] == undefined)
             {
                 alert("Please enter an email to register");
+                props.navigation.navigate("Register");
             } else
             {
                 if (inputs["Password"] == "" || inputs["Password"] == undefined)
                 {
                     alert("Please enter an password to register");
+                    props.navigation.navigate("Register");
                 } else
                 {
                     if (inputs["Password"] == inputs["Repassword"])
@@ -174,9 +179,11 @@ const Register = async (inputs, props) =>
                                     {
                                         case "A valid email was not entered.":
                                             alert("A valid email was not entered.");
+                                            props.navigation.navigate("Register");
                                         break;
                                         case "User already exists with that email":
                                             alert("User already exists with that email");
+                                            props.navigation.navigate("Register");
                                         break;
                                     }
                                 }
@@ -187,6 +194,7 @@ const Register = async (inputs, props) =>
                     } else
                     {
                         alert("Passwords do not match!\nPlease try again.");
+                        props.navigation.navigate("Register");
                     }
                 }
             }
@@ -194,6 +202,8 @@ const Register = async (inputs, props) =>
 module.exports.Register = Register;
 
 const CompleteProfile = async (first, last, interests, industry, LF, bio, props) => {
+
+  props.navigation.navigate("Loading");
 
     if (first == "" || last == "")
     {

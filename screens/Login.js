@@ -15,6 +15,7 @@ import {
   TouchableOpacity,WebView
 } from "react-native";
 import { Text, Button, Icon } from "native-base";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import Background from '../components/Background';
 
@@ -84,6 +85,7 @@ export default class Login extends React.Component {
             </Button>
           );
     };
+
     return (
       <View>
       <Background logo= {true}/>
@@ -103,7 +105,7 @@ export default class Login extends React.Component {
                 />
 
                 <TouchableOpacity style={styles.buttonContainer}>
-                  <Button onPress={()=>APIcall.login(this.state.username, this.state.password, this.props)} style={styles.button}>
+                  <Button onPress={() => APIcall.login(this.state.username, this.state.password, this.props)} style={styles.button}>
                     <Text style={{ fontWeight: "bold" }}>LOGIN</Text>
                   </Button>
                 </TouchableOpacity>

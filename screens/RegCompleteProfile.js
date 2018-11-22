@@ -7,13 +7,16 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  Dimensions,
-   KeyboardAvoidingView, Alert, TextInput, TouchableOpacity,
+  Dimensions, 
+   KeyboardAvoidingView, Alert, TextInput, TouchableOpacity, Slider
 } from 'react-native';
 import {Badge, Container, Content, Text, Item, Header, View, Tabs, Tab, Button, TabHeading, Input, Form, Textarea} from 'native-base'
+import { Pages } from 'react-native-pages';
 import Background from '../components/Background';
+// import SliderBadge from '../components/sliderBadge';
 import MainTabNavigator from '../navigation/MainTabNavigator';
 import AppNavigator from '../navigation/AppNavigator';
+// import { Slider } from 'react-native-elements';
 const API = require("../API_calls/APIs");
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -24,6 +27,7 @@ export default class RegCompleteProfile extends React.Component {
   };
 
   state = {
+    value: 0.5,
   interests: {},
   LF: {},
   industry: {},
@@ -42,6 +46,34 @@ export default class RegCompleteProfile extends React.Component {
 
 handleLastname = (text) => {
   this.setState({ lastName: text });
+}
+
+sliding = (val, which, what) => {
+  if (which == 0) {
+    () => this.handleInterestValue(val, what);
+  } else if(which == 1) {
+    () => this.handleLFValue(val, what);
+  } else if(which == 2) {
+    () => this.handleIndustryValue(val, what);
+  }
+}
+
+handleInterestValue = (val, interest) => {
+  let interesttemp = this.state.interests;
+  interesttemp[interest] = val;
+  this.setState({interests:interesttemp});
+}
+
+handleIndustryValue = (val, ind) => {
+  let industrytemp = this.state.industry;
+  industrytemp[ind] = val;
+  this.setState({industry:industrytemp});
+}
+
+handleLFValue = (val, lf) => {
+  let LFtemp = this.state.LF;
+  LFtemp[lf] = val;
+  this.setState({LF:LFtemp});
 }
 
   onPressInterests(interest)
@@ -96,9 +128,8 @@ handleLastname = (text) => {
     return (
 
         <Container style={{backgroundColor: '#16131d'}}>
-          <Tabs style={{paddingTop: height*0.025}}>
-            <Tab heading= {<TabHeading style={{backgroundColor: '#16131d'}}><Text style={{color: '#c75e9a', fontSize: 18}}>PERSONAL DETAILS</Text></TabHeading>} >
             <Background logo= {false}/>
+            <Pages >
             <Content contentContainerStyle={{paddingHorizontal: width*0.05, }}>
             <Form>
               <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300', padding: width*0.02}}>First Name</Text>
@@ -115,175 +146,45 @@ handleLastname = (text) => {
             </Item>
             </Form>
             </Content>
-            </Tab>
-            <Tab heading= {<TabHeading style={{backgroundColor: '#16131d'}}><Text style={{color: '#c75e9a', fontSize: 20}}> PASSION </Text></TabHeading>} >
-            <Background logo= {false}/>
+            
+            
         <Content>
         
         <Text style={{color: '#c75e9a', fontSize: 22, paddingLeft: width*0.05}}>INTERESTS</Text>
-            <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true} contentContainerStyle={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Item style={{borderColor: 'transparent'}}>
-          <Badge style={{   backgroundColor: interests["IA"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: interests["IA"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressInterests("IA")}>
-            <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300'}}>Interest A</Text>
-            </Button>
-          </Badge>
-          </Item>
-          <Item style={{borderColor: 'transparent'}}> 
+            <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
           
-          </Item>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: interests["IB"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: interests["IB"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressInterests("IB")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Interest B</Text>
-            </Button>
-          </Badge>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: interests["IC"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: interests["IC"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressInterests("IC")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Interest C</Text>
-            </Button>
-          </Badge>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: interests["ID"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: interests["ID"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressInterests("ID")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Interest D</Text>
-            </Button>
-          </Badge>
-          </Form>
-          
-        </ScrollView>
-        <Text style={{color: '#c75e9a', paddingTop: height*0.03, paddingLeft: width*0.05, fontSize: 22}}>LOOKING FOR</Text>
-            <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true} contentContainerStyle={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
-            <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-            <Item style={{borderColor: 'transparent'}}> 
-          <Badge style={{ backgroundColor: LF["LA"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: LF["LA"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressLF("LA")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Looking for A</Text>
-            </Button>
-          </Badge>
-          </Item>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: LF["LB"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: LF["LB"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressLF("LB")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Looking for B</Text>
-            </Button>
-          </Badge>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: LF["LC"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: LF["LC"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressLF("LC")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Looking for C</Text>
-            </Button>
-          </Badge>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: LF["LD"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: LF["LD"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressLF("LD")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Looking for D</Text>
-            </Button>
-          </Badge>
-          </Form>
+              <SliderBadge displayName={"Interest A"} flag={interests["IA"]} toCall = {() => this.onPressInterests("IA")} toSetVal = {(value) => this.sliding(value, 0, "IAval")}/>
+              <SliderBadge displayName={"Interest B"} flag={interests["IB"]} toCall = {() => this.onPressInterests("IB")} toSetVal = {(value) => this.sliding(value, 0, "IBval")}/>
+              <SliderBadge displayName={"Interest C"} flag={interests["IC"]} toCall = {() => this.onPressInterests("IC")} toSetVal = {(value) => this.sliding(value, 0, "ICval")}/>
+              <SliderBadge displayName={"Interest D"} flag={interests["ID"]} toCall = {() => this.onPressInterests("ID")} toSetVal = {(value) => this.sliding(value, 0, "IDval")}/>
+
+            </View>
+            </Content>
+            <Content>
+
+        <Text style={{color: '#c75e9a', paddingLeft: width*0.05, fontSize: 22}}>LOOKING FOR</Text>
+
+            <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
+            
+            <SliderBadge displayName={"Looking for A"} flag={LF["LA"]} toCall = {() => this.onPressInterests("LA")} toSetVal = {(value) => this.sliding(value, 1, "LAval")}/>
+            <SliderBadge displayName={"Looking for B"} flag={LF["LB"]} toCall = {() => this.onPressInterests("LB")} toSetVal = {(value) => this.sliding(value, 1, "LBval")}/>
+            <SliderBadge displayName={"Looking for C"} flag={LF["LC"]} toCall = {() => this.onPressInterests("LC")} toSetVal = {(value) => this.sliding(value, 1, "LCval")}/>
+            <SliderBadge displayName={"Looking for D"} flag={LF["LD"]} toCall = {() => this.onPressInterests("LD")} toSetVal = {(value) => this.sliding(value, 1, "LDval")}/>
         
-        </ScrollView>
-        <Text style={{color: '#c75e9a', paddingTop: height*0.03, paddingLeft: width*0.05, fontSize: 22}}>INDUSTRY</Text>
-            <ScrollView showsHorizontalScrollIndicator = {false} horizontal = {true} style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
-            <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-            <Item style={{borderColor: 'transparent'}}> 
-          <Badge style={{ backgroundColor: industry["INA"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: industry["INA"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressIndustry("INA")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Industry A</Text>
-            </Button>
-          </Badge>
-          </Item>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: industry["INB"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: industry["INB"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressIndustry("INB")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Industry B</Text>
-            </Button>
-          </Badge>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: industry["INC"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: industry["INC"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressIndustry("INC")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Industry C</Text>
-            </Button>
-          </Badge>
-          </Form>
-          <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: width*0.02}}>
-          <Badge style={{ backgroundColor: industry["IND"]? '#c75e9a' : '#16131d',
-                            minHeight: height*0.055,
-                            borderWidth: width*0.0015, 
-                            borderColor: industry["IND"]? '#c75e9a' : '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-          <Button transparent light onPress = {() => this.onPressIndustry("IND")}>
-            <Text style={{color: '#fff7f7', fontSize: 25, fontWeight: '300'}}>Industry D</Text>
-            </Button>
-          </Badge>
-          </Form>
-        </ScrollView>
+            </View>
+            </Content>
+            <Content>
+
+        <Text style={{color: '#c75e9a', paddingLeft: width*0.05, fontSize: 22}}>INDUSTRY</Text>
+
+            <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
+
+            <SliderBadge displayName={"Industry A"} flag={industry["INA"]} toCall = {() => this.onPressInterests("INA")} toSetVal = {(value) => this.sliding(value, 2, "INAval")}/>
+            <SliderBadge displayName={"Industry B"} flag={industry["INB"]} toCall = {() => this.onPressInterests("INB")} toSetVal = {(value) => this.sliding(value, 2, "INBval")}/>
+            <SliderBadge displayName={"Industry C"} flag={industry["INC"]} toCall = {() => this.onPressInterests("INC")} toSetVal = {(value) => this.sliding(value, 2, "INCval")}/>
+            <SliderBadge displayName={"Industry D"} flag={industry["IND"]} toCall = {() => this.onPressInterests("IND")} toSetVal = {(value) => this.sliding(value, 2, "INDval")}/>
+            
+            </View>
         <Content scrollEnabled={false} contentContainerStyle={{flexDirection: 'row', justifyContent: 'center', padding: width*0.05}}>
         <Button rounded style={{backgroundColor: '#16131d', borderWidth: width*0.003, borderColor: 'white', paddingHorizontal: width*0.05}} 
                 onPress = {()=>API.CompleteProfile(this.state.firstName, this.state.lastName, this.state.interests, this.state.industry, this.state.LF, this.state.bio, this.props)}>
@@ -291,11 +192,48 @@ handleLastname = (text) => {
           </Button>
           </Content>
         </Content>
-        </Tab>
-        </Tabs>
+        </Pages>
       </Container>
 
 );
   }
 
 }
+
+class SliderBadge extends React.Component {
+
+  render() {
+    const {flag} = this.props;
+      return(
+        <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}>
+<Item style={{borderBottomColor: 'transparent'}}>
+        <Badge style={{   backgroundColor: flag? '#c75e9a' : '#16131d',
+                          minHeight: height*0.055,
+                          borderWidth: width*0.0015, 
+                          borderColor: flag? '#c75e9a' : '#f2f2f2' ,
+                          borderRadius: 30,
+                          }}>
+        <Button transparent light onPress={this.props.toCall}>
+          <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300'}}>{this.props.displayName}</Text>
+          </Button>
+        </Badge>
+        </Item> 
+        { 
+          flag?
+          <Item style={{borderBottomColor: 'transparent'}}>
+            <Badge style={{   backgroundColor: '#16131d',
+                  backgroundColor: flag? '#c75e9a' : '#16131d',
+                  borderColor: flag? '#c75e9a' : '#f2f2f2' ,
+                  minHeight: height*0.055,
+                  borderWidth: width*0.0015, 
+                  borderRadius: 30,
+                  minWidth: width*0.3,
+                  }}>
+            <Slider onSlidingComplete={this.props.toSetVal}/>
+            </Badge>
+              </Item> : null
+                  }
+                  </Form>
+      )
+                      };
+                  }
