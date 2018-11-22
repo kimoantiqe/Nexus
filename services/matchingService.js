@@ -126,13 +126,13 @@ const match = async function(req, res){
 
   [err, newuser] = await to(User.findById(id));
 		if( !newuser ){
-			return ReE(res, "user not in your matches");
+			return ReE(res, "user not found");
     }
     if(newuser == user){
       return ReE(res, "cannot add yourself");
     }
 		else if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
-			return ReS(res, {message: 'already matches'});
+			return ReE(res, {message: 'already matched'});
 		}
 		else{
 			newuser.InstantMatches.push(user._id);
