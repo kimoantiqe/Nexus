@@ -10,7 +10,7 @@ import {
   FlatList,
   Dimensions
 } from "react-native";
-import { WebBrowser} from "expo";
+import { WebBrowser } from "expo";
 
 import { MonoText } from "../components/StyledText";
 
@@ -32,14 +32,13 @@ import {
   ListItem
 } from "native-base";
 
-import { sbCreateChannel } from '../sendbirdActions/groupChannel';
+import { sbCreateChannel } from "../sendbirdActions/groupChannel";
 
 var apiURL = "https://nexus-restapi.azurewebsites.net/api";
 
 var matchesArray = [];
 
-
-export const user2Token = async() => {
+export const user2Token = async () => {
   let token = await AsyncStorage.getItem("userToken");
   return token;
 };
@@ -52,7 +51,6 @@ const height = Dimensions.get("window").height;
 var USERID;
 
 export default class HomeScreen extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -95,7 +93,7 @@ export default class HomeScreen extends React.Component {
           if (response.success) {
             //console.log(response.user.matches);
             for (var i = 0; i < response.user.matches.length; i++) {
-             await this.getUser(response.user.matches[i]);
+              await this.getUser(response.user.matches[i]);
             }
             //console.log(matchesArray);
             this.refreshScreen();
@@ -103,7 +101,6 @@ export default class HomeScreen extends React.Component {
         });
     }
   };
-
 
   //need to make sure
   getUser = async userid => {
@@ -119,7 +116,7 @@ export default class HomeScreen extends React.Component {
       };
       await fetch(apiURL + "/user/getuser/?id=" + userid, user)
         .then(response => response.json())
-        .then( (response) => {
+        .then(response => {
           // var obj;
           // obj.firstName= response.user.firstName;
           // obj.lastName = response.user.lastName;
@@ -129,8 +126,8 @@ export default class HomeScreen extends React.Component {
         });
     }
   };
-   //Function that is used to populate when the user logs in.
-   populate = async () => {
+  //Function that is used to populate when the user logs in.
+  populate = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
 
     //console.log(userToken);
@@ -152,37 +149,43 @@ export default class HomeScreen extends React.Component {
 
   render() {
     return (
-
       <Container>
-
         <Content>
-        <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
-          <Left/>
-          <Body>
-            <Title style={styles.headerTitle}>DASHBOARD</Title>
-          </Body>
-          <Right />
-        </Header>
-        <FlatList
-          horizontal
-          data={matchesArray}
-          keyExtractor={item => item._id}
-          showsHorizontalScrollIndicator={false}
-            renderItem={({item}) =>
-            <Card  style={styles.avatarCard} >
-              <CardItem button onPress={(item) => item.firstName }>
+          <Header
+            iosBarStyle="light-content"
+            androidStatusBarColor="#ffffff"
+            style={styles.header}
+          >
+            <Left />
+            <Body>
+              <Title style={styles.headerTitle}>DASHBOARD</Title>
+            </Body>
+            <Right>
+              <Button transparent>
+                <Icon name="calendar" style={{color:'white'}} onPress={()=>this.props.navigation.navigate('Calendar') } />
+              </Button>
+            </Right>
+          </Header>
+          <FlatList
+            horizontal
+            data={matchesArray}
+            keyExtractor={item => item._id}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <Card style={styles.avatarCard}>
+                <CardItem button onPress={item => item.firstName}>
                   <Thumbnail
                     source={require("../images/sherif.png")}
                     style={styles.avatarImg}
                   />
-              </CardItem>
-              <CardItem style={{marginTop:0,paddingTop:0}}>
-              <Body style={styles.centerText}>
-                <Text style={styles.avatarText}>{item.firstName}</Text>
-              </Body>
-              </CardItem>
-            </Card>
-          }
+                </CardItem>
+                <CardItem style={{ marginTop: 0, paddingTop: 0 }}>
+                  <Body style={styles.centerText}>
+                    <Text style={styles.avatarText}>{item.firstName}</Text>
+                  </Body>
+                </CardItem>
+              </Card>
+            )}
           />
 
           <View style={styles.centerCards}>
@@ -195,8 +198,10 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                    <Text style={styles.numberText}>{matchesArray.length}</Text>
-                    <Text style={styles.titleText}>Matches</Text>
+                      <Text style={styles.numberText}>
+                        {matchesArray.length}
+                      </Text>
+                      <Text style={styles.titleText}>Matches</Text>
                     </View>
                     <Text style={styles.subTitleText}>since joining!</Text>
                   </Body>
@@ -212,11 +217,11 @@ export default class HomeScreen extends React.Component {
                     style={styles.cardImg}
                   />
                   <Body style={styles.centerText}>
-                  <View style={styles.rowContainer}>
-                  <Text style={styles.numberText}>3</Text>
-                  <Text style={styles.titleText}>Meetings</Text>
-                  </View>
-                  <Text style={styles.subTitleText}>coming up!</Text>
+                    <View style={styles.rowContainer}>
+                      <Text style={styles.numberText}>3</Text>
+                      <Text style={styles.titleText}>Meetings</Text>
+                    </View>
+                    <Text style={styles.subTitleText}>coming up!</Text>
                   </Body>
                 </Left>
               </CardItem>
@@ -230,16 +235,15 @@ export default class HomeScreen extends React.Component {
                     style={styles.cardImg}
                   />
                   <Body style={styles.centerText}>
-                  <View style={styles.rowContainer}>
-                  <Text style={styles.numberText}>2</Text>
-                  <Text style={styles.titleText}>Taps</Text>
-                  </View>
-                  <Text style={styles.subTitleText}>so far!</Text>
+                    <View style={styles.rowContainer}>
+                      <Text style={styles.numberText}>2</Text>
+                      <Text style={styles.titleText}>Taps</Text>
+                    </View>
+                    <Text style={styles.subTitleText}>so far!</Text>
                   </Body>
                 </Left>
               </CardItem>
             </Card>
-
           </View>
         </Content>
       </Container>
@@ -247,11 +251,15 @@ export default class HomeScreen extends React.Component {
   }
 }
 
-
-
-const items =
-[{key: 'a'}, {key: 'b'},{key: 'c'}, {key: 'd'},{key: 'e'}, {key: 'f'},{key: 'g'}]
-;
+const items = [
+  { key: "a" },
+  { key: "b" },
+  { key: "c" },
+  { key: "d" },
+  { key: "e" },
+  { key: "f" },
+  { key: "g" }
+];
 const styles = StyleSheet.create({
   centerCards: {
     flex: 1,
@@ -278,46 +286,46 @@ const styles = StyleSheet.create({
     width: 75,
     height: 75
   },
-  avatarCard:{
+  avatarCard: {
     marginTop: 20,
-    marginBottom : 24,
+    marginBottom: 24,
     flex: 1,
     width: 100
   },
-  header:{
-    backgroundColor: '#2c2638',
-    height: height*0.1
+  header: {
+    backgroundColor: "#2c2638",
+    height: height * 0.1
   },
-  headerTitle:{
-    paddingTop:height*0.03,
-    paddingBottom:50,
-    fontFamily: 'BebasNeue',
-    fontSize : 25,
-    color: '#ffffff'
+  headerTitle: {
+    paddingTop: height * 0.03,
+    paddingBottom: 50,
+    fontFamily: "BebasNeue",
+    fontSize: 25,
+    color: "#ffffff"
   },
-  numberText:{
-    fontSize:19,
-    color:'#463143',
+  numberText: {
+    fontSize: 19,
+    color: "#463143",
     marginRight: 5,
-    fontFamily: 'Poppins-Bold'
+    fontFamily: "Poppins-Bold"
   },
-  titleText:{
-    fontSize:19,
-    color:'#414345',
-    fontFamily: 'Poppins'
+  titleText: {
+    fontSize: 19,
+    color: "#414345",
+    fontFamily: "Poppins"
   },
-  subTitleText:{
-    fontSize:14,
-    color: 'grey',
-    fontFamily: 'Poppins'
+  subTitleText: {
+    fontSize: 14,
+    color: "grey",
+    fontFamily: "Poppins"
   },
   rowContainer: {
-    flex:0,
-    justifyContent: 'center',
-    alignItems:'center',
-    flexDirection: 'row'
+    flex: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row"
   },
-  avatarText:{
-    fontFamily: 'Poppins'
+  avatarText: {
+    fontFamily: "Poppins"
   }
 });

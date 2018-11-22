@@ -9,13 +9,15 @@ import SettingsScreen from '../screens/SettingsScreen';
 import ChatDashboard from '../screens/ChatDashboard';
 import ChatScreen from '../screens/ChatScreen'
 import AddButton from "../screens/TabBarIcon";
+import Calendar from '../screens/Calendar';
 import QR from "../screens/instantMatch"
 import InstantMatches from '../screens/instantMatch';
 import QrCamera from '../screens/qrCamera';
 
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen
+  Home: HomeScreen,
+  Calendar: Calendar
 });
 
 

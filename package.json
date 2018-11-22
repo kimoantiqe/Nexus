@@ -25,6 +25,7 @@
     "native-base": "^2.8.1",
     "react": "16.3.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-calendars": "^1.21.0",
     "react-native-deck-swiper": "^1.5.22",
     "react-native-elements": "^0.19.1",
     "react-native-gradient-buttons": "^1.2.9",
