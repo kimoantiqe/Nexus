@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { TouchableOpacity, StyleSheet, View, Dimensions, AsyncStorage} from "react-native";
 import { Button, Text, Container, Content, Header, Left, Right, Body, Title } from "native-base";
-import QRCode from "react-native-qrcode";
+
+import { QRCode } from 'react-native-custom-qr-codes';
+
 import Expo from "expo";
 import { WaveIndicator } from "react-native-indicators";
 const width = Dimensions.get("window").width;
@@ -77,12 +79,16 @@ export default class InstantMatch extends React.Component {
         </Header>
 
       <View style={styles.container}>
-        <QRCode
-          value={userID}
-          size={200}
-          bgColor="#bf7611"
-          fgColor="white"
+      <QRCode codeStyle='dot' 
+        content={userID} 
+        outerEyeStyle='square'
+        logo= {require("../images/logoQR.png")}
+        logoSize = {80}
+        ecl = 'H'
+        size = {300}
+       linearGradient={['#c31432','#240b36']} 
         />
+       
 
         <TouchableOpacity style={styles.buttonContainerTop}>
           <Button
@@ -106,7 +112,7 @@ export default class InstantMatch extends React.Component {
 const styles = StyleSheet.create({
 
   container: {
-    marginTop: height*0.2,
+    marginTop: height*0.14,
     flex: 1,
     backgroundColor: "white",
     alignItems: "center",

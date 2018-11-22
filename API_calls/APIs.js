@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "https://nexus-restapi.azurewebsites.net/api";
+const apiURL = "http://192.168.1.115:3000/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -49,7 +49,6 @@ const _bootstrapAsync = async (props) => {
 
   const login = async function(username, password, props, reload)
   {
-    props.navigation.navigate("Loading");
       console.log("ABD");
       const settings =    {
                               method: "POST",
@@ -62,23 +61,20 @@ const _bootstrapAsync = async (props) => {
                                                   })
                           };
 
-                          setTimeout(function(){
+       
 
-        fetch(apiURL + "/user/login", settings)
+        await fetch(apiURL + "/user/login", settings)
           .then(response => response.json())
-          .then(response => {
-            //console.log(response);
-
+          .then(async(response) => {
             if (response.success) {
-              AsyncStorage.setItem("userToken", response.token);
-              AsyncStorage.setItem("userid", response.user.id);
-              Expo.SecureStore.setItemAsync("userToken", response.token);
-
-              populate();
-
-              sbConnect(response.user.id, response.user.firstName);
-
-              props.navigation.navigate("Main");
+               AsyncStorage.setItem("userToken", response.token)
+              .then(AsyncStorage.setItem("userid", response.user.id))
+              .then(Expo.SecureStore.setItemAsync("userToken", response.token))
+              .then(Expo.SecureStore.setItemAsync("userid", response.user.id))
+              .then(populate)
+              .then(sbConnect(response.user.id, response.user.firstName))
+              .then(props.navigation.navigate("Main"))
+              
             } else {
               switch (response.error) {
                 case "Not registered":
@@ -105,7 +101,6 @@ const _bootstrapAsync = async (props) => {
             }
           })
           .catch(error => console.error("Error:", error));
-        } ,2000);
   };
   module.exports.login = login;
 
@@ -133,10 +128,7 @@ populate = async () =>
 
 const Register = async (inputs, props) =>
 {
-    //////////////////////REGISTRATION API CALL////////////////////////////
-
-    props.navigation.navigate("Loading");
-
+    ///////////////////////////////REGISTRATION API CALL//////////////////////////////////////
             if (inputs["Username"] == "" || inputs["Username"] == undefined)
             {
                 alert("Please enter an email to register");
@@ -165,20 +157,23 @@ const Register = async (inputs, props) =>
                             })
                         };
 
-                        setTimeout(function(){
+                       
 
                         console.log(inputs);
-                        fetch(apiURL + '/user', settings)
+                        await fetch(apiURL + '/user', settings)
                         .then((response) => response.json())
                         .then((response)  =>
                             {
                                 if (response.success)
                                 {
-                                    AsyncStorage.setItem("userid", response.user.id);
-                                    AsyncStorage.setItem('userToken', response.token);
-                                    Expo.SecureStore.setItemAsync("userToken", response.token);
+                                    AsyncStorage.setItem("userid", response.user.id)
+                                    .then(Expo.SecureStore.setItemAsync("userid", response.user.id))
+                                    .then(AsyncStorage.setItem('userToken', response.token))
+                                    .then(Expo.SecureStore.setItemAsync("userToken", response.token))
+                                    .then(props.navigation.navigate('RCP'))
+                                    .then(console.log('DDDD'));
                                     regUserID = response.user.id;
-                                    props.navigation.navigate('RCP');
+                                    
                                 } else
                                 {
                                     switch (response.error)
@@ -196,7 +191,7 @@ const Register = async (inputs, props) =>
                             }
                         )
                         .catch((error) => console.error('Error:', error));
-                      } ,2000);
+                      
 
                     } else
                     {
@@ -205,13 +200,13 @@ const Register = async (inputs, props) =>
                     }
                 }
             }
+            console.log("DONE");
 };
 module.exports.Register = Register;
 
 const CompleteProfile = async (first, last, interests, industry, LF, bio, props) => {
 
-  props.navigation.navigate("Loading");
-
+  
     if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
@@ -276,14 +271,14 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
         console.log(settings);
 
-        setTimeout(function(){
+       
 
-         fetch(apiURL + '/user', settings)
+      await fetch(apiURL + '/user', settings)
         .then((response) => response.json())
         .then(() => populate())
         .then(() => sbConnect(regUserID, first))
         .then(() =>  props.navigation.navigate("Main"))
-      } ,2000);
+      
     }
 
   };
@@ -391,3 +386,46 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
     }
   }
   module.exports.loginfb = loginfb;
+
+
+  const instantMatch = async (UserID) => {
+    userToken= await Expo.SecureStore.getItemAsync("userToken");
+    if (userToken != null) {
+      
+      var updateUser = {
+        method: 'PUT',
+        headers: {
+          'Authorization': userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'id' : UserID
+          })
+      };
+      await fetch(apiURL + '/user/match', updateUser).then(response => response.json())
+      .then(async(response) => {console.log(response);})
+    }
+  };
+  module.exports.instantMatch = instantMatch;
+
+
+   //need to make sure
+   getUser = async userid => {
+    let userToken = await AsyncStorage.getItem("userToken");
+
+    if (userToken != null) {
+      var user = {
+        method: "GET",
+        headers: {
+          Authorization: userToken
+        }
+      };
+      await fetch(apiURL + "/user/getuser/?id=" + userid, user)
+        .then(response => response.json())
+        .then(response => {
+          console.log("USER IS" + response.user)
+          return(response.user)
+        });
+    }
+  };
+  module.exports.getUser = getUser;

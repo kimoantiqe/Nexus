@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Dimensions, Slider, StyleSheet } from 'react-native';
 import {Badge, Container, Content, Text, Item, Header, View, Button, Input, Form, Textarea, Footer, Left, Right, Body, Title} from 'native-base'
 import { Pages } from 'react-native-pages';
-
+import { WaveIndicator } from "react-native-indicators";
+import Background from '../components/Background';
 const API = require("../API_calls/APIs");
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -20,7 +21,8 @@ export default class RegCompleteProfile extends React.Component {
   industry: {},
   bio: "",
   firstName: "",
-  lastName: ""
+  lastName: "",
+  loading: 0
   }
 
   handleBio = (text) => {
@@ -111,8 +113,43 @@ handleLFValue = (val, lf) => {
   render() {
 
     const {industry, interests, LF} = this.state;
+   
+    if(this.state.loading ==1){
+      console.log("HERE");
+      return(
+        
+        <Container >
+          <Header
+            iosBarStyle="light-content"
+            androidStatusBarColor="#ffffff"
+            style={styles.header}
+          >
+            <Left />
+            <Body>
+              <Title style={styles.headerTitle}>PROFILE</Title>
+            </Body>
+            <Right>
+            </Right>
+          </Header>
+          <Content>
 
-    return (
+       <WaveIndicator
+            size={80}
+            color="#2c2638"
+            style={{ flex: 0, marginTop: height*0.3 }}
+          />
+          </Content>
+
+         
+        <Footer style={{ backgroundColor: "#2c2638", height: height * 0.05 }}></Footer>
+      </Container>
+
+      )
+    }
+
+  else 
+      return (
+
 
         <Container >
           <Header
@@ -126,7 +163,13 @@ handleLFValue = (val, lf) => {
             </Body>
             <Right>
             <Button hasText transparent 
-            onPress = {()=>API.CompleteProfile(this.state.firstName, this.state.lastName, this.state.interests, this.state.industry, this.state.LF, this.state.bio, this.props)}>
+            onPress = { 
+              async()=>{
+                this.setState({ loading: 1 });
+                await API.CompleteProfile(this.state.firstName, this.state.lastName, this.state.interests, this.state.industry, this.state.LF, this.state.bio, this.props);
+                this.setState({ loading: 0});
+              }
+              }>
               <Text>Done</Text>
             </Button>
             </Right>

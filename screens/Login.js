@@ -10,7 +10,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Text, Button, Icon } from "native-base";
-
+import { WaveIndicator } from "react-native-indicators";
 import Background from '../components/Background';
 
 const width = Dimensions.get("window").width;
@@ -30,7 +30,8 @@ export default class Login extends React.Component {
       username: "",
       password: "",
       userid: "",
-      nickname: ""
+      nickname: "",
+      loading: 0,
     };
 
   }
@@ -43,8 +44,24 @@ export default class Login extends React.Component {
     this.setState({ password: text });
   };
 
+
+
   render() {
-    return (
+    if(this.state.loading ==1){
+      console.log("HERE");
+      return(
+        
+        <View>
+        <Background logo= {true}/>
+        <WaveIndicator
+            size={80}
+            color="white"
+            style={{ flex: 0, marginTop: 90 }}
+          />
+        </View>
+      )
+    }
+    else return (
       <View>
       <Background logo= {true}/>
       <View style={styles.container}>
@@ -63,7 +80,13 @@ export default class Login extends React.Component {
                 />
 
                 <TouchableOpacity style={styles.buttonContainer}>
-                  <Button onPress={() => APIcall.login(this.state.username, this.state.password, this.props)} style={styles.button}>
+                  <Button onPress={ async() => {
+                     this.setState({ loading: 1 })
+                    await APIcall.login(this.state.username, this.state.password, this.props)
+                    this.setState({ loading: 0 })
+                  } 
+                }
+                  style={styles.button}>
                     <Text style={{ fontWeight: "bold" }}>LOGIN</Text>
                   </Button>
                 </TouchableOpacity>

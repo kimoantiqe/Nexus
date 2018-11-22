@@ -1,9 +1,14 @@
 import React from 'react';
 import { Image,Dimensions,StyleSheet, Text, View } from 'react-native';
 import { BarCodeScanner, Permissions } from 'expo';
-
+import { Button, Container, Content, Header, Left, Right, Body, Title } from "native-base";
+import { WaveIndicator } from "react-native-indicators";
 const { width } = Dimensions.get('window')
 const qrSize = width * 0.7
+const APIcall = require("../API_calls/APIs");
+
+const height = Dimensions.get("window").height;
+
 
 export default class qrCamera extends React.Component {
   static navigationOptions = {
@@ -11,6 +16,7 @@ export default class qrCamera extends React.Component {
   };
   state = {
     hasCameraPermission: null,
+    loading:0,
   }
 
   async componentDidMount() {
@@ -27,7 +33,30 @@ export default class qrCamera extends React.Component {
     if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     }
-    return (
+    if(this.state.loading == 1){
+      <Container>
+        <Content>
+          <Header
+            iosBarStyle="light-content"
+            androidStatusBarColor="#ffffff"
+            style={styles.header}
+          >
+            <Left />
+            <Body>
+              <Title style={styles.headerTitle}>Nexus Match</Title>
+            </Body>
+            <Right>
+            </Right>
+          </Header>
+          <WaveIndicator
+            size={80}
+            color="#2c2638"
+            style={{ flex: 0, marginTop: height*0.3 }}
+          />
+        </Content>
+      </Container>
+    }
+    else return (
       <View style={{ flex: 1 }}>
         <BarCodeScanner
         onBarCodeRead={this.handleBarCodeScanned}
@@ -47,8 +76,14 @@ export default class qrCamera extends React.Component {
     );
   }
 
-  handleBarCodeScanned = ({ type, data }) => {
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  handleBarCodeScanned = async({ type, data }) => {
+    console.log(type+ " " + data);
+    this.props.navigation.goBack();
+    await APIcall.instantMatch(data);
+    user = await (APIcall.getUser(data));
+    console.log(user);
+    
+    
   }
 }
 

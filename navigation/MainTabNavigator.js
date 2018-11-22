@@ -10,9 +10,10 @@ import ChatDashboard from '../screens/ChatDashboard';
 import ChatScreen from '../screens/ChatScreen'
 import AddButton from "../screens/TabBarIcon";
 import Calendar from '../screens/Calendar';
-import QR from "../screens/instantMatch"
+import QR from "../screens/newQRcode"
 import InstantMatches from '../screens/instantMatch';
 import QrCamera from '../screens/qrCamera';
+
 
 
 const HomeStack = createStackNavigator({

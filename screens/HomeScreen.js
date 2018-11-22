@@ -10,6 +10,7 @@ import {
   FlatList,
   Dimensions
 } from "react-native";
+import { WaveIndicator } from "react-native-indicators";
 import { WebBrowser } from "expo";
 
 import { MonoText } from "../components/StyledText";
@@ -34,6 +35,7 @@ import {
 
 import { sbCreateChannel } from "../sendbirdActions/groupChannel";
 
+
 const APIcall      = require("../API_calls/APIs");
 
 var apiURL = APIcall.apiURL;
@@ -56,7 +58,8 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastRefresh: Date(Date.now()).toString()
+      lastRefresh: Date(Date.now()).toString(),
+      loading: 1 
     };
 
     this.refreshScreen = this.refreshScreen.bind(this);
@@ -66,7 +69,9 @@ export default class HomeScreen extends React.Component {
   //function that grabs a new user and refreshes the screen to update the
   //parameters.
   refreshScreen() {
-    this.setState({ lastRefresh: Date(Date.now()).toString() });
+    this.setState({ lastRefresh: Date(Date.now()).toString(),
+                    loading:0
+                    });
   }
 
   static navigationOptions = {
@@ -95,6 +100,7 @@ export default class HomeScreen extends React.Component {
           if (response.success) {
             //console.log(response.user.matches);
             for (var i = 0; i < response.user.matches.length; i++) {
+              if(response.user.matches[i])
               await this.getUser(response.user.matches[i]);
             }
             //console.log(matchesArray);
@@ -119,12 +125,9 @@ export default class HomeScreen extends React.Component {
       await fetch(apiURL + "/user/getuser/?id=" + userid, user)
         .then(response => response.json())
         .then(response => {
-          // var obj;
-          // obj.firstName= response.user.firstName;
-          // obj.lastName = response.user.lastName;
-          //console.log(response.user.firstName + "\n");
+          console.log(response.user._id);
           matchesArray.push(response.user);
-          //console.log(matchesArray);
+          
         });
     }
   };
@@ -148,8 +151,9 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    return (
-      <Container>
+    if(this.state.loading){
+      return(
+        <Container>
         <Content>
           <Header
             iosBarStyle="light-content"
@@ -163,6 +167,35 @@ export default class HomeScreen extends React.Component {
             <Right>
               <Button transparent>
                 <Icon name="calendar" style={{color:'white'}} onPress={()=>this.props.navigation.navigate('Calendar') } />
+              </Button>
+            </Right>
+          </Header>
+          <WaveIndicator
+            size={80}
+            color="#2c2638"
+            style={{ flex: 0, marginTop: height*0.3 }}
+          />
+
+        </Content>
+      </Container>
+      )
+    }
+
+    else return (
+      <Container>
+        <Content>
+          <Header
+            iosBarStyle="light-content"
+            androidStatusBarColor="#ffffff"
+            style={styles.header}
+          >
+            <Left />
+            <Body>
+              <Title style={styles.headerTitle}>DASHBOARD</Title>
+            </Body>
+            <Right>
+              <Button transparent>
+                <Icon name="calendar" style={{color:'#f5ba57'}} onPress={()=>this.props.navigation.navigate('Calendar') } />
               </Button>
             </Right>
           </Header>
