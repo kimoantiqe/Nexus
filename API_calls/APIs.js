@@ -62,6 +62,8 @@ const _bootstrapAsync = async (props) => {
                                                   })
                           };
 
+                          setTimeout(function(){
+
         fetch(apiURL + "/user/login", settings)
           .then(response => response.json())
           .then(response => {
@@ -103,6 +105,7 @@ const _bootstrapAsync = async (props) => {
             }
           })
           .catch(error => console.error("Error:", error));
+        } ,2000);
   };
   module.exports.login = login;
 
@@ -161,6 +164,9 @@ const Register = async (inputs, props) =>
                                 'password' : inputs["Password"]
                             })
                         };
+
+                        setTimeout(function(){
+
                         console.log(inputs);
                         fetch(apiURL + '/user', settings)
                         .then((response) => response.json())
@@ -190,6 +196,7 @@ const Register = async (inputs, props) =>
                             }
                         )
                         .catch((error) => console.error('Error:', error));
+                      } ,2000);
 
                     } else
                     {
@@ -269,12 +276,14 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
         console.log(settings);
 
-        await fetch(apiURL + '/user', settings)
+        setTimeout(function(){
+
+         fetch(apiURL + '/user', settings)
         .then((response) => response.json())
         .then(() => populate())
         .then(() => sbConnect(regUserID, first))
         .then(() =>  props.navigation.navigate("Main"))
-
+      } ,2000);
     }
 
   };
@@ -354,8 +363,22 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
         response = await response.json();
         if(response.message == "Successfully created new user." && response.success){ // Means it was a new user need to complete profile
           console.log("New user");
+          AsyncStorage.setItem("userid", response.user.id);
+          AsyncStorage.setItem('userToken', response.token);
+          Expo.SecureStore.setItemAsync("userToken", response.token);
+          regUserID = response.user.id;
+          props.navigation.navigate('RCP');
         }else if(response.success){//Loged in Successfuly
           console.log("Logged in:");
+          AsyncStorage.setItem("userToken", response.token);
+              AsyncStorage.setItem("userid", response.user.id);
+              Expo.SecureStore.setItemAsync("userToken", response.token);
+
+              populate();
+
+              sbConnect(response.user.id, response.user.firstName);
+
+              props.navigation.navigate("Main");
         }else{//Means an error has occoured
           console.log("An error has occourd in facebook back end call");
         }

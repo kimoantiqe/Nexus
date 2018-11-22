@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Dimensions, Slider } from 'react-native';
-import {Badge, Container, Content, Text, Item, Header, View, Button, Input, Form, Textarea} from 'native-base'
+import { Dimensions, Slider, StyleSheet } from 'react-native';
+import {Badge, Container, Content, Text, Item, Header, View, Button, Input, Form, Textarea, Footer, Left, Right, Body, Title} from 'native-base'
 import { Pages } from 'react-native-pages';
-
-import Background from '../components/Background';
 
 const API = require("../API_calls/APIs");
 const width = Dimensions.get('window').width;
@@ -116,22 +114,38 @@ handleLFValue = (val, lf) => {
 
     return (
 
-        <Container style={{backgroundColor: '#16131d'}}>
-            <Background logo= {false}/>
-            <Pages >
+        <Container >
+          <Header
+            iosBarStyle="light-content"
+            androidStatusBarColor="#ffffff"
+            style={styles.header}
+          >
+            <Left />
+            <Body>
+              <Title style={styles.headerTitle}>PROFILE</Title>
+            </Body>
+            <Right>
+            <Button hasText transparent 
+            onPress = {()=>API.CompleteProfile(this.state.firstName, this.state.lastName, this.state.interests, this.state.industry, this.state.LF, this.state.bio, this.props)}>
+              <Text>Done</Text>
+            </Button>
+            </Right>
+          </Header>
+          
+            <Pages indicatorColor='#2c2638'>
             <Content contentContainerStyle={{paddingHorizontal: width*0.05, }}>
             <Form>
-              <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300', padding: width*0.02}}>First Name</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
-            <Input placeholder="e.g., Alex" style={{color: '#f2f2f2', fontSize: 22, fontWeight: '400'}} onChangeText = {this.handleFirstname}/>
+              <Text style={{color: '#2c2638', fontSize: 25, fontWeight: '500', padding: width*0.02}}>First Name</Text>
+            <Item rounded style={{ paddingHorizontal: width*0.02, borderColor: '#2c2638', borderWidth: 17}}>
+            <Input placeholder="e.g., Alex" style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleFirstname}/>
             </Item>
-            <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300', padding: width*0.02}}>Last Name</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
-            <Input placeholder="e.g., Elliot" style={{color: '#f2f2f2', fontSize: 22, fontWeight: '400'}} onChangeText = {this.handleLastname}/>
+            <Text style={{color: '#2c2638', fontSize: 25, fontWeight: '500', padding: width*0.02}}>Last Name</Text>
+            <Item rounded style={{ paddingHorizontal: width*0.02, borderColor: '#2c2638', borderWidth: 17}}>
+            <Input placeholder="e.g., Elliot" style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleLastname}/>
             </Item>
-            <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '300', padding: width*0.02}}>Bio</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
-            <Textarea rowSpan={6} rounded placeholder="Please enter a brief bio"  style={{color: '#f2f2f2', fontSize: 22, fontWeight: '400'}} onChangeText = {this.handleBio}/>
+            <Text style={{color: '#2c2638', fontSize: 25, fontWeight: '500', padding: width*0.02}}>Bio</Text>
+            <Item rounded style={{ paddingHorizontal: width*0.02, borderColor: '#2c2638', borderWidth: 17}}>
+            <Textarea rowSpan={6} rounded placeholder="Please enter a brief bio"  style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleBio}/>
             </Item>
             </Form>
             </Content>
@@ -139,49 +153,59 @@ handleLFValue = (val, lf) => {
             
         <Content>
         
-        <Text style={{color: '#c75e9a', fontSize: 22, paddingLeft: width*0.05}}>INTERESTS</Text>
-            <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
+        <Text style={styles.Qtext}>Out of the following, choose what you are interested in and the emphasis of interest.</Text>
+            <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01, flex: 1, flexDirection: 'row'}}>
           
+            <Form>
               <SliderBadge displayName={"Interest A"} flag={interests["IA"]} toCall = {() => this.onPressInterests("IA")} toSetVal = {(value) => this.sliding(value, 0, "IAval")}/>
-              <SliderBadge displayName={"Interest B"} flag={interests["IB"]} toCall = {() => this.onPressInterests("IB")} toSetVal = {(value) => this.sliding(value, 0, "IBval")}/>
               <SliderBadge displayName={"Interest C"} flag={interests["IC"]} toCall = {() => this.onPressInterests("IC")} toSetVal = {(value) => this.sliding(value, 0, "ICval")}/>
+            </Form>
+
+            <Form>
+              <SliderBadge displayName={"Interest B"} flag={interests["IB"]} toCall = {() => this.onPressInterests("IB")} toSetVal = {(value) => this.sliding(value, 0, "IBval")}/>
               <SliderBadge displayName={"Interest D"} flag={interests["ID"]} toCall = {() => this.onPressInterests("ID")} toSetVal = {(value) => this.sliding(value, 0, "IDval")}/>
+            </Form>
 
             </View>
             </Content>
             <Content>
 
-        <Text style={{color: '#c75e9a', paddingLeft: width*0.05, fontSize: 22}}>LOOKING FOR</Text>
+        <Text style={styles.Qtext}>Out of the following, choose what you are looking for.</Text>
 
             <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
             
+            <Form>
             <SliderBadge displayName={"Looking for A"} flag={LF["LA"]} toCall = {() => this.onPressLF("LA")} toSetVal = {(value) => this.sliding(value, 1, "LAval")}/>
-            <SliderBadge displayName={"Looking for B"} flag={LF["LB"]} toCall = {() => this.onPressLF("LB")} toSetVal = {(value) => this.sliding(value, 1, "LBval")}/>
             <SliderBadge displayName={"Looking for C"} flag={LF["LC"]} toCall = {() => this.onPressLF("LC")} toSetVal = {(value) => this.sliding(value, 1, "LCval")}/>
+            </Form>
+
+            <Form>
+            <SliderBadge displayName={"Looking for B"} flag={LF["LB"]} toCall = {() => this.onPressLF("LB")} toSetVal = {(value) => this.sliding(value, 1, "LBval")}/>
             <SliderBadge displayName={"Looking for D"} flag={LF["LD"]} toCall = {() => this.onPressLF("LD")} toSetVal = {(value) => this.sliding(value, 1, "LDval")}/>
-        
+            </Form>
+
             </View>
             </Content>
             <Content>
 
-        <Text style={{color: '#c75e9a', paddingLeft: width*0.05, fontSize: 22}}>INDUSTRY</Text>
+        <Text style={styles.Qtext}>Out of the following, choose what industries you are involved with.</Text>
 
             <View style={{paddingVertical: width*0.05, paddingHorizontal: width*0.01}}>
 
+            <Form>
             <SliderBadge displayName={"Industry A"} flag={industry["INA"]} toCall = {() => this.onPressIndustry("INA")} toSetVal = {(value) => this.sliding(value, 2, "INAval")}/>
-            <SliderBadge displayName={"Industry B"} flag={industry["INB"]} toCall = {() => this.onPressIndustry("INB")} toSetVal = {(value) => this.sliding(value, 2, "INBval")}/>
             <SliderBadge displayName={"Industry C"} flag={industry["INC"]} toCall = {() => this.onPressIndustry("INC")} toSetVal = {(value) => this.sliding(value, 2, "INCval")}/>
+            </Form>
+
+            <Form>
+            <SliderBadge displayName={"Industry B"} flag={industry["INB"]} toCall = {() => this.onPressIndustry("INB")} toSetVal = {(value) => this.sliding(value, 2, "INBval")}/>
             <SliderBadge displayName={"Industry D"} flag={industry["IND"]} toCall = {() => this.onPressIndustry("IND")} toSetVal = {(value) => this.sliding(value, 2, "INDval")}/>
+            </Form>
             
             </View>
-        <Content scrollEnabled={false} contentContainerStyle={{flexDirection: 'row', justifyContent: 'center', padding: width*0.05}}>
-        <Button rounded style={{backgroundColor: '#16131d', borderWidth: width*0.003, borderColor: 'white', paddingHorizontal: width*0.05}} 
-                onPress = {()=>API.CompleteProfile(this.state.firstName, this.state.lastName, this.state.interests, this.state.industry, this.state.LF, this.state.bio, this.props)}>
-            <Text style={{color: '#f2f2f2', fontSize: 20, fontWeight: '300'}}>Finalize Profile</Text>
-          </Button>
-          </Content>
         </Content>
         </Pages>
+        <Footer style={{ backgroundColor: "#2c2638", height: height * 0.05 }}></Footer>
       </Container>
 
 );
@@ -195,7 +219,7 @@ class SliderBadge extends React.Component {
     const {flag} = this.props;
       return(
         <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}>
-<Item style={{borderBottomColor: 'transparent'}}>
+<Item style={{borderBottomColor: 'transparent', paddingBottom: flag? 0 : height*0.015}}>
         <Badge style={{   backgroundColor: flag? '#c75e9a' : '#16131d',
                           minHeight: height*0.055,
                           borderWidth: width*0.0015, 
@@ -209,7 +233,7 @@ class SliderBadge extends React.Component {
         </Item> 
         { 
           flag?
-          <Item style={{borderBottomColor: 'transparent'}}>
+          <Item style={{borderBottomColor: 'transparent', paddingBottom: flag? height*0.015 : 0}}>
             <Badge style={{   backgroundColor: '#16131d',
                   backgroundColor: flag? '#c75e9a' : '#16131d',
                   borderColor: flag? '#c75e9a' : '#f2f2f2' ,
@@ -226,3 +250,23 @@ class SliderBadge extends React.Component {
       )
                       };
                   }
+
+const styles = StyleSheet.create({
+                  header: {
+                    backgroundColor: "#2c2638",
+                    height: height * 0.1
+                  },
+                  headerTitle: {
+                    paddingTop: height * 0.03,
+                    paddingBottom: 50,
+                    fontFamily: "BebasNeue",
+                    fontSize: 25,
+                    color: "#ffffff"
+                  },
+                  Qtext: {
+                  color: '#2c2638', 
+                  fontSize: 28, 
+                  fontWeight: '400', 
+                  paddingHorizontal: width*0.05
+                  }
+                });
