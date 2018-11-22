@@ -64,3 +64,24 @@ test('Login field password works', () => {
 
   expect(wrapper.instance().state.password).toEqual('abc');
 });
+
+test('Login With Facebook logo', () => {
+  const wrapper = shallow(<Login/>);
+
+  expect(wrapper.find(Icon).first().props().name).toEqual('logo-facebook');
+});
+
+test('Login With Facebook button', () => {
+
+  let clickMock = jest.fn();
+  clickMock.mockReturnValue('Send Button Pressed');
+  
+  const wrapper = shallow(<Login />);
+
+  wrapper.instance().loginFb = clickMock;
+  wrapper.update();
+
+  wrapper.find(Button).at(1).props().onPress();
+
+  expect(clickMock).toHaveBeenCalled();
+});

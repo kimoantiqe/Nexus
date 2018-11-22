@@ -38,7 +38,7 @@ export default class qrCamera extends React.Component {
           source={require('../images/qrCamera.png')}
         />
         <Text
-          onPress={() => this.props.navigation.pop()}
+          onPress={() => this.props.navigation.goBack()}
           style={styles.cancel}>
           Cancel
         </Text>

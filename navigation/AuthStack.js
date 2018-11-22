@@ -7,8 +7,6 @@ import Login from '../screens/Login';
 import Splash from '../screens/SplashScreen';
 import Register from '../screens/Register';
 import RegCompleteProfile from '../screens/RegCompleteProfile';
-import InstantMatches from '../screens/instantMatch';
-import QrCamera from '../screens/qrCamera';
 
 
 export default createStackNavigator({
@@ -17,8 +15,6 @@ export default createStackNavigator({
   Register: Register,
   Splash : Splash,
   RCP: RegCompleteProfile,
-  QrCamera: QrCamera,
-  InstantMatches:InstantMatches,
 },
 {
   initialRouteName: 'Splash',
