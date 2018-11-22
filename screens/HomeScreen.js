@@ -34,7 +34,9 @@ import {
 
 import { sbCreateChannel } from "../sendbirdActions/groupChannel";
 
-var apiURL = "https://nexus-restapi.azurewebsites.net/api";
+const APIcall      = require("../API_calls/APIs");
+
+var apiURL = APIcall.apiURL;
 
 var matchesArray = [];
 
@@ -131,8 +133,6 @@ export default class HomeScreen extends React.Component {
     let userToken = await AsyncStorage.getItem("userToken");
 
     //console.log(userToken);
-
-    var apiURL = "https://nexus-restapi.azurewebsites.net/api";
 
     if (userToken != null) {
       var populate = {
