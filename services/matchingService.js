@@ -128,12 +128,14 @@ const match = async function(req, res){
 		if( !newuser ){
 			return ReE(res, "user not in your matches");
 		}
-		else if(newuser.InstantMatches.map((newuser) => newuser.toString()).includes(user._id.toString())){
+		else if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){
 			return ReS(res, {message: 'already matches'});
 		}
 		else{
 			newuser.InstantMatches.push(user._id);
-			user.InstantMatches.push(id);
+      user.InstantMatches.push(id);
+      newuser.matches.push(user._id);
+			user.matches.push(id);
 			[err, otheruser] = await to(newuser.save());
       [err, user] = await to(user.save());
       if(err){
