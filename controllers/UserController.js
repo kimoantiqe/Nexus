@@ -2,8 +2,8 @@ const User                    = require('./../models/user');
 const authService             = require('./../services/AuthService');
 const { to, ReE, ReS }        = require('../services/util');
 const matchingService         = require('./../services/matchingService');
-
-
+const Sendbird 				  = require('sendbird');
+const APP_ID = '5684560F-4764-4763-A8EB-3AD372D8B9EB';
 
 let SanatizeUpdateData = function(data){
 	let blacklist = ['membership','role','createdAt','updatedAt','_id','__v'] ;
@@ -252,6 +252,25 @@ async function pushLikes(user, field){
 						return -1;
 					}
 					else if(newuser.liked.map((user) => user.toString()).includes(user._id.toString())){
+						//connect to the database
+						const sb = new SendBird({ 'appId': APP_ID });
+						
+						const userIds = [user._id, field[i]];
+						if(sb){
+            				sb.GroupChannel.createChannelWithUserIds(userIds, true, 'GroupChannel', null, null, null, (groupChannel, error) => {
+                				if (error) {
+                    				console.log('Create Channel failed');
+                    				console.log(error);
+                    				return;
+                				} else {
+                    				console.log('Create Channel worked');
+                    				console.log(groupChannel);
+                				}
+           			 		});
+        				} else {
+            				console.log('There is no SendBird instance!');
+        				}
+
 						newuser.matches.push(user._id);
 						user.matches.push(field[i]);
 						await newuser.save();

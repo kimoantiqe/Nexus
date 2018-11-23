@@ -39,6 +39,7 @@
     "passport-facebook-token": "^3.3.0",
     "passport-jwt": "^4.0.0",
     "react-native-custom-qr-codes": "^1.0.2",
+    "sendbird": "^3.0.90",
     "validator": "^10.8.0"
   },
   "devDependencies": {
