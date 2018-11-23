@@ -37,6 +37,8 @@ class SettingsScreen extends React.Component {
 
     signOut = async () => {
     await AsyncStorage.clear();
+    await Expo.SecureStore.deleteItemAsync("userToken");
+    await Expo.SecureStore.deleteItemAsync("userid");
 
     //logout of sendbird.
     this.props.sendbirdLogout();

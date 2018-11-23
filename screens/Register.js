@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import Background from '../components/Background';
 import { Container, Content, Form, Input, Button, Item, Text } from 'native-base';
-
+import { WaveIndicator } from "react-native-indicators";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -16,7 +16,8 @@ export default class Register extends React.Component {
   };
 
     state = {
-      inputs: {}
+      inputs: {},
+      loading: 0
         };
 
    handleInput = (i, obj) => {
@@ -24,8 +25,23 @@ export default class Register extends React.Component {
    };
 
   render() {
+    if(this.state.loading ==1){
+        console.log("HERE");
+        return(
+          
+          <View>
+          <Background logo= {true}/>
+          <WaveIndicator
+              size={80}
+              color="white"
+              style={{ flex: 0, marginTop: 90 }}
+            />
+          </View>
+        )
+      }
 
-    return (
+    else 
+        return (
 
 <Container >
     <Content>
@@ -44,7 +60,14 @@ export default class Register extends React.Component {
                 <Input style={styles.InputText} secureTextEntry onChangeText = {(text)=>this.handleInput("Repassword", text)}/>
             </Item>
             <Content scrollEnabled={false} contentContainerStyle={styles.ButtonContainer}>
-            <Button rounded style={styles.Button} onPress = {()=>API.Register(this.state.inputs, this.props)}>
+            <Button rounded onPress={ async() => {
+                    this.setState({ loading: 1 })
+                    await API.Register(this.state.inputs, this.props)
+                    this.setState({ loading: 0 })
+                  } 
+                }
+                style={styles.Button}>
+                 
                 <Text style={{color: '#f2f2f2', fontSize: 20, fontWeight: '300'}}>Register</Text>
             </Button>
             </Content>
@@ -53,7 +76,8 @@ export default class Register extends React.Component {
 </Container>
 
     );
-  }
+            }
+  
 
 };
 

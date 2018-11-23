@@ -9,12 +9,17 @@ import SettingsScreen from '../screens/SettingsScreen';
 import ChatDashboard from '../screens/ChatDashboard';
 import ChatScreen from '../screens/ChatScreen'
 import AddButton from "../screens/TabBarIcon";
-import QR from "../screens/instantMatch"
+import Calendar from '../screens/Calendar';
+import QR from "../screens/newQRcode"
 import QrCamera from '../screens/qrCamera';
+import Profile from '../screens/UserProfile';
+
 
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen
+  Home: HomeScreen,
+  Calendar: Calendar,
+  UProfile: Profile
 });
 
 
@@ -79,6 +84,7 @@ SettingsStack.navigationOptions = {
 const QRStack = createStackNavigator({
   QR: QR,
   QrCamera: QrCamera,
+  Profile : Profile
 });
 
 QRStack.navigationOptions = () => ({

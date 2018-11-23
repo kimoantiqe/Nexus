@@ -49,7 +49,7 @@ const _bootstrapAsync = async (props) => {
   };
   module.exports._bootstrapAsync = _bootstrapAsync;
 
-  const login = async function(username, password, props)
+  const login = async function(username, password, props, reload)
   {
       console.log("ABD");
       const settings =    {
@@ -63,39 +63,41 @@ const _bootstrapAsync = async (props) => {
                                                   })
                           };
 
-        fetch(apiURL + "/user/login", settings)
+       
+
+        await fetch(apiURL + "/user/login", settings)
           .then(response => response.json())
-          .then(response => {
-            //console.log(response);
-
+          .then(async(response) => {
             if (response.success) {
-              AsyncStorage.setItem("userToken", response.token);
-              AsyncStorage.setItem("userid", response.user.id);
-              Expo.SecureStore.setItemAsync("userToken", response.token);
-
-              populate();
-
-              sbConnect(response.user.id, response.user.firstName);
-
-              props.navigation.navigate("Main");
+               AsyncStorage.setItem("userToken", response.token)
+              .then(AsyncStorage.setItem("userid", response.user.id))
+              .then(Expo.SecureStore.setItemAsync("userToken", response.token))
+              .then(Expo.SecureStore.setItemAsync("userid", response.user.id))
+              .then(populate)
+              .then(sbConnect(response.user.id, response.user.firstName))
+              .then(props.navigation.navigate("Main"))
+              
             } else {
               switch (response.error) {
                 case "Not registered":
-                  alert(
-                    'This Username is not registered\nGo to "Register" to make an account'
-                  );
+                  alert('This Username is not registered\nGo to "Register" to make an account');
+                  props.navigation.navigate("Login");
                   break;
                 case "invalid password":
                   alert("Incorrect password");
+                  props.navigation.navigate("Login");
                   break;
                 case "Please enter a password to login":
                   alert("Please enter your password");
+                  props.navigation.navigate("Login");
                   break;
                 case "Please enter an email to login":
                   alert("Please enter your email");
+                  props.navigation.navigate("Login");
                   break;
                 case "A valid email  was not entered":
                   alert("Please enter a valid email\n(abc@xyz.com)");
+                  props.navigation.navigate("Login");
                   break;
               }
             }
@@ -128,18 +130,17 @@ populate = async () =>
 
 const Register = async (inputs, props) =>
 {
-    //////////////////////REGISTRATION API CALL////////////////////////////
-
-
-
+    ///////////////////////////////REGISTRATION API CALL//////////////////////////////////////
             if (inputs["Username"] == "" || inputs["Username"] == undefined)
             {
                 alert("Please enter an email to register");
+                props.navigation.navigate("Register");
             } else
             {
                 if (inputs["Password"] == "" || inputs["Password"] == undefined)
                 {
                     alert("Please enter an password to register");
+                    props.navigation.navigate("Register");
                 } else
                 {
                     if (inputs["Password"] == inputs["Repassword"])
@@ -157,45 +158,57 @@ const Register = async (inputs, props) =>
                                 'password' : inputs["Password"]
                             })
                         };
+
+                       
+
                         console.log(inputs);
-                        fetch(apiURL + '/user', settings)
+                        await fetch(apiURL + '/user', settings)
                         .then((response) => response.json())
                         .then((response)  =>
                             {
                                 if (response.success)
                                 {
-                                    AsyncStorage.setItem("userid", response.user.id);
-                                    AsyncStorage.setItem('userToken', response.token);
-                                    Expo.SecureStore.setItemAsync("userToken", response.token);
+                                    AsyncStorage.setItem("userid", response.user.id)
+                                    .then(Expo.SecureStore.setItemAsync("userid", response.user.id))
+                                    .then(AsyncStorage.setItem('userToken', response.token))
+                                    .then(Expo.SecureStore.setItemAsync("userToken", response.token))
+                                    .then(props.navigation.navigate('RCP'))
+                                    .then(console.log('DDDD'));
                                     regUserID = response.user.id;
-                                    props.navigation.navigate('RCP');
+                                    
                                 } else
                                 {
                                     switch (response.error)
                                     {
                                         case "A valid email was not entered.":
                                             alert("A valid email was not entered.");
+                                            props.navigation.navigate("Register");
                                         break;
                                         case "User already exists with that email":
                                             alert("User already exists with that email");
+                                            props.navigation.navigate("Register");
                                         break;
                                     }
                                 }
                             }
                         )
                         .catch((error) => console.error('Error:', error));
+                      
 
                     } else
                     {
                         alert("Passwords do not match!\nPlease try again.");
+                        props.navigation.navigate("Register");
                     }
                 }
             }
+            console.log("DONE");
 };
 module.exports.Register = Register;
 
 const CompleteProfile = async (first, last, interests, industry, LF, bio, props) => {
 
+  
     if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
@@ -260,12 +273,14 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
         console.log(settings);
 
-        await fetch(apiURL + '/user', settings)
+       
+
+      await fetch(apiURL + '/user', settings)
         .then((response) => response.json())
         .then(() => populate())
         .then(() => sbConnect(regUserID, first))
         .then(() =>  props.navigation.navigate("Main"))
-
+      
     }
 
   };
@@ -317,3 +332,102 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
     }
   };
   module.exports.dislikedUser = dislikedUser;
+
+  const loginfb = async (props) => {
+    try {
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions,
+      } = await Expo.Facebook.logInWithReadPermissionsAsync('1220787098061912', {
+        permissions: ['public_profile'],
+      });
+      if (type === 'success') {
+
+        const payload = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'access_token' : token
+            })
+        }
+
+        const response = await fetch(apiURL+"/user/login/facebook",payload);
+        response = await response.json();
+        if(response.message == "Successfully created new user." && response.success){ // Means it was a new user need to complete profile
+          console.log("New user");
+          AsyncStorage.setItem("userid", response.user.id);
+          AsyncStorage.setItem('userToken', response.token);
+          Expo.SecureStore.setItemAsync("userToken", response.token);
+          regUserID = response.user.id;
+          props.navigation.navigate('RCP');
+        }else if(response.success){//Loged in Successfuly
+          console.log("Logged in:");
+          AsyncStorage.setItem("userToken", response.token);
+              AsyncStorage.setItem("userid", response.user.id);
+              Expo.SecureStore.setItemAsync("userToken", response.token);
+
+              populate();
+
+              sbConnect(response.user.id, response.user.firstName);
+
+              props.navigation.navigate("Main");
+        }else{//Means an error has occoured
+          console.log("An error has occourd in facebook back end call");
+        }
+
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  }
+  module.exports.loginfb = loginfb;
+
+
+  const instantMatch = async (UserID) => {
+    userToken= await Expo.SecureStore.getItemAsync("userToken");
+    if (userToken != null) {
+      
+      var updateUser = {
+        method: 'PUT',
+        headers: {
+          'Authorization': userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'id' : UserID
+          })
+      };
+      await fetch(apiURL + '/user/match', updateUser).then(response => response.json())
+      .then(async(response) => {console.log(response);})
+    }
+  };
+  module.exports.instantMatch = instantMatch;
+
+
+   //need to make sure
+   getUser = async userid => {
+    let userToken = await AsyncStorage.getItem("userToken");
+
+    if (userToken != null) {
+      var user = {
+        method: "GET",
+        headers: {
+          Authorization: userToken
+        }
+      };
+      await fetch(apiURL + "/user/getuser/?id=" + userid, user)
+        .then(response => response.json())
+        .then(response => {
+          console.log(response.user)
+          return(response.user)
+        });
+    }
+  };
+  module.exports.getUser = getUser;

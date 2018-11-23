@@ -1,30 +1,22 @@
 import React, { Component } from "react";
-import Expo from 'expo' 
+import Expo from 'expo'
 import { LinearGradient } from "expo";
 import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
   StyleSheet,
   View,
-  Image,
   Dimensions,
-  KeyboardAvoidingView,
   Alert,
   TextInput,
-  TouchableOpacity,WebView
+  TouchableOpacity
 } from "react-native";
-import { Text, Button, Icon } from "native-base";
-
+import { Text, Button, Icon, Content, Container, Form, Item, Input } from "native-base";
+import { WaveIndicator } from "react-native-indicators";
 import Background from '../components/Background';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const APIcall      = require("../API_calls/APIs");
-
-var userToken3;
-export {userToken3};
 
 export default class Login extends React.Component {
   static navigationOptions = {
@@ -38,9 +30,10 @@ export default class Login extends React.Component {
       username: "",
       password: "",
       userid: "",
-      nickname: ""
+      nickname: "",
+      loading: 0,
     };
-    //this. = this.modal.bind(this);
+
   }
 
   handleUsername = text => {
@@ -51,30 +44,51 @@ export default class Login extends React.Component {
     this.setState({ password: text });
   };
 
+
+
   render() {
-    return (
-      <View>
+    if(this.state.loading ==1){
+      console.log("HERE");
+      return(
+        
+        <View>
+        <Background logo= {true}/>
+        <WaveIndicator
+            size={80}
+            color="white"
+            style={{ flex: 0, marginTop: 90 }}
+          />
+        </View>
+      )
+    }
+    else return (
+      
+      <Container>
+        
+      <Content>
       <Background logo= {true}/>
-      <View style={styles.container}>
-      <TextInput
-                  placeholder="Email Address"
-                  placeholderTextColor="rgba(255, 255, 255, 0.2)"
-                  style={styles.input}
-                  onChangeText={this.handleUsername}
-                />
-                <TextInput
-                  placeholder="password"
-                  placeholderTextColor="rgba(255, 255, 255, 0.2)"
-                  secureTextEntry
-                  style={styles.input}
-                  onChangeText={this.handlePassword}
-                />
+      <Form style={{paddingHorizontal: width*0.05, justifyContent: 'space-evenly'}}>
+            <Text style={styles.Text}>Email Address</Text>
+            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+                <Input  style={styles.InputText} onChangeText = {(text)=>this.handleUsername(text)}/>
+            </Item>
+            <Text style={styles.Text}>Password</Text>
+            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+                <Input style={styles.InputText} secureTextEntry onChangeText = {(text)=>this.handlePassword(text)}/>
+            </Item>
 
                 <TouchableOpacity style={styles.buttonContainer}>
-                  <Button onPress={()=>APIcall.login(this.state.username, this.state.password, this.props)} style={styles.button}>
+                  <Button onPress={ async() => {
+                     this.setState({ loading: 1 })
+                    await APIcall.login(this.state.username, this.state.password, this.props)
+                    this.setState({ loading: 0 })
+                  } 
+                }
+                  style={styles.button}>
                     <Text style={{ fontWeight: "bold" }}>LOGIN</Text>
                   </Button>
                 </TouchableOpacity>
+              </Form>
 
                 <View style={{ flexDirection: "row" }}>
                   <View
@@ -115,16 +129,16 @@ export default class Login extends React.Component {
                   <Button
                     iconLeft
                     bordered
-                    onPress = {() => this.loginFb()}
+                    onPress = {() => APIcall.loginfb(this.props)}
                     activeOpacity={0.5}
                     style={{
                       width: (width * 38) / 100,
                       height: height / 14,
-                      borderColor: "grey"
+                      borderColor: "white"
                     }}
                   >
                     <Icon
-                      style={{ fontSize: 30, color: "grey" }}
+                      style={{ fontSize: 30, color: "white" }}
                       name="logo-facebook"
                     />
                     <Text
@@ -132,7 +146,7 @@ export default class Login extends React.Component {
                       style={{
                         fontSize: 18,
                         fontWeight: "500",
-                        color: "grey",
+                        color: "white",
                         paddingLeft: width / 30
                       }}
                     >
@@ -140,32 +154,9 @@ export default class Login extends React.Component {
                     </Text>
                   </Button>
                 </View>
-              </View>
-          </View>
+              </Content>
+              </Container>
     );
-  }
-
-  loginFb = async () => {
-    try {
-      const {
-        type,
-        token,
-        expires,
-        permissions,
-        declinedPermissions,
-      } = await Expo.Facebook.logInWithReadPermissionsAsync('1220787098061912', {
-        permissions: ['public_profile'],
-      });
-      if (type === 'success') {
-        // Get the user's name using Facebook's Graph API
-        const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
-    }
   }
 
 }
@@ -192,14 +183,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  Text:           {
+    color: 'white', 
+    fontSize: 20, 
+    fontWeight: '300', 
+    padding: width*0
+},
+InputText:      {
+  color: 'white', 
+  fontSize: 22, 
+  fontWeight: '400'
+},
   button: {
     width: 200,
     backgroundColor: "transparent",
-    borderColor: "grey",
+    borderColor: "white",
     borderWidth: 1,
     borderRadius: 100,
     marginTop: 20,
     justifyContent: "center"
   }
 });
-
