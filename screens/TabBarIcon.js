@@ -26,8 +26,8 @@ class AddButton extends Component {
                  <GradientButton
                     onPress={() => onPress && onPress()}
                     gradientBegin="#874f00"
-      gradientEnd="#f5ba57"
-      gradientDirection="diagonal"
+                    gradientEnd="#f5ba57"
+                    gradientDirection="diagonal"
                     height={ SIZE / 2}
                     width={ SIZE / 2}
                     radius={SIZE / 4}
