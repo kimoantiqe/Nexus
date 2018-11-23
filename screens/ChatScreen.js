@@ -340,9 +340,9 @@ export default class ChatScreen extends Component {
                         value={this.state.taskDescription}
                     />
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
                     <TextInput
-                        style={[styles.modalTextInput, { width:width*0.63 }]}
+                        style={[styles.modalTextInput, { width:width*0.60 }]}
                         placeholder="Time"
                         editable = {false}
                         value={this.state.taskTime}
@@ -355,9 +355,9 @@ export default class ChatScreen extends Component {
                         onPress={() => this._toggleTimeModal()} 
                     />
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
                     <TextInput
-                        style={[styles.modalTextInput, { width:width*0.63 }]}
+                        style={[styles.modalTextInput, { width:width*0.60 }]}
                         placeholder="Date"
                         editable = {false}
                         value={this.state.taskDate}
@@ -428,9 +428,9 @@ export default class ChatScreen extends Component {
                         value={this.state.meetingDescription}
                     />
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
                     <TextInput
-                        style={[styles.modalTextInput, { width:width*0.63 }]}
+                        style={[styles.modalTextInput, { width:width*0.60 }]}
                         placeholder="Time"
                         editable = {false}
                         value={this.state.meetingTime}
@@ -443,9 +443,9 @@ export default class ChatScreen extends Component {
                         onPress={() => this._toggleTimeModal()} 
                     />
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
                     <TextInput
-                        style={[styles.modalTextInput, { width:width*0.63 }]}
+                        style={[styles.modalTextInput, { width:width*0.60 }]}
                         placeholder="Date"
                         editable = {false}
                         value={this.state.meetingDate}
