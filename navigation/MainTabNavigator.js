@@ -10,7 +10,6 @@ import ChatDashboard from '../screens/ChatDashboard';
 import ChatScreen from '../screens/ChatScreen'
 import AddButton from "../screens/TabBarIcon";
 import QR from "../screens/instantMatch"
-import InstantMatches from '../screens/instantMatch';
 import QrCamera from '../screens/qrCamera';
 
 

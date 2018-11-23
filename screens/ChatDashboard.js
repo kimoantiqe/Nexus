@@ -1,10 +1,10 @@
 import React from 'react';
 import { AsyncStorage, StyleSheet, View, Alert, ListView, TouchableHighlight, Button, Dimensions} from 'react-native';
-import { Avatar, ListItem} from 'react-native-elements'
+import { Avatar, ListItem, Badge, Text} from 'react-native-elements'
 import { connect } from 'react-redux'
-import { sbCreateGroupChannelListQuery } from '../sendbirdActions/groupChannel';
+import { sbCreateGroupChannelListQuery, sbConnect, sbCreateChannel } from '../sendbirdActions';
 import { getGroupChannelList } from '../actions';
-
+import moment from 'moment'
 
 import {
     Header,
@@ -28,22 +28,27 @@ class ChatDashboard extends React.Component {
         super(props);
         this.state = {
             refresh: false,
+            childRefresh: false,
             groupChannelListQuery: null,
             list: [],
             groupChannelList: ds.cloneWithRows([])
         }
-        this.getUserID();
     }
 
-    getUserID = async() => {
-        userID = await AsyncStorage.getItem("userid");
+
+    getUserID = () => {
+        userID ='5bcf97fd4a5aa600150cc338';
+        //userID = await AsyncStorage.getItem("userid");
     }
 
     componentDidMount() {
+        this._connectSb();
+        this.getUserID();
         this._initGroupChannelList();
     }
 
     componentWillReceiveProps(props) {
+        
         const { list } = props;
     
         if (list !== this.props.list) {
@@ -54,6 +59,26 @@ class ChatDashboard extends React.Component {
                 this.setState({ list: newList, groupChannelList: ds.cloneWithRows(newList) });
             }
         }
+    }
+
+    componentDidUpdate(prevProps){
+        if (this.state.childRefresh) {
+            this.state.refresh = false,
+            this.state.childRefresh = false,
+            this.state.groupChannelListQuery = null,
+            this.state.list = [],
+            this.state.groupChannelList = ds.cloneWithRows([])
+            this._initGroupChannelList();
+            return;
+        }
+    }
+
+    _returnData(childRefresh) {
+        this.setState({childRefresh: childRefresh});
+    }
+
+    _connectSb = () => {
+        sbConnect('5bcf97fd4a5aa600150cc338', 'Ahmed');
     }
 
     _initGroupChannelList = () => {
@@ -73,11 +98,13 @@ class ChatDashboard extends React.Component {
         }
     }
     
-    _onListItemPress = (channelUrl) => {
+    _onListItemPress = (channelUrl, unreadMessageCount) => {
         this.props.navigation.navigate(
             'ChatScreen', 
             { channelUrl: channelUrl,
-              userID: userID
+              userID: userID,
+              unreadMessageCount: unreadMessageCount,
+              returnData: this._returnData.bind(this)
             }
         );
     }
@@ -90,7 +117,39 @@ class ChatDashboard extends React.Component {
         }
     }
     
+    _renderBadge = (count, createdAt) => {
+        if(count > 0)
+            return (
+                <View>
+                <Text style={{paddingBottom: 5, fontSize: 15}}>{createdAt}</Text>
+                <Badge
+                    value={count}
+                    textStyle={{ color: 'orange' }}
+                />
+                </View>
+            )
+        else    
+            return createdAt;
+    }
+
+    _formatTime = (timeStamp) => {
+        return;
+    }
+
     _renderList = (rowData) => {
+        let lastMessage;
+        let createdAt;
+        if(rowData.lastMessage === null)
+            lastMessage = 'Let\'s start chatting!';
+        else {
+            lastMessage = rowData.lastMessage.message;
+            createdAt = moment(rowData.lastMessage.createdAt).format('H:mm')
+            if(rowData.lastMessage._sender.userId !== userID)
+                lastMessage = rowData.lastMessage.sender.nickname + ': ' + lastMessage;
+            else    
+                lastMessage = 'You: ' + lastMessage;
+
+        }
         return (
             <ListItem
                 component={TouchableHighlight}
@@ -98,14 +157,18 @@ class ChatDashboard extends React.Component {
                 key={rowData.url}
                 avatar={(
                     <Avatar 
+                        medium
+                        rounded
                         source={{uri: rowData.coverUrl}} 
                     />
                 )}
                 title={
                     rowData.members[0].userId == userID ? rowData.members[1].nickname : rowData.members[0].nickname
                 }
-                titleStyle={{fontWeight: '500', fontSize: 16}}
-                onPress={ () => this._onListItemPress(rowData.url) }
+                subtitle={lastMessage}
+                rightTitle={this._renderBadge(rowData.unreadMessageCount, createdAt)}
+                titleStyle={{fontWeight: '500', fontSize: 17}}
+                onPress={ () => this._onListItemPress(rowData.url, rowData.unreadMessageCount) }
             />
         )
     }

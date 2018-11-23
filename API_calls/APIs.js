@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "https://nexus-restapi.azurewebsites.net/api";
+const apiURL = "http://localhost:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -19,7 +19,7 @@ const _bootstrapAsync = async (props) => {
   }
   };
 
-  var apiURL = 'https://nexus-restapi.azurewebsites.net/api';
+  var apiURL = 'http://localhost:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)

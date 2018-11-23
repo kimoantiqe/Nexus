@@ -34,7 +34,7 @@ import {
 
 import { sbCreateChannel } from '../sendbirdActions/groupChannel';
 
-var apiURL = "https://nexus-restapi.azurewebsites.net/api";
+var apiURL = "http://localhost:1337/api";
 
 var matchesArray = [];
 
