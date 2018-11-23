@@ -13,6 +13,7 @@ import Calendar from '../screens/Calendar';
 import QR from "../screens/newQRcode"
 import QrCamera from '../screens/qrCamera';
 import Profile from '../screens/UserProfile';
+import EditProfile from '../screens/EditProfile';
 
 
 
@@ -69,6 +70,7 @@ MatchesStack.navigationOptions = {
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
+  EditProfileScreen: EditProfile
 });
 
 SettingsStack.navigationOptions = {

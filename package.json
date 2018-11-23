@@ -31,6 +31,7 @@
     "react-native-deck-swiper": "^1.5.22",
     "react-native-elements": "^0.19.1",
     "react-native-gradient-buttons": "^1.2.9",
+    "react-native-hr-plus": "^1.0.6",
     "react-native-indicators": "^0.13.0",
     "react-native-keyboard-aware-scroll-view": "^0.7.4",
     "react-native-linear-gradient": "^2.4.4",
@@ -47,6 +48,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "sendbird": "^3.0.84",
+    "styled-components": "^4.1.1",
     "yarn": "^1.12.3"
   },
   "devDependencies": {

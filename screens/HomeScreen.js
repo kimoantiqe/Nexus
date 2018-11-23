@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   View,
   FlatList,
-  Dimensions
+  Dimensions,
+  RefreshControl
 } from "react-native";
 import { WaveIndicator } from "react-native-indicators";
 import { WebBrowser } from "expo";
@@ -58,7 +59,8 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       lastRefresh: Date(Date.now()).toString(),
-      loading: 1 
+      loading: 1 ,
+      refreshing: false,
     };
 
     this.refreshScreen = this.refreshScreen.bind(this);
@@ -148,11 +150,19 @@ export default class HomeScreen extends React.Component {
     }
   };
 
+  _onRefresh = async () => {
+    await this.setState({refreshing: true});
+    await this.setState({refreshing: false});
+    this.setState({loading: 1});
+    await this.getUserMatches();
+    this.setState({loading: 0});
+  }
+
   render() {
     if(this.state.loading){
       return(
         <Container>
-        <Content>
+        <Content >
           <Header
             iosBarStyle="light-content"
             androidStatusBarColor="#ffffff"
@@ -181,7 +191,12 @@ export default class HomeScreen extends React.Component {
 
     else return (
       <Container>
-        <Content>
+        <Content refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }>
           <Header
             iosBarStyle="light-content"
             androidStatusBarColor="#ffffff"

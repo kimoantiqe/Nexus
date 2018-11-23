@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Slider, StyleSheet } from 'react-native';
+import { Dimensions, Slider, StyleSheet, AsyncStorage } from 'react-native';
 import { Container, Content, Text, Item, Header, View, Button, Input, Form, Textarea, Footer, Left, Right, Body, Title} from 'native-base'
 import { Pages } from 'react-native-pages';
 import { WaveIndicator } from "react-native-indicators";
@@ -9,23 +9,65 @@ const API = require("../API_calls/APIs");
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
+var apiURL = API.apiURL;
+
 export default class RegCompleteProfile extends React.Component {
   static navigationOptions = {
     header: null,
     title: 'RCP',
   };
 
-  state = {
-    value: 0.5,
+  constructor(props) {
+
+    super(props);
+  this.state = {
   interests: {},
   LF: {},
   industry: {},
   bio: "",
   firstName: "",
   lastName: "",
-  loading: 0,
+  loading: 1,
   page: 0
   }
+
+}
+
+componentWillMount = async () => {
+  const userToken = await AsyncStorage.getItem("userToken");
+
+  var settings = {
+    method: 'GET',
+    headers: {
+      'Authorization': userToken
+    }
+    };
+  
+    try {
+            let response = await fetch(apiURL + '/user', settings)
+            response = await response.json();
+
+            this.state.firstName = response.user.firstName;
+            this.state.lastName = response.user.lastName;
+            this.state.bio = response.user.bio;
+
+            // console.log(JSON.stringify(response) + '       A7AAAAAAAAAAAAAA');
+
+            for (let index = 0; index < response.user.interests.length; index++) 
+              this.state.interests[response.user.interests[index]] = true;
+
+            for (let index = 0; index < response.user.industry.length; index++) 
+              this.state.industry[response.user.industry[index]] = true;
+
+            for (let index = 0; index < response.user.lookingFor.length; index++) 
+              this.state.LF[response.user.lookingFor[index]] = true;
+          
+            this.setState({loading: 0});
+
+    } catch (error) {
+      console.error(error);
+    }
+}
 
   handleBio = (text) => {
     this.setState({ bio: text });
@@ -175,11 +217,11 @@ handleLFValue = (val, lf) => {
             onPress = { 
               async()=>{
                 this.setState({ loading: 1 });
-                await API.CompleteProfile(this.state.firstName, this.state.lastName, this.state.interests, this.state.industry, this.state.LF, this.state.bio, this.props);
+                await API.UpdateProfile(this.state.firstName, this.state.lastName, this.state.interests, this.state.industry, this.state.LF, this.state.bio, this.props);
                 this.setState({ loading: 0});
               }
               }>
-              <Text>Done</Text>
+              <Text>Apply</Text>
             </Button>
             </Right> : 
           <Right>
@@ -198,15 +240,15 @@ handleLFValue = (val, lf) => {
             <Form>
               <Text style={{color: '#2c2638', fontSize: 25, fontWeight: '500', padding: width*0.02}}>First Name</Text>
             <Item rounded style={{ paddingHorizontal: width*0.02, borderColor: '#2c2638', borderWidth: 17}}>
-            <Input placeholder="e.g., Alex" style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleFirstname}/>
+            <Input value={this.state.firstName} style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleFirstname}/>
             </Item>
             <Text style={{color: '#2c2638', fontSize: 25, fontWeight: '500', padding: width*0.02}}>Last Name</Text>
             <Item rounded style={{ paddingHorizontal: width*0.02, borderColor: '#2c2638', borderWidth: 17}}>
-            <Input placeholder="e.g., Elliot" style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleLastname}/>
+            <Input value={this.state.lastName} style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleLastname}/>
             </Item>
             <Text style={{color: '#2c2638', fontSize: 25, fontWeight: '500', padding: width*0.02}}>Bio</Text>
             <Item rounded style={{ paddingHorizontal: width*0.02, borderColor: '#2c2638', borderWidth: 17}}>
-            <Textarea rowSpan={6} rounded placeholder="Please enter a brief bio"  style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleBio}/>
+            <Textarea rowSpan={6} rounded value={this.state.bio}  style={{color: '#2c2638', fontSize: 20, fontWeight: '400'}} onChangeText = {this.handleBio}/>
             </Item>
             </Form>
             </Content>
