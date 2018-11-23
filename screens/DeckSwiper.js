@@ -30,6 +30,8 @@ import {
   Button,
   Form, Item, Badge
 } from "native-base";
+import GradientButton from 'react-native-gradient-buttons';
+
 
 const APIcall = require("../API_calls/APIs");
 
@@ -281,8 +283,98 @@ export default class Matches extends React.Component {
                 }}
                 source={image}
               />
-            </View>
+               { ((item.interests.length > 0) || (item.industry.length > 0) || (item.lookingFor.length > 0)) ? 
+            <View style={styles.tags}>
+            <Form style={{ flexWrap : 'wrap', flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+              { 
+                item.interests.map((interest, i) => {
+                  return(
+                  <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.004, marginRight:0,}}>
+          <GradientButton
+                    onPress={() => onPress && onPress()}
+                    gradientBegin="#874f00"
+                    gradientEnd="#f5ba57"
+                    gradientDirection="diagonal"
+                    height={ 20}
+                    width={80 }
+                    radius={50 / 4}
+                    violetPink
+                    impact
+                    impactStyle='Light'
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        opacity: 1,
+                        marginLeft: 0,
+                        marginRight: 0
+                    }}
+                >
+            <Text style={{color: '#f2f2f2', fontSize: 12, fontWeight: '400'}}>{interest== "IA" ? "INTEREST A" : interest == "IB" ? "INTEREST B" : interest == "IC" ? "INTEREST C": "INTEREST D" }</Text>
+            </GradientButton>
+          </Item>)
+                })}
+                
+                
+                {item.industry.map((industry, i) => {
+                  return(<Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.004}}>
+                   <GradientButton
+                    onPress={() => onPress && onPress()}
+                    gradientBegin="#874f00"
+                    gradientEnd="#f5ba57"
+                    gradientDirection="diagonal"
+                    height={ 20}
+                    width={80 }
+                    radius={50 / 4}
+                    //violetPink
+                    impact
+                    impactStyle='Light'
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        opacity: 1
+                    }}
+                >
+                    <Text style={{color: '#f2f2f2', fontSize: 12, fontWeight: '400'}}>{industry== "INA" ? "INDUSTRY A" : (industry == "INB" ? "INDUSTRY B" : ( industry == "INC" ? "INDUSTRY C": "INDUSTRY D")) }</Text>
+                  </GradientButton>
+                  </Item>)
+                })
+              }
+             
+             
+              {item.lookingFor.map((lf, i) => {
+                  return(<Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.004}}>
+                  <GradientButton
+                    onPress={() => onPress && onPress()}
+                    gradientBegin="#874f00"
+                    gradientEnd="#f5ba57"
+                    gradientDirection="diagonal"
+                    height={ 20}
+                    width={80 }
+                    radius={50 / 4}
+                    blueViolet
+                    impact
+                    impactStyle='Light'
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        opacity: 1,
+                        paddingLeft:0,
+                        paddingRight:0,
+                        marginRight: 0,
+                        marginLeft: 0
+                    }}
+                >
+                    <Text style={{color: '#f2f2f2', fontSize: 12, fontWeight: '400'}}>{lf}</Text>
+                    </GradientButton>
+                  </Item>)
+                })
+              }
+              </Form>  : null }
+              </View> : null
+}
 
+            </View>
+           
             <View style={styles.BIO}>
               <Text style={styles.BIOText}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
@@ -291,54 +383,7 @@ export default class Matches extends React.Component {
                 Aliquam consectetur massa id augue viverra facilisis.{" "}
               </Text>
             </View>
-{ ((item.interests.length > 0) || (item.industry.length > 0) || (item.lookingFor.length > 0)) ? 
-            <View style={styles.tags}>
-            {(item.interests.length > 0)? <Form style={{width: width * 0.3, alignItems: 'center'}}>
-              { 
-                item.interests.map((interest, i) => {
-                  return(
-                  <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015}}>
-          <Badge style={{   backgroundColor: '#16131d',
-                            borderWidth: width*0.0015, 
-                            borderColor: '#f2f2f2' ,
-                            borderRadius: 30,
-                            }}>
-            <Text style={{color: '#f2f2f2', fontSize: 15, fontWeight: '300'}}>{interest}</Text>
-          </Badge>
-          </Item>)
-                })}
-                </Form>  : null }
-                {(item.industry.length > 0)? <Form style={{width: width * 0.3, alignItems: 'center'}}>
-                {item.industry.map((industry, i) => {
-                  return(<Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015}}>
-                  <Badge style={{   backgroundColor: '#16131d',
-                                    borderWidth: width*0.0015, 
-                                    borderColor: '#f2f2f2' ,
-                                    borderRadius: 30,
-                                    }}>
-                    <Text style={{color: '#f2f2f2', fontSize: 15, fontWeight: '300'}}>{industry}</Text>
-                  </Badge>
-                  </Item>)
-                })
-              }
-              </Form>  : null }
-              {(item.lookingFor.length > 0)? <Form style={{width: width * 0.3, alignItems: 'center'}}>
-              {item.lookingFor.map((lf, i) => {
-                  return(<Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015}}>
-                  <Badge style={{   backgroundColor: '#16131d',
-                                    borderWidth: width*0.0015, 
-                                    borderColor: '#f2f2f2' ,
-                                    borderRadius: 30,
-                                    
-                                    }}>
-                    <Text style={{color: '#f2f2f2', fontSize: 15, fontWeight: '300'}}>{lf}</Text>
-                  </Badge>
-                  </Item>)
-                })
-              }
-              </Form>  : null }
-              </View> : null
-}
+
           </Animated.View>
         );
       } else {
@@ -535,7 +580,8 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   Tags: {
-    height: height * 0.05,
+
+    height: height * 0.02,
     paddingTop: height * 0.02,
     backgroundColor: "transparent",
     justifyContent: "center",
@@ -570,11 +616,12 @@ const styles = StyleSheet.create({
     opacity: 0.9
   },
   tags: {
-    flex: 1,
+    position:"absolute",
+    bottom: 0,
+    flex: 0.5,
     flexDirection: "row",
-    backgroundColor: "#2c2638",
+    backgroundColor: "transparent",
     width: width * 0.9,
-    alignSelf: "center",
     alignItems: 'center',
     justifyContent: 'center',
     opacity: 0.9

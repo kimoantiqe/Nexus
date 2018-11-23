@@ -55,6 +55,7 @@ export default class qrCamera extends React.Component {
       return <Text>No access to camera</Text>;
     }
     if(this.state.loading == 1){
+      return(
       <Container>
         <Content>
           <Header
@@ -76,6 +77,7 @@ export default class qrCamera extends React.Component {
           />
         </Content>
       </Container>
+      )
     }
     else return (
       <View style={{ flex: 1 }}>
@@ -99,6 +101,7 @@ export default class qrCamera extends React.Component {
 
   handleBarCodeScanned = async({ type, data }) => {
     console.log(type+ " " + data);
+    this.setState({loading: 1});
     await APIcall.instantMatch(data);
     await this.getUser(data);
     this.props.navigation.navigate("Profile", {
@@ -132,5 +135,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width: '70%',
     color: 'white',
+  },
+  header: {
+    backgroundColor: "#2c2638",
+    height: height * 0.1
+  },
+  headerTitle: {
+    paddingTop: height * 0.03,
+    paddingBottom: 50,
+    fontFamily: "BebasNeue",
+    fontSize: 25,
+    color: "#ffffff"
   },
 });
