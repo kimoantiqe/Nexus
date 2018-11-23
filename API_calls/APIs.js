@@ -2,7 +2,8 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://192.168.1.115:1337/api";
+
+const apiURL = "https://nexus-restapi.azurewebsites.net/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -18,6 +19,8 @@ const _bootstrapAsync = async (props) => {
     'Authorization': userToken
   }
   };
+
+  var apiURL = 'http://172.20.10.4:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)
@@ -49,7 +52,6 @@ const _bootstrapAsync = async (props) => {
 
   const login = async function(username, password, props, reload)
   {
-      console.log("ABD");
       const settings =    {
                               method: "POST",
                               headers: {
@@ -61,7 +63,7 @@ const _bootstrapAsync = async (props) => {
                                                   })
                           };
 
-       
+
 
         await fetch(apiURL + "/user/login", settings)
           .then(response => response.json())
@@ -74,7 +76,7 @@ const _bootstrapAsync = async (props) => {
               .then(populate)
               .then(sbConnect(response.user.id, response.user.firstName))
               .then(props.navigation.navigate("Main"))
-              
+
             } else {
               switch (response.error) {
                 case "Not registered":
@@ -157,7 +159,7 @@ const Register = async (inputs, props) =>
                             })
                         };
 
-                       
+
 
                         console.log(inputs);
                         await fetch(apiURL + '/user', settings)
@@ -173,7 +175,7 @@ const Register = async (inputs, props) =>
                                     .then(props.navigation.navigate('RCP'))
                                     .then(console.log('DDDD'));
                                     regUserID = response.user.id;
-                                    
+
                                 } else
                                 {
                                     switch (response.error)
@@ -191,7 +193,7 @@ const Register = async (inputs, props) =>
                             }
                         )
                         .catch((error) => console.error('Error:', error));
-                      
+
 
                     } else
                     {
@@ -206,7 +208,7 @@ module.exports.Register = Register;
 
 const CompleteProfile = async (first, last, interests, industry, LF, bio, props) => {
 
-  
+
     if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
@@ -271,14 +273,14 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
         console.log(settings);
 
-       
+
 
       await fetch(apiURL + '/user', settings)
         .then((response) => response.json())
         .then(() => populate())
         .then(() => sbConnect(regUserID, first))
         .then(() =>  props.navigation.navigate("Main"))
-      
+
     }
 
   };
@@ -286,7 +288,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
   const UpdateProfile = async (first, last, interests, industry, LF, bio, props) => {
 
-  
+
     if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
@@ -351,10 +353,10 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
         console.log(settings);
 
-       
+
 
       await fetch(apiURL + '/user', settings)
-      
+
     }
 
   };
@@ -467,7 +469,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
   const instantMatch = async (UserID) => {
     userToken= await Expo.SecureStore.getItemAsync("userToken");
     if (userToken != null) {
-      
+
       var updateUser = {
         method: 'PUT',
         headers: {
@@ -505,3 +507,79 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
     }
   };
   module.exports.getUser = getUser;
+
+
+  sendTaskMeeting = async (taskName, taskDescription, taskDateTime, type, friendId) => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var user = {
+        method: "POST",
+        headers: {
+          Authorization: userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'taskTitle' : taskName,
+          'taskInfo': taskDescription,
+          'taskType': type,
+          'taskDueDate': taskDateTime,
+          'participatingUser': friendId,
+          })
+      };
+      await fetch(apiURL + "/user/task", user)
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.sendTaskMeeting = sendTaskMeeting;
+
+  sendImage = async (PicturePath) => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var data = new FormData();
+      data.append('file', { uri: PicturePath, name: 'profilePic.jpg' });
+      var user = {
+        method: "POST",
+        headers: {
+          Accept: 'application/json',
+          Authorization: userToken,
+          'Content-Type': 'multipart/form-data',
+        },
+        body: data
+      };
+      await fetch(apiURL + "/user/image", user)
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.sendImage = sendImage;
+
+  getImage = async () => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var user = {
+        method: "GET",
+        headers: {
+          Authorization: userToken,
+        }
+      };
+      await fetch(apiURL + "/user/image", user)
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.getImage = getImage;
