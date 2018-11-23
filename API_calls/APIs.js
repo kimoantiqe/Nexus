@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://192.168.1.115:1337/api";
+const apiURL = "https://nexus-restapi.azurewebsites.net/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -49,7 +49,6 @@ const _bootstrapAsync = async (props) => {
 
   const login = async function(username, password, props, reload)
   {
-      console.log("ABD");
       const settings =    {
                               method: "POST",
                               headers: {
@@ -61,7 +60,7 @@ const _bootstrapAsync = async (props) => {
                                                   })
                           };
 
-       
+
 
         await fetch(apiURL + "/user/login", settings)
           .then(response => response.json())
@@ -74,7 +73,7 @@ const _bootstrapAsync = async (props) => {
               .then(populate)
               .then(sbConnect(response.user.id, response.user.firstName))
               .then(props.navigation.navigate("Main"))
-              
+
             } else {
               switch (response.error) {
                 case "Not registered":
@@ -157,7 +156,7 @@ const Register = async (inputs, props) =>
                             })
                         };
 
-                       
+
 
                         console.log(inputs);
                         await fetch(apiURL + '/user', settings)
@@ -173,7 +172,7 @@ const Register = async (inputs, props) =>
                                     .then(props.navigation.navigate('RCP'))
                                     .then(console.log('DDDD'));
                                     regUserID = response.user.id;
-                                    
+
                                 } else
                                 {
                                     switch (response.error)
@@ -191,7 +190,7 @@ const Register = async (inputs, props) =>
                             }
                         )
                         .catch((error) => console.error('Error:', error));
-                      
+
 
                     } else
                     {
@@ -206,7 +205,7 @@ module.exports.Register = Register;
 
 const CompleteProfile = async (first, last, interests, industry, LF, bio, props) => {
 
-  
+
     if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
@@ -271,14 +270,14 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
         console.log(settings);
 
-       
+
 
       await fetch(apiURL + '/user', settings)
         .then((response) => response.json())
         .then(() => populate())
         .then(() => sbConnect(regUserID, first))
         .then(() =>  props.navigation.navigate("Main"))
-      
+
     }
 
   };
@@ -391,7 +390,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
   const instantMatch = async (UserID) => {
     userToken= await Expo.SecureStore.getItemAsync("userToken");
     if (userToken != null) {
-      
+
       var updateUser = {
         method: 'PUT',
         headers: {
