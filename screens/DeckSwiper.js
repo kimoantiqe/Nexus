@@ -10,6 +10,7 @@ import {
   PanResponder
 } from "react-native";
 import Expo from "expo";
+import { LinearGradient } from "expo";
 import SliderBadge from '../components/SliderBadge'
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -30,7 +31,9 @@ import {
   Button,
   Form, Item, Badge
 } from "native-base";
+import Hr from 'react-native-hr-plus'
 import GradientButton from 'react-native-gradient-buttons';
+
 
 
 const APIcall = require("../API_calls/APIs");
@@ -217,12 +220,8 @@ export default class Matches extends React.Component {
                 position: "absolute"
               }
             ]}
-          >
-            <View style={styles.Name}>
-              <Text style={styles.NameText}>
-                {item.firstName + " " + item.lastName}
-              </Text>
-            </View>
+          > 
+          
 
             <Animated.View
               style={{
@@ -279,10 +278,22 @@ export default class Matches extends React.Component {
                   height: null,
                   width: width * 0.9,
                   resizeMode: "cover",
-                  backgroundColor: "black"
+                  backgroundColor: "black",
+                  borderRadius: 25,
                 }}
                 source={image}
               />
+               
+            <View style={styles.Name}>
+              <Text style={styles.NameText}>
+                {item.firstName + " " + item.lastName}
+              </Text>
+            </View>
+            </View>
+
+
+
+            <View style={styles.BIO}>
                { ((item.interests.length > 0) || (item.industry.length > 0) || (item.lookingFor.length > 0)) ? 
             <View style={styles.tags}>
             <Form style={{ flexWrap : 'wrap', flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
@@ -313,6 +324,7 @@ export default class Matches extends React.Component {
             </GradientButton>
           </Item>)
                 })}
+
                 
                 
                 {item.industry.map((industry, i) => {
@@ -373,15 +385,16 @@ export default class Matches extends React.Component {
               </View> : null
 }
 
-            </View>
+                 
            
-            <View style={styles.BIO}>
+            {/* <View >
               <Text style={styles.BIOText}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
                 sed mi ex. Proin luctus, purus non faucibus bibendum, ligula
                 justo blandit quam, interdum elementum dui eros sed erat.
                 Aliquam consectetur massa id augue viverra facilisis.{" "}
               </Text>
+            </View> */}
             </View>
 
           </Animated.View>
@@ -401,6 +414,7 @@ export default class Matches extends React.Component {
               }
             ]}
           >
+          
           <View style={styles.Name}>
             <Text style={styles.NameText}>
               {item.firstName + " " + item.lastName}
@@ -476,6 +490,7 @@ export default class Matches extends React.Component {
               Aliquam consectetur massa id augue viverra facilisis.{" "}
             </Text>
           </View>
+          
           </Animated.View>
         );
       }
@@ -570,14 +585,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
-    opacity: 0.9
+    opacity: 0.9,
+    position: "absolute",
+    alignSelf: "flex-end",
+    bottom: 0,
+  },
+  VIEW: {
+    borderRadius: 50,
   },
   Image: {
     flex: 1,
     backgroundColor: "transparent",
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center"
+    alignSelf: "center",
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10
   },
   Tags: {
 
@@ -596,10 +619,10 @@ const styles = StyleSheet.create({
     height: 0.001 * height
   },
   NameText: {
-    fontFamily: "Roboto",
+    fontFamily: "Arial",
     fontSize: 19,
     textAlign: "center",
-    color: "#ffffff",
+    color: "white",
     justifyContent: "center",
     alignItems: "center"
   },
@@ -617,7 +640,7 @@ const styles = StyleSheet.create({
   },
   tags: {
     position:"absolute",
-    bottom: 0,
+    top: 0,
     flex: 0.5,
     flexDirection: "row",
     backgroundColor: "transparent",
@@ -632,9 +655,14 @@ const styles = StyleSheet.create({
     marginTop: 0,
     fontFamily: "Roboto",
     fontSize: 14,
-    color: "#ffffff",
+    color: "#2c2638",
     textAlign: "left",
     flexWrap: "wrap"
+  },
+  textWithDivider: {
+    color: 'white',
+    marginVertical: 10,
+    paddingHorizontal: 10
   },
   numberText: {
     fontSize: 19,
