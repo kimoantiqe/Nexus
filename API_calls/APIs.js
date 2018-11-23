@@ -2,7 +2,11 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
+<<<<<<< HEAD
 const apiURL = "http://192.168.1.115:1337/api";
+=======
+const apiURL = "http://localhost:1337/api";
+>>>>>>> e8e24746f2a44f2efa4f37e1497d34c864779eb2
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -18,6 +22,8 @@ const _bootstrapAsync = async (props) => {
     'Authorization': userToken
   }
   };
+
+  var apiURL = 'http://localhost:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)

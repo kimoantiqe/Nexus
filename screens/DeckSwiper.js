@@ -10,6 +10,7 @@ import {
   PanResponder
 } from "react-native";
 import Expo from "expo";
+import SliderBadge from '../components/SliderBadge'
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const NumUsers = 7;
@@ -26,7 +27,8 @@ import {
   Body,
   Content,
   Container,
-  Button
+  Button,
+  Form, Item, Badge
 } from "native-base";
 
 const APIcall = require("../API_calls/APIs");
@@ -289,6 +291,54 @@ export default class Matches extends React.Component {
                 Aliquam consectetur massa id augue viverra facilisis.{" "}
               </Text>
             </View>
+{ ((item.interests.length > 0) || (item.industry.length > 0) || (item.lookingFor.length > 0)) ? 
+            <View style={styles.tags}>
+            {(item.interests.length > 0)? <Form style={{width: width * 0.3, alignItems: 'center'}}>
+              { 
+                item.interests.map((interest, i) => {
+                  return(
+                  <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015}}>
+          <Badge style={{   backgroundColor: '#16131d',
+                            borderWidth: width*0.0015, 
+                            borderColor: '#f2f2f2' ,
+                            borderRadius: 30,
+                            }}>
+            <Text style={{color: '#f2f2f2', fontSize: 15, fontWeight: '300'}}>{interest}</Text>
+          </Badge>
+          </Item>)
+                })}
+                </Form>  : null }
+                {(item.industry.length > 0)? <Form style={{width: width * 0.3, alignItems: 'center'}}>
+                {item.industry.map((industry, i) => {
+                  return(<Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015}}>
+                  <Badge style={{   backgroundColor: '#16131d',
+                                    borderWidth: width*0.0015, 
+                                    borderColor: '#f2f2f2' ,
+                                    borderRadius: 30,
+                                    }}>
+                    <Text style={{color: '#f2f2f2', fontSize: 15, fontWeight: '300'}}>{industry}</Text>
+                  </Badge>
+                  </Item>)
+                })
+              }
+              </Form>  : null }
+              {(item.lookingFor.length > 0)? <Form style={{width: width * 0.3, alignItems: 'center'}}>
+              {item.lookingFor.map((lf, i) => {
+                  return(<Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015}}>
+                  <Badge style={{   backgroundColor: '#16131d',
+                                    borderWidth: width*0.0015, 
+                                    borderColor: '#f2f2f2' ,
+                                    borderRadius: 30,
+                                    
+                                    }}>
+                    <Text style={{color: '#f2f2f2', fontSize: 15, fontWeight: '300'}}>{lf}</Text>
+                  </Badge>
+                  </Item>)
+                })
+              }
+              </Form>  : null }
+              </View> : null
+}
           </Animated.View>
         );
       } else {
@@ -517,6 +567,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#2c2638",
     width: width * 0.9,
     alignSelf: "center",
+    opacity: 0.9
+  },
+  tags: {
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "#2c2638",
+    width: width * 0.9,
+    alignSelf: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     opacity: 0.9
   },
   BIOText: {
