@@ -281,17 +281,7 @@ export default class Matches extends React.Component {
                 }}
                 source={image}
               />
-            </View>
-
-            <View style={styles.BIO}>
-              <Text style={styles.BIOText}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                sed mi ex. Proin luctus, purus non faucibus bibendum, ligula
-                justo blandit quam, interdum elementum dui eros sed erat.
-                Aliquam consectetur massa id augue viverra facilisis.{" "}
-              </Text>
-            </View>
-{ ((item.interests.length > 0) || (item.industry.length > 0) || (item.lookingFor.length > 0)) ? 
+               { ((item.interests.length > 0) || (item.industry.length > 0) || (item.lookingFor.length > 0)) ? 
             <View style={styles.tags}>
             {(item.interests.length > 0)? <Form style={{width: width * 0.3, alignItems: 'center'}}>
               { 
@@ -339,6 +329,18 @@ export default class Matches extends React.Component {
               </Form>  : null }
               </View> : null
 }
+
+            </View>
+           
+            <View style={styles.BIO}>
+              <Text style={styles.BIOText}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                sed mi ex. Proin luctus, purus non faucibus bibendum, ligula
+                justo blandit quam, interdum elementum dui eros sed erat.
+                Aliquam consectetur massa id augue viverra facilisis.{" "}
+              </Text>
+            </View>
+
           </Animated.View>
         );
       } else {
@@ -535,7 +537,8 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   Tags: {
-    height: height * 0.05,
+
+    height: height * 0.02,
     paddingTop: height * 0.02,
     backgroundColor: "transparent",
     justifyContent: "center",
@@ -570,14 +573,15 @@ const styles = StyleSheet.create({
     opacity: 0.9
   },
   tags: {
-    flex: 1,
+    position:"absolute",
+    bottom:0,
+    flex: 0.5,
     flexDirection: "row",
     backgroundColor: "#2c2638",
     width: width * 0.9,
-    alignSelf: "center",
     alignItems: 'center',
     justifyContent: 'center',
-    opacity: 0.9
+    opacity: 0.4
   },
   BIOText: {
     flex: 1,
