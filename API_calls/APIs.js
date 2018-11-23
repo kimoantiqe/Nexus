@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://localhost:1337/api";
+const apiURL = "http://172.20.10.4:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -19,7 +19,7 @@ const _bootstrapAsync = async (props) => {
   }
   };
 
-  var apiURL = 'http://localhost:1337/api';
+  var apiURL = 'http://172.20.10.4:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)
@@ -431,3 +431,79 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
     }
   };
   module.exports.getUser = getUser;
+
+
+  sendTaskMeeting = async (taskName, taskDescription, taskDateTime, type, friendId) => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var user = {
+        method: "POST",
+        headers: {
+          Authorization: userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'taskTitle' : taskName,
+          'taskInfo': taskDescription,
+          'taskType': type,
+          'taskDueDate': taskDateTime,
+          'participatingUser': friendId,
+          })
+      };
+      await fetch(apiURL + "/user/task", user)
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.sendTaskMeeting = sendTaskMeeting;
+
+  sendImage = async (PicturePath) => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var data = new FormData(); 
+      data.append('file', { uri: PicturePath, name: 'profilePic.jpg' });
+      var user = {
+        method: "POST",
+        headers: {
+          Accept: 'application/json', 
+          Authorization: userToken,
+          'Content-Type': 'multipart/form-data',
+        },
+        body: data
+      };
+      await fetch(apiURL + "/user/image", user)
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.sendImage = sendImage;
+
+  getImage = async () => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var user = {
+        method: "GET",
+        headers: { 
+          Authorization: userToken,
+        }
+      };
+      await fetch(apiURL + "/user/image", user)
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.getImage = getImage;

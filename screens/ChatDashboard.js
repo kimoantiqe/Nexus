@@ -36,13 +36,13 @@ class ChatDashboard extends React.Component {
     }
 
 
-    getUserID = () => {
-        userID ='5bcf97fd4a5aa600150cc338';
-        //userID = await AsyncStorage.getItem("userid");
+    getUserID = async() => {
+        //userID ='5bcf97fd4a5aa600150cc338';
+        userID = await AsyncStorage.getItem("userid");
     }
 
     componentDidMount() {
-        this._connectSb();
+        //this._connectSb();
         this.getUserID();
         this._initGroupChannelList();
     }
@@ -201,12 +201,12 @@ const styles = {
         backgroundColor: '#2c2638',
         height: height*0.1
       },
-      headerTitle:{
-        paddingTop:height*0.03,
-        paddingBottom:50,
-        fontFamily: 'BebasNeue',
-        fontSize : 25,
-        color: '#ffffff'
+      headerTitle: {
+        paddingTop: height * 0.03,
+        paddingBottom: 50,
+        fontFamily: "BebasNeue",
+        fontSize: 25,
+        color: "#ffffff"
       },
 };
 
