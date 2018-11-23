@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://localhost:1337/api";
+const apiURL = "http://10.0.0.228:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -18,8 +18,6 @@ const _bootstrapAsync = async (props) => {
     'Authorization': userToken
   }
   };
-
-  var apiURL = 'http://localhost:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)
@@ -285,6 +283,82 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
   };
   module.exports.CompleteProfile = CompleteProfile;
+
+  const UpdateProfile = async (first, last, interests, industry, LF, bio, props) => {
+
+  
+    if (first == "" || last == "")
+    {
+        alert("Please enter your first & last name to register");
+    } else
+    {
+
+    const userToken = await AsyncStorage.getItem('userToken');
+    let i = 0;
+    let interest = '[';
+    let ind = '[';
+    let lf = '[';
+
+    Object.keys(interests).map(function(keyName) {
+
+        interest += (i? ',': '') + "\"" + keyName + "\"";
+        i++;
+
+      });
+
+    i = 0;
+    interest += "]";
+
+    Object.keys(industry).map(function(keyName) {
+
+        ind += (i? ',': '') + "\"" + keyName + "\"";
+        i++;
+
+      });
+
+    i = 0;
+    ind += "]";
+
+    Object.keys(LF).map(function(keyName) {
+
+        lf += (i? ',': '') + "\"" + keyName + "\"";
+        i++;
+
+      });
+
+    i = 0;
+    lf += "]";
+
+    interest = JSON.parse(interest);
+    ind = JSON.parse(ind);
+    lf = JSON.parse(lf);
+
+    var settings = {
+        method: 'PUT',
+        headers: {
+            'Authorization': userToken,
+            'Content-Type': 'application/JSON'
+        },
+        body: JSON.stringify({
+            "firstName" : first,
+            "lastName" : last,
+            "interests" : interest,
+            "lookingFor": lf,
+            "industry"  : ind,
+            "bio" : bio
+        })
+        };
+
+        console.log(settings);
+
+       
+
+      await fetch(apiURL + '/user', settings)
+      
+    }
+
+  };
+  module.exports.UpdateProfile = UpdateProfile;
 
   const likedUser = async (currUserID) => {
     userToken= await Expo.SecureStore.getItemAsync("userToken");
