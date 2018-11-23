@@ -252,25 +252,6 @@ async function pushLikes(user, field){
 						return -1;
 					}
 					else if(newuser.liked.map((user) => user.toString()).includes(user._id.toString())){
-						//connect to the database
-						const sb = new SendBird({ 'appId': APP_ID });
-						
-						const userIds = [user._id, field[i]];
-						if(sb){
-            				sb.GroupChannel.createChannelWithUserIds(userIds, true, 'GroupChannel', null, null, null, (groupChannel, error) => {
-                				if (error) {
-                    				console.log('Create Channel failed');
-                    				console.log(error);
-                    				return;
-                				} else {
-                    				console.log('Create Channel worked');
-                    				console.log(groupChannel);
-                				}
-           			 		});
-        				} else {
-            				console.log('There is no SendBird instance!');
-        				}
-
 						newuser.matches.push(user._id);
 						user.matches.push(field[i]);
 						await newuser.save();
