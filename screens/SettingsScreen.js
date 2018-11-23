@@ -2,7 +2,8 @@ import React from 'react';
 import {
   AsyncStorage,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  FlatList,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -11,7 +12,7 @@ import { sendbirdLogout, initMenu } from '../actions';
 
 import MainTabNavigator from '../navigation/MainTabNavigator';
 import AppNavigator from '../navigation/AppNavigator';
-import { Container, Content, Button, Text, Form } from 'native-base';
+import { Container, Content, Button, Text, Form, ListItem, Body, Right } from 'native-base';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -24,14 +25,17 @@ class SettingsScreen extends React.Component {
   render() {
     return (
         <Container>
-        <Content scrollEnabled={false} contentContainerStyle={styles.ButtonGroup}>
-        <Form style={styles.Button}>
-          <Button bordered rounded onPress = {this.signOut}>
-            <Text>Signout</Text>
-          </Button>
-          </Form>
+          <Content>
+            <Form style={styles.Button}>
+              <Button block onPress = {this.editProfile}>
+                <Text>Edit Profile</Text>
+              </Button>
+              <Button block danger onPress = {this.signOut}>
+                <Text>Signout</Text>
+              </Button>
+            </Form>
           </Content>
-          </Container>
+        </Container>
       );
     }
 
@@ -46,6 +50,10 @@ class SettingsScreen extends React.Component {
     this.props.navigation.navigate('Auth');
 
   };
+
+  editProfile = async () => {
+    this.props.navigation.navigate('EditProfileScreen');
+  }
 }
 
 const styles = StyleSheet.create({
