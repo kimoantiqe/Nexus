@@ -23,7 +23,8 @@ export default class RegCompleteProfile extends React.Component {
   bio: "",
   firstName: "",
   lastName: "",
-  loading: 0
+  loading: 0,
+  page: 0
   }
 
   handleBio = (text) => {
@@ -113,7 +114,7 @@ handleLFValue = (val, lf) => {
 
   render() {
 
-    const {industry, interests, LF} = this.state;
+    const {industry, interests, LF, page} = this.state;
    
     if(this.state.loading ==1){
       console.log("HERE");
@@ -158,11 +159,18 @@ handleLFValue = (val, lf) => {
             androidStatusBarColor="#ffffff"
             style={styles.header}
           >
-            <Left />
+            <Left>
+            { (page > 0)? <Button hasText transparent 
+          onPress={() => {
+            this.pager.scrollToPage(this.state.page - 1);
+        }}>
+            <Text>Previous</Text>
+          </Button> : null}
+            </Left>
             <Body>
               <Title style={styles.headerTitle}>PROFILE</Title>
             </Body>
-            <Right>
+            { (page >= 3)? <Right>
             <Button hasText transparent 
             onPress = { 
               async()=>{
@@ -173,10 +181,19 @@ handleLFValue = (val, lf) => {
               }>
               <Text>Done</Text>
             </Button>
-            </Right>
+            </Right> : 
+          <Right>
+          <Button hasText transparent 
+          onPress={() => {
+            this.pager.scrollToPage(this.state.page + 1);
+        }}>
+            <Text>Next</Text>
+          </Button>
+          </Right>
+          }
           </Header>
           
-            <Pages indicatorColor='#2c2638'>
+            <Pages ref={ref => { this.pager = ref; }} onScrollEnd={(p) => this.setState({page: p})} indicatorColor='#2c2638'>
             <Content contentContainerStyle={{paddingHorizontal: width*0.05, }}>
             <Form>
               <Text style={{color: '#2c2638', fontSize: 25, fontWeight: '500', padding: width*0.02}}>First Name</Text>
