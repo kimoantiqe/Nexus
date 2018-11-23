@@ -35,7 +35,6 @@ import {
 
 import { sbCreateChannel } from "../sendbirdActions/groupChannel";
 
-
 const APIcall      = require("../API_calls/APIs");
 
 var apiURL = APIcall.apiURL;

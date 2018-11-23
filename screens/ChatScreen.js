@@ -5,9 +5,9 @@ import {
   Text,
   View,
   Image,
-  Button,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   FlatList,
   Dimensions,
   KeyboardAvoidingView
@@ -23,15 +23,21 @@ import {
     Title
   } from "native-base";
 
-import {Icon} from 'react-native-elements'
+import { LinearGradient } from 'expo';
+import {Icon, Button} from 'react-native-elements'
+import ActionButton from 'react-native-action-button';
+import Modal from "react-native-modal";
+
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 console.disableYellowBox = true
 
-var sb;
+var messageSent;
 
-const themeColor = '#2f1959'
+//const themeColor = '#dd9221'
+//const themeColor = '#45385e'
+const themeColor = '#5c4d7a'
 const themeDarkColor = '#287277'
 
 var messageQuery;
@@ -47,24 +53,26 @@ export default class ChatScreen extends Component {
         super(props)
         this.getGroupChannel = this.getGroupChannel.bind(this)
         this.sendMessage = this.sendMessage.bind(this)
-        this.state = { text: '', messages: [] , groupChannel: Object, friendName: '', userId: '', channelUrl: '', sb: Object }
+        this.state = { text: '', messages: [] , groupChannel: Object, friendName: '', userId: '',
+                         channelUrl: '', sb: Object, UserOne: '', UserTwo: '', isTaskModalVisible: false,
+                         isMeetingModalVisible: false, taskName: '', taskDescription: ''
+                     }
         this.state.sb = SendBird.getInstance();
+        messageSent = false;
     }
 
     componentDidMount() {
         this.getGroupChannel();
         const ChannelHandler = new this.state.sb.ChannelHandler()
         ChannelHandler.onMessageReceived = (receivedChannel, message) => {
-            if (receivedChannel.url === groupChannel.url) {
+            if (receivedChannel.url === this.state.groupChannel.url) {
                 const messages = []
                 messages.push(message)
                 const newMessages = messages.concat(this.state.messages)
                 this.setState({ messages: newMessages })
-                if (this.state.groupChannel.channelType == 'group') {
-                    this.state.groupChannel.markAsRead()
-                }
             }
         }
+        this.state.groupChannel.markAsRead();
         this.state.sb.addChannelHandler('ChatScreen', ChannelHandler)
 
         const ConnectionHandler = new this.state.sb.ConnectionHandler()
@@ -92,8 +100,11 @@ export default class ChatScreen extends Component {
             
             if(this.state.userId === null)
                 this.state.friendName = channel.name;            
-            else 
+            else {
                 this.state.friendName = channel.members[0].userId === this.state.userId ? channel.members[1].nickname : channel.members[0].nickname;
+                this.state.UserOne = this.state.userId;
+                this.state.UserTwo = channel.members[0].userId === this.state.userId ? channel.members[1].userId : channel.members[0].userId;
+            }
                
             this.getChannelMessage(false);
         })
@@ -104,6 +115,7 @@ export default class ChatScreen extends Component {
             console.log("return");
             return
         }
+        messageSent = true;
         this.state.groupChannel.sendUserMessage(this.state.text, '', (message, error) => {
             if (error) {
                 console.error(error)
@@ -113,6 +125,12 @@ export default class ChatScreen extends Component {
             const messages = [].concat([message]).concat(this.state.messages)
             this.setState({ text: '', messages })
         })
+    }
+
+    componentWillUnmount(){
+        const unreadMessageCount = this.props.navigation.getParam('unreadMessageCount', null);
+        if(messageSent || unreadMessageCount > 0)
+            this.props.navigation.state.params.returnData(true);
     }
 
     getChannelMessage(refresh) {
@@ -140,6 +158,14 @@ export default class ChatScreen extends Component {
             this.setState({ messages: newMessageList })
             })
         }
+    }
+
+    _toggleTaskModal = () => {
+        this.setState({ isTaskModalVisible: !this.state.isTaskModalVisible });
+    }
+
+    _toggleMeetingModal = () => {
+        this.setState({ isMeetingModalVisible: !this.state.isMeetingModalVisible });
     }
 
     renderMessage(msg) {
@@ -191,7 +217,7 @@ export default class ChatScreen extends Component {
                 style={styles.container}
                 behavior="padding"
             >
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', width:width - 60}}>
                     <TextInput
                         style={styles.textInput}
                         placeholder="Text Message"
@@ -207,7 +233,77 @@ export default class ChatScreen extends Component {
                         onPress={() => this.sendMessage()} 
                     />
                 </View>
+                <ActionButton buttonColor={themeColor} size={44} offsetX={10} offsetY={7} spacing={40}>
+                    <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => this._toggleTaskModal()} size={20}>
+                        <Icon 
+                            raised
+                            name='create'
+                            color= {themeColor}
+                            size = {20}
+                        />
+                    </ActionButton.Item>
+                    <ActionButton.Item buttonColor='#9b59b6' title="Set-up Meeting" onPress={() => this._toggleMeetingModal()} size={20} >
+                        <Icon 
+                            raised
+                            name='meetup'
+                            type='font-awesome'
+                            color= {themeColor}
+                            size = {20}
+                        />
+                    </ActionButton.Item>
+                </ActionButton>
             </KeyboardAvoidingView>
+
+            <Modal isVisible={this.state.isTaskModalVisible} onBackdropPress={this._toggleTaskModal} avoidKeyboard={true}>
+                <View style={{ flex: 1}} style={styles.modalContent}>
+                <Text style={styles.modalHeader}>Schedule Your Task Here!</Text>
+                <View style={{padding: 10}}>
+                <TextInput 
+                        style={styles.modalTextInput}
+                        placeholder="Task Name"
+                        onChangeText={(taskName) => this.setState({ taskName })}
+                        value={this.state.taskName}
+                    />
+                </View>
+                <View style={{padding: 10}}>
+                <TextInput 
+                        style={styles.modalTextInput}
+                        placeholder="Task Description"
+                        onChangeText={(taskDescription) => this.setState({ taskDescription })}
+                        value={this.state.taskDescription}
+                    />
+                </View>
+                <View style={{padding: 30, justifyContent: "center", alignContent: 'center'}}>
+                <Button 
+                    buttonStyle={{
+                        backgroundColor: themeColor,
+                        width: 220,
+                        height: 50,
+                        borderColor: "transparent",
+                        borderWidth: 0,
+                        borderRadius: 30,
+                        paddingHorizontal: 10,
+                      }}
+                      icon={{
+                        name: 'tasks',
+                        type:'font-awesome',
+                        size: 15,
+                        color: 'white'
+                    }}
+                    title='Schedule'
+                />
+                </View>
+                </View>
+            </Modal>
+
+            <Modal isVisible={this.state.isMeetingModalVisible} onBackdropPress={this._toggleMeetingModal}>
+                <View style={{ flex: 1 }} style={styles.modalContent}>
+                    <Text>Hello!</Text>
+                    <TouchableHighlight onPress={this._toggleMeetingModal}>
+                        <Text>Hide me!</Text>
+                    </TouchableHighlight>
+                </View>
+            </Modal>
         </React.Fragment>
         )
     }
@@ -226,6 +322,22 @@ const styles = {
         fontSize : 25,
         color: '#ffffff'
     },
+    modalHeader:{
+        textTransform: 'capitalize',
+        paddingVertical: 30,
+        fontFamily: 'BebasNeue',
+        fontSize : 25,
+        textAlign: 'center',
+        color: '#000000'
+    },
+    modalContent: {
+        backgroundColor: "white",
+        paddingHorizontal: 30,
+        justifyContent: "center",
+        alignContent: 'center',
+        borderRadius: 20,
+        borderColor: "rgba(0, 0, 0, 0.1)",
+      },
   textInput: {
     height: 40,
     borderColor: 'lightgray',
@@ -233,6 +345,12 @@ const styles = {
     flex: 1,
     paddingHorizontal: 8,
     marginTop: 10
+  },
+  modalTextInput: {
+    height: 40,
+    borderColor: 'lightgray',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   sendButton: {
     width: 80,
@@ -256,7 +374,7 @@ const styles = {
   messageBody: {
     flex: 1,
     padding: 8,
-    borderRadius: 5
+    borderRadius: 8,
   },
   profile: {
     width: 40,
