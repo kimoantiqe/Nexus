@@ -3,7 +3,7 @@ import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
 
-const apiURL = "https://nexus-restapi.azurewebsites.net/api";
+const apiURL = "http://192.168.1.115:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -19,8 +19,6 @@ const _bootstrapAsync = async (props) => {
     'Authorization': userToken
   }
   };
-
-  var apiURL = 'http://172.20.10.4:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)

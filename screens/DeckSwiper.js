@@ -780,7 +780,6 @@ export default class Matches extends React.Component {
                         marginRight: 5,
                         paddingRight: 10,
                         paddingLeft: 10,
-                        alignSelf: "centre"
                       }}
                     >
                       <Text style={styles.textWithDivider}>
@@ -904,7 +903,7 @@ export default class Matches extends React.Component {
 
                     <View style= {{
                              width: width * 0.9,
-                             marginTop: height* 0.04, 
+                             marginTop: height* 0.02, 
                              paddingBottom:7,
                              flexDirection: "row",
                              paddingLeft:15,
@@ -1078,7 +1077,8 @@ const styles = StyleSheet.create({
     borderRadius: 50
   },
   Image: {
-    flex: 1,
+    width: width*0.9,
+    height: width*0.9,
     backgroundColor: "transparent",
     justifyContent: "center",
     alignItems: "center",
@@ -1117,7 +1117,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   BIO: {
-    flex: 1.4,
+   
+    height: height*0.4 + 150,
     width: width,
     flexDirection: "row",
     paddingTop: 40,
@@ -1126,7 +1127,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#2c2638",
     width: width * 0.9,
     alignSelf: "center",
-    
+    position: "absolute",
+    bottom: -height*0.5,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
