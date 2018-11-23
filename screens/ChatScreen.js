@@ -23,13 +23,17 @@ import {
     Title
   } from "native-base";
 
-import { LinearGradient } from 'expo';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import {getImageFromCamera} from './ImageInterface'
 import {Icon, Button} from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import Modal from "react-native-modal";
 
+var dateInit;
+var timeInit;
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
+const APIcall      = require("../API_calls/APIs");
 
 console.disableYellowBox = true
 
@@ -54,8 +58,10 @@ export default class ChatScreen extends Component {
         this.getGroupChannel = this.getGroupChannel.bind(this)
         this.sendMessage = this.sendMessage.bind(this)
         this.state = { text: '', messages: [] , groupChannel: Object, friendName: '', userId: '',
-                         channelUrl: '', sb: Object, UserOne: '', UserTwo: '', isTaskModalVisible: false,
-                         isMeetingModalVisible: false, taskName: '', taskDescription: ''
+                         channelUrl: '', sb: Object, friendId: '', isTaskModalVisible: false,
+                         isMeetingModalVisible: false, taskName: '', taskDescription: '', taskTime: '', taskDate: '',
+                         meetingName: '', meetingDescription: '', meetingTime: '', meetingDate: '', isTimeModalVisible: false,
+                         isDateModalVisible: false
                      }
         this.state.sb = SendBird.getInstance();
         messageSent = false;
@@ -102,8 +108,7 @@ export default class ChatScreen extends Component {
                 this.state.friendName = channel.name;            
             else {
                 this.state.friendName = channel.members[0].userId === this.state.userId ? channel.members[1].nickname : channel.members[0].nickname;
-                this.state.UserOne = this.state.userId;
-                this.state.UserTwo = channel.members[0].userId === this.state.userId ? channel.members[1].userId : channel.members[0].userId;
+                this.state.friendId = channel.members[0].userId === this.state.userId ? channel.members[1].userId : channel.members[0].userId;
             }
                
             this.getChannelMessage(false);
@@ -166,6 +171,59 @@ export default class ChatScreen extends Component {
 
     _toggleMeetingModal = () => {
         this.setState({ isMeetingModalVisible: !this.state.isMeetingModalVisible });
+    }
+
+    _toggleDateModal = () => {
+        this.setState({ isDateModalVisible: !this.state.isDateModalVisible });
+    }
+
+    _toggleTimeModal = () => {
+        this.setState({ isTimeModalVisible: !this.state.isTimeModalVisible });
+    }
+
+    _handleDatePicked = (date, type) => {
+        moment.locale('pst');
+        const dateOut = moment(date).format('MM-DD-YYYY').toString();
+        dateInit = moment(date).format('YYYY-MM-DD').toString();
+        if(type === 'task')
+            this.state.taskDate = dateOut;
+        else
+            this.state.meetingDate = dateOut;
+        this._toggleDateModal();
+    }
+
+    _handleTimePicked = (time, type) => {
+        moment.locale('pst');
+        const timeOut = moment(time).format('HH:mm').toString();
+        timeInit = moment(time).format('HH:mm:ss.SSS').toString();
+        if(type === 'task')
+            this.state.taskTime = timeOut;
+        else
+            this.state.meetingTime = timeOut;
+        this._toggleTimeModal();
+    }
+
+    _schedule = (type) => {
+        const dateOut = new Date(dateInit + "T" + timeInit);
+        if(type === 'task'){
+            if(this.state.taskName === '' || this.state.taskDescription === '' || this.state.taskDate === '' || this.state.taskTime === '')
+                alert("One or more fields is empty!");
+            else{
+                console.log(dateOut);
+                APIcall.sendTaskMeeting(this.state.taskName, this.state.taskDescription, dateOut, 'Task', this.state.friendId);
+                this.setState({taskName: '', taskDescription: '', taskDate: '', taskTime: ''});
+                this._toggleTaskModal();
+            }
+        }else{
+            if(this.state.meetingName === '' || this.state.meetingDescription === '' || this.state.meetingDate === '' || this.state.meetingTime === '')
+                alert("One or more fields is empty!");
+            else{
+                console.log(dateOut);
+                APIcall.sendTaskMeeting(this.state.meetingName, this.state.meetingDescription, dateOut, 'Meeting', this.state.friendId);
+                this.setState({meetingName: '',meetingDescription: '', meetingDate: '', meetingTime: ''});
+                this._toggleMeetingModal();
+            }
+        }
     }
 
     renderMessage(msg) {
@@ -245,7 +303,16 @@ export default class ChatScreen extends Component {
                     <ActionButton.Item buttonColor='#9b59b6' title="Set-up Meeting" onPress={() => this._toggleMeetingModal()} size={20} >
                         <Icon 
                             raised
-                            name='meetup'
+                            name='group'
+                            type='font-awesome'
+                            color= {themeColor}
+                            size = {20}
+                        />
+                    </ActionButton.Item>
+                    <ActionButton.Item buttonColor='#9b59b6' title="Take Pic" onPress={() => getImageFromCamera()} size={20} >
+                        <Icon 
+                            raised
+                            name='group'
                             type='font-awesome'
                             color= {themeColor}
                             size = {20}
@@ -256,7 +323,7 @@ export default class ChatScreen extends Component {
 
             <Modal isVisible={this.state.isTaskModalVisible} onBackdropPress={this._toggleTaskModal} avoidKeyboard={true}>
                 <View style={{ flex: 1}} style={styles.modalContent}>
-                <Text style={styles.modalHeader}>Schedule Your Task Here!</Text>
+                <Text style={styles.modalHeader}>SCHEDULE YOUR TASK HERE!</Text>
                 <View style={{padding: 10}}>
                 <TextInput 
                         style={styles.modalTextInput}
@@ -273,6 +340,37 @@ export default class ChatScreen extends Component {
                         value={this.state.taskDescription}
                     />
                 </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                    <TextInput
+                        style={[styles.modalTextInput, { width:width*0.60 }]}
+                        placeholder="Time"
+                        editable = {false}
+                        value={this.state.taskTime}
+                    />
+                   <Icon
+                        raised
+                        name='access-time'
+                        color= {themeColor}
+                        size = {20}
+                        onPress={() => this._toggleTimeModal()} 
+                    />
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                    <TextInput
+                        style={[styles.modalTextInput, { width:width*0.60 }]}
+                        placeholder="Date"
+                        editable = {false}
+                        value={this.state.taskDate}
+                    />
+                   <Icon
+                        raised
+                        name='date-range'
+                        color= {themeColor}
+                        size = {20}
+                        onPress={() => this._toggleDateModal()} 
+                    />
+                </View>
+
                 <View style={{padding: 30, justifyContent: "center", alignContent: 'center'}}>
                 <Button 
                     buttonStyle={{
@@ -291,19 +389,114 @@ export default class ChatScreen extends Component {
                         color: 'white'
                     }}
                     title='Schedule'
+                    onPress = {() => this._schedule('task')}
                 />
                 </View>
+
+                <DateTimePicker
+                    isVisible={this.state.isTimeModalVisible}
+                    mode = 'time'
+                    onConfirm={(time) => this._handleTimePicked(time, 'task')}
+                    onCancel={this._toggleTimeModal}
+                />
+
+                <DateTimePicker
+                    isVisible={this.state.isDateModalVisible}
+                    onConfirm={(date) => this._handleDatePicked(date, 'task')}
+                    onCancel={this._toggleDateModal}
+                />
+
+                </View>
+            </Modal>
+            
+            <Modal isVisible={this.state.isMeetingModalVisible} onBackdropPress={this._toggleMeetingModal} avoidKeyboard={true}>
+                <View style={{ flex: 1}} style={styles.modalContent}>
+                <Text style={styles.modalHeader}>SCHEDULE YOUR MEETING HERE!</Text>
+                <View style={{padding: 10}}>
+                <TextInput 
+                        style={styles.modalTextInput}
+                        placeholder="Meeting Title"
+                        onChangeText={(meetingName) => this.setState({ meetingName })}
+                        value={this.state.meetingName}
+                    />
+                </View>
+                <View style={{padding: 10}}>
+                <TextInput 
+                        style={styles.modalTextInput}
+                        placeholder="This meeting is about..."
+                        onChangeText={(meetingDescription) => this.setState({ meetingDescription })}
+                        value={this.state.meetingDescription}
+                    />
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                    <TextInput
+                        style={[styles.modalTextInput, { width:width*0.60 }]}
+                        placeholder="Time"
+                        editable = {false}
+                        value={this.state.meetingTime}
+                    />
+                   <Icon
+                        raised
+                        name='access-time'
+                        color= {themeColor}
+                        size = {20}
+                        onPress={() => this._toggleTimeModal()} 
+                    />
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
+                    <TextInput
+                        style={[styles.modalTextInput, { width:width*0.60 }]}
+                        placeholder="Date"
+                        editable = {false}
+                        value={this.state.meetingDate}
+                    />
+                   <Icon
+                        raised
+                        name='date-range'
+                        color= {themeColor}
+                        size = {20}
+                        onPress={() => this._toggleDateModal()} 
+                    />
+                </View>
+
+                <View style={{padding: 30, justifyContent: "center", alignContent: 'center'}}>
+                <Button 
+                    buttonStyle={{
+                        backgroundColor: themeColor,
+                        width: 220,
+                        height: 50,
+                        borderColor: "transparent",
+                        borderWidth: 0,
+                        borderRadius: 30,
+                        paddingHorizontal: 10,
+                      }}
+                      icon={{
+                        name: 'group',
+                        type:'font-awesome',
+                        size: 15,
+                        color: 'white'
+                    }}
+                    title='Schedule'
+                    onPress = {() => this._schedule('meeting')}
+                />
+                </View>
+
+                <DateTimePicker
+                    isVisible={this.state.isTimeModalVisible}
+                    mode = 'time'
+                    onConfirm={(time) => this._handleTimePicked(time, 'meeting')}
+                    onCancel={this._toggleTimeModal}
+                />
+
+                <DateTimePicker
+                    isVisible={this.state.isDateModalVisible}
+                    onConfirm={(date) => this._handleDatePicked(date, 'meeting')}
+                    onCancel={this._toggleDateModal}
+                />
+
                 </View>
             </Modal>
 
-            <Modal isVisible={this.state.isMeetingModalVisible} onBackdropPress={this._toggleMeetingModal}>
-                <View style={{ flex: 1 }} style={styles.modalContent}>
-                    <Text>Hello!</Text>
-                    <TouchableHighlight onPress={this._toggleMeetingModal}>
-                        <Text>Hide me!</Text>
-                    </TouchableHighlight>
-                </View>
-            </Modal>
         </React.Fragment>
         )
     }
@@ -315,7 +508,6 @@ const styles = {
         height: height*0.1
       },
       headerTitle:{
-        textTransform: 'capitalize',
         paddingTop:height*0.03,
         paddingBottom:50,
         fontFamily: 'BebasNeue',
@@ -323,7 +515,6 @@ const styles = {
         color: '#ffffff'
     },
     modalHeader:{
-        textTransform: 'capitalize',
         paddingVertical: 30,
         fontFamily: 'BebasNeue',
         fontSize : 25,
@@ -333,8 +524,6 @@ const styles = {
     modalContent: {
         backgroundColor: "white",
         paddingHorizontal: 30,
-        justifyContent: "center",
-        alignContent: 'center',
         borderRadius: 20,
         borderColor: "rgba(0, 0, 0, 0.1)",
       },

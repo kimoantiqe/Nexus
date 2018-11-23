@@ -2,6 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
+
 const apiURL = "https://nexus-restapi.azurewebsites.net/api";
 module.exports.apiURL = apiURL;
 
@@ -18,6 +19,8 @@ const _bootstrapAsync = async (props) => {
     'Authorization': userToken
   }
   };
+
+  var apiURL = 'http://172.20.10.4:1337/api';
 
   try {
     let response = await fetch(apiURL + '/user', settings)
@@ -283,6 +286,82 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
   };
   module.exports.CompleteProfile = CompleteProfile;
 
+  const UpdateProfile = async (first, last, interests, industry, LF, bio, props) => {
+
+
+    if (first == "" || last == "")
+    {
+        alert("Please enter your first & last name to register");
+    } else
+    {
+
+    const userToken = await AsyncStorage.getItem('userToken');
+    let i = 0;
+    let interest = '[';
+    let ind = '[';
+    let lf = '[';
+
+    Object.keys(interests).map(function(keyName) {
+
+        interest += (i? ',': '') + "\"" + keyName + "\"";
+        i++;
+
+      });
+
+    i = 0;
+    interest += "]";
+
+    Object.keys(industry).map(function(keyName) {
+
+        ind += (i? ',': '') + "\"" + keyName + "\"";
+        i++;
+
+      });
+
+    i = 0;
+    ind += "]";
+
+    Object.keys(LF).map(function(keyName) {
+
+        lf += (i? ',': '') + "\"" + keyName + "\"";
+        i++;
+
+      });
+
+    i = 0;
+    lf += "]";
+
+    interest = JSON.parse(interest);
+    ind = JSON.parse(ind);
+    lf = JSON.parse(lf);
+
+    var settings = {
+        method: 'PUT',
+        headers: {
+            'Authorization': userToken,
+            'Content-Type': 'application/JSON'
+        },
+        body: JSON.stringify({
+            "firstName" : first,
+            "lastName" : last,
+            "interests" : interest,
+            "lookingFor": lf,
+            "industry"  : ind,
+            "bio" : bio
+        })
+        };
+
+        console.log(settings);
+
+
+
+      await fetch(apiURL + '/user', settings)
+
+    }
+
+  };
+  module.exports.UpdateProfile = UpdateProfile;
+
   const likedUser = async (currUserID) => {
     userToken= await Expo.SecureStore.getItemAsync("userToken");
     if (userToken != null) {
@@ -428,3 +507,79 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
     }
   };
   module.exports.getUser = getUser;
+
+
+  sendTaskMeeting = async (taskName, taskDescription, taskDateTime, type, friendId) => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var user = {
+        method: "POST",
+        headers: {
+          Authorization: userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'taskTitle' : taskName,
+          'taskInfo': taskDescription,
+          'taskType': type,
+          'taskDueDate': taskDateTime,
+          'participatingUser': friendId,
+          })
+      };
+      await fetch(apiURL + "/user/task", user)
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.sendTaskMeeting = sendTaskMeeting;
+
+  sendImage = async (PicturePath) => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var data = new FormData();
+      data.append('file', { uri: PicturePath, name: 'profilePic.jpg' });
+      var user = {
+        method: "POST",
+        headers: {
+          Accept: 'application/json',
+          Authorization: userToken,
+          'Content-Type': 'multipart/form-data',
+        },
+        body: data
+      };
+      await fetch(apiURL + "/user/image", user)
+        .then(response => response.json())
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.sendImage = sendImage;
+
+  getImage = async () => {
+    let userToken = await AsyncStorage.getItem("userToken");
+    console.log(userToken);
+
+    if (userToken != null) {
+      var user = {
+        method: "GET",
+        headers: {
+          Authorization: userToken,
+        }
+      };
+      await fetch(apiURL + "/user/image", user)
+        .then(response => {
+          console.log(response)
+          return(response)
+        });
+    }
+  };
+  module.exports.getImage = getImage;
