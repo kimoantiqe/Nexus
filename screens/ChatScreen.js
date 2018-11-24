@@ -84,7 +84,7 @@ export default class ChatScreen extends Component {
         const ConnectionHandler = new this.state.sb.ConnectionHandler()
         ConnectionHandler.onReconnectSucceeded = () => {
             this.getChannelMessage(true)
-            channel.refresh()
+            this.state.groupChannel.refresh()
         }
         this.state.sb.addConnectionHandler('ChatView', ConnectionHandler)
     }
@@ -277,7 +277,7 @@ export default class ChatScreen extends Component {
                 style={styles.container}
                 behavior="padding"
             >
-                <View style={{ flexDirection: 'row', width:width - 60}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingRight: 55}}>
                     <TextInput
                         style={styles.textInput}
                         placeholder="Text Message"
@@ -292,8 +292,7 @@ export default class ChatScreen extends Component {
                         size = {20}
                         onPress={() => this.sendMessage()} 
                     />
-                </View>
-                <ActionButton buttonColor={themeColor} size={44} offsetX={10} offsetY={7} spacing={40}>
+                    <ActionButton buttonColor={themeColor} size={44} offsetX={10} offsetY={6} spacing={40}>
                     <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => this._toggleTaskModal()} size={20}>
                         <Icon 
                             raised
@@ -311,16 +310,8 @@ export default class ChatScreen extends Component {
                             size = {20}
                         />
                     </ActionButton.Item>
-                    <ActionButton.Item buttonColor='#9b59b6' title="Take Pic" onPress={() => getImageFromCamera()} size={20} >
-                        <Icon 
-                            raised
-                            name='group'
-                            type='font-awesome'
-                            color= {themeColor}
-                            size = {20}
-                        />
-                    </ActionButton.Item>
-                </ActionButton>
+                    </ActionButton>
+                </View>
             </KeyboardAvoidingView>
 
             <Modal isVisible={this.state.isTaskModalVisible} onBackdropPress={this._toggleTaskModal} avoidKeyboard={true}>
@@ -373,7 +364,7 @@ export default class ChatScreen extends Component {
                     />
                 </View>
 
-                <View style={{padding: 30, justifyContent: "center", alignContent: 'center'}}>
+                <View style={{padding: 30, justifyContent: "center", alignContent: 'center',  alignItems: 'center'}}>
                 <Button 
                     buttonStyle={{
                         backgroundColor: themeColor,
@@ -461,7 +452,7 @@ export default class ChatScreen extends Component {
                     />
                 </View>
 
-                <View style={{padding: 30, justifyContent: "center", alignContent: 'center'}}>
+                <View style={{padding: 30, justifyContent: "center", alignContent: 'center', alignItems: 'center'}}>
                 <Button 
                     buttonStyle={{
                         backgroundColor: themeColor,
@@ -507,7 +498,7 @@ export default class ChatScreen extends Component {
 const styles = {
     header:{
         backgroundColor: '#2c2638',
-        height: height*0.1
+        height: height*0.08
       },
       headerTitle:{
         paddingTop:height*0.03,

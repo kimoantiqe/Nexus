@@ -15,6 +15,7 @@ import QrCamera from '../screens/qrCamera';
 import Profile from '../screens/UserProfile';
 import EditProfile from '../screens/EditProfile';
 import AddUser from '../screens/AddUser'
+import ProfilePic from '../screens/ProfilePic'
 
 
 const HomeStack = createStackNavigator({
@@ -71,7 +72,8 @@ MatchesStack.navigationOptions = {
 
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
-  EditProfileScreen: EditProfile
+  EditProfileScreen: EditProfile,
+  ProfilePic: ProfilePic
 });
 
 SettingsStack.navigationOptions = {

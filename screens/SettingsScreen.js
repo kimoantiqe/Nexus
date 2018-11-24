@@ -12,7 +12,7 @@ import { sendbirdLogout, initMenu } from '../actions';
 
 import MainTabNavigator from '../navigation/MainTabNavigator';
 import AppNavigator from '../navigation/AppNavigator';
-import { Container, Content, Button, Text, Form, ListItem, Body, Right } from 'native-base';
+import { Container, Content, Button, Text, Form, ListItem, Body, Right, Header, Left, Title } from 'native-base';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -26,9 +26,19 @@ class SettingsScreen extends React.Component {
     return (
         <Container>
           <Content>
+          <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
+                <Left/>
+                    <Body>
+                        <Title style={styles.headerTitle}>Settings</Title>
+                    </Body>
+                <Right />
+            </Header>
             <Form style={styles.Button}>
               <Button block onPress = {this.editProfile}>
                 <Text>Edit Profile</Text>
+              </Button>
+              <Button block onPress = {() => this.props.navigation.navigate('ProfilePic')}>
+                <Text>Edit Profile Pic</Text>
               </Button>
               <Button block danger onPress = {this.signOut}>
                 <Text>Signout</Text>
@@ -57,6 +67,17 @@ class SettingsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  header:{
+    backgroundColor: '#2c2638',
+    height: height*0.1
+  },
+  headerTitle: {
+    paddingTop: height * 0.03,
+    paddingBottom: 50,
+    fontFamily: "BebasNeue",
+    fontSize: 25,
+    color: "#ffffff"
+  },
     ButtonGroup:   { 
                         flex: 1, 
                         flexDirection: 'column', 

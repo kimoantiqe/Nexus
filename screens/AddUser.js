@@ -86,11 +86,9 @@ export default class AddUser extends React.Component {
                 match.avatar_url = require("../images/sherif.png");
                 match.userid = userid;
                 
-                const matchToPush = [match];
-                const newList = [...this.state.matchesArray, ...matchToPush];
+                const newList = this.state.matchesArray;
+                newList.push(match);
                 this.setState({ matchesArray: newList });
-                
-                this.state.matchesArray.push(match);
             });
         }
     };
@@ -147,7 +145,7 @@ export default class AddUser extends React.Component {
 const styles = {
     header:{
         backgroundColor: '#2c2638',
-        height: height*0.1
+        height: height*0.08
       },
       headerTitle: {
         paddingTop: height * 0.03,
