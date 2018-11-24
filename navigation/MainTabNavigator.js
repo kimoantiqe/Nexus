@@ -14,7 +14,7 @@ import QR from "../screens/newQRcode"
 import QrCamera from '../screens/qrCamera';
 import Profile from '../screens/UserProfile';
 import EditProfile from '../screens/EditProfile';
-
+import AddUser from '../screens/AddUser'
 
 
 const HomeStack = createStackNavigator({
@@ -41,7 +41,8 @@ HomeStack.navigationOptions = {
 
 const ChatStack = createStackNavigator({
   ChatDashboard: ChatDashboard,
-  ChatScreen: ChatScreen
+  ChatScreen: ChatScreen,
+  AddUser: AddUser
 });
 
 ChatStack.navigationOptions = {

@@ -126,7 +126,6 @@ export default class ChatScreen extends Component {
                 console.error(error)
                 return
             }
-            console.log("Hello");
             const messages = [].concat([message]).concat(this.state.messages)
             this.setState({ text: '', messages })
         })
@@ -135,7 +134,7 @@ export default class ChatScreen extends Component {
     componentWillUnmount(){
         const unreadMessageCount = this.props.navigation.getParam('unreadMessageCount', null);
         if(messageSent || unreadMessageCount > 0)
-            this.props.navigation.state.params.returnData(true);
+            this.props.navigation.state.params.returnData();
     }
 
     getChannelMessage(refresh) {
@@ -194,7 +193,7 @@ export default class ChatScreen extends Component {
 
     _handleTimePicked = (time, type) => {
         moment.locale('pst');
-        const timeOut = moment(time).format('HH:mm').toString();
+        const timeOut = moment(time).format('h:mm A').toString();
         timeInit = moment(time).format('HH:mm:ss.SSS').toString();
         if(type === 'task')
             this.state.taskTime = timeOut;
@@ -227,7 +226,7 @@ export default class ChatScreen extends Component {
     }
 
     renderMessage(msg) {
-        const createdAt = moment(msg.createdAt).format('H:mm')
+        const createdAt = moment(msg.createdAt).format('h:mm A')
         if (msg._sender.userId === this.state.userId) {
             return (
                 <View style={[styles.messageContainer, { paddingLeft: 50 }]}>
@@ -254,6 +253,8 @@ export default class ChatScreen extends Component {
         )
     }
 
+    _keyExtractor = (item, index) => String(item.messageId);
+
     render() {
         return (
         <React.Fragment>
@@ -270,6 +271,7 @@ export default class ChatScreen extends Component {
                 data={this.state.messages}
                 renderItem={({ item }) => this.renderMessage(item)}
                 style={{ flex: 1 }}
+                keyExtractor={this._keyExtractor}
                 />
             <KeyboardAvoidingView
                 style={styles.container}

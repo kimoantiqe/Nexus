@@ -3,13 +3,14 @@ import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
 
-const apiURL = "http://192.168.1.115:1337/api";
+const apiURL = "http://localhost:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
 
 const _bootstrapAsync = async (props) => {
   const userToken= await Expo.SecureStore.getItemAsync("userToken");
+  const userid = await Expo.SecureStore.getItemAsync("userid");
 
     if (userToken != null) {
 
@@ -30,7 +31,10 @@ const _bootstrapAsync = async (props) => {
         } else
         {
           response.json()
-          .then((response) => console.log(" "));
+          .then((response) => {
+            console.log(" ");
+            sbConnect(userid, response.user.firstName)
+          });
           props.navigation.navigate('Main');
         }
       }
@@ -72,7 +76,7 @@ const _bootstrapAsync = async (props) => {
               .then(Expo.SecureStore.setItemAsync("userToken", response.token))
               .then(Expo.SecureStore.setItemAsync("userid", response.user.id))
               .then(populate)
-              .then(sbConnect(response.user.id, response.user.firstName))
+              .then(sbConnect(response.user.id, response.user.firstName + " " + response.user.lastName))
               .then(props.navigation.navigate("Main"))
 
             } else {
@@ -276,7 +280,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
       await fetch(apiURL + '/user', settings)
         .then((response) => response.json())
         .then(() => populate())
-        .then(() => sbConnect(regUserID, first))
+        .then(() => sbConnect(regUserID, first + " " + last))
         .then(() =>  props.navigation.navigate("Main"))
 
     }
@@ -447,7 +451,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
 
               populate();
 
-              sbConnect(response.user.id, response.user.firstName);
+              sbConnect(response.user.id, response.user.firstName + " " + response.user.lastName);
 
               props.navigation.navigate("Main");
         }else{//Means an error has occoured

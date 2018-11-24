@@ -1,8 +1,8 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, View, Alert, ListView, TouchableHighlight, Button, Dimensions} from 'react-native';
+import { AsyncStorage, StyleSheet, View, Alert, ListView, TouchableHighlight, Dimensions} from 'react-native';
 import { Avatar, ListItem, Badge, Text} from 'react-native-elements'
 import { connect } from 'react-redux'
-import { sbCreateGroupChannelListQuery, sbConnect, sbCreateChannel } from '../sendbirdActions';
+import { sbCreateGroupChannelListQuery, sbConnect } from '../sendbirdActions';
 import { getGroupChannelList } from '../actions';
 import moment from 'moment'
 
@@ -11,8 +11,11 @@ import {
     Left,
     Right,
     Body,
-    Title
+    Title,
+    Icon,
+    Button,
   } from "native-base";
+import Modal from "react-native-modal";
 
 var userID;
 const width = Dimensions.get("window").width;
@@ -31,7 +34,7 @@ class ChatDashboard extends React.Component {
             childRefresh: false,
             groupChannelListQuery: null,
             list: [],
-            groupChannelList: ds.cloneWithRows([])
+            groupChannelList: ds.cloneWithRows([]),
         }
     }
 
@@ -61,20 +64,15 @@ class ChatDashboard extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps){
-        if (this.state.childRefresh) {
-            this.state.refresh = false,
-            this.state.childRefresh = false,
-            this.state.groupChannelListQuery = null,
-            this.state.list = [],
-            this.state.groupChannelList = ds.cloneWithRows([])
-            this._initGroupChannelList();
-            return;
-        }
+    _returnData() {
+        this.setState({childRefresh: !this.state.childRefresh});
     }
 
-    _returnData(childRefresh) {
-        this.setState({childRefresh: childRefresh});
+    _addChannel(channel) {
+        console.log('Went back')
+        let newList = this.state.list;
+        newList.push(channel);
+        this.setState({ list: newList, groupChannelList: ds.cloneWithRows(newList) });
     }
 
     _connectSb = () => {
@@ -139,16 +137,21 @@ class ChatDashboard extends React.Component {
     _renderList = (rowData) => {
         let lastMessage;
         let createdAt;
+        const profileUrl = rowData.members[0].userId == userID ? rowData.members[1].profileUrl : rowData.members[0].profileUrl
         if(rowData.lastMessage === null)
             lastMessage = 'Let\'s start chatting!';
         else {
             lastMessage = rowData.lastMessage.message;
-            createdAt = moment(rowData.lastMessage.createdAt).format('H:mm')
-            if(rowData.lastMessage._sender.userId !== userID)
-                lastMessage = rowData.lastMessage.sender.nickname + ': ' + lastMessage;
+            const todayDate = Number(new Date(moment(Date.now()).format('YYYY-MM-DD')));
+            const lastMessageDate = Number(new Date(moment(rowData.lastMessage.createdAt).format('YYYY-MM-DD')));
+    
+            if(todayDate === lastMessageDate)
+                createdAt = moment(rowData.lastMessage.createdAt).format('h:mm A');
             else    
-                lastMessage = 'You: ' + lastMessage;
+                createdAt = moment(rowData.lastMessage.createdAt).format('MM-DD-YYYY');
 
+            if(rowData.lastMessage._sender.userId === userID)  
+                lastMessage = 'You: ' + lastMessage;
         }
         return (
             <ListItem
@@ -159,7 +162,7 @@ class ChatDashboard extends React.Component {
                     <Avatar 
                         medium
                         rounded
-                        source={{uri: rowData.coverUrl}} 
+                        source={{uri: profileUrl}} 
                     />
                 )}
                 title={
@@ -181,7 +184,16 @@ class ChatDashboard extends React.Component {
                         <Body>
                             <Title style={styles.headerTitle}>CHAT</Title>
                         </Body>
-                    <Right />
+                    <Right>
+                        <Button transparent>
+                            <Icon name="person-add" style={{color:'#f5ba57'}} onPress={() => 
+                                this.props.navigation.navigate("AddUser", {
+                                    userID: userID,
+                                    addChannel: this._addChannel.bind(this)
+                                })}
+                            />
+                        </Button>
+                    </Right>
                 </Header>
                 <ListView
                     enableEmptySections={true}
@@ -207,6 +219,31 @@ const styles = {
         fontFamily: "BebasNeue",
         fontSize: 25,
         color: "#ffffff"
+      },
+      modalHeader:{
+        paddingVertical: 30,
+        fontFamily: 'BebasNeue',
+        fontSize : 25,
+        textAlign: 'center',
+        color: '#000000'
+    },
+    buttonText:{
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        paddingLeft: 10, 
+        paddingRight: 30,
+        fontSize: 20,
+        fontFamily: 'BebasNeue',
+        textAlign: 'center',
+        color: '#000000'
+    },
+    modalContent: {
+        backgroundColor: "white",
+        paddingHorizontal: 30,
+        borderRadius: 20,
+        borderColor: "rgba(0, 0, 0, 0.1)",
+        alignContent: 'center',
+        alignItems: 'center',
       },
 };
 

@@ -421,7 +421,7 @@ export default class Matches extends React.Component {
                         marginRight: 5,
                         paddingRight: 10,
                         paddingLeft: 10,
-                        alignSelf: "centre"
+                        alignSelf: "center"
                       }}
                     >
                       <Text style={styles.textWithDivider}>
@@ -489,7 +489,7 @@ export default class Matches extends React.Component {
                         marginRight: 5,
                         paddingRight: 10,
                         paddingLeft: 10,
-                        alignSelf: "centre"
+                        alignSelf: "center"
                       }}
                     >
                       <Text style={styles.textWithDivider}>Goals</Text>
@@ -847,7 +847,7 @@ export default class Matches extends React.Component {
                         marginRight: 5,
                         paddingRight: 10,
                         paddingLeft: 10,
-                        alignSelf: "centre"
+                        alignSelf: "center"
                       }}
                     >
                       <Text style={styles.textWithDivider}>Goals</Text>
