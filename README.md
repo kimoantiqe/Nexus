@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
- The up and coming professional networking app
+ The up and coming professional networking app 
 </p>
 
 <p align="center">
