@@ -20,8 +20,8 @@ import ModalSelector from 'react-native-modal-selector'
 import {getImageFromLibrary, getImageFromCamera} from './ImageInterface';
 
 const APIcall      = require("../API_calls/APIs");
-const imageUrl = 'http://172.20.10.4:1337/api/image/';
-const apiURL = "http://172.20.10.4:1337/api";
+var apiURL = APIcall.apiURL;
+const imageUrl = apiURL + '/image/';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;

@@ -48,6 +48,7 @@ var isHidden = true;
 var userToken;
 //var userToken2;
 var apiURL = APIcall.apiURL;
+var imageURL = apiURL + "/image/";
 const Users = [];
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -359,7 +360,7 @@ export default class Matches extends React.Component {
                   borderRadius: 25,
                 }}
                 blurRadius= {this.state.blurRadius}
-                source={image}
+                source={{ uri: imageURL+ item.image }}
               />
              
             <Animated.View style={[styles.BIO,
@@ -718,7 +719,7 @@ export default class Matches extends React.Component {
                   borderRadius: 25,
                 }}
                 blurRadius= {this.state.blurRadius}
-                source={image}
+                source={{ uri: imageURL+ item.image }}
               />
              
             <Animated.View style={[styles.BIO,
@@ -1086,14 +1087,14 @@ const styles = StyleSheet.create({
   },
   Name: {
     backgroundColor: "#2c2638",
-    height: height * 0.1,
+    height: height * 0.07,
     width: width * 0.9,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
     
     position: "absolute",
-    top:-height * 0.08,
+    top:-height * 0.07,
   },
   VIEW: {
     borderRadius: 50
@@ -1130,8 +1131,8 @@ const styles = StyleSheet.create({
     height: 0.001 * height
   },
   NameText: {
-    fontFamily: "Helvetica",
-    fontSize: 22,
+    fontFamily: "Arial",
+    fontSize: 19,
     fontWeight: "400",
     textAlign: "center",
     color: "white",

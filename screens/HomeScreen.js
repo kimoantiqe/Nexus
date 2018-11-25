@@ -66,6 +66,7 @@ export default class HomeScreen extends React.Component {
     this.refreshScreen = this.refreshScreen.bind(this);
     this.getUserMatches();
   }
+  
 
   //function that grabs a new user and refreshes the screen to update the
   //parameters.
@@ -78,6 +79,10 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+
+  componentWillMount(){
+    this.getUserMatches();
+  }
 
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => {
@@ -99,9 +104,8 @@ export default class HomeScreen extends React.Component {
         .then(async response => {
         
           if (response.success) {
-        
+            thisUser = response.user;
             for (var i = 0; i < response.user.matches.length; i++) {
-              thisUser = response.user;
               console.log(thisUser);
               if(response.user.matches[i])
               await this.getUser(response.user.matches[i]);
@@ -274,7 +278,7 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                      <Text style={styles.numberText}>{thisUser.tasks ? thisUser.tasks.length : 0}</Text>
+                      <Text style={styles.numberText}>{thisUser.tasks ? (thisUser.tasks.length ? thisUser.tasks.length : 0) : 0}</Text> }
                       <Text style={styles.titleText}>{(thisUser.tasks && thisUser.tasks.length !=1)  ? "Meetings/Tasks" : "Meeting/Task"}</Text>
                     </View>
                     <Text style={styles.subTitleText}>coming up!</Text>
