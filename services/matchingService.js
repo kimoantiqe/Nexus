@@ -143,10 +143,20 @@ const match = async function(req, res){
 			return ReE(res, {message: 'already matched'});
 		}
 		else{
-			newuser.InstantMatches.push(user._id);
-      user.InstantMatches.push(id);
-      newuser.matches.push(user._id);
-			user.matches.push(id);
+			await newuser.InstantMatches.push(user._id);
+      await user.InstantMatches.push(id);
+      await newuser.matches.push(user._id);
+      await user.matches.push(id);
+      for(let j =  user.potentialMatches.length - 1; j >= 0; j--) {
+        if( user.potentialMatches[j] == id.toString()) {
+           await user.potentialMatches.splice(j, 1);
+        }
+      }
+      for(let j =  newuser.potentialMatches.length - 1; j >= 0; j--) {
+        if( newuser.potentialMatches[j] == user._id.toString()) {
+           await newuser.potentialMatches.splice(j, 1);
+        }
+      }
 			[err, otheruser] = await to(newuser.save());
       [err, user] = await to(user.save());
       if(err){
