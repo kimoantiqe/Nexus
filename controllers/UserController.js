@@ -235,43 +235,70 @@ function pushIntoUser(user,field,fieldType){
 }
 
 async function pushLikes(user, field){
-
+	
 	if(field){
 		let newuser,err;
 		for(let i = 0 ; i < field.length ; i++){
 			if(user.liked.indexOf(field[i]) != -1){
-				console.log('A7A');
+				for(let j =  user.potentialMatches.length - 1; j >= 0; j--) {
+					if( user.potentialMatches[j] == field[i].toString()) {
+						await user.potentialMatches.splice(j, 1);
+					}
+				}
+				console.log("a7a");
 			}
 			if(field[i] != null && user.liked.indexOf(field[i]) === -1 ){
 				user.liked.push(field[i]);
-				await user.potentialMatches.shift();
+				
+				for(let j =  user.potentialMatches.length - 1; j >= 0; j--) {
+					if( user.potentialMatches[j] == field[i].toString()) {
+						
+						await user.potentialMatches.splice(j, 1);
+					}
+				}
+				
 				[err, newuser] = await to(User.findById(field[i]));
 					if(!newuser || newuser == null || newuser.liked.includes(null)){
-						return -1;
 					}
 					else if(newuser.liked.map((user) => user.toString()).includes(user._id.toString())){
 						newuser.matches.push(user._id);
 						user.matches.push(field[i]);
 						await newuser.save();
 						await user.save();
-						return 0;
+						
+						
 					}
 					else{
 						await user.save();
-						return 0;
+						
 					}
 			}
 		}
 	}
+	
 }
 
-function pushDislikes (user,field){
+ function pushDislikes (user,field){
+	
 	if(field){
 		for(let i = 0 ; i < field.length ; i++){
+			if(user.disliked.indexOf(field[i]) != -1 ){
+				for(let j =  user.potentialMatches.length - 1; j >= 0; j--) {
+					if( user.potentialMatches[j] == field[i].toString()) {
+						 user.potentialMatches.splice(j, 1);
+					}
+				}	
+			}
 			if(user.disliked.indexOf(field[i]) === -1 ){
 				user.disliked.push(field[i]);
-				user.potentialMatches.shift();
+				for(let j =  user.potentialMatches.length - 1; j >= 0; j--) {
+					if( user.potentialMatches[j] == field[i].toString()) {
+						 user.potentialMatches.splice(j, 1);
+						 
+					}
+				}
 			}
 		}
 	}
+	
 }

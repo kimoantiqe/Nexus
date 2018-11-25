@@ -4,46 +4,54 @@ const { to, ReE, ReS }        = require('./util');
 
 
 
-function getUser(element, callback) {
+  async function getUser(element, callback) {
+  
   if(element){
-	 User.findById(element, function(err, newuser) {
+	  await User.findById(element,  await async function(err, newuser) {
 	 	if(!err) {
-	 	callback(newuser);
+    await callback(newuser);
      }
     });
   }
+ 
  };
 
 
-function get10users(arr, callback) {
+ async function get10users(arr, callback) {
+
 	let userarr2= [];
 	let ids=0;
-	arr.forEach( function(element){
-		  getUser(element,function(newuser){ userarr2.push(newuser);
-			ids++;
+  for(let i=0; i<arr.length; i++){
+		  await getUser(arr[i], await async function(newuser){ userarr2.push(newuser);
+      ids++;
+      
 			if(ids == arr.length){
-			callback(userarr2);
+       await callback(userarr2);
 		}
-	});
-});
+  });
+  
+}
+
 };
 
 
 
 //gets 10 potential connection for a user
-const getpotconn = async function(req, res){
+const getpotconn =  async function(req, res){
+  
 	res.setHeader('Content-Type', 'application/json');
 		let user = req.user;
 		let arr=[];
 		//gets the first id in the users potential matches array
 		for(let i=0; i<7; i++){
-			let potcon = user.potentialMatches[i];
-			arr.push(potcon);
+      let potcon = user.potentialMatches[i];
+      ;
+			 await arr.push(potcon);
 		}
-		get10users(arr,
-			function(userarr2){
+		await get10users(arr, await async function(userarr2){
 				return ReS(res, {array:JSON.stringify(userarr2)});
-			});
+      });
+      
 		};
 module.exports.getpotconn = getpotconn;
 
