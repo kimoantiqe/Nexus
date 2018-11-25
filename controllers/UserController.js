@@ -2,8 +2,6 @@ const User                    = require('./../models/user');
 const authService             = require('./../services/AuthService');
 const { to, ReE, ReS }        = require('../services/util');
 const matchingService         = require('./../services/matchingService');
-const Sendbird 				  = require('sendbird');
-const APP_ID = '5684560F-4764-4763-A8EB-3AD372D8B9EB';
 
 let SanatizeUpdateData = function(data){
 	let blacklist = ['membership','role','createdAt','updatedAt','_id','__v'] ;

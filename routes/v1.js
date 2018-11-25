@@ -72,7 +72,7 @@ module.exports = function(app, passport) {
   }), UserController.getuser);
   /************************************/
 
-  /**********  Instant Match **************/ 
+  /**********  Instant Match **************/
   app.put('/api/user/match', passport.authenticate('jwt', {
     session: false
   }), matchingService.match);
@@ -101,6 +101,11 @@ module.exports = function(app, passport) {
     session: false
   }), ImageController.get);
   /***********************************/
+
+  /********  get  image **************/ //g
+  app.get('/api/image/:imageId', ImageController.getById);
+  /***********************************/
+
 
 	/* TASK ROUTES */
   /************ create task for a user ***************/ //C

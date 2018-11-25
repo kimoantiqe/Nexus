@@ -6,7 +6,7 @@ const { to, ReE, ReS }        = require('../services/util');
 const User                    = require('./../models/user');
 const conn                  = mongoUtil.conn;
 const mongoose              = mongoUtil.mongoose;
-
+var mongooseC = require('mongoose');
 
 var gfs;
 conn.once('open', () => {
@@ -38,6 +38,39 @@ const get =  function(req,res){
   });
 };
 module.exports.get = get;
+
+const getById =  function(req,res){
+  let imageId = req.params.imageId;
+
+  gfs.collection('image');
+
+  if(!mongoose.Types.ObjectId.isValid(imageId)){
+      return  ReE(res, 'Please enter a valid image id');
+  }
+
+  //Cast to mongoid
+  imageId = mongooseC.Types.ObjectId(imageId);
+  /** First check if file exists */
+  gfs.files.find({_id: imageId}).toArray(function(err, files){
+
+    if(!files || files.length === 0){
+      return  ReE(res, 'file does not exists', 404);
+    }
+
+    /** create read stream */
+    var readstream = gfs.createReadStream({
+      filename: files[0].filename,
+    });
+
+    /** set the proper content type */
+    res.set('Content-Type', files[0].contentType);
+    //res.set('Content-Disposition', 'attachment; filename="' + files[0].filename + '"');
+    /** return response */
+    return readstream.pipe(res);
+  });
+};
+module.exports.getById = getById;
+
 
 
 const removeOld =  function(req,res,next){
