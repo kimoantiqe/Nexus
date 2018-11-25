@@ -46,6 +46,7 @@
     "react-native-pages": "^0.7.0",
     "react-native-qrcode": "^0.2.7",
     "react-native-snap-carousel": "^3.7.5",
+    "react-native-swipeable": "^0.6.0",
     "react-native-textinput-effects": "^0.4.2",
     "react-native-vector-icons": "^6.1.0",
     "react-navigation": "^2.18.2",

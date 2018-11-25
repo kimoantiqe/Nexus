@@ -107,8 +107,13 @@ export default class ChatScreen extends Component {
             if(this.state.userId === null)
                 this.state.friendName = channel.name;            
             else {
-                this.state.friendName = channel.members[0].userId === this.state.userId ? channel.members[1].nickname : channel.members[0].nickname;
-                this.state.friendId = channel.members[0].userId === this.state.userId ? channel.members[1].userId : channel.members[0].userId;
+                if(channel.memberCount == 2){
+                    this.state.friendName = channel.members[0].userId === this.state.userId ? channel.members[1].nickname : channel.members[0].nickname;
+                    this.state.friendId = channel.members[0].userId === this.state.userId ? channel.members[1].userId : channel.members[0].userId;
+                }else{
+                    this.state.friendName = 'Nexus User';
+                    this.state.friendId = this.state.userId;
+                }
             }
                
             this.getChannelMessage(false);
@@ -256,6 +261,48 @@ export default class ChatScreen extends Component {
     _keyExtractor = (item, index) => String(item.messageId);
 
     render() {
+        if(this.state.groupChannel.memberCount === 1){
+            return (
+                <React.Fragment>
+                    <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
+                        <Left/>
+                            <Body>
+                                <Title style={styles.headerTitle}>{this.state.friendName}</Title>
+                            </Body>
+                        <Right />
+                    </Header>
+                    <FlatList
+                        inverted
+                        onEndReached={() => this.getChannelMessage(false)}
+                        data={this.state.messages}
+                        renderItem={({ item }) => this.renderMessage(item)}
+                        style={{ flex: 1 }}
+                        keyExtractor={this._keyExtractor}
+                    />
+                    <KeyboardAvoidingView
+                        style={styles.container}
+                        behavior="padding"
+                    >
+                        <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                            <TextInput
+                                style={styles.textInput}
+                                placeholder="Text Message"
+                                onChangeText={(text) => this.setState({ text })}
+                                value={this.state.text}
+                            />
+                            <Icon
+                                raised
+                                name='send'
+                                type='font-awesome'
+                                color= {themeColor}
+                                size = {20}
+                                onPress={() => this.sendMessage()} 
+                            />
+                        </View>
+                    </KeyboardAvoidingView>
+                </React.Fragment>
+            )
+        }
         return (
         <React.Fragment>
             <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
