@@ -257,7 +257,7 @@ export default class HomeScreen extends React.Component {
                       <Text style={styles.numberText}>
                         {matchesArray.length}
                       </Text>
-                      <Text style={styles.titleText}>Matches</Text>
+                      <Text style={styles.titleText}>{(matchesArray.length != 1) ? "Matches" : "Match"}</Text>
                     </View>
                     <Text style={styles.subTitleText}>since joining!</Text>
                   </Body>
@@ -274,8 +274,8 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                      <Text style={styles.numberText}>3</Text>
-                      <Text style={styles.titleText}>Meetings</Text>
+                      <Text style={styles.numberText}>{thisUser.tasks ? thisUser.tasks.length : 0}</Text>
+                      <Text style={styles.titleText}>{(thisUser.tasks && thisUser.tasks.length !=1)  ? "Meetings/Tasks" : "Meeting/Task"}</Text>
                     </View>
                     <Text style={styles.subTitleText}>coming up!</Text>
                   </Body>
