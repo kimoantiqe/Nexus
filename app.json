@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "AwesomeProject",
-    "description": "A very interesting project.",
-    "slug": "AwesomeProject",
+    "name": "Nexus",
+    "description": "The up and coming professional networking app",
+    "slug": "Nexus",
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": [
@@ -15,7 +15,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#16131d"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.networkinc.nexus",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.networkinc.nexus"
     }
   },
   "facebookScheme":"fb1220787098061912",
