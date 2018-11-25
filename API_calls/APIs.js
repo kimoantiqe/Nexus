@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://localhost:1337/api";
+const apiURL = "http://192.168.1.115:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -564,34 +564,3 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
     }
   };
   module.exports.sendImage = sendImage;
-
-  getImage = () => {
-    return new Promise(async (resolve, reject) => {
-      let userToken = await AsyncStorage.getItem("userToken");
-      console.log(userToken);
-
-      if (userToken != null) {
-        var user = {
-          method: "GET",
-          headers: {
-            Authorization: userToken,
-          }
-        };
-        await fetch(apiURL + "/user/image", user)
-        .then(response => response.blob())
-        .then(blob => {
-          console.log(blob);
-          const url = URL.createObjectURL(blob);
-          console.log(url);
-          const fileReaderInstance = new FileReader();
-            fileReaderInstance.readAsDataURL(blob); 
-            fileReaderInstance.onload = () => {
-            base64data = fileReaderInstance.result;
-            console.log(base64data.length)                
-            resolve(base64data.toString());
-          }
-        })
-      }
-    })
-  };
-  module.exports.getImage = getImage;

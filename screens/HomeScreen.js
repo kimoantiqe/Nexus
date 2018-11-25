@@ -51,7 +51,7 @@ var firstName = [];
 var lastName = [];
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-
+var thisUser;
 var USERID;
 
 export default class HomeScreen extends React.Component {
@@ -66,6 +66,7 @@ export default class HomeScreen extends React.Component {
     this.refreshScreen = this.refreshScreen.bind(this);
     this.getUserMatches();
   }
+  
 
   //function that grabs a new user and refreshes the screen to update the
   //parameters.
@@ -78,6 +79,10 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+
+  componentWillMount(){
+    this.getUserMatches();
+  }
 
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => {
@@ -99,8 +104,9 @@ export default class HomeScreen extends React.Component {
         .then(async response => {
         
           if (response.success) {
-        
+            thisUser = response.user;
             for (var i = 0; i < response.user.matches.length; i++) {
+              console.log(thisUser);
               if(response.user.matches[i])
               await this.getUser(response.user.matches[i]);
             }
@@ -133,6 +139,8 @@ export default class HomeScreen extends React.Component {
     }
   };
 
+  
+
   //Function that is used to populate when the user logs in.
   populate = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
@@ -155,6 +163,7 @@ export default class HomeScreen extends React.Component {
     await this.setState({refreshing: false});
     this.setState({loading: 1});
     await this.getUserMatches();
+   
     this.setState({loading: 0});
   }
 
@@ -213,19 +222,20 @@ export default class HomeScreen extends React.Component {
             </Right>
           </Header>
           <FlatList
+            style={{paddingHorizontal: 5}}
             horizontal
             data={matchesArray}
             keyExtractor={item => item._id}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
-              <Card style={styles.avatarCard}>
+              <Card style={[styles.avatarCard, {alignItems: 'center'}]}>
                 <CardItem button onPress={ () => this.props.navigation.navigate("UProfile", {
       user: item
     }
     )
                   }>
                   <Thumbnail
-                    source={require("../images/sherif.png")}
+                    source={{url: apiURL + "/image/" + item.image}}
                     style={styles.avatarImg}
                   />
                 </CardItem>
@@ -251,7 +261,7 @@ export default class HomeScreen extends React.Component {
                       <Text style={styles.numberText}>
                         {matchesArray.length}
                       </Text>
-                      <Text style={styles.titleText}>Matches</Text>
+                      <Text style={styles.titleText}>{(matchesArray.length != 1) ? "Matches" : "Match"}</Text>
                     </View>
                     <Text style={styles.subTitleText}>since joining!</Text>
                   </Body>
@@ -268,8 +278,8 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                      <Text style={styles.numberText}>3</Text>
-                      <Text style={styles.titleText}>Meetings</Text>
+                      <Text style={styles.numberText}>{thisUser.tasks ? (thisUser.tasks.length ? thisUser.tasks.length : 0) : 0}</Text> }
+                      <Text style={styles.titleText}>{(thisUser.tasks && thisUser.tasks.length !=1)  ? "Meetings/Tasks" : "Meeting/Task"}</Text>
                     </View>
                     <Text style={styles.subTitleText}>coming up!</Text>
                   </Body>
@@ -286,8 +296,8 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                      <Text style={styles.numberText}>2</Text>
-                      <Text style={styles.titleText}>Taps</Text>
+                      <Text style={styles.numberText}>{thisUser.InstantMatches ? thisUser.InstantMatches.length : 0}</Text>
+                      <Text style={styles.titleText}>{ (thisUser.InstantMatches && thisUser.InstantMatches.length != 1) ? "Instant Matches" : "Instant Match" }</Text>
                     </View>
                     <Text style={styles.subTitleText}>so far!</Text>
                   </Body>
@@ -334,13 +344,14 @@ const styles = StyleSheet.create({
   },
   avatarImg: {
     width: 75,
-    height: 75
+    height: 75,
+    borderRadius: 37.5
   },
   avatarCard: {
     marginTop: 20,
     marginBottom: 24,
     flex: 1,
-    width: 100
+    width: 107
   },
   header: {
     backgroundColor: "#2c2638",

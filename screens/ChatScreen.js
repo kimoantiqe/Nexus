@@ -363,7 +363,7 @@ export default class ChatScreen extends Component {
 
             <Modal isVisible={this.state.isTaskModalVisible} onBackdropPress={this._toggleTaskModal} avoidKeyboard={true}>
                 <View style={{ flex: 1}} style={styles.modalContent}>
-                <Text style={styles.modalHeader}>SCHEDULE YOUR TASK HERE!</Text>
+                <Text style={styles.modalHeader}>CREATE YOUR TASK HERE!</Text>
                 <View style={{padding: 10}}>
                 <TextInput 
                         style={styles.modalTextInput}

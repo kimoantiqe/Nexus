@@ -2,6 +2,7 @@ import React from 'react';
 import { List, ListItem, Avatar } from 'react-native-elements'
 import { AsyncStorage, Dimensions, View, Image } from 'react-native'
 import moment from 'moment'
+import SendBird from 'sendbird';
 
 import {
     Container, 
@@ -19,6 +20,8 @@ import ModalSelector from 'react-native-modal-selector'
 import {getImageFromLibrary, getImageFromCamera} from './ImageInterface';
 
 const APIcall      = require("../API_calls/APIs");
+var apiURL = APIcall.apiURL;
+const imageUrl = apiURL + '/image/';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -44,27 +47,68 @@ export default class ProfilePic extends React.Component {
         this._getImage();
     }
 
-    _getImage = async () => {
-        await APIcall.getImage().then((image) => {
-            this.setState({image: image})
-        });
+    //need to make sure
+    _getUser = async () => {
+        return new Promise(async (resolve, reject) => {
+            let userToken = await AsyncStorage.getItem("userToken");
+            if (userToken != null) {
+                var user = {
+                    method: "GET",
+                    headers: {
+                        Authorization: userToken
+                    }
+                };
+                await fetch(apiURL + "/user", user)
+                .then(response => response.json())
+                .then(response => {
+                    resolve(response.user)
+                });
+            }
+        }
+    )}
+
+    _getImage = () => {
+        this._getUser().then((user) => {
+            const imageIn = imageUrl + user.image;
+            this.setState({image: imageIn});
+        })
     }
 
     _updatePic = async(key) => {
         if(key === 0)
-            await getImageFromCamera().then((image) => {
-                console.log(image);
+            await getImageFromCamera().then(async(image) => {
                 const output = 'data:image/jpeg;base64,' + image;
                 this.setState({image: output})
+                const sb = SendBird.getInstance();
+                await this._getUser().then(async (user) => {
+                    const imageOut = imageUrl + user.image;
+                    sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
+                        if(error) {
+                            console.log("ERror" + error)
+                            return;
+                        } 
+                        console.log(response);   
+                    });
+                })
             })
             .catch((error) => {
                 console.log(error);
             })
         else
-            await getImageFromLibrary().then((image) => {
-                console.log(image);
+            await getImageFromLibrary().then(async(image) => {
                 const output = 'data:image/jpeg;base64,' + image;
                 this.setState({image: output})
+                const sb = SendBird.getInstance();
+                await this._getUser().then(async (user) => {
+                    const imageOut = imageUrl + user.image;
+                    sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
+                        if(error) {
+                            console.log("ERror" + error)
+                            return;
+                        } 
+                        console.log(response);   
+                    });
+                })
             })
             .catch((error) => {
                 console.log(error);

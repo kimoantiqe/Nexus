@@ -47,6 +47,7 @@ var isHidden = true;
 var userToken;
 //var userToken2;
 var apiURL = APIcall.apiURL;
+var imageURL = apiURL + "/image/";
 const Users = [];
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -152,7 +153,7 @@ export default class Matches extends React.Component {
                   borderRadius: 25,
                 }}
                 blurRadius= {this.state.blurRadius}
-                source={image}
+                source={{ uri: imageURL+ item.image }}
               />
              
             <Animated.View style={[styles.BIO,
