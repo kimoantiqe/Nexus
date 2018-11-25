@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Slider, StyleSheet } from "react-native";
+import { Dimensions, Image, StyleSheet } from "react-native";
 import {
   Container,
   Content,
@@ -15,11 +15,13 @@ import {
   Left,
   Right,
   Body,
-  Title
+  Title,
+  Icon
 } from "native-base";
 import { Pages } from "react-native-pages";
 import { WaveIndicator } from "react-native-indicators";
 import SliderBadge from "../components/SliderBadge";
+import { LinearGradient } from "expo";
 
 const API = require("../API_calls/APIs");
 const width = Dimensions.get("window").width;
@@ -153,6 +155,20 @@ export default class RegCompleteProfile extends React.Component {
     } else
       return (
         <Container>
+          <View>
+                <LinearGradient 
+                  colors={["#2c2638", "#2c2638"]}
+                  locations={[0.0, height * 0.0095]}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: -height*0.5,
+                    height: height*2
+                  }}
+                />
+              </View>
+              
           <Header
             iosBarStyle="light-content"
             androidStatusBarColor="#ffffff"
@@ -161,21 +177,28 @@ export default class RegCompleteProfile extends React.Component {
             <Left>
               {page > 0 ? (
                 <Button
-                  hasText
                   transparent
                   onPress={() => {
                     this.pager.scrollToPage(this.state.page - 1);
                   }}
                 >
-                  <Text style={styles.headerNavText}>Previous</Text>
+                  <Icon 
+                    type='EvilIcons'
+                    name='arrow-left'
+                    style={{
+                      fontSize: 40,
+                      color: '#ef6e0b',
+                    }}
+                  />
                 </Button>
               ) : null}
             </Left>
             <Body>
-              <Title style={styles.headerTitle}>PROFILE</Title>
+              <Title style={styles.headerTitle}>{(page != 0) ? "PROFILE" : ""}</Title>
             </Body>
+            <Right>
             {page >= 3 ? (
-              <Right>
+              
                 <Button
                   hasText
                   transparent
@@ -190,43 +213,101 @@ export default class RegCompleteProfile extends React.Component {
                       this.state.bio,
                       this.props
                     );
+                    this.setState({page: 0});
                     this.setState({ loading: 0 });
                   }}
                 >
                   <Text style={styles.headerNavText}>Done</Text>
                 </Button>
-              </Right>
-            ) : (
-              <Right>
+            ) : (page!=0) ? (
                 <Button
-                  hasText
                   transparent
                   onPress={() => {
                     this.pager.scrollToPage(this.state.page + 1);
                   }}
                 >
-                  <Text style={styles.headerNavText}>Next</Text>
+                  <Icon 
+                    type='EvilIcons'
+                    name='arrow-right'
+                    style={{
+                      fontSize: 40,
+                      color: '#ef6e0b',
+                    }}
+                  />
                 </Button>
-              </Right>
-            )}
+            ) : null}
+            </Right>
           </Header>
+
+          
 
           <Pages
             ref={ref => {
               this.pager = ref;
             }}
             onScrollEnd={p => this.setState({ page: p })}
-            indicatorColor="#2c2638"
           >
+          <Content >
+            <View
+              style={{
+                paddingTop: height*0.03,
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <Image 
+                source={require("../images/logoGold.png")}
+                style={{
+                  width: width * 0.82,
+                  height: height * 0.3,
+                  resizeMode: "contain"
+                }}
+              />
+            </View>
+            <Text
+              style={styles.Qtext}
+            >You're almost ready to connect with the Nexus community, just a few steps left!</Text>
+            <Text
+                  style={{
+                    color: "white",
+                    fontSize: 19,
+                    fontWeight: "300",
+                    paddingHorizontal: width * 0.02,
+                    paddingTop: height*0.07,
+                    textAlign: "center",
+                    flexWrap: "wrap",
+                  }}
+                >keep swiping to answer the next few questions. Doing so will help us connect you to those that are notable to you in this community.</Text>
+                <Button
+                  style={{
+                    backgroundColor: 'transparent',
+                    height: height*0.09,
+                    alignSelf: 'center'
+                  }}
+                  onPress={() => {
+                    this.pager.scrollToPage(this.state.page + 1);
+                  }}
+                >
+                  <Icon 
+                    type='EvilIcons'
+                    name='arrow-right'
+                    style={{
+                      fontSize: 57,
+                      color: '#ef6e0b',
+                      paddingLeft: width*0.02
+                    }}
+                  />
+                </Button>
+          </Content>
             <Content
-              contentContainerStyle={{ paddingHorizontal: width * 0.05 }}
+              contentContainerStyle={{ paddingHorizontal: width * 0.07 }}
             >
               <Form>
                 <Text
                   style={{
-                    color: "#2c2638",
-                    fontSize: 25,
-                    fontWeight: "500",
+                    color: "white",
+                    fontSize: 19,
+                    fontWeight: "300",
                     padding: width * 0.02
                   }}
                 >
@@ -236,15 +317,16 @@ export default class RegCompleteProfile extends React.Component {
                   rounded
                   style={{
                     paddingHorizontal: width * 0.02,
-                    borderColor: "#2c2638",
-                    borderWidth: 17
+                    borderColor: "white",
+                    borderWidth: 17,
+                    height: height*0.065,
                   }}
                 >
                   <Input
                     placeholder="e.g., Alex"
                     style={{
-                      color: "#2c2638",
-                      fontSize: 20,
+                      color: "white",
+                      fontSize: 22,
                       fontWeight: "400"
                     }}
                     onChangeText={this.handleFirstname}
@@ -252,9 +334,9 @@ export default class RegCompleteProfile extends React.Component {
                 </Item>
                 <Text
                   style={{
-                    color: "#2c2638",
-                    fontSize: 25,
-                    fontWeight: "500",
+                    color: "white",
+                    fontSize: 19,
+                    fontWeight: "300",
                     padding: width * 0.02
                   }}
                 >
@@ -264,15 +346,16 @@ export default class RegCompleteProfile extends React.Component {
                   rounded
                   style={{
                     paddingHorizontal: width * 0.02,
-                    borderColor: "#2c2638",
-                    borderWidth: 17
+                    borderColor: "white",
+                    borderWidth: 17,
+                    height: height*0.065,
                   }}
                 >
                   <Input
                     placeholder="e.g., Elliot"
                     style={{
-                      color: "#2c2638",
-                      fontSize: 20,
+                      color: "white",
+                      fontSize: 22,
                       fontWeight: "400"
                     }}
                     onChangeText={this.handleLastname}
@@ -280,9 +363,9 @@ export default class RegCompleteProfile extends React.Component {
                 </Item>
                 <Text
                   style={{
-                    color: "#2c2638",
-                    fontSize: 25,
-                    fontWeight: "500",
+                    color: "white",
+                    fontSize: 19,
+                    fontWeight: "300",
                     padding: width * 0.02
                   }}
                 >
@@ -292,17 +375,17 @@ export default class RegCompleteProfile extends React.Component {
                   rounded
                   style={{
                     paddingHorizontal: width * 0.02,
-                    borderColor: "#2c2638",
+                    borderColor: "white",
                     borderWidth: 17
                   }}
                 >
                   <Textarea
-                    rowSpan={6}
+                    rowSpan={4}
                     rounded
                     placeholder="Please enter a brief bio"
                     style={{
-                      color: "#2c2638",
-                      fontSize: 20,
+                      color: "white",
+                      fontSize: 22,
                       fontWeight: "400"
                     }}
                     onChangeText={this.handleBio}
@@ -312,19 +395,41 @@ export default class RegCompleteProfile extends React.Component {
             </Content>
 
             <Content>
-              <Text style={styles.Qtext}>
-                Out of the following, choose what you are interested in and the
-                emphasis of interest.
-              </Text>
+              
+              <View
+                style={{
+                  flexDirection:'row',
+                  alignItems: 'flex-start'
+                }}>
+                <Icon
+                  type='FontAwesome'
+                  name='question-circle-o'
+                  style={{
+                    fontSize: 47,
+                    color: '#2c2638',
+                    paddingLeft: width*0.02
+                  }}
+                />
+                <View
+                  style={{
+                    flexGrow: 1,
+                    width: 0,
+                  }}
+                >
+                <Text style={styles.Qtext}>
+                  Out of the following, choose what you are interested in and the
+                  emphasis of interest.
+                </Text>
+                </View>
+                </View>
               <View
                 style={{
                   paddingVertical: width * 0.05,
                   paddingHorizontal: width * 0.01,
                   flex: 1,
-                  flexDirection: "column"
+                  flexDirection: "column",
                 }}
               >
-                <Form style={{ flex: 1, flexDirection: "row" }}>
                   <SliderBadge
                     displayName={"Interest A"}
                     flag={interests["IA"]}
@@ -337,9 +442,7 @@ export default class RegCompleteProfile extends React.Component {
                     toCall={() => this.onPressInterests("IC")}
                     toSetVal={value => this.sliding(value, 0, "ICval")}
                   />
-                </Form>
 
-                <Form style={{ flex: 1, flexDirection: "row" }}>
                   <SliderBadge
                     displayName={"Interest B"}
                     flag={interests["IB"]}
@@ -352,14 +455,34 @@ export default class RegCompleteProfile extends React.Component {
                     toCall={() => this.onPressInterests("ID")}
                     toSetVal={value => this.sliding(value, 0, "IDval")}
                   />
-                </Form>
               </View>
             </Content>
             <Content>
+            <View
+                style={{
+                  flexDirection:'row',
+                  alignItems: 'flex-start'
+                }}>
+                <Icon
+                  type='FontAwesome'
+                  name='question-circle-o'
+                  style={{
+                    fontSize: 47,
+                    color: '#2c2638',
+                    paddingLeft: width*0.02
+                  }}
+                />
+                <View
+                  style={{
+                    flexGrow: 1,
+                    width: 0,
+                  }}
+                >
               <Text style={styles.Qtext}>
                 Out of the following, choose what you are looking for.
               </Text>
-
+              </View>
+              </View>
               <View
                 style={{
                   paddingVertical: width * 0.05,
@@ -398,11 +521,32 @@ export default class RegCompleteProfile extends React.Component {
               </View>
             </Content>
             <Content>
+            <View
+                style={{
+                  flexDirection:'row',
+                  alignItems: 'flex-start'
+                }}>
+                <Icon
+                  type='FontAwesome'
+                  name='question-circle-o'
+                  style={{
+                    fontSize: 47,
+                    color: '#2c2638',
+                    paddingLeft: width*0.02
+                  }}
+                />
+                <View
+                  style={{
+                    flexGrow: 1,
+                    width: 0,
+                  }}
+                >
               <Text style={styles.Qtext}>
                 Out of the following, choose what industries you are involved
                 with.
               </Text>
-
+                </View>
+                </View>
               <View
                 style={{
                   paddingVertical: width * 0.05,
@@ -441,9 +585,6 @@ export default class RegCompleteProfile extends React.Component {
               </View>
             </Content>
           </Pages>
-          <Footer
-            style={{ backgroundColor: "#2c2638", height: height * 0.05 }}
-          />
         </Container>
       );
   }
@@ -452,7 +593,8 @@ export default class RegCompleteProfile extends React.Component {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: "#2c2638",
-    height: height * 0.1
+    height: height * 0.1,
+    borderBottomColor: '#2c2638'
   },
   headerTitle: {
     paddingTop: height * 0.03,
@@ -462,10 +604,13 @@ const styles = StyleSheet.create({
     color: "#ffffff"
   },
   Qtext: {
-    color: "#2c2638",
+    color: "white",
     fontSize: 28,
-    fontWeight: "400",
-    paddingHorizontal: width * 0.05
+    paddingHorizontal: width * 0.02,
+    paddingTop: height*0.05,
+    fontFamily: "Folks-Normal",
+    textAlign: "center",
+    flexWrap: "wrap",
   },
   headerNavText:{
     color: 'white'

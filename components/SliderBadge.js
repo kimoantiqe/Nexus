@@ -25,13 +25,13 @@ export default class SliderBadge extends React.Component {
           { 
             flag?
             <Item style={{borderBottomColor: 'transparent', paddingBottom: flag? height*0.015 : 0}}>
-              <Badge style={{   backgroundColor: '#16131d',
-                    backgroundColor: flag? '#c75e9a' : '#16131d',
-                    borderColor: flag? '#c75e9a' : '#f2f2f2' ,
+              <Badge style={{
+                    backgroundColor: 'transparent',
+                    borderColor: 'transparent' ,
                     minHeight: height*0.055,
                     borderWidth: width*0.0015, 
                     borderRadius: 30,
-                    minWidth: width*0.3,
+                    minWidth: width*0.9,
                     }}>
               <Slider onSlidingComplete={this.props.toSetVal}/>
               </Badge>
