@@ -14,7 +14,7 @@ export const getImageFromLibrary = async () => {
             exif: false,
           });
         if(result.cancelled === false){
-            APIcall.sendImage(result.uri);
+            await APIcall.sendImage(result.uri);
             resolve(result.base64)
         }else{
             reject("Cancelled Selection")
@@ -37,7 +37,7 @@ export const getImageFromCamera = async () => {
             exif: false,
           });
         if(result.cancelled === false){
-            APIcall.sendImage(result.uri);
+            await APIcall.sendImage(result.uri);
             resolve(result.base64)
         }else{
             reject("Cancelled Selection")

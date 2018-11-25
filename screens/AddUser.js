@@ -83,9 +83,9 @@ export default class AddUser extends React.Component {
                 
                 let match = {name: '', avatar_url: '', userid: ''};
                 match.name = response.user.firstName + ' ' + response.user.lastName;
-                match.avatar_url = require("../images/sherif.png");
+                match.avatar_url = apiURL + "/image/" + response.user.image;
                 match.userid = userid;
-                
+                console.log(match.avatar_url)               
                 const newList = this.state.matchesArray;
                 newList.push(match);
                 this.setState({ matchesArray: newList });
@@ -106,6 +106,7 @@ export default class AddUser extends React.Component {
         });
     }
 
+    //key = {l.avatar_url}
     render() {
         console.log(this.state.matchesArray)
         return (
@@ -121,12 +122,12 @@ export default class AddUser extends React.Component {
             {
                 this.state.matchesArray.map((l) => (
                     <ListItem
-                        key = {l.avatar_url}
+                        key = {l.userid}
                         avatar={(
                             <Avatar 
                                 medium
                                 rounded
-                                source={l.avatar_url} 
+                                source={{uri: l.avatar_url}} 
                             />
                         )}
                         title={l.name}

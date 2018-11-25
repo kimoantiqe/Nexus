@@ -213,19 +213,20 @@ export default class HomeScreen extends React.Component {
             </Right>
           </Header>
           <FlatList
+            style={{paddingHorizontal: 5}}
             horizontal
             data={matchesArray}
             keyExtractor={item => item._id}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
-              <Card style={styles.avatarCard}>
+              <Card style={[styles.avatarCard, {alignItems: 'center'}]}>
                 <CardItem button onPress={ () => this.props.navigation.navigate("UProfile", {
       user: item
     }
     )
                   }>
                   <Thumbnail
-                    source={require("../images/sherif.png")}
+                    source={{url: apiURL + "/image/" + item.image}}
                     style={styles.avatarImg}
                   />
                 </CardItem>
@@ -334,13 +335,14 @@ const styles = StyleSheet.create({
   },
   avatarImg: {
     width: 75,
-    height: 75
+    height: 75,
+    borderRadius: 37.5
   },
   avatarCard: {
     marginTop: 20,
     marginBottom: 24,
     flex: 1,
-    width: 100
+    width: 107
   },
   header: {
     backgroundColor: "#2c2638",
