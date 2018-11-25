@@ -86,6 +86,44 @@ module.exports.getImageSuccess = (done,chai,server) => {
             });
 };
 
+
+//Test get image
+module.exports.getImageSuccess2 = (done,chai,server) => {
+        chai.request(server)
+            .get('/api/image/'+dummyUser.user.image)
+            .end((err, res) => {
+                  res.should.have.status(200);
+                  res.body.should.be.a('Uint8Array');
+              done();
+            });
+};
+
+
+//Test get image failing bad id
+module.exports.getImagefail = (done,chai,server) => {
+        chai.request(server)
+            .get('/api/image/wafaawf')
+            .end((err, res) => {
+							res.body.should.be.a('object');
+							res.body.should.have.property('success').eql(false);
+							res.body.should.have.property('error').include('Please enter a valid image id');
+              done();
+            });
+};
+
+//Test get image failing cant find image
+module.exports.getImagefail2 = (done,chai,server) => {
+        chai.request(server)
+            .get('/api/image/'+dummyUser.user._id)
+            .end((err, res) => {
+							res.body.should.be.a('object');
+							res.body.should.have.property('success').eql(false);
+							res.body.should.have.property('error').include('file does not exists');
+              done();
+            });
+};
+
+
 module.exports.deleteSuccess = (done,chai,server) => {
 
         chai.request(server)

@@ -1,6 +1,7 @@
 const chai        = require('chai');
 const landing      = require('./landing.test');
 const user      = require('./user.test');
+const facebook      = require('./facebook.test');
 const image      = require('./image.test');
 const task      = require('./task.test');
 const matching      = require('./matching.test');
@@ -14,12 +15,21 @@ chai.use(chaiHttp);
 
 describe('Nexus API test', async () => {
 
-  //Landing
+  /*
+  █░░ █▀▀█ █▀▀▄ █▀▀▄ ░▀░ █▀▀▄ █▀▀▀
+  █░░ █▄▄█ █░░█ █░░█ ▀█▀ █░░█ █░▀█
+  ▀▀▀ ▀░░▀ ▀░░▀ ▀▀▀░ ▀▀▀ ▀░░▀ ▀▀▀▀
+  */
   describe('/GET api', () => {
       it('it should GET the api version', (done) => landing(done,chai,server));
   });
 
-  //Users
+
+  /*
+  █░░█ █▀▀ █▀▀ █▀▀█
+  █░░█ ▀▀█ █▀▀ █▄▄▀
+  ░▀▀▀ ▀▀▀ ▀▀▀ ▀░▀▀
+  */
   describe('/POST /api/user/login', () => {
       it('it should fail : missing payload', (done) => user.loginFail1(done,chai,server));
   });
@@ -64,6 +74,16 @@ describe('Nexus API test', async () => {
       it('it should login the just registered user 2', (done) => user.loginSuccess2(done,chai,server));
   });
 
+
+  describe('/POST /api/user/login/facebook', () => {
+        it('it should login facebookuser , creating a new account', (done) => facebook.loginSuccessfb(done,chai,server));
+  });
+
+  describe('/POST /api/user/login/facebook', () => {
+        it('it should login facebookuser , without creating a new account', (done) => facebook.loginSuccessfb(done,chai,server));
+  });
+
+
   describe('/GET /api/user', () => {
       it('it should return the profile of the just registered user', (done) => user.getSuccess(done,chai,server));
   });
@@ -89,6 +109,11 @@ describe('Nexus API test', async () => {
   });
 
   describe('/DELETE /api/user', () => {
+      it('it should delete registered facebook user', (done) => facebook.deleteSuccess(done,chai,server));
+  });
+
+
+  describe('/DELETE /api/user', () => {
       it('it should delete registered user 2', (done) => user.deleteSuccess2(done,chai,server));
   });
 
@@ -96,7 +121,11 @@ describe('Nexus API test', async () => {
       it('it should fail : inccorect token', (done) => user.deletefail1(done,chai,server));
   });
 
-  //Images
+  /*
+  ░▀░ █▀▄▀█ █▀▀█ █▀▀▀ █▀▀ █▀▀
+  ▀█▀ █░▀░█ █▄▄█ █░▀█ █▀▀ ▀▀█
+  ▀▀▀ ▀░░░▀ ▀░░▀ ▀▀▀▀ ▀▀▀ ▀▀▀
+  */
   describe('/POST /api/user', () => {
       it('it should register a new user', (done) => image.registerSuccess(done,chai,server));
   });
@@ -117,11 +146,31 @@ describe('Nexus API test', async () => {
       it('it should get user image', (done) => image.getImageSuccess(done,chai,server));
   });
 
+  describe('/POST /api/user/login', () => {
+      it('it should login new user', (done) => image.loginSuccess(done,chai,server));
+  });
+
+  describe('/GET /api/image/:id', () => {
+      it('it should get image with above id', (done) => image.getImageSuccess2(done,chai,server));
+  });
+
+  describe('/GET /api/image/:id', () => {
+      it('it should fail , bad image id', (done) => image.getImagefail(done,chai,server));
+  });
+
+  describe('/GET /api/image/:id', () => {
+      it('it should fail , nonexisting image id', (done) => image.getImagefail2(done,chai,server));
+  });
+
   describe('/DELETE /api/user', () => {
       it('it should delete registered user', (done) => image.deleteSuccess(done,chai,server));
   });
 
-  //TASKS
+  /*
+  ▀▀█▀▀ █▀▀█ █▀▀ █░█ █▀▀
+  ░░█░░ █▄▄█ ▀▀█ █▀▄ ▀▀█
+  ░░▀░░ ▀░░▀ ▀▀▀ ▀░▀ ▀▀▀
+  */
   describe('/POST /api/user', () => {
       it('it should register a new user', (done) => task.registerSuccess(done,chai,server));
   });
@@ -183,7 +232,11 @@ describe('Nexus API test', async () => {
       it('it should delete registered user 2', (done) => task.deleteSuccess1(done,chai,server));
   });
 
-
+  /*
+  █▀▄▀█ █▀▀█ ▀▀█▀▀ █▀▀ █░░█ ░▀░ █▀▀▄ █▀▀▀
+  █░▀░█ █▄▄█ ░░█░░ █░░ █▀▀█ ▀█▀ █░░█ █░▀█
+  ▀░░░▀ ▀░░▀ ░░▀░░ ▀▀▀ ▀░░▀ ▀▀▀ ▀░░▀ ▀▀▀▀
+  */
     //Matching
      describe('/POST /api/user REGISTER USER 1', () => {
     it('it should register new user 1', (done) => matching.registerUser1(done,chai,server));
