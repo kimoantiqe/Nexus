@@ -18,6 +18,7 @@ import SliderBadge from "../components/SliderBadge";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const NumUsers = 7;
+import { WaveIndicator } from "react-native-indicators";
 var image = require("./../images/d3rs.jpg");
 import Icon from "react-native-vector-icons/Ionicons";
 import { userToken3 } from "./Login";
@@ -94,11 +95,12 @@ export default class Matches extends React.Component {
     });
     this.refreshScreen = this.refreshScreen.bind(this);
     this.state = {
-      bounceValue: new Animated.Value(0), //This is the initial position of the subview
+      bounceValue: new Animated.Value(0), 
       buttonText: "Show Subview",
       blurRadius: 0,
       profileopacity: new Animated.Value(0.85),
       profilecolour: new Animated.Value(0x2c2638),
+      loading: 1,
     };
     console.log(height);
   }
@@ -128,8 +130,6 @@ export default class Matches extends React.Component {
       toValue3 = 0.85;
     }
 
-    //This will animate the transalteY of the subview between 0 & 100 depending on its current state
-    //100 comes from the style below, which is the height of the subview.
     Animated.spring(this.state.bounceValue, {
       toValue: toValue,
       velocity: 3,
@@ -152,35 +152,45 @@ export default class Matches extends React.Component {
 
   //Function that grabs a user from the database.
   getUser = async () => {
-    console.log("im here");
+    
     userToken = await Expo.SecureStore.getItemAsync("userToken");
-    console.log("im after");
+    
 
     if (userToken != null) {
+      
       var grabUser = {
         method: "GET",
         headers: {
           Authorization: userToken
         }
       };
+     
       await fetch(apiURL + "/user/getpotconn", grabUser)
         .then(response => response.json())
         .then(response => {
+         
           if (response.success) {
             if (response.array) {
+              
               var array = JSON.parse(response.array);
               for (let i = 0; i < array.length; i++) {
                 Users[i] = array[i];
               }
             }
+           
           }
+
         })
-        .then(
-          this.setState({ currentIndex: 0 }, () => {
-            this.position.setValue({ x: 0, y: 0 });
+        .then(() => {
+          
+          this.setState({ currentIndex: 0, loading:0 }, () => {
+          this.position.setValue({ x: 0, y: 0 });
+          
           })
+        }
         );
     }
+   
   };
 
   componentWillMount() {
@@ -200,7 +210,8 @@ export default class Matches extends React.Component {
             speed: 1000
           }).start(async () => {
             await APIcall.likedUser(Users[this.state.currentIndex]._id);
-            if (this.state.currentIndex == NumUsers - 1) {
+            if (this.state.currentIndex == NumUsers - 3) {
+              await this.setState({loading: 1});
              await this.getUser();
             } else {
               await this.setState(
@@ -241,12 +252,24 @@ export default class Matches extends React.Component {
   }
 
   renderUsers = () => {
-    while (!Users.length) {
-      this.getUser();
+    if(this.state.loading ==1){
       return (
-        <View style={[styles.container1, styles.horizontal1]}>
-          <ActivityIndicator size="large" color="#2c2638" />
-        </View>
+        <WaveIndicator
+        size={80}
+        color="#2c2638"
+        style={{ flex: 0, marginTop: height*0.3 }}
+      />
+      );
+    }
+    if (!Users.length) {
+      console.log("NO USERS");
+      console.log(Users);
+      return (
+        <WaveIndicator
+        size={80}
+        color="#2c2638"
+        style={{ flex: 0, marginTop: height*0.3 }}
+      />
       );
     }
 
@@ -260,7 +283,6 @@ export default class Matches extends React.Component {
       }
 
       if (i < this.state.currentIndex) {
-        console.log("FUCK");
       } else if (i == this.state.currentIndex) {
         return (
           <Animated.View
@@ -628,7 +650,7 @@ export default class Matches extends React.Component {
               {
                 opacity: this.nextCardOpacity,
                 transform: [{ scale: this.nextCardScale }],
-                height: SCREEN_HEIGHT * 0.75,
+                height: SCREEN_HEIGHT,
                 width: SCREEN_WIDTH,
                 padding: 10,
                 position: "absolute"
@@ -700,9 +722,9 @@ export default class Matches extends React.Component {
               />
              
             <Animated.View style={[styles.BIO,
-              {transform: [{translateY: this.state.bounceValue}]} ,
-              {opacity : this.state.profileopacity}]}>
-           <TouchableHighlight style={styles.Name} onPress={()=> {this._toggleSubview()}}>  
+               {transform: [{translateY: this.state.bounceValue}]} ,
+               {opacity : this.state.profileopacity}]}>
+           <TouchableHighlight style={styles.Name} onPress={()=> {onPress && onPress()}}>  
                 <Text style={styles.NameText}>
                   {item.firstName + " " + item.lastName}
                 </Text>
@@ -1064,14 +1086,14 @@ const styles = StyleSheet.create({
   },
   Name: {
     backgroundColor: "#2c2638",
-    height: height * 0.07,
+    height: height * 0.1,
     width: width * 0.9,
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
     
     position: "absolute",
-    top:-height * 0.07,
+    top:-height * 0.08,
   },
   VIEW: {
     borderRadius: 50
@@ -1108,11 +1130,11 @@ const styles = StyleSheet.create({
     height: 0.001 * height
   },
   NameText: {
-    fontFamily: "Arial",
-    fontSize: 19,
+    fontFamily: "Helvetica",
+    fontSize: 22,
+    fontWeight: "400",
     textAlign: "center",
     color: "white",
-    fontWeight: "400",
     justifyContent: "center",
     alignItems: "center"
   },
