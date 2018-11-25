@@ -79,9 +79,6 @@ describe('Nexus API test', async () => {
         it('it should login facebookuser , creating a new account', (done) => facebook.loginSuccessfb(done,chai,server));
   });
 
-  describe('/POST /api/user/login/facebook', () => {
-        it('it should login facebookuser , without creating a new account', (done) => facebook.loginSuccessfb(done,chai,server));
-  });
 
 
   describe('/GET /api/user', () => {
@@ -96,6 +93,10 @@ describe('Nexus API test', async () => {
       it('it should update the user ', (done) => user.putSuccess(done,chai,server));
   });
 
+  describe('/POST /api/user/login/facebook', () => {
+        it('it should login facebookuser , without creating a new account', (done) => facebook.loginSuccessfb(done,chai,server));
+  });
+  
   describe('/PUT /api/user', () => {
       it('it should fail : blacklisted property entered ', (done) => user.putFail1(done,chai,server));
   });
