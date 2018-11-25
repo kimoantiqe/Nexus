@@ -10,7 +10,8 @@ const jwtConfig = require('../configurations/jwt');
 let UserSchema = mongoose.Schema({
   facebookId:{
     type:String,
-    index: true
+    index: true,
+    sparse: true
   },
   image:{
     type:mongoose.Schema.Types.ObjectId,
