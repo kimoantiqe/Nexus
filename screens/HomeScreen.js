@@ -51,7 +51,7 @@ var firstName = [];
 var lastName = [];
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-
+var thisUser;
 var USERID;
 
 export default class HomeScreen extends React.Component {
@@ -101,6 +101,8 @@ export default class HomeScreen extends React.Component {
           if (response.success) {
         
             for (var i = 0; i < response.user.matches.length; i++) {
+              thisUser = response.user;
+              console.log(thisUser);
               if(response.user.matches[i])
               await this.getUser(response.user.matches[i]);
             }
@@ -133,6 +135,8 @@ export default class HomeScreen extends React.Component {
     }
   };
 
+  
+
   //Function that is used to populate when the user logs in.
   populate = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
@@ -155,6 +159,7 @@ export default class HomeScreen extends React.Component {
     await this.setState({refreshing: false});
     this.setState({loading: 1});
     await this.getUserMatches();
+   
     this.setState({loading: 0});
   }
 
@@ -287,8 +292,8 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                      <Text style={styles.numberText}>2</Text>
-                      <Text style={styles.titleText}>Taps</Text>
+                      <Text style={styles.numberText}>{thisUser.InstantMatches ? thisUser.InstantMatches.length : 0}</Text>
+                      <Text style={styles.titleText}>{ (thisUser.InstantMatches && thisUser.InstantMatches.length != 1) ? "Instant Matches" : "Instant Match" }</Text>
                     </View>
                     <Text style={styles.subTitleText}>so far!</Text>
                   </Body>
