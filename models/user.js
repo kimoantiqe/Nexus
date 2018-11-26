@@ -91,7 +91,15 @@ let UserSchema = mongoose.Schema({
     ref :'Task',
     exists: true
   }],
-
+  ie: {
+    type: Number,
+  },
+  ine: {
+    type: Number,
+  },
+  lfe: {
+    type: Number,
+  }
 }, {
   timestamps: true
 });

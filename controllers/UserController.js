@@ -102,7 +102,9 @@ const update = async function(req, res){
 
 	//Push into respective field into user object
 	pushIntoUser(user,data.interests,'interests');
-	pushIntoUser(user,data.lookingFor,'lookingFor');
+	pushEmphasis(user,data.ie,'ie');
+	pushEmphasis(user,data.ine,'ine');
+	pushEmphasis(user,data.lfe,'lfe');
 	pushIntoUser(user,data.industry,'industry');
 	pushIntoUser(user,data.matches,'matches');
 	pushIntoUser(user,data.potentialMatches,'potentialMatches');
@@ -231,6 +233,12 @@ function pushIntoUser(user,field,fieldType){
 				user[fieldType].push(field[i]);
 			}
 		}
+	}
+}
+
+function pushEmphasis(user, field, fieldType){
+	if(field){
+		user[fieldType]= field;
 	}
 }
 

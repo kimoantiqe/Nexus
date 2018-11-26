@@ -68,6 +68,10 @@ const popconns = async function(req, res){
   let OGlookingFor = user.lookingFor;
   let OGindustry = user.industry;
 
+  let ie = user.ie;
+  let ine = user.ine;
+  let lfe = user.lfe;
+
   let results=[];
   
 	//sorts all users in the database according to their score
@@ -81,22 +85,26 @@ const popconns = async function(req, res){
            let otinterests = otheruser.interests;
            let otlookingFor = otheruser.lookingFor;
            let otindustry = otheruser.industry;
-
-
 					 //calculate score
            for(let i=0; i<OGinterests.length ; i++ ){
              if(otinterests.includes(OGinterests[i])){
-               score+=2;
+               if(ie){
+                 score+=ie;
+               }
              }
            }
            for(let j=0; j<OGlookingFor.length ; j++ ){
              if(otlookingFor.includes(OGlookingFor[j])){
-               score+=3;
+               if(lfe){
+                 score+=lfe;
+               }
              }
            }
            for(let z=0; z<OGindustry.length ; z++ ){
              if(otindustry.includes(OGindustry[z])){
-               score+=5;
+               if(ine){
+                 score+=ine;
+               }
              }
            }
            let userOb = { "id" : otheruser._id,
