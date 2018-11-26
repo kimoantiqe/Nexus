@@ -18,9 +18,9 @@ class AddButton extends Component {
                 <Animated.View style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    width: SIZE,
-                    height: SIZE,
-                    borderRadius: SIZE / 2,
+                    width: SIZE/2,
+                    height: SIZE/2,
+                    borderRadius: SIZE / 4,
                     backgroundColor: 'transparent',
                 }}>    
                  <GradientButton
@@ -29,8 +29,8 @@ class AddButton extends Component {
                     gradientEnd="#f5ba57"
                     gradientDirection="diagonal"
                     height={ SIZE / 2}
-                    width={ SIZE / 2}
-                    radius={SIZE / 4}
+                    width={ SIZE /  2}
+                    radius={SIZE /  4}
                     //violetPink
                     impact
                     impactStyle='Light'

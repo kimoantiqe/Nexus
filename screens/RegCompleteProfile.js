@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Image, StyleSheet, Keyboard, AsyncStorage } from "react-native";
+import { Dimensions, Image, StyleSheet, Keyboard, Slider, AsyncStorage } from "react-native";
 import {
   Container,
   Content,
@@ -16,7 +16,8 @@ import {
   Right,
   Body,
   Title,
-  Icon
+  Icon,
+  Badge
 } from "native-base";
 import { Pages } from "react-native-pages";
 import { WaveIndicator } from "react-native-indicators";
@@ -39,16 +40,10 @@ export default class RegCompleteProfile extends React.Component {
     title: "RCP"
   };
 
-  componentDidMount () {
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
-  }
-
-  _keyboardWillShow () {
-    // if(check) {Keyboard.dismiss();}
-  }
-
   state = {
-    value: 0.5,
+    Ival: 1,
+    INval: 1,
+    LFval: 1,
     interests: {},
     LF: {},
     industry: {},
@@ -57,7 +52,6 @@ export default class RegCompleteProfile extends React.Component {
     lastName: "",
     loading: 0,
     page: 0,
-    headerTitle: ["PROFILE", "INTERESTS", "GOALS", "INDUSTRY", "PICTURE"],
     image: 'https://www.peakgrantmaking.org/wp-content/uploads/2017/05/gender_neutral_icons_lf-02.png',
     isModalVisible: false,
     imageWidth: width/4,
@@ -67,6 +61,7 @@ export default class RegCompleteProfile extends React.Component {
 
   doneScroll(p) {
    this.setState({ page: p });
+   Keyboard.dismiss();
   }
 
   handleBio = text => {
@@ -81,32 +76,14 @@ export default class RegCompleteProfile extends React.Component {
     this.setState({ lastName: text });
   };
 
-  sliding = (val, which, what) => {
+  sliding = (val, which) => {
     if (which == 0) {
-      () => this.handleInterestValue(val, what);
-    } else if (which == 1) {
-      () => this.handleLFValue(val, what);
+      this.setState({Ival: val})
     } else if (which == 2) {
-      () => this.handleIndustryValue(val, what);
+      this.setState({INval: val})
+    } else if (which == 1) {
+      this.setState({LFval: val})
     }
-  };
-
-  handleInterestValue = (val, interest) => {
-    let interesttemp = this.state.interests;
-    interesttemp[interest] = val;
-    this.setState({ interests: interesttemp });
-  };
-
-  handleIndustryValue = (val, ind) => {
-    let industrytemp = this.state.industry;
-    industrytemp[ind] = val;
-    this.setState({ industry: industrytemp });
-  };
-
-  handleLFValue = (val, lf) => {
-    let LFtemp = this.state.LF;
-    LFtemp[lf] = val;
-    this.setState({ LF: LFtemp });
   };
 
   onPressInterests(interest) {
@@ -222,7 +199,7 @@ export default class RegCompleteProfile extends React.Component {
       }
 
   render() {
-    const { industry, interests, LF, page } = this.state;
+    const { industry, interests, LF, page, Ival, INval, LFval } = this.state;
     const data = [
       { key: 0, label: 'Take a Picture..' },
       { key: 1, label: 'Choose From Library..' }
@@ -297,7 +274,7 @@ export default class RegCompleteProfile extends React.Component {
               ) : null}
             </Left>
             <Body>
-              <Title style={styles.headerTitle}>{(page != 0) ? this.state.headerTitle[page-1] : ""}</Title>
+              <Title style={styles.headerTitle}>{(page != 0) ? "PROFILE" : ""}</Title>
             </Body>
             <Right>
             {page >= 5 ? (
@@ -314,6 +291,9 @@ export default class RegCompleteProfile extends React.Component {
                       this.state.industry,
                       this.state.LF,
                       this.state.bio,
+                      this.state.Ival,
+                      this.state.INval,
+                      this.state.LFval,
                       this.props
                     );
                     await this._sendPicture();
@@ -419,9 +399,18 @@ export default class RegCompleteProfile extends React.Component {
                 paddingLeft: width*0.045
               }}
             />
+            <Text 
+            style={{
+              paddingTop: height * 0.01,
+              fontFamily: "BebasNeue",
+              fontSize: 35,
+              color: "#ffffff",
+              alignSelf: 'center'
+              }}
+            >ABOUT YOU</Text>
             <Text
                   style={styles.Qtext}
-                >keep swiping to answer the next few questions. Doing so will help us connect you</Text>
+                >Please fill out your First and Last Name, and write a brief Bio about yourself.</Text>
               <Form>
                 <Text
                   style={{
@@ -532,10 +521,16 @@ export default class RegCompleteProfile extends React.Component {
                   paddingTop: height*0.01
                 }}
             />
-                <Text style={styles.Qtext}>
-                  Out of the following, choose what you are interested in and the
-                  emphasis of interest.
-                </Text>
+              <Text 
+              style={{
+                paddingTop: height * 0.01,
+                fontFamily: "BebasNeue",
+                fontSize: 35,
+                color: "#ffffff",
+                alignSelf: 'center'
+                  }}
+              >INTERESTS</Text>
+                <Text style={styles.Qtext}>Out of the following, choose what you are interested in.</Text>
                 </View>
               <View
                 style={{
@@ -549,28 +544,52 @@ export default class RegCompleteProfile extends React.Component {
                     displayName={"Interest A"}
                     flag={interests["IA"]}
                     toCall={() => this.onPressInterests("IA")}
-                    toSetVal={value => this.sliding(value, 0, "IAval")}
                   />
                   <SliderBadge
                     displayName={"Interest C"}
                     flag={interests["IC"]}
                     toCall={() => this.onPressInterests("IC")}
-                    toSetVal={value => this.sliding(value, 0, "ICval")}
                   />
 
                   <SliderBadge
                     displayName={"Interest B"}
                     flag={interests["IB"]}
                     toCall={() => this.onPressInterests("IB")}
-                    toSetVal={value => this.sliding(value, 0, "IBval")}
                   />
                   <SliderBadge
                     displayName={"Interest D"}
                     flag={interests["ID"]}
                     toCall={() => this.onPressInterests("ID")}
-                    toSetVal={value => this.sliding(value, 0, "IDval")}
                   />
               </View>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
+              <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
+              <Badge style={{
+                    backgroundColor: 'transparent',
+                    borderColor: 'transparent' ,
+                    minHeight: height*0.055,
+                    borderWidth: width*0.0015, 
+                    borderRadius: 30,
+                    minWidth: width*0.9,
+                    
+                    }}>
+              <Slider 
+                onValueChange={(value) => this.sliding(value, 0)}
+                maximumValue={5}
+                step={1}
+                value={Ival}
+                minimumTrackTintColor={'#FFC719'}
+              />
+              </Badge>
+                </Item>
+                <Text 
+              style={{
+                color: '#FFC719',
+                fontFamily: "BebasNeue",
+                fontSize: 35,
+                alignSelf: 'center'
+                  }}
+              >{Ival}</Text>
             </Content>
             <Content>
             <View
@@ -590,6 +609,15 @@ export default class RegCompleteProfile extends React.Component {
                     paddingTop: height*0.01
                   }}
                 />
+                <Text 
+                style={{
+                  paddingTop: height * 0.01,
+                  fontFamily: "BebasNeue",
+                  fontSize: 35,
+                  color: "#ffffff",
+                  alignSelf: 'center'
+                    }}
+                >GOALS</Text>
               <Text style={styles.Qtext}>
                 Out of the following, choose what you are looking for.
               </Text>
@@ -605,13 +633,11 @@ export default class RegCompleteProfile extends React.Component {
                     displayName={"Looking for A"}
                     flag={LF["LA"]}
                     toCall={() => this.onPressLF("LA")}
-                    toSetVal={value => this.sliding(value, 1, "LAval")}
                   />
                   <SliderBadge
                     displayName={"Looking for C"}
                     flag={LF["LC"]}
                     toCall={() => this.onPressLF("LC")}
-                    toSetVal={value => this.sliding(value, 1, "LCval")}
                   />
                 </Form>
 
@@ -620,16 +646,42 @@ export default class RegCompleteProfile extends React.Component {
                     displayName={"Looking for B"}
                     flag={LF["LB"]}
                     toCall={() => this.onPressLF("LB")}
-                    toSetVal={value => this.sliding(value, 1, "LBval")}
                   />
                   <SliderBadge
                     displayName={"Looking for D"}
                     flag={LF["LD"]}
                     toCall={() => this.onPressLF("LD")}
-                    toSetVal={value => this.sliding(value, 1, "LDval")}
                   />
                 </Form>
               </View>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
+              <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
+              <Badge style={{
+                    backgroundColor: 'transparent',
+                    borderColor: 'transparent' ,
+                    minHeight: height*0.055,
+                    borderWidth: width*0.0015, 
+                    borderRadius: 30,
+                    minWidth: width*0.9,
+                    
+                    }}>
+              <Slider 
+                onValueChange={(value) => this.sliding(value, 1)}
+                maximumValue={5}
+                step={1}
+                value={LFval}
+                minimumTrackTintColor={'#FFC719'}
+              />
+              </Badge>
+                </Item>
+                <Text 
+              style={{
+                color: '#FFC719',
+                fontFamily: "BebasNeue",
+                fontSize: 35,
+                alignSelf: 'center'
+                  }}
+              >{LFval}</Text>
             </Content>
             <Content>
             <View
@@ -649,6 +701,15 @@ export default class RegCompleteProfile extends React.Component {
                     paddingTop: height*0.01
                   }}
                 />
+                <Text 
+                  style={{
+                    paddingTop: height * 0.01,
+                    fontFamily: "BebasNeue",
+                    fontSize: 35,
+                    color: "#ffffff",
+                    alignSelf: 'center'
+                    }}
+                  >INDUSTRY</Text>
               <Text style={styles.Qtext}>
                 Out of the following, choose what industries you are involved
                 with.
@@ -665,13 +726,11 @@ export default class RegCompleteProfile extends React.Component {
                     displayName={"Industry A"}
                     flag={industry["INA"]}
                     toCall={() => this.onPressIndustry("INA")}
-                    toSetVal={value => this.sliding(value, 2, "INAval")}
                   />
                   <SliderBadge
                     displayName={"Industry C"}
                     flag={industry["INC"]}
                     toCall={() => this.onPressIndustry("INC")}
-                    toSetVal={value => this.sliding(value, 2, "INCval")}
                   />
                 </Form>
 
@@ -680,16 +739,42 @@ export default class RegCompleteProfile extends React.Component {
                     displayName={"Industry B"}
                     flag={industry["INB"]}
                     toCall={() => this.onPressIndustry("INB")}
-                    toSetVal={value => this.sliding(value, 2, "INBval")}
                   />
                   <SliderBadge
                     displayName={"Industry D"}
                     flag={industry["IND"]}
                     toCall={() => this.onPressIndustry("IND")}
-                    toSetVal={value => this.sliding(value, 2, "INDval")}
                   />
                 </Form>
               </View>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
+              <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
+              <Badge style={{
+                    backgroundColor: 'transparent',
+                    borderColor: 'transparent' ,
+                    minHeight: height*0.055,
+                    borderWidth: width*0.0015, 
+                    borderRadius: 30,
+                    minWidth: width*0.9,
+                    
+                    }}>
+              <Slider 
+                onValueChange={(value) => this.sliding(value, 2)}
+                maximumValue={5}
+                step={1}
+                value={INval}
+                minimumTrackTintColor={'#FFC719'}
+              />
+              </Badge>
+                </Item>
+                <Text 
+              style={{
+                color: '#FFC719',
+                fontFamily: "BebasNeue",
+                fontSize: 35,
+                alignSelf: 'center'
+                  }}
+              >{INval}</Text>
             </Content>
             <Content>
             <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}} >
@@ -736,9 +821,18 @@ const styles = StyleSheet.create({
   },
   Qtext: {
     color: "white",
-    fontSize: 28,
+    fontSize: 25,
     paddingHorizontal: width * 0.02,
     paddingTop: height*0.02,
+    fontFamily: "Folks-Normal",
+    textAlign: "center",
+    flexWrap: "wrap",
+    alignSelf: 'center'
+  },
+  Etext: {
+    color: "white",
+    fontSize: 19,
+    paddingHorizontal: width * 0.02,
     fontFamily: "Folks-Normal",
     textAlign: "center",
     flexWrap: "wrap",

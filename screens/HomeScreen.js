@@ -80,6 +80,7 @@ export default class HomeScreen extends React.Component {
     header: null
   };
 
+  
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
@@ -129,31 +130,14 @@ export default class HomeScreen extends React.Component {
         .then(response => response.json())
         .then(response => {
           console.log(response.user._id);
-          matchesArray.push(response.user);
-          
+          matchesArray.push(response.user); 
         });
     }
   };
 
   
 
-  //Function that is used to populate when the user logs in.
-  populate = async () => {
-    let userToken = await AsyncStorage.getItem("userToken");
-
-    if (userToken != null) {
-      var populate = {
-        method: "GET",
-
-        headers: {
-          Authorization: userToken,
-          "Content-Type": "application/json"
-        }
-      };
-      fetch(apiURL + "/user/popconn", populate);
-    }
-  };
-
+ 
   _onRefresh = async () => {
     await this.setState({refreshing: true});
     await this.setState({refreshing: false});
