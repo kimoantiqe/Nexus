@@ -2,6 +2,7 @@
   <img width=200 src="static/logo.png"/>
 </p>
 
+
 <p align="center">
  The up and coming professional networking app 
 </p>
