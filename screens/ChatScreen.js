@@ -86,18 +86,20 @@ export default class ChatScreen extends Component {
             this.getChannelMessage(true)
             this.state.groupChannel.refresh()
         }
-        this.state.sb.addConnectionHandler('ChatView', ConnectionHandler)
+        this.state.sb.addConnectionHandler('ChatScreen', ConnectionHandler)
     }
 
     getGroupChannel() {
         this.state.channelUrl = this.props.navigation.getParam('channelUrl', null);
         this.state.userId = this.props.navigation.getParam('userID', null);
+        console.log(this.state.sb.GroupChannel);
         //get groupchannel
         this.state.sb.GroupChannel.getChannel(this.state.channelUrl, (channel, error) => {
             //add alert and go back on press
             if(error){
                 console.log('Could not get channel');
                 console.log(error);
+                return;
             }
             
             messageQuery = channel.createPreviousMessageListQuery();
@@ -115,7 +117,7 @@ export default class ChatScreen extends Component {
                     this.state.friendId = this.state.userId;
                 }
             }
-               
+            console.log(this.state.groupChannel);
             this.getChannelMessage(false);
         })
     }

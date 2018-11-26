@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://192.168.1.115:1337/api";
+const apiURL = "https://nexus-restapi.azurewebsites.net/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -32,7 +32,7 @@ const _bootstrapAsync = async (props) => {
           response.json()
           .then((response) => {
             console.log(" ");
-            sbConnect(userid, response.user.firstName)
+            sbConnect(userid, response.user.firstName + " " + response.user.lastName)
           });
           props.navigation.navigate('Main');
         }

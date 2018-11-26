@@ -36,47 +36,29 @@ import {
  
 Enzyme.configure({ adapter: new Adapter() });
 
-test('renders correctly', () => {
-
-    let userid = "5bcf97fd4a5aa600150cc338";
-    let nickname = "Ahmed";
-
-    sbConnect(userid, nickname);
-
-    const navigation = { navigate: jest.fn(), getParam: jest.fn() };
-    navigation.getParam
-    .mockReturnValueOnce("sendbird_group_channel_86468035_24ca64b3b280f3552d5c287d8ae2fcf40d238388")
-    .mockReturnValueOnce(userid);
-    
-    const wrapper = shallow(<ChatScreen navigation={navigation} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
-
-    sbDisconnect();
-});
-
 test('Check if TextInput is present', () => {
 
-    let userid = "5bcf97fd4a5aa600150cc338";
-    let nickname = "Ahmed";
+    let userid = "5bf7a3ceb55135ea0644ccab";
+    let nickname = "James";
 
     sbConnect(userid, nickname);
 
     const navigation = { navigate: jest.fn(), getParam: jest.fn() };
     navigation.getParam
-    .mockReturnValueOnce("sendbird_group_channel_86468035_24ca64b3b280f3552d5c287d8ae2fcf40d238388")
+    .mockReturnValueOnce("sendbird_group_channel_89787208_65cd1cc8adc564edddc0e60a2c0b68351043929c")
     .mockReturnValueOnce(userid);
     
     const wrapper = shallow(<ChatScreen navigation={navigation} />);
 
-    expect(wrapper.find(TextInput)).toHaveLength(1);
+    expect(wrapper.find(TextInput)).toHaveLength(9);
 
     sbDisconnect();
 });
 
 test('Check Icon onPress', () => {
 
-    let userid = "5bcf97fd4a5aa600150cc338";
-    let nickname = "Ahmed";
+    let userid = "5bf7a3ceb55135ea0644ccab";
+    let nickname = "James";
 
     sbConnect(userid, nickname);
 
@@ -87,7 +69,7 @@ test('Check Icon onPress', () => {
     sendMessageMock.mockReturnValue('Send Button Pressed');
 
     navigation.getParam
-    .mockReturnValueOnce("sendbird_group_channel_86468035_24ca64b3b280f3552d5c287d8ae2fcf40d238388")
+    .mockReturnValueOnce("sendbird_group_channel_89787208_65cd1cc8adc564edddc0e60a2c0b68351043929c")
     .mockReturnValueOnce(userid);
     
     const wrapper = shallow(<ChatScreen navigation={navigation}/>);
@@ -105,8 +87,8 @@ test('Check Icon onPress', () => {
 
 test('Check Text Input', () => {
 
-    let userid = "5bcf97fd4a5aa600150cc338";
-    let nickname = "Ahmed";
+    let userid = "5bf7a3ceb55135ea0644ccab";
+    let nickname = "James";
 
     sbConnect(userid, nickname);
 
@@ -117,7 +99,7 @@ test('Check Text Input', () => {
     sendMessageMock.mockReturnValue('Send Button Pressed');
 
     navigation.getParam
-    .mockReturnValueOnce("sendbird_group_channel_86468035_24ca64b3b280f3552d5c287d8ae2fcf40d238388")
+    .mockReturnValueOnce("sendbird_group_channel_89787208_65cd1cc8adc564edddc0e60a2c0b68351043929c")
     .mockReturnValueOnce(userid);
     
     const wrapper = shallow(<ChatScreen navigation={navigation}/>);
@@ -132,8 +114,8 @@ test('Check Text Input', () => {
 
 test('Check message array not updated with empty input', () => {
 
-    let userid = "5bcf97fd4a5aa600150cc338";
-    let nickname = "Ahmed";
+    let userid = "5bf7a3ceb55135ea0644ccab";
+    let nickname = "James";
 
     sbConnect(userid, nickname);
 
@@ -144,7 +126,7 @@ test('Check message array not updated with empty input', () => {
     sendMessageMock.mockReturnValue('Send Button Pressed');
 
     navigation.getParam
-    .mockReturnValueOnce("sendbird_group_channel_86468035_24ca64b3b280f3552d5c287d8ae2fcf40d238388")
+    .mockReturnValueOnce("sendbird_group_channel_89787208_65cd1cc8adc564edddc0e60a2c0b68351043929c")
     .mockReturnValueOnce(userid);
     
     const wrapper = shallow(<ChatScreen navigation={navigation}/>);
@@ -161,8 +143,8 @@ test('Check message array not updated with empty input', () => {
 
 test('Check send message box', () => {
 
-    let userid = "5bcf97fd4a5aa600150cc338";
-    let nickname = "Ahmed";
+    let userid = "5bf7a3ceb55135ea0644ccab";
+    let nickname = "James";
 
     sbConnect(userid, nickname);
 
@@ -173,7 +155,7 @@ test('Check send message box', () => {
     sendMessageMock.mockReturnValue('Send Button Pressed');
 
     navigation.getParam
-    .mockReturnValueOnce("sendbird_group_channel_86468035_24ca64b3b280f3552d5c287d8ae2fcf40d238388")
+    .mockReturnValueOnce("sendbird_group_channel_89787208_65cd1cc8adc564edddc0e60a2c0b68351043929c")
     .mockReturnValueOnce(userid);
     
     const wrapper = shallow(<ChatScreen navigation={navigation}/>);
@@ -192,8 +174,8 @@ test('Check send message box', () => {
 
 test('Check received message box', () => {
 
-    let userid = "5bcf97fd4a5aa600150cc338";
-    let nickname = "Ahmed";
+    let userid = "5bf7a3ceb55135ea0644ccab";
+    let nickname = "James";
 
     sbConnect(userid, nickname);
 
@@ -204,7 +186,7 @@ test('Check received message box', () => {
     sendMessageMock.mockReturnValue('Send Button Pressed');
 
     navigation.getParam
-    .mockReturnValueOnce("sendbird_group_channel_86468035_24ca64b3b280f3552d5c287d8ae2fcf40d238388")
+    .mockReturnValueOnce("sendbird_group_channel_89787208_65cd1cc8adc564edddc0e60a2c0b68351043929c")
     .mockReturnValueOnce(userid);
     
     const wrapper = shallow(<ChatScreen navigation={navigation}/>);
@@ -223,8 +205,8 @@ test('Check received message box', () => {
 
 test('Check List containes messages', () => {
 
-    let userid = "5bcf97fd4a5aa600150cc338";
-    let nickname = "Ahmed";
+    let userid = "5bf7a3ceb55135ea0644ccab";
+    let nickname = "James";
 
     sbConnect(userid, nickname);
 
@@ -235,7 +217,7 @@ test('Check List containes messages', () => {
     sendMessageMock.mockReturnValue('Send Button Pressed');
 
     navigation.getParam
-    .mockReturnValueOnce("sendbird_group_channel_86468035_24ca64b3b280f3552d5c287d8ae2fcf40d238388")
+    .mockReturnValueOnce("sendbird_group_channel_89787208_65cd1cc8adc564edddc0e60a2c0b68351043929c")
     .mockReturnValueOnce(userid);
     
     const wrapper = shallow(<ChatScreen navigation={navigation}/>);

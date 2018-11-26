@@ -8,7 +8,7 @@ exports[`renders correctly 1`] = `
     style={
       Object {
         "backgroundColor": "#2c2638",
-        "height": 133.4,
+        "height": 106.72,
       }
     }
   >
@@ -22,7 +22,6 @@ exports[`renders correctly 1`] = `
             "fontSize": 25,
             "paddingBottom": 50,
             "paddingTop": 40.019999999999996,
-            "textTransform": "capitalize",
           }
         }
       />
@@ -58,7 +57,9 @@ exports[`renders correctly 1`] = `
     <Component
       style={
         Object {
+          "alignItems": "center",
           "flexDirection": "row",
+          "paddingRight": 55,
         }
       }
     >
@@ -79,7 +80,7 @@ exports[`renders correctly 1`] = `
         value=""
       />
       <Icon
-        color="#2f1959"
+        color="#5c4d7a"
         name="send"
         onPress={[Function]}
         raised={true}
@@ -89,7 +90,564 @@ exports[`renders correctly 1`] = `
         type="font-awesome"
         underlayColor="white"
       />
+      <ActionButton
+        active={false}
+        activeOpacity={0.85}
+        autoInactive={true}
+        backdrop={false}
+        backgroundTappable={false}
+        bgColor="transparent"
+        bgOpacity={1}
+        buttonColor="#5c4d7a"
+        buttonText="+"
+        buttonTextStyle={Object {}}
+        degrees={45}
+        fixNativeFeedbackRadius={false}
+        nativeFeedbackRippleColor="rgba(255,255,255,0.75)"
+        offsetX={10}
+        offsetY={6}
+        onPress={[Function]}
+        onPressIn={[Function]}
+        onPressOn={[Function]}
+        outRangeScale={1}
+        position="right"
+        resetToken={null}
+        size={44}
+        spacing={40}
+        useNativeFeedback={true}
+        verticalOrientation="up"
+      >
+        <ActionButtonItem
+          active={true}
+          activeOpacity={0.85}
+          buttonColor="#9b59b6"
+          fixNativeFeedbackRadius={false}
+          nativeFeedbackRippleColor="rgba(255,255,255,0.75)"
+          onPress={[Function]}
+          size={20}
+          spaceBetween={15}
+          title="New Task"
+          useNativeFeedback={true}
+        >
+          <Icon
+            color="#5c4d7a"
+            name="create"
+            raised={true}
+            reverse={false}
+            reverseColor="white"
+            size={20}
+            underlayColor="white"
+          />
+        </ActionButtonItem>
+        <ActionButtonItem
+          active={true}
+          activeOpacity={0.85}
+          buttonColor="#9b59b6"
+          fixNativeFeedbackRadius={false}
+          nativeFeedbackRippleColor="rgba(255,255,255,0.75)"
+          onPress={[Function]}
+          size={20}
+          spaceBetween={15}
+          title="Set-up Meeting"
+          useNativeFeedback={true}
+        >
+          <Icon
+            color="#5c4d7a"
+            name="group"
+            raised={true}
+            reverse={false}
+            reverseColor="white"
+            size={20}
+            type="font-awesome"
+            underlayColor="white"
+          />
+        </ActionButtonItem>
+      </ActionButton>
     </Component>
   </KeyboardAvoidingView>
+  <ReactNativeModal
+    animationIn="slideInUp"
+    animationInTiming={300}
+    animationOut="slideOutDown"
+    animationOutTiming={300}
+    avoidKeyboard={true}
+    backdropColor="black"
+    backdropOpacity={0.7}
+    backdropTransitionInTiming={300}
+    backdropTransitionOutTiming={300}
+    deviceHeight={null}
+    deviceWidth={null}
+    hideModalContentWhileAnimating={false}
+    isVisible={false}
+    onBackButtonPress={[Function]}
+    onBackdropPress={[Function]}
+    onModalHide={[Function]}
+    onModalShow={[Function]}
+    scrollOffset={0}
+    scrollOffsetMax={0}
+    scrollTo={null}
+    supportedOrientations={
+      Array [
+        "portrait",
+        "landscape",
+      ]
+    }
+    swipeThreshold={100}
+    useNativeDriver={false}
+  >
+    <Component
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "rgba(0, 0, 0, 0.1)",
+          "borderRadius": 20,
+          "paddingHorizontal": 30,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontFamily": "BebasNeue",
+            "fontSize": 25,
+            "paddingVertical": 30,
+            "textAlign": "center",
+          }
+        }
+      >
+        CREATE YOUR TASK HERE!
+      </Text>
+      <Component
+        style={
+          Object {
+            "padding": 10,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          onChangeText={[Function]}
+          placeholder="Task Name"
+          style={
+            Object {
+              "borderBottomWidth": 0.5,
+              "borderColor": "lightgray",
+              "borderTopWidth": 0.5,
+              "height": 40,
+            }
+          }
+          value=""
+        />
+      </Component>
+      <Component
+        style={
+          Object {
+            "padding": 10,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          onChangeText={[Function]}
+          placeholder="Task Description"
+          style={
+            Object {
+              "borderBottomWidth": 0.5,
+              "borderColor": "lightgray",
+              "borderTopWidth": 0.5,
+              "height": 40,
+            }
+          }
+          value=""
+        />
+      </Component>
+      <Component
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "paddingLeft": 10,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          editable={false}
+          placeholder="Time"
+          style={
+            Array [
+              Object {
+                "borderBottomWidth": 0.5,
+                "borderColor": "lightgray",
+                "borderTopWidth": 0.5,
+                "height": 40,
+              },
+              Object {
+                "width": 450,
+              },
+            ]
+          }
+          value=""
+        />
+        <Icon
+          color="#5c4d7a"
+          name="access-time"
+          onPress={[Function]}
+          raised={true}
+          reverse={false}
+          reverseColor="white"
+          size={20}
+          underlayColor="white"
+        />
+      </Component>
+      <Component
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "paddingLeft": 10,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          editable={false}
+          placeholder="Date"
+          style={
+            Array [
+              Object {
+                "borderBottomWidth": 0.5,
+                "borderColor": "lightgray",
+                "borderTopWidth": 0.5,
+                "height": 40,
+              },
+              Object {
+                "width": 450,
+              },
+            ]
+          }
+          value=""
+        />
+        <Icon
+          color="#5c4d7a"
+          name="date-range"
+          onPress={[Function]}
+          raised={true}
+          reverse={false}
+          reverseColor="white"
+          size={20}
+          underlayColor="white"
+        />
+      </Component>
+      <Component
+        style={
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "padding": 30,
+          }
+        }
+      >
+        <Button
+          buttonStyle={
+            Object {
+              "backgroundColor": "#5c4d7a",
+              "borderColor": "transparent",
+              "borderRadius": 30,
+              "borderWidth": 0,
+              "height": 50,
+              "paddingHorizontal": 10,
+              "width": 220,
+            }
+          }
+          icon={
+            Object {
+              "color": "white",
+              "name": "tasks",
+              "size": 15,
+              "type": "font-awesome",
+            }
+          }
+          onPress={[Function]}
+          title="Schedule"
+        />
+      </Component>
+      <CustomDatePickerIOS
+        cancelTextIOS="Cancel"
+        confirmTextIOS="Confirm"
+        date={2018-11-26T01:38:25.407Z}
+        isVisible={false}
+        mode="time"
+        neverDisableConfirmIOS={false}
+        onCancel={[Function]}
+        onConfirm={[Function]}
+        onDateChange={[Function]}
+        onHideAfterConfirm={[Function]}
+        reactNativeModalPropsIOS={Object {}}
+        titleIOS="Pick a date"
+      />
+      <CustomDatePickerIOS
+        cancelTextIOS="Cancel"
+        confirmTextIOS="Confirm"
+        date={2018-11-26T01:38:25.407Z}
+        isVisible={false}
+        mode="date"
+        neverDisableConfirmIOS={false}
+        onCancel={[Function]}
+        onConfirm={[Function]}
+        onDateChange={[Function]}
+        onHideAfterConfirm={[Function]}
+        reactNativeModalPropsIOS={Object {}}
+        titleIOS="Pick a date"
+      />
+    </Component>
+  </ReactNativeModal>
+  <ReactNativeModal
+    animationIn="slideInUp"
+    animationInTiming={300}
+    animationOut="slideOutDown"
+    animationOutTiming={300}
+    avoidKeyboard={true}
+    backdropColor="black"
+    backdropOpacity={0.7}
+    backdropTransitionInTiming={300}
+    backdropTransitionOutTiming={300}
+    deviceHeight={null}
+    deviceWidth={null}
+    hideModalContentWhileAnimating={false}
+    isVisible={false}
+    onBackButtonPress={[Function]}
+    onBackdropPress={[Function]}
+    onModalHide={[Function]}
+    onModalShow={[Function]}
+    scrollOffset={0}
+    scrollOffsetMax={0}
+    scrollTo={null}
+    supportedOrientations={
+      Array [
+        "portrait",
+        "landscape",
+      ]
+    }
+    swipeThreshold={100}
+    useNativeDriver={false}
+  >
+    <Component
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "rgba(0, 0, 0, 0.1)",
+          "borderRadius": 20,
+          "paddingHorizontal": 30,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontFamily": "BebasNeue",
+            "fontSize": 25,
+            "paddingVertical": 30,
+            "textAlign": "center",
+          }
+        }
+      >
+        SCHEDULE YOUR MEETING HERE!
+      </Text>
+      <Component
+        style={
+          Object {
+            "padding": 10,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          onChangeText={[Function]}
+          placeholder="Meeting Title"
+          style={
+            Object {
+              "borderBottomWidth": 0.5,
+              "borderColor": "lightgray",
+              "borderTopWidth": 0.5,
+              "height": 40,
+            }
+          }
+          value=""
+        />
+      </Component>
+      <Component
+        style={
+          Object {
+            "padding": 10,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          onChangeText={[Function]}
+          placeholder="This meeting is about..."
+          style={
+            Object {
+              "borderBottomWidth": 0.5,
+              "borderColor": "lightgray",
+              "borderTopWidth": 0.5,
+              "height": 40,
+            }
+          }
+          value=""
+        />
+      </Component>
+      <Component
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "paddingLeft": 10,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          editable={false}
+          placeholder="Time"
+          style={
+            Array [
+              Object {
+                "borderBottomWidth": 0.5,
+                "borderColor": "lightgray",
+                "borderTopWidth": 0.5,
+                "height": 40,
+              },
+              Object {
+                "width": 450,
+              },
+            ]
+          }
+          value=""
+        />
+        <Icon
+          color="#5c4d7a"
+          name="access-time"
+          onPress={[Function]}
+          raised={true}
+          reverse={false}
+          reverseColor="white"
+          size={20}
+          underlayColor="white"
+        />
+      </Component>
+      <Component
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "paddingLeft": 10,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          editable={false}
+          placeholder="Date"
+          style={
+            Array [
+              Object {
+                "borderBottomWidth": 0.5,
+                "borderColor": "lightgray",
+                "borderTopWidth": 0.5,
+                "height": 40,
+              },
+              Object {
+                "width": 450,
+              },
+            ]
+          }
+          value=""
+        />
+        <Icon
+          color="#5c4d7a"
+          name="date-range"
+          onPress={[Function]}
+          raised={true}
+          reverse={false}
+          reverseColor="white"
+          size={20}
+          underlayColor="white"
+        />
+      </Component>
+      <Component
+        style={
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "padding": 30,
+          }
+        }
+      >
+        <Button
+          buttonStyle={
+            Object {
+              "backgroundColor": "#5c4d7a",
+              "borderColor": "transparent",
+              "borderRadius": 30,
+              "borderWidth": 0,
+              "height": 50,
+              "paddingHorizontal": 10,
+              "width": 220,
+            }
+          }
+          icon={
+            Object {
+              "color": "white",
+              "name": "group",
+              "size": 15,
+              "type": "font-awesome",
+            }
+          }
+          onPress={[Function]}
+          title="Schedule"
+        />
+      </Component>
+      <CustomDatePickerIOS
+        cancelTextIOS="Cancel"
+        confirmTextIOS="Confirm"
+        date={2018-11-26T01:38:25.407Z}
+        isVisible={false}
+        mode="time"
+        neverDisableConfirmIOS={false}
+        onCancel={[Function]}
+        onConfirm={[Function]}
+        onDateChange={[Function]}
+        onHideAfterConfirm={[Function]}
+        reactNativeModalPropsIOS={Object {}}
+        titleIOS="Pick a date"
+      />
+      <CustomDatePickerIOS
+        cancelTextIOS="Cancel"
+        confirmTextIOS="Confirm"
+        date={2018-11-26T01:38:25.407Z}
+        isVisible={false}
+        mode="date"
+        neverDisableConfirmIOS={false}
+        onCancel={[Function]}
+        onConfirm={[Function]}
+        onDateChange={[Function]}
+        onHideAfterConfirm={[Function]}
+        reactNativeModalPropsIOS={Object {}}
+        titleIOS="Pick a date"
+      />
+    </Component>
+  </ReactNativeModal>
 </Fragment>
 `;

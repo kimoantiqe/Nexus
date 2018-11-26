@@ -22,8 +22,14 @@ import { Pages } from "react-native-pages";
 import { WaveIndicator } from "react-native-indicators";
 import SliderBadge from "../components/SliderBadge";
 import { LinearGradient } from "expo";
+import Lightbox from 'react-native-lightbox';
+import ModalSelector from 'react-native-modal-selector'
+import {getImageFromLibrary, getImageFromCamera} from './ImageInterface';
+import SendBird from 'sendbird';
 
 const API = require("../API_calls/APIs");
+var apiURL = API.apiURL;
+const imageUrl = apiURL + '/image/';
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
@@ -43,7 +49,12 @@ export default class RegCompleteProfile extends React.Component {
     lastName: "",
     loading: 0,
     page: 0,
-    headerTitle: ["PROFILE", "INTERESTS", "GOALS", "INDUSTRY", "PICTURE"]
+    headerTitle: ["PROFILE", "INTERESTS", "GOALS", "INDUSTRY", "PICTURE"],
+    image: 'https://www.peakgrantmaking.org/wp-content/uploads/2017/05/gender_neutral_icons_lf-02.png',
+    isModalVisible: false,
+    imageWidth: width/4,
+    displayWidth: width/2,
+    imageAvailable: false,
   };
 
   doneScroll(p) {
@@ -127,8 +138,95 @@ export default class RegCompleteProfile extends React.Component {
     }
   }
 
+  //need to make sure
+  _getUser = async () => {
+    return new Promise(async (resolve, reject) => {
+        let userToken = Expo.SecureStore.getItemAsync("userToken");
+        if (userToken != null) {
+            var user = {
+                method: "GET",
+                headers: {
+                    Authorization: userToken
+                }
+            };
+            await fetch(apiURL + "/user", user)
+            .then(response => response.json())
+            .then(response => {
+                resolve(response.user)
+            });
+        }
+    }
+  )}
+
+  _getImage = () => {
+    this._getUser().then((user) => {
+        const imageIn = imageUrl + user.image;
+        this.setState({image: imageIn});
+    })
+  }
+
+  _sendPicture = async () => {
+    if(this.state.imageAvailable === false){
+      await API.sendImage(this.state.image)
+      const sb = SendBird.getInstance();
+      sb.updateCurrentUserInfo(this.state.firstName + " " + this.state.lastName, this.state.image, function(response, error) {
+        if(error) {
+          console.log("ERror" + error)
+          return;
+        } 
+        console.log(response);   
+        });
+    }
+  }
+
+    _updatePic = async(key) => {
+      if(key === 0)
+        await getImageFromCamera().then(async(image) => {
+            this.state.imageAvailable = true;
+            const output = 'data:image/jpeg;base64,' + image;
+            this.setState({image: output})
+            const sb = SendBird.getInstance();
+            await this._getUser().then(async (user) => {
+                const imageOut = imageUrl + user.image;
+                sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
+                    if(error) {
+                        console.log("ERror" + error)
+                        return;
+                    } 
+                    console.log(response);   
+                });
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+      else
+        await getImageFromLibrary().then(async(image) => {
+            const output = 'data:image/jpeg;base64,' + image;
+            this.setState({image: output})
+            const sb = SendBird.getInstance();
+            await this._getUser().then(async (user) => {
+                const imageOut = imageUrl + user.image;
+                sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
+                    if(error) {
+                        console.log("ERror" + error)
+                        return;
+                    } 
+                    console.log(response);   
+                });
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+      }
+
   render() {
     const { industry, interests, LF, page } = this.state;
+    const data = [
+      { key: 0, label: 'Take a Picture..' },
+      { key: 1, label: 'Choose From Library..' }
+    ];
 
     if (this.state.loading == 1) {
       console.log("HERE");
@@ -218,6 +316,7 @@ export default class RegCompleteProfile extends React.Component {
                       this.state.bio,
                       this.props
                     );
+                    await this._sendPicture();
                     this.setState({page: 0});
                     this.setState({ loading: 0 });
                   }}
@@ -593,7 +692,28 @@ export default class RegCompleteProfile extends React.Component {
               </View>
             </Content>
             <Content>
-              {/* INSERT IMAGE UPLOAD HERE */}
+            <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}} >
+                <Lightbox
+                    onOpen={() => {this.setState({imageWidth: 0, displayWidth: width})}}
+                    willClose={() => {this.setState({imageWidth: width/4, displayWidth: width/2})}}
+                    >
+                    <Image
+                    style={{ height: this.state.displayWidth, width: this.state.displayWidth, borderRadius: this.state.imageWidth,
+                            borderWidth: 3, borderColor: 'white'}}
+                    source={{ uri: this.state.image }}
+                    />
+                </Lightbox>
+
+                <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}}>
+                <ModalSelector
+                    style={{backgroundColor: 'white', borderRadius: 6}}
+                    backdropPressToClose={true}
+                    data={data}
+                    initValue="Update Picture"
+                    onChange={(option)=>{this._updatePic(option.key)}} />
+                </View>
+                
+                </View>
             </Content>
           </Pages>
         </Container>

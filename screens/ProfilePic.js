@@ -3,6 +3,7 @@ import { List, ListItem, Avatar } from 'react-native-elements'
 import { AsyncStorage, Dimensions, View, Image } from 'react-native'
 import moment from 'moment'
 import SendBird from 'sendbird';
+import { WaveIndicator } from "react-native-indicators";
 
 import {
     Container, 
@@ -35,11 +36,12 @@ export default class ProfilePic extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            image: '',
+            image: 'https://www.peakgrantmaking.org/wp-content/uploads/2017/05/gender_neutral_icons_lf-02.png',
             isModalVisible: false,
             imageWidth: width/4,
             displayWidth: width/2,
             refresh: false,
+            loading: 1,
         }
     }
 
@@ -68,9 +70,13 @@ export default class ProfilePic extends React.Component {
     )}
 
     _getImage = () => {
+        this.setState({loading: 1});
         this._getUser().then((user) => {
-            const imageIn = imageUrl + user.image;
-            this.setState({image: imageIn});
+            this.setState({loading: 0});
+            if(user.image !== undefined){
+                const imageIn = imageUrl + user.image;
+                this.setState({image: imageIn});
+            }
         })
     }
 
@@ -120,6 +126,20 @@ export default class ProfilePic extends React.Component {
             { key: 0, label: 'Take a Picture..' },
             { key: 1, label: 'Choose From Library..' }
         ];
+        if(this.state.loading === 1){
+            console.log("HERE");
+            return(
+              
+              <View>
+              <WaveIndicator
+                  size={80}
+                  color="white"
+                  style={{ flex: 0, marginTop: 90 }}
+                />
+              </View>
+            )
+          }
+    
         return (
             <Container>
                 <Content>
