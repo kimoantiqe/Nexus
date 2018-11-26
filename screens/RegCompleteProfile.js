@@ -569,7 +569,7 @@ export default class RegCompleteProfile extends React.Component {
                     toCall={() => this.onPressInterests("ID")}
                   />
               </View>
-              <Text style={styles.Etext}>On a scale of 1 to 5, set how important these interests are in deciding who you will be matched with.</Text>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
               <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
               <Badge style={{
                     backgroundColor: 'transparent',
@@ -581,7 +581,7 @@ export default class RegCompleteProfile extends React.Component {
                     
                     }}>
               <Slider 
-                onSlidingComplete={(value) => this.sliding(value, 0)}
+                onValueChange={(value) => this.sliding(value, 0)}
                 maximumValue={5}
                 step={1}
                 value={Ival}
@@ -589,6 +589,14 @@ export default class RegCompleteProfile extends React.Component {
               />
               </Badge>
                 </Item>
+                <Text 
+              style={{
+                color: '#FFC719',
+                fontFamily: "BebasNeue",
+                fontSize: 35,
+                alignSelf: 'center'
+                  }}
+              >{Ival}</Text>
             </Content>
             <Content>
             <View
@@ -653,7 +661,7 @@ export default class RegCompleteProfile extends React.Component {
                   />
                 </Form>
               </View>
-              <Text style={styles.Etext}>On a scale of 1 to 5, set how important these goals are in deciding who you will be matched with.</Text>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
               <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
               <Badge style={{
                     backgroundColor: 'transparent',
@@ -665,7 +673,7 @@ export default class RegCompleteProfile extends React.Component {
                     
                     }}>
               <Slider 
-                onSlidingComplete={(value) => this.sliding(value, 1)}
+                onValueChange={(value) => this.sliding(value, 1)}
                 maximumValue={5}
                 step={1}
                 value={LFval}
@@ -673,6 +681,14 @@ export default class RegCompleteProfile extends React.Component {
               />
               </Badge>
                 </Item>
+                <Text 
+              style={{
+                color: '#FFC719',
+                fontFamily: "BebasNeue",
+                fontSize: 35,
+                alignSelf: 'center'
+                  }}
+              >{LFval}</Text>
             </Content>
             <Content>
             <View
@@ -738,7 +754,7 @@ export default class RegCompleteProfile extends React.Component {
                   />
                 </Form>
               </View>
-              <Text style={styles.Etext}>On a scale of 1 to 5, set how important these industry are in deciding who you will be matched with.</Text>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
               <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
               <Badge style={{
                     backgroundColor: 'transparent',
@@ -750,7 +766,7 @@ export default class RegCompleteProfile extends React.Component {
                     
                     }}>
               <Slider 
-                onSlidingComplete={(value) => this.sliding(value, 2)}
+                onValueChange={(value) => this.sliding(value, 2)}
                 maximumValue={5}
                 step={1}
                 value={INval}
@@ -758,6 +774,14 @@ export default class RegCompleteProfile extends React.Component {
               />
               </Badge>
                 </Item>
+                <Text 
+              style={{
+                color: '#FFC719',
+                fontFamily: "BebasNeue",
+                fontSize: 35,
+                alignSelf: 'center'
+                  }}
+              >{INval}</Text>
             </Content>
             <Content>
             <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}} >
@@ -816,7 +840,6 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 19,
     paddingHorizontal: width * 0.02,
-    paddingTop: height*0.02,
     fontFamily: "Folks-Normal",
     textAlign: "center",
     flexWrap: "wrap",
