@@ -148,7 +148,7 @@ const match = async function(req, res){
 		if( !newuser ){
 			return ReE(res, "user not found");
     }
-    if(newuser == user){
+    if(newuser._id.toString() == user._id.toString()){
       return ReE(res, "cannot add yourself");
     }
 		else if(newuser.matches.map((newuser) => newuser.toString()).includes(user._id.toString())){

@@ -318,6 +318,219 @@ module.exports.popconn1 = (done,chai,server) => {
 
 
 
+//Test matching already matched Users
+module.exports.matchInvalidID = (done,chai,server) => {
+    let newDetails = {
+        id: "leet hx04"
+    };
+    chai.request(server)
+        .put('/api/user/match')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(false);
+          done();
+        });
+};
+
+
+
+
+//Test matching already matched Users
+module.exports.matchAlreadyMatched = (done,chai,server) => {
+    let newDetails = {
+        id: dummyUser2.user._id
+    };
+    chai.request(server)
+        .put('/api/user/match')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(false);
+          done();
+        });
+};
+
+
+
+//Test matching already matched Users
+module.exports.matchToMyself = (done,chai,server) => {
+    let newDetails = {
+        id: dummyUser.user._id
+    };
+    chai.request(server)
+        .put('/api/user/match')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(false);
+          done();
+        });
+};
+
+
+//Test delete user
+module.exports.deleteUser1 = (done,chai,server) => {
+        chai.request(server)
+            .delete('/api/user')
+            .set('Content-Type', 'application/json')
+            .set('Authorization',dummyUser.token)
+            .end((err, res) => {
+                  res.should.have.status(204);
+              done();
+            });
+};
+
+//Test delete user
+module.exports.deleteUser2 = (done,chai,server) => {
+        chai.request(server)
+            .delete('/api/user')
+            .set('Content-Type', 'application/json')
+            .set('Authorization',dummyUser2.token)
+            .end((err, res) => {
+                  res.should.have.status(204);
+              done();
+            });
+};
+
+
+
+//Register User 1
+module.exports.registerUser3 = (done,chai,server) => {
+    let register = {
+          email: emailCreated,
+          password: passwordCreated,
+    };
+    chai.request(server)
+        .post('/api/user')
+        .set('Content-Type', 'application/json')
+        .send(register)
+        .end((err, res) => {
+              res.should.have.status(201);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+
+//Register User 2
+module.exports.registerUser4 = (done,chai,server) => {
+    let register = {
+          email: emailCreated2,
+          password: passwordCreated2,
+    };
+    chai.request(server)
+        .post('/api/user')
+        .set('Content-Type', 'application/json')
+        .send(register)
+        .end((err, res) => {
+              res.should.have.status(201);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+
+
+//login user 1
+module.exports.loginUser3 = (done,chai,server) => {
+    let register = {
+          email: emailCreated,
+          password: passwordCreated
+    };
+    chai.request(server)
+        .post('/api/user/login')
+        .set('Content-Type', 'application/json')
+        .send(register)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+              dummyUser = res.body;
+          done();
+        });
+};
+
+
+//login user 2
+module.exports.loginUser4 = (done,chai,server) => {
+    let register = {
+          email: emailCreated2,
+          password: passwordCreated2
+    };
+    chai.request(server)
+        .post('/api/user/login')
+        .set('Content-Type', 'application/json')
+        .send(register)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+              dummyUser2 = res.body;
+          done();
+        });
+};
+
+
+
+//Test matching already matched Users
+module.exports.matchSuccess = (done,chai,server) => {
+    let newDetails = {
+        id: dummyUser2.user._id
+    };
+    chai.request(server)
+        .put('/api/user/match')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+
+//Test delete user
+module.exports.deleteUser3 = (done,chai,server) => {
+        chai.request(server)
+            .delete('/api/user')
+            .set('Content-Type', 'application/json')
+            .set('Authorization',dummyUser.token)
+            .end((err, res) => {
+                  res.should.have.status(204);
+              done();
+            });
+};
+
+//Test delete user
+module.exports.deleteUser4 = (done,chai,server) => {
+        chai.request(server)
+            .delete('/api/user')
+            .set('Content-Type', 'application/json')
+            .set('Authorization',dummyUser2.token)
+            .end((err, res) => {
+                  res.should.have.status(204);
+              done();
+            });
+};
+
+
+
+
+
+
+
+
+
 
 
 
