@@ -254,6 +254,15 @@ export default class Matches extends React.Component {
                 }
               );
             }
+            if(!Users[this.state.currentIndex]){
+              Users=[];
+              await this.setState(
+                { currentIndex: 0, loading:0},
+                () => {
+                  this.position.setValue({ x: 0, y: 0 });
+                }
+              );
+            }
           });
         }
         else {
@@ -745,7 +754,7 @@ export default class Matches extends React.Component {
             <Animated.View style={[styles.BIO,
                {transform: [{translateY: this.state.bounceValue}]} ,
                {opacity : this.state.profileopacity}]}>
-           <TouchableHighlight style={styles.Name} onPress={()=> {onPress && onPress()}}>  
+           <TouchableHighlight style={styles.Name}>  
                 <Text style={styles.NameText}>
                   {item.firstName + " " + item.lastName}
                 </Text>
