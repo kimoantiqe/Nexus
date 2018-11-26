@@ -13,6 +13,9 @@ let UserSchema = mongoose.Schema({
     index: true,
     sparse: true
   },
+  ExpoUserToken:{
+    type:String
+  },
   image:{
     type:mongoose.Schema.Types.ObjectId,
     ref :'image',
