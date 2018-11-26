@@ -39,6 +39,14 @@ export default class RegCompleteProfile extends React.Component {
     title: "RCP"
   };
 
+  componentDidMount () {
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardWillShow', this._keyboardWillShow);
+  }
+
+  _keyboardWillShow () {
+    // if(check) {Keyboard.dismiss();}
+  }
+
   state = {
     value: 0.5,
     interests: {},
@@ -58,7 +66,6 @@ export default class RegCompleteProfile extends React.Component {
   };
 
   doneScroll(p) {
-    Keyboard.dismiss();
    this.setState({ page: p });
   }
 
