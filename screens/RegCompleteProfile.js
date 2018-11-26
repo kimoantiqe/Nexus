@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { Dimensions, Image, StyleSheet, Keyboard } from "react-native";
 import {
   Container,
   Content,
@@ -43,8 +43,13 @@ export default class RegCompleteProfile extends React.Component {
     lastName: "",
     loading: 0,
     page: 0,
-    headerTitle: ["PROFILE", "INTERESTS", "GOALS", "INDUSTRY"]
+    headerTitle: ["PROFILE", "INTERESTS", "GOALS", "INDUSTRY", "PICTURE"]
   };
+
+  doneScroll(p) {
+    Keyboard.dismiss();
+   this.setState({ page: p });
+  }
 
   handleBio = text => {
     this.setState({ bio: text });
@@ -187,7 +192,7 @@ export default class RegCompleteProfile extends React.Component {
                     name='arrow-left'
                     style={{
                       fontSize: 40,
-                      color: '#ef6e0b',
+                      color: '#FFC719',
                     }}
                   />
                 </Button>
@@ -197,7 +202,7 @@ export default class RegCompleteProfile extends React.Component {
               <Title style={styles.headerTitle}>{(page != 0) ? this.state.headerTitle[page-1] : ""}</Title>
             </Body>
             <Right>
-            {page >= 4 ? (
+            {page >= 5 ? (
               
                 <Button
                   hasText
@@ -231,7 +236,7 @@ export default class RegCompleteProfile extends React.Component {
                     name='arrow-right'
                     style={{
                       fontSize: 40,
-                      color: '#ef6e0b',
+                      color: '#FFC719',
                     }}
                   />
                 </Button>
@@ -245,7 +250,7 @@ export default class RegCompleteProfile extends React.Component {
             ref={ref => {
               this.pager = ref;
             }}
-            onScrollEnd={p => this.setState({ page: p })}
+            onScrollEnd={(p) => this.doneScroll(p)}
           >
           <Content 
             scrollEnabled={false}
@@ -295,7 +300,7 @@ export default class RegCompleteProfile extends React.Component {
                     name='arrow-right'
                     style={{
                       fontSize: 57,
-                      color: '#ef6e0b',
+                      color: '#FFC719',
                       paddingLeft: width*0.02
                     }}
                   />
@@ -309,9 +314,10 @@ export default class RegCompleteProfile extends React.Component {
               name='person'
               style={{
                 fontSize: 55,
-                color: '#ef6e0b',
+                color: '#FFC719',
                 alignSelf: 'center',
-                paddingTop: height*0.01
+                paddingTop: height*0.01,
+                paddingLeft: width*0.045
               }}
             />
             <Text
@@ -422,7 +428,7 @@ export default class RegCompleteProfile extends React.Component {
                 name='lightbulb-on'
                 style={{
                   fontSize: 55,
-                  color: '#ef6e0b',
+                  color: '#FFC719',
                   alignSelf: 'center',
                   paddingTop: height*0.01
                 }}
@@ -480,7 +486,7 @@ export default class RegCompleteProfile extends React.Component {
                   name='account-search'
                   style={{
                     fontSize: 55,
-                    color: '#ef6e0b',
+                    color: '#FFC719',
                     alignSelf: 'center',
                     paddingTop: height*0.01
                   }}
@@ -539,7 +545,7 @@ export default class RegCompleteProfile extends React.Component {
                   name='briefcase'
                   style={{
                     fontSize: 55,
-                    color: '#ef6e0b',
+                    color: '#FFC719',
                     alignSelf: 'center',
                     paddingTop: height*0.01
                   }}
@@ -586,6 +592,9 @@ export default class RegCompleteProfile extends React.Component {
                 </Form>
               </View>
             </Content>
+            <Content>
+              {/* INSERT IMAGE UPLOAD HERE */}
+            </Content>
           </Pages>
         </Container>
       );
@@ -616,7 +625,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   headerNavText:{
-    color: '#ef6e0b',
+    color: '#FFC719',
     fontSize: 20,
     fontWeight: '600'
   }
