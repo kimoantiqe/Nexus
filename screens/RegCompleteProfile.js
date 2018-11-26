@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Image, StyleSheet, Keyboard } from "react-native";
+import { Dimensions, Image, StyleSheet, Keyboard, AsyncStorage } from "react-native";
 import {
   Container,
   Content,
@@ -148,7 +148,8 @@ export default class RegCompleteProfile extends React.Component {
   //need to make sure
   _getUser = async () => {
     return new Promise(async (resolve, reject) => {
-        let userToken = Expo.SecureStore.getItemAsync("userToken");
+        let userToken = await AsyncStorage.getItem("userToken");
+        console.log(userToken);
         if (userToken != null) {
             var user = {
                 method: "GET",
@@ -182,7 +183,20 @@ export default class RegCompleteProfile extends React.Component {
           return;
         } 
         console.log(response);   
-        });
+      });
+    }else{
+      const sb = SendBird.getInstance();
+      await this._getUser().then(async (user) => {
+        console.log(user);
+        const imageOut = imageUrl + user.image;
+        sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
+          if(error) {
+            console.log("ERror" + error)
+            return;
+          } 
+          console.log(response);   
+       });
+      })
     }
   }
 
@@ -192,36 +206,15 @@ export default class RegCompleteProfile extends React.Component {
             this.state.imageAvailable = true;
             const output = 'data:image/jpeg;base64,' + image;
             this.setState({image: output})
-            const sb = SendBird.getInstance();
-            await this._getUser().then(async (user) => {
-                const imageOut = imageUrl + user.image;
-                sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
-                    if(error) {
-                        console.log("ERror" + error)
-                        return;
-                    } 
-                    console.log(response);   
-                });
-            })
         })
         .catch((error) => {
             console.log(error);
         })
       else
         await getImageFromLibrary().then(async(image) => {
+            this.state.imageAvailable = true;
             const output = 'data:image/jpeg;base64,' + image;
             this.setState({image: output})
-            const sb = SendBird.getInstance();
-            await this._getUser().then(async (user) => {
-                const imageOut = imageUrl + user.image;
-                sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
-                    if(error) {
-                        console.log("ERror" + error)
-                        return;
-                    } 
-                    console.log(response);   
-                });
-            })
         })
         .catch((error) => {
             console.log(error);

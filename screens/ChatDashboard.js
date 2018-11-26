@@ -6,6 +6,7 @@ import { sbCreateGroupChannelListQuery, sbConnect } from '../sendbirdActions';
 import { getGroupChannelList } from '../actions';
 import Swipeable from 'react-native-swipeable';
 import moment from 'moment'
+import {Notifications} from 'expo'
 
 import {
     Header,
@@ -49,6 +50,8 @@ class ChatDashboard extends React.Component {
         //this._connectSb();
         this.getUserID();
         this._initGroupChannelList();
+        console.log(this._notificationSubscription);
+        this._notificationSubscription = Notifications.addListener(this._handleNotification);
     }
 
     componentWillReceiveProps(props) {
@@ -128,9 +131,9 @@ class ChatDashboard extends React.Component {
             return createdAt;
     }
 
-    _leaveChannel = (groupChannel) => {
+    _leaveChannel = async (groupChannel) => {
         
-        groupChannel.leave(function(response, error) {
+        await groupChannel.leave(function(response, error) {
             if (error) {
                 return;
             }
@@ -169,7 +172,8 @@ class ChatDashboard extends React.Component {
                     }
                 });
                 return null;
-            }
+            } else if(rowData.memberCount === 0)
+                return null;
         }
 
         let lastMessage;

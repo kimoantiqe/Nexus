@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://192.168.1.115:1337/api";
+const apiURL = "https://nexus-restapi.azurewebsites.net/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -564,3 +564,23 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
     }
   };
   module.exports.sendImage = sendImage;
+
+  _pushNotification = async() => {
+    
+    userToken = await Expo.SecureStore.getItemAsync("userToken");
+    //userToken = await AsyncStorage.getItem('userToken');
+
+    if (userToken != null) {
+      var updateUser = {
+        method: 'PUT',
+        headers: {
+          'Authorization': userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'ExpoUserToken' : token
+          })
+      }
+      await fetch(apiURL + '/user', updateUser)
+    }
+  };

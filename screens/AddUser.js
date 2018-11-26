@@ -93,10 +93,10 @@ export default class AddUser extends React.Component {
         }
     };
 
-    _addUser = (userid) => {
+    _addUser = async (userid) => {
         const currUserid = this.props.navigation.getParam('userID', null);
         const userids = [currUserid, userid];
-        sbCreateChannel(userids, 'MyChannel').then((groupChannel) => {
+        await sbCreateChannel(userids, 'MyChannel').then((groupChannel) => {
             const todayDate = Number(new Date(moment(Date.now()).format('YYYY-MM-DDTHH:mm:s')));
             const createdAtDate = Number(new Date(moment(groupChannel.createdAt).format('YYYY-MM-DDTHH:mm:s')));
             if(todayDate === createdAtDate)
