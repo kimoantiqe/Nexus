@@ -139,11 +139,8 @@ export default class HomeScreen extends React.Component {
 
  
   _onRefresh = async () => {
-    await this.setState({refreshing: true});
-    await this.setState({refreshing: false});
     this.setState({loading: 1});
     await this.getUserMatches();
-   
     this.setState({loading: 0});
   }
 
@@ -180,12 +177,6 @@ export default class HomeScreen extends React.Component {
 
     else return (
       <Container>
-        <Content refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh.bind(this)}
-          />
-        }>
           <Header
             iosBarStyle="light-content"
             androidStatusBarColor="#ffffff"
@@ -201,6 +192,12 @@ export default class HomeScreen extends React.Component {
               </Button>
             </Right>
           </Header>
+          <Content refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+          />
+        }>
           <FlatList
             style={{paddingHorizontal: 5}}
             horizontal
