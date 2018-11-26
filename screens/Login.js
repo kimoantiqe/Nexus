@@ -51,11 +51,13 @@ export default class Login extends React.Component {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       finalStatus = status;
     }
-  
+    
+    console.log(finalStatus);
+
     // Stop here if the user did not grant permissions
-    //if (finalStatus !== 'granted') {
-      //return;
-    //}
+    if (finalStatus !== 'granted') {
+      return;
+    }
   
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExpoPushTokenAsync();

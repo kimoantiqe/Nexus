@@ -229,7 +229,7 @@ export default class ChatScreen extends Component {
     }
 
     _handleDatePicked = (date, type) => {
-        moment.locale('pst');
+        moment.locale('utc');
         const dateOut = moment(date).format('MM-DD-YYYY').toString();
         dateInit = moment(date).format('YYYY-MM-DD').toString();
         if(type === 'task')
@@ -240,7 +240,7 @@ export default class ChatScreen extends Component {
     }
 
     _handleTimePicked = (time, type) => {
-        moment.locale('pst');
+        moment.locale('utc');
         const timeOut = moment(time).format('h:mm A').toString();
         timeInit = moment(time).format('HH:mm:ss.SSS').toString();
         if(type === 'task')

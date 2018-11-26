@@ -3,8 +3,11 @@ import {StyleSheet, View, Dimensions} from 'react-native';
 import Background from '../components/Background';
 import { Container, Content, Form, Input, Button, Item, Text } from 'native-base';
 import { WaveIndicator } from "react-native-indicators";
+import {Notifications, Permissions} from 'expo'
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
 
 const API = require("../API_calls/APIs");
 
@@ -45,14 +48,15 @@ export default class Register extends React.Component {
     }
   
     // Stop here if the user did not grant permissions
-    if (finalStatus !== 'granted') {
-      return;
-    }
+    //if (finalStatus !== 'granted') {
+      //return;
+    //}
   
     // Get the token that uniquely identifies this device
     let token = await Notifications.getExpoPushTokenAsync();
+    console.log(token);
 
-    await APIcall._pushNotification(token);
+    //await APIcall._pushNotification(token);
 
   }
 

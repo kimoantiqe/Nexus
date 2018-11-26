@@ -248,7 +248,8 @@ class ChatDashboard extends React.Component {
                             <Icon name="person-add" style={{color:'#f5ba57'}} onPress={() => 
                                 this.props.navigation.navigate("AddUser", {
                                     userID: userID,
-                                    addChannel: this._addChannel.bind(this)
+                                    addChannel: this._addChannel.bind(this),
+                                    list: this.state.list,
                                 })}
                             />
                         </Button>
