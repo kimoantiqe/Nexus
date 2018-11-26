@@ -153,12 +153,12 @@ export default class Matches extends React.Component {
 
   //Function that grabs a user from the database.
   getUser = async () => {
-    
+    console.log("im here");
     userToken = await Expo.SecureStore.getItemAsync("userToken");
     
 
     if (userToken != null) {
-      
+      console.log("im here 161");
       var grabUser = {
         method: "GET",
         headers: {
@@ -170,10 +170,12 @@ export default class Matches extends React.Component {
       await fetch(apiURL + "/user/getpotconn", grabUser)
         .then(response => response.json())
         .then(response => {
-         
+          console.log("im here 163");
           if (response.success) {
+            console.log(175);
+            console.log(response);
             if (response.array) {
-              
+              console.log("176");
               var array = JSON.parse(response.array);
               
               for (let i = 0; i < array.length; i++) {
@@ -182,7 +184,9 @@ export default class Matches extends React.Component {
             }
            
           }
-
+          else{
+            Users=[];
+          }
         })
         .then(() => {
           
@@ -196,11 +200,11 @@ export default class Matches extends React.Component {
    
   };
 
-  componentWillMount() {
+  componentWillMount(){
     this.setState({ currentIndex: -1 }, () => {
       this.position.setValue({ x: 0, y: 0 });
     });
-
+  
     this.PanResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onPanResponderMove: (evt, gestureState) => {
@@ -219,6 +223,15 @@ export default class Matches extends React.Component {
             } else {
               await this.setState(
                 { currentIndex: this.state.currentIndex + 1 },
+                () => {
+                  this.position.setValue({ x: 0, y: 0 });
+                }
+              );
+            }
+            if(!Users[this.state.currentIndex]){
+              Users=[];
+              await this.setState(
+                { currentIndex: 0, loading:0},
                 () => {
                   this.position.setValue({ x: 0, y: 0 });
                 }
