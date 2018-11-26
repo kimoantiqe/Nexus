@@ -275,11 +275,6 @@ describe('Nexus API test', async () => {
         it('should pass ', (done) =>   matching.popconn(done,chai,server)).timeout(0);
     });
 
-    describe('/GET /api/user/popconn POPULATES USER 2 ARRAY', () => {
-        it('should pass ', (done) =>   matching.popconn1(done,chai,server)).timeout(0);
-    });
-
-
       describe('/GET /api/user GETS USER 2', () => {
         it('should pass ', (done) => matching.getUser2(done,chai,server));
     });
