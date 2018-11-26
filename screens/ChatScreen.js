@@ -160,7 +160,6 @@ export default class ChatScreen extends Component {
                     this.state.friendId = this.state.userId;
                 }
             }
-            console.log(this.state.groupChannel);
             this.getChannelMessage(false);
         })
     }
