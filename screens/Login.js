@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Expo from 'expo'
+import {Permissions, Notifications} from 'expo'
 import { LinearGradient } from "expo";
 import {
   StyleSheet,
@@ -33,6 +33,38 @@ export default class Login extends React.Component {
       nickname: "",
       loading: 0,
     };
+
+    this.registerForPushNotificationsAsync();
+  }
+
+   registerForPushNotificationsAsync = async () => {
+    const { status: existingStatus } = await Permissions.askAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+  
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    
+    console.log(finalStatus);
+
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== 'granted') {
+      return;
+    }
+  
+    // Get the token that uniquely identifies this device
+    let token = await Notifications.getExpoPushTokenAsync();
+
+    console.log(token);
+
+    //await APIcall._pushNotification(token);
 
   }
 
