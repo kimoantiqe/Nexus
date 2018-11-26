@@ -37,9 +37,13 @@ class ChatDashboard extends React.Component {
             groupChannelListQuery: null,
             list: [],
             groupChannelList: ds.cloneWithRows([]),
+            notifictation: {},
         }
     }
 
+    _handleNotification = (notification) => {
+        this.setState({notification: notification});
+    };
 
     getUserID = async() => {
         //userID ='5bcf97fd4a5aa600150cc338';
@@ -50,8 +54,8 @@ class ChatDashboard extends React.Component {
         //this._connectSb();
         this.getUserID();
         this._initGroupChannelList();
-        console.log(this._notificationSubscription);
         this._notificationSubscription = Notifications.addListener(this._handleNotification);
+        console.log(this._notificationSubscription);
     }
 
     componentWillReceiveProps(props) {

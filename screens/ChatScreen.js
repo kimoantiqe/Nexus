@@ -35,6 +35,7 @@ var timeInit;
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const APIcall      = require("../API_calls/APIs");
+var apiURL = APIcall.apiURL;
 
 console.disableYellowBox = true
 
@@ -109,7 +110,10 @@ export default class ChatScreen extends Component {
     };
 
     _sendPushNotification = async(message) => {
-
+        console.log("Hello");
+        console.log(message);
+        console.log(this.state.friendToken);
+        console.log("Bye");
           var toPush = {
             method: 'POST',
             headers: {
@@ -117,14 +121,14 @@ export default class ChatScreen extends Component {
                 'accept-encoding': 'gzip, deflate',
                 'content-type': 'application/json'
             },
-            body: [{
+            body: JSON.stringify({
                 "to": this.state.friendToken,
                 "title": this.state.friendName,
                 "sound": "default",
                 "body": message,
-              }]
+              })
           }
-          await fetch(apiURL + '/user', toPush)
+          await fetch('https://exp.host/--/api/v2/push/send', toPush).then((response) => console.log(response))
       };
 
     getGroupChannel() {
@@ -172,9 +176,10 @@ export default class ChatScreen extends Component {
                 console.error(error)
                 return
             }
-            //this._sendPushNotification(this.state.text);
+            const messageOut = this.state.text;
             const messages = [].concat([message]).concat(this.state.messages)
             this.setState({ text: '', messages })
+            this._sendPushNotification(messageOut);
         })
 
     }
