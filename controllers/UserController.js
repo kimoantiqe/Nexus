@@ -102,6 +102,7 @@ const update = async function(req, res){
 
 	//Push into respective field into user object
 	pushIntoUser(user,data.interests,'interests');
+	pushIntoUser(user,data.lookingFor,'lookingFor');
 	pushEmphasis(user,data.ie,'ie');
 	pushEmphasis(user,data.ine,'ine');
 	pushEmphasis(user,data.lfe,'lfe');
