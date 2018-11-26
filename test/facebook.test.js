@@ -4,8 +4,8 @@ var dummyUser = {};
 
 module.exports.loginSuccessfb = (done,chai,server) => {
 		let login = {
-              access_token: 'EAARWTKVTjFgBAMVPNXTMxgeRHNQfMnbrJ4ZAUB7V0EKGx9TyDyxoBIlPkZByQqkxsB4lffBMNordzHCNOhUZAYqqcQ11QaEJCv1PUGkyov4FgaCM2M2mrTNLScRZBsg15kdzx78KAPtWpvjlCtgN77ZAkX1ZB7XkDv7sZA9ZASpH91YSAdcmnYYTCo5yZBUzDoi1zZCY9FD8gK8E3LzXllONDAvw2zIYfTLZA6LpLZB6zspCpZAP5HTPKOVEL'
-        };
+              access_token: 'EAARWTKVTjFgBAEzC1hi3Bzy9WWwZBuW5dkjoNBJXdOHZAsGf6jjZADbntninJiaj1Ovid7ddHjML51jYIV4DWKS4iYfrpw35HssSz7kn4mlxZAoDonwXPTUVCAaiJamHXXMZCJ0lP5WhYWmKGifFzzdmNPb6u0LU74FidNqDEXQnnmZCedPmbgVnrfaZABQ0JkWvg8ZCZAc3vlTlTiZBDMgnPnMIy9RPtEltGYDmzL6GreV2xrWCNWjrBh'
+        };        
         chai.request(server)
             .post('/api/user/login/facebook')
             .set('Content-Type', 'application/json')
