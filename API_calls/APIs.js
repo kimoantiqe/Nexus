@@ -2,11 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-<<<<<<< HEAD
-const apiURL = "http://10.0.0.228:1337/api";
-=======
 const apiURL = "https://nexus-restapi.azurewebsites.net/api";
->>>>>>> b541137fd1b12a801e4b69f5a5c25d67ac71b4fc
 module.exports.apiURL = apiURL;
 
 var regUserID;
