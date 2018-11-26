@@ -42,7 +42,8 @@ export default class RegCompleteProfile extends React.Component {
     firstName: "",
     lastName: "",
     loading: 0,
-    page: 0
+    page: 0,
+    headerTitle: ["PROFILE", "INTERESTS", "GOALS", "INDUSTRY"]
   };
 
   handleBio = text => {
@@ -135,7 +136,6 @@ export default class RegCompleteProfile extends React.Component {
           >
             <Left />
             <Body>
-              <Title style={styles.headerTitle}>PROFILE</Title>
             </Body>
             <Right />
           </Header>
@@ -194,10 +194,10 @@ export default class RegCompleteProfile extends React.Component {
               ) : null}
             </Left>
             <Body>
-              <Title style={styles.headerTitle}>{(page != 0) ? "PROFILE" : ""}</Title>
+              <Title style={styles.headerTitle}>{(page != 0) ? this.state.headerTitle[page-1] : ""}</Title>
             </Body>
             <Right>
-            {page >= 3 ? (
+            {page >= 4 ? (
               
                 <Button
                   hasText
@@ -247,7 +247,9 @@ export default class RegCompleteProfile extends React.Component {
             }}
             onScrollEnd={p => this.setState({ page: p })}
           >
-          <Content >
+          <Content 
+            scrollEnabled={false}
+          >
             <View
               style={{
                 paddingTop: height*0.03,
@@ -302,6 +304,19 @@ export default class RegCompleteProfile extends React.Component {
             <Content
               contentContainerStyle={{ paddingHorizontal: width * 0.07 }}
             >
+            <Icon 
+              type='Octicons'
+              name='person'
+              style={{
+                fontSize: 55,
+                color: '#ef6e0b',
+                alignSelf: 'center',
+                paddingTop: height*0.01
+              }}
+            />
+            <Text
+                  style={styles.Qtext}
+                >keep swiping to answer the next few questions. Doing so will help us connect you</Text>
               <Form>
                 <Text
                   style={{
@@ -395,32 +410,27 @@ export default class RegCompleteProfile extends React.Component {
             </Content>
 
             <Content>
-              
-              <View
-                style={{
-                  flexDirection:'row',
-                  alignItems: 'flex-start'
-                }}>
-                <Icon
-                  type='FontAwesome'
-                  name='question-circle-o'
-                  style={{
-                    fontSize: 47,
-                    color: '#2c2638',
-                    paddingLeft: width*0.02
-                  }}
-                />
                 <View
                   style={{
                     flexGrow: 1,
-                    width: 0,
+                    flexDirection:'column',
+                    alignItems: 'flex-start'
                   }}
                 >
+              <Icon 
+                type='MaterialCommunityIcons'
+                name='lightbulb-on'
+                style={{
+                  fontSize: 55,
+                  color: '#ef6e0b',
+                  alignSelf: 'center',
+                  paddingTop: height*0.01
+                }}
+            />
                 <Text style={styles.Qtext}>
                   Out of the following, choose what you are interested in and the
                   emphasis of interest.
                 </Text>
-                </View>
                 </View>
               <View
                 style={{
@@ -460,28 +470,24 @@ export default class RegCompleteProfile extends React.Component {
             <Content>
             <View
                 style={{
-                  flexDirection:'row',
-                  alignItems: 'flex-start'
-                }}>
+                  flexDirection:'column',
+                  alignItems: 'flex-start',
+                  flexGrow: 1,
+                }}
+            >
                 <Icon
-                  type='FontAwesome'
-                  name='question-circle-o'
+                  type='MaterialCommunityIcons'
+                  name='account-search'
                   style={{
-                    fontSize: 47,
-                    color: '#2c2638',
-                    paddingLeft: width*0.02
+                    fontSize: 55,
+                    color: '#ef6e0b',
+                    alignSelf: 'center',
+                    paddingTop: height*0.01
                   }}
                 />
-                <View
-                  style={{
-                    flexGrow: 1,
-                    width: 0,
-                  }}
-                >
               <Text style={styles.Qtext}>
                 Out of the following, choose what you are looking for.
               </Text>
-              </View>
               </View>
               <View
                 style={{
@@ -523,29 +529,25 @@ export default class RegCompleteProfile extends React.Component {
             <Content>
             <View
                 style={{
-                  flexDirection:'row',
-                  alignItems: 'flex-start'
-                }}>
+                  flexDirection:'column',
+                  alignItems: 'flex-start',
+                  flexGrow: 1,
+                }}
+            >
                 <Icon
                   type='FontAwesome'
-                  name='question-circle-o'
+                  name='briefcase'
                   style={{
-                    fontSize: 47,
-                    color: '#2c2638',
-                    paddingLeft: width*0.02
+                    fontSize: 55,
+                    color: '#ef6e0b',
+                    alignSelf: 'center',
+                    paddingTop: height*0.01
                   }}
                 />
-                <View
-                  style={{
-                    flexGrow: 1,
-                    width: 0,
-                  }}
-                >
               <Text style={styles.Qtext}>
                 Out of the following, choose what industries you are involved
                 with.
               </Text>
-                </View>
                 </View>
               <View
                 style={{
@@ -607,12 +609,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 28,
     paddingHorizontal: width * 0.02,
-    paddingTop: height*0.05,
+    paddingTop: height*0.02,
     fontFamily: "Folks-Normal",
     textAlign: "center",
     flexWrap: "wrap",
+    alignSelf: 'center'
   },
   headerNavText:{
-    color: 'white'
+    color: '#ef6e0b',
+    fontSize: 20,
+    fontWeight: '600'
   }
 });
