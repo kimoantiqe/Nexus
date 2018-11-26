@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "http://192.168.1.115:1337/api";
+const apiURL = "http://10.0.0.228:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -207,7 +207,7 @@ const Register = async (inputs, props) =>
 };
 module.exports.Register = Register;
 
-const CompleteProfile = async (first, last, interests, industry, LF, bio, props) => {
+const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, INval, LFval, props) => {
 
 
     if (first == "" || last == "")
@@ -268,7 +268,10 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
             "interests" : interest,
             "lookingFor": lf,
             "industry"  : ind,
-            "bio" : bio
+            "bio" : bio,
+            "ie" : Ival,
+            "ine" : INval,
+            "lfe" : LFval
         })
         };
 

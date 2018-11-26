@@ -10,7 +10,7 @@ export default class SliderBadge extends React.Component {
       const {flag} = this.props;
         return(
           <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}>
-  <Item style={{borderBottomColor: 'transparent', paddingBottom: flag? 0 : height*0.015}}>
+  <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015}}>
           <Badge style={{   backgroundColor: flag? '#FFC719' : 'transparent',
                             minHeight: height*0.055,
                             borderWidth: width*0.0015, 
@@ -21,26 +21,8 @@ export default class SliderBadge extends React.Component {
             <Text style={{color: '#f2f2f2', fontSize: 25, fontWeight: '400'}}>{this.props.displayName}</Text>
             </Button>
           </Badge>
-          </Item> 
-          { 
-            flag?
-            <Item style={{borderBottomColor: 'transparent', paddingBottom: flag? height*0.015 : 0}}>
-              <Badge style={{
-                    backgroundColor: 'transparent',
-                    borderColor: 'transparent' ,
-                    minHeight: height*0.055,
-                    borderWidth: width*0.0015, 
-                    borderRadius: 30,
-                    minWidth: width*0.9,
-                    }}>
-              <Slider 
-                onSlidingComplete={this.props.toSetVal}
-                minimumTrackTintColor={'#FFC719'}
-              />
-              </Badge>
-                </Item> : null
-                    }
-                    </Form>
+          </Item>
+          </Form>
         )
                         };
                     }
