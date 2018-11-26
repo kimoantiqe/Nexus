@@ -82,17 +82,38 @@ export default class Register extends React.Component {
 <Container >
     <Content>
         <Background logo= {true}/>
-        <Form style={{paddingHorizontal: width*0.05, justifyContent: 'space-evenly'}}>
+        <Form style={{paddingHorizontal: width*0.05}}>
             <Text style={styles.Text}>Email Address</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+            <Item 
+              rounded 
+              style={{
+                    paddingHorizontal: width * 0.02,
+                    borderColor: "white",
+                    borderWidth: 17,
+                    height: height*0.065,
+                    }}>
                 <Input  style={styles.InputText} onChangeText = {(text)=>this.handleInput("Username", text)}/>
             </Item>
             <Text style={styles.Text}>Password</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+            <Item 
+              rounded 
+              style={{
+                    paddingHorizontal: width * 0.02,
+                    borderColor: "white",
+                    borderWidth: 17,
+                    height: height*0.065,
+                    }}>
                 <Input style={styles.InputText} secureTextEntry onChangeText = {(text)=>this.handleInput("Password", text)}/>
             </Item>
             <Text style={styles.Text}>Confirm Password</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+            <Item 
+              rounded 
+              style={{
+                    paddingHorizontal: width * 0.02,
+                    borderColor: "white",
+                    borderWidth: 17,
+                    height: height*0.065,
+                    }}>
                 <Input style={styles.InputText} secureTextEntry onChangeText = {(text)=>this.handleInput("Repassword", text)}/>
             </Item>
             <Content scrollEnabled={false} contentContainerStyle={styles.ButtonContainer}>
@@ -132,10 +153,10 @@ const styles = StyleSheet.create({
                         padding: width*0.05
                     },
     Text:           {
-                        color: '#f2f2f2', 
-                        fontSize: 20, 
-                        fontWeight: '300', 
-                        padding: width*0.02
+                        color: "white",
+                        fontSize: 19,
+                        fontWeight: "300",
+                        padding: width * 0.02
                     },
     InputText:      {
                         color: '#f2f2f2', 

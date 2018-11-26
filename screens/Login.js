@@ -97,13 +97,30 @@ export default class Login extends React.Component {
         
       <Content>
       <Background logo= {true}/>
-      <Form style={{paddingHorizontal: width*0.05, justifyContent: 'space-evenly'}}>
+      <Form style={{paddingHorizontal: width*0.05, height: height*0.38}}>
             <Text style={styles.Text}>Email Address</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
-                <Input  style={styles.InputText} onChangeText = {(text)=>this.handleUsername(text)}/>
+            <Item 
+              rounded 
+              style={{
+                    paddingHorizontal: width * 0.02,
+                    borderColor: "white",
+                    borderWidth: 17,
+                    height: height*0.065,
+                    }}>
+                <Input  
+                  style={styles.InputText} 
+                  onChangeText = {(text)=>this.handleUsername(text)}/>
             </Item>
             <Text style={styles.Text}>Password</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+            <Item 
+              rounded
+              style={{
+                paddingHorizontal: width * 0.02,
+                borderColor: "white",
+                borderWidth: 17,
+                height: height*0.065,
+                }}
+              >
                 <Input style={styles.InputText} secureTextEntry onChangeText = {(text)=>this.handlePassword(text)}/>
             </Item>
 
@@ -215,15 +232,15 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   Text:           {
-    color: 'white', 
-    fontSize: 20, 
-    fontWeight: '300', 
-    padding: width*0
-},
+    color: "white",
+    fontSize: 19,
+    fontWeight: "300",
+    padding: width * 0.02
+  },
 InputText:      {
-  color: 'white', 
-  fontSize: 22, 
-  fontWeight: '400'
+  color: "white",
+  fontSize: 22,
+  fontWeight: "400"
 },
   button: {
     width: 200,

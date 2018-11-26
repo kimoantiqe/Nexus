@@ -11,10 +11,10 @@ export default class SliderBadge extends React.Component {
         return(
           <Form style={{flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center'}}>
   <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015}}>
-          <Badge style={{   backgroundColor: flag? '#FFC719' : 'transparent',
+          <Badge style={{   backgroundColor: flag? '#f5ba57' : 'transparent',
                             minHeight: height*0.055,
                             borderWidth: width*0.0015, 
-                            borderColor: flag? '#FFC719' : 'white' ,
+                            borderColor: flag? '#f5ba57' : 'white' ,
                             borderRadius: 30,
                             }}>
           <Button transparent light onPress={this.props.toCall}>
