@@ -165,7 +165,8 @@ export default class Matches extends React.Component {
           Authorization: userToken
         }
       };
-     
+      
+      
       await fetch(apiURL + "/user/getpotconn", grabUser)
         .then(response => response.json())
         .then(response => {
@@ -174,6 +175,7 @@ export default class Matches extends React.Component {
             if (response.array) {
               
               var array = JSON.parse(response.array);
+              
               for (let i = 0; i < array.length; i++) {
                 Users[i] = array[i];
               }
@@ -254,6 +256,7 @@ export default class Matches extends React.Component {
 
   renderUsers = () => {
     if(this.state.loading ==1){
+     
       return (
         <WaveIndicator
         size={80}
@@ -263,14 +266,18 @@ export default class Matches extends React.Component {
       );
     }
     if (!Users.length) {
-      console.log("NO USERS");
-      console.log(Users);
       return (
-        <WaveIndicator
+      <View>
+       <WaveIndicator
         size={80}
         color="#2c2638"
         style={{ flex: 0, marginTop: height*0.3 }}
-      />
+          />
+        <Text style={{
+          textAlign: "center"
+        }}>Way to go! it looks like you've swiped on all your potential matches, Come back later to see some more!</Text>
+      </View>
+      
       );
     }
 
