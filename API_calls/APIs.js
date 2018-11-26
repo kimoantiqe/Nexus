@@ -207,7 +207,7 @@ const Register = async (inputs, props) =>
 };
 module.exports.Register = Register;
 
-const CompleteProfile = async (first, last, interests, industry, LF, bio, props) => {
+const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, INval, LFval, props) => {
 
 
     if (first == "" || last == "")
@@ -268,7 +268,10 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, props)
             "interests" : interest,
             "lookingFor": lf,
             "industry"  : ind,
-            "bio" : bio
+            "bio" : bio,
+            "ie" : Ival,
+            "ine" : INval,
+            "lfe" : LFval
         })
         };
 
