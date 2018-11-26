@@ -80,10 +80,6 @@ export default class HomeScreen extends React.Component {
     header: null
   };
 
-  componentWillMount(){
-    this.getUserMatches();
-  }
-
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
