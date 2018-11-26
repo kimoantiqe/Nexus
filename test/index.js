@@ -287,8 +287,6 @@ describe('Nexus API test', async () => {
     describe('/GET /api/user/getpotconn GETS USER2 POT CONNS', () => {
         it('should pass ', (done) =>  matching.getpotcon(done,chai,server));
     });
-
-
     describe('/GET /api/user GETS USER 1', () => {
         it('should pass ', (done) => matching.getUser1(done,chai,server));
     });
