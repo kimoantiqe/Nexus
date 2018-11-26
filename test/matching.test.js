@@ -313,8 +313,7 @@ module.exports.popconn1 = (done,chai,server) => {
               res.body.should.be.a('object');
               res.body.should.have.property('success').eql(true);
               done();
-        });
-        
+        });  
 };
 
 

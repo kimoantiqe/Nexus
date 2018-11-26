@@ -45,9 +45,13 @@ const getpotconn =  async function(req, res){
 		//gets the first id in the users potential matches array
 		for(let i=0; i<7; i++){
       let potcon = user.potentialMatches[i];
-      ;
+      if(potcon)
 			 await arr.push(potcon);
-		}
+    }
+    console.log(arr);
+    if(!arr.length){
+      return  ReE(res, "No more Matches");
+    }
 		await get10users(arr, await async function(userarr2){
 				return ReS(res, {array:JSON.stringify(userarr2)});
       });
