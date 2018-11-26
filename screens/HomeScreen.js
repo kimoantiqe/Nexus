@@ -139,11 +139,8 @@ export default class HomeScreen extends React.Component {
 
 
   _onRefresh = async () => {
-    await this.setState({refreshing: true});
-    await this.setState({refreshing: false});
     this.setState({loading: 1});
     await this.getUserMatches();
-
     this.setState({loading: 0});
   }
 

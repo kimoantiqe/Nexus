@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Image, StyleSheet, Keyboard, Slider } from "react-native";
+import { Dimensions, Image, StyleSheet, Keyboard, Slider, AsyncStorage } from "react-native";
 import {
   Container,
   Content,
@@ -125,7 +125,8 @@ export default class RegCompleteProfile extends React.Component {
   //need to make sure
   _getUser = async () => {
     return new Promise(async (resolve, reject) => {
-        let userToken = Expo.SecureStore.getItemAsync("userToken");
+        let userToken = await AsyncStorage.getItem("userToken");
+        console.log(userToken);
         if (userToken != null) {
             var user = {
                 method: "GET",
@@ -159,7 +160,20 @@ export default class RegCompleteProfile extends React.Component {
           return;
         } 
         console.log(response);   
-        });
+      });
+    }else{
+      const sb = SendBird.getInstance();
+      await this._getUser().then(async (user) => {
+        console.log(user);
+        const imageOut = imageUrl + user.image;
+        sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
+          if(error) {
+            console.log("ERror" + error)
+            return;
+          } 
+          console.log(response);   
+       });
+      })
     }
   }
 
@@ -169,36 +183,15 @@ export default class RegCompleteProfile extends React.Component {
             this.state.imageAvailable = true;
             const output = 'data:image/jpeg;base64,' + image;
             this.setState({image: output})
-            const sb = SendBird.getInstance();
-            await this._getUser().then(async (user) => {
-                const imageOut = imageUrl + user.image;
-                sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
-                    if(error) {
-                        console.log("ERror" + error)
-                        return;
-                    } 
-                    console.log(response);   
-                });
-            })
         })
         .catch((error) => {
             console.log(error);
         })
       else
         await getImageFromLibrary().then(async(image) => {
+            this.state.imageAvailable = true;
             const output = 'data:image/jpeg;base64,' + image;
             this.setState({image: output})
-            const sb = SendBird.getInstance();
-            await this._getUser().then(async (user) => {
-                const imageOut = imageUrl + user.image;
-                sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
-                    if(error) {
-                        console.log("ERror" + error)
-                        return;
-                    } 
-                    console.log(response);   
-                });
-            })
         })
         .catch((error) => {
             console.log(error);
@@ -274,7 +267,7 @@ export default class RegCompleteProfile extends React.Component {
                     name='arrow-left'
                     style={{
                       fontSize: 40,
-                      color: '#FFC719',
+                      color: '#f5ba57',
                     }}
                   />
                 </Button>
@@ -322,7 +315,7 @@ export default class RegCompleteProfile extends React.Component {
                     name='arrow-right'
                     style={{
                       fontSize: 40,
-                      color: '#FFC719',
+                      color: '#f5ba57',
                     }}
                   />
                 </Button>
@@ -386,7 +379,7 @@ export default class RegCompleteProfile extends React.Component {
                     name='arrow-right'
                     style={{
                       fontSize: 57,
-                      color: '#FFC719',
+                      color: '#f5ba57',
                       paddingLeft: width*0.02
                     }}
                   />
@@ -400,7 +393,7 @@ export default class RegCompleteProfile extends React.Component {
               name='person'
               style={{
                 fontSize: 55,
-                color: '#FFC719',
+                color: '#f5ba57',
                 alignSelf: 'center',
                 paddingTop: height*0.01,
                 paddingLeft: width*0.045
@@ -436,7 +429,7 @@ export default class RegCompleteProfile extends React.Component {
                     borderColor: "white",
                     borderWidth: 17,
                     height: height*0.065,
-                  }}
+                    }}
                 >
                   <Input
                     placeholder="e.g., Alex"
@@ -523,7 +516,7 @@ export default class RegCompleteProfile extends React.Component {
                 name='lightbulb-on'
                 style={{
                   fontSize: 55,
-                  color: '#FFC719',
+                  color: '#f5ba57',
                   alignSelf: 'center',
                   paddingTop: height*0.01
                 }}
@@ -585,13 +578,13 @@ export default class RegCompleteProfile extends React.Component {
                 maximumValue={5}
                 step={1}
                 value={Ival}
-                minimumTrackTintColor={'#FFC719'}
+                minimumTrackTintColor={'#f5ba57'}
               />
               </Badge>
                 </Item>
                 <Text 
               style={{
-                color: '#FFC719',
+                color: '#f5ba57',
                 fontFamily: "BebasNeue",
                 fontSize: 35,
                 alignSelf: 'center'
@@ -611,7 +604,7 @@ export default class RegCompleteProfile extends React.Component {
                   name='account-search'
                   style={{
                     fontSize: 55,
-                    color: '#FFC719',
+                    color: '#f5ba57',
                     alignSelf: 'center',
                     paddingTop: height*0.01
                   }}
@@ -677,13 +670,13 @@ export default class RegCompleteProfile extends React.Component {
                 maximumValue={5}
                 step={1}
                 value={LFval}
-                minimumTrackTintColor={'#FFC719'}
+                minimumTrackTintColor={'#f5ba57'}
               />
               </Badge>
                 </Item>
                 <Text 
               style={{
-                color: '#FFC719',
+                color: '#f5ba57',
                 fontFamily: "BebasNeue",
                 fontSize: 35,
                 alignSelf: 'center'
@@ -703,7 +696,7 @@ export default class RegCompleteProfile extends React.Component {
                   name='briefcase'
                   style={{
                     fontSize: 55,
-                    color: '#FFC719',
+                    color: '#f5ba57',
                     alignSelf: 'center',
                     paddingTop: height*0.01
                   }}
@@ -770,13 +763,13 @@ export default class RegCompleteProfile extends React.Component {
                 maximumValue={5}
                 step={1}
                 value={INval}
-                minimumTrackTintColor={'#FFC719'}
+                minimumTrackTintColor={'#f5ba57'}
               />
               </Badge>
                 </Item>
                 <Text 
               style={{
-                color: '#FFC719',
+                color: '#f5ba57',
                 fontFamily: "BebasNeue",
                 fontSize: 35,
                 alignSelf: 'center'
@@ -846,7 +839,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   headerNavText:{
-    color: '#FFC719',
+    color: '#f5ba57',
     fontSize: 20,
     fontWeight: '600'
   }

@@ -28,12 +28,14 @@ import {getImageFromCamera} from './ImageInterface'
 import {Icon, Button} from 'react-native-elements'
 import ActionButton from 'react-native-action-button';
 import Modal from "react-native-modal";
+import Expo from "expo";
 
 var dateInit;
 var timeInit;
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const APIcall      = require("../API_calls/APIs");
+var apiURL = APIcall.apiURL;
 
 console.disableYellowBox = true
 
@@ -61,7 +63,7 @@ export default class ChatScreen extends Component {
                          channelUrl: '', sb: Object, friendId: '', isTaskModalVisible: false,
                          isMeetingModalVisible: false, taskName: '', taskDescription: '', taskTime: '', taskDate: '',
                          meetingName: '', meetingDescription: '', meetingTime: '', meetingDate: '', isTimeModalVisible: false,
-                         isDateModalVisible: false
+                         isDateModalVisible: false, friendToken: '',
                      }
         this.state.sb = SendBird.getInstance();
         messageSent = false;
@@ -72,6 +74,7 @@ export default class ChatScreen extends Component {
         const ChannelHandler = new this.state.sb.ChannelHandler()
         ChannelHandler.onMessageReceived = (receivedChannel, message) => {
             if (receivedChannel.url === this.state.groupChannel.url) {
+                messageSent = true;
                 const messages = []
                 messages.push(message)
                 const newMessages = messages.concat(this.state.messages)
@@ -88,6 +91,45 @@ export default class ChatScreen extends Component {
         }
         this.state.sb.addConnectionHandler('ChatScreen', ConnectionHandler)
     }
+
+    _getUser = async (userid) => {
+        userToken= await Expo.SecureStore.getItemAsync("userToken");
+        if (userToken != null) {
+            var user = {
+                method: "GET",
+                headers: {
+                    Authorization: userToken
+                }
+            };
+            await fetch(apiURL + "/user/getuser/?id=" + userid, user)
+            .then(response => response.json())
+            .then(response => {
+                this.setState({friendToken: response.user.ExpoUserToken})
+            });
+        }
+    };
+
+    _sendPushNotification = async(message) => {
+        console.log("Hello");
+        console.log(message);
+        console.log(this.state.friendToken);
+        console.log("Bye");
+          var toPush = {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'accept-encoding': 'gzip, deflate',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                "to": this.state.friendToken,
+                "title": this.state.friendName,
+                "sound": "default",
+                "body": message,
+              })
+          }
+          await fetch('https://exp.host/--/api/v2/push/send', toPush).then((response) => console.log(response))
+      };
 
     getGroupChannel() {
         this.state.channelUrl = this.props.navigation.getParam('channelUrl', null);
@@ -112,12 +154,12 @@ export default class ChatScreen extends Component {
                 if(channel.memberCount == 2){
                     this.state.friendName = channel.members[0].userId === this.state.userId ? channel.members[1].nickname : channel.members[0].nickname;
                     this.state.friendId = channel.members[0].userId === this.state.userId ? channel.members[1].userId : channel.members[0].userId;
+                    this._getUser(this.state.friendId);
                 }else{
                     this.state.friendName = 'Nexus User';
                     this.state.friendId = this.state.userId;
                 }
             }
-            console.log(this.state.groupChannel);
             this.getChannelMessage(false);
         })
     }
@@ -133,9 +175,12 @@ export default class ChatScreen extends Component {
                 console.error(error)
                 return
             }
+            const messageOut = this.state.text;
             const messages = [].concat([message]).concat(this.state.messages)
             this.setState({ text: '', messages })
+            this._sendPushNotification(messageOut);
         })
+
     }
 
     componentWillUnmount(){
@@ -188,7 +233,7 @@ export default class ChatScreen extends Component {
     }
 
     _handleDatePicked = (date, type) => {
-        moment.locale('pst');
+        moment.locale('utc');
         const dateOut = moment(date).format('MM-DD-YYYY').toString();
         dateInit = moment(date).format('YYYY-MM-DD').toString();
         if(type === 'task')
@@ -199,7 +244,7 @@ export default class ChatScreen extends Component {
     }
 
     _handleTimePicked = (time, type) => {
-        moment.locale('pst');
+        moment.locale('utc');
         const timeOut = moment(time).format('h:mm A').toString();
         timeInit = moment(time).format('HH:mm:ss.SSS').toString();
         if(type === 'task')
@@ -440,12 +485,14 @@ export default class ChatScreen extends Component {
                     mode = 'time'
                     onConfirm={(time) => this._handleTimePicked(time, 'task')}
                     onCancel={this._toggleTimeModal}
+
                 />
 
                 <DateTimePicker
                     isVisible={this.state.isDateModalVisible}
                     onConfirm={(date) => this._handleDatePicked(date, 'task')}
                     onCancel={this._toggleDateModal}
+                    minimumDate = {new Date(Date.now())}
                 />
 
                 </View>
@@ -534,6 +581,7 @@ export default class ChatScreen extends Component {
                     isVisible={this.state.isDateModalVisible}
                     onConfirm={(date) => this._handleDatePicked(date, 'meeting')}
                     onCancel={this._toggleDateModal}
+                    minimumDate = {new Date(Date.now())}
                 />
 
                 </View>

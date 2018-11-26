@@ -6,6 +6,7 @@ import { sbCreateGroupChannelListQuery, sbConnect } from '../sendbirdActions';
 import { getGroupChannelList } from '../actions';
 import Swipeable from 'react-native-swipeable';
 import moment from 'moment'
+import {Notifications} from 'expo'
 
 import {
     Header,
@@ -36,9 +37,21 @@ class ChatDashboard extends React.Component {
             groupChannelListQuery: null,
             list: [],
             groupChannelList: ds.cloneWithRows([]),
+            notifictation: {},
         }
     }
 
+    _handleNotification = (notification) => {
+        this.setState({
+            refresh: false,
+            childRefresh: false,
+            groupChannelListQuery: null,
+            list: [],
+            groupChannelList: ds.cloneWithRows([]),
+            notifictation: notification,
+        })
+        this._initGroupChannelList();
+    };
 
     getUserID = async() => {
         //userID ='5bcf97fd4a5aa600150cc338';
@@ -49,6 +62,8 @@ class ChatDashboard extends React.Component {
         //this._connectSb();
         this.getUserID();
         this._initGroupChannelList();
+        this._notificationSubscription = Notifications.addListener(this._handleNotification);
+        console.log(this._notificationSubscription);
     }
 
     componentWillReceiveProps(props) {
@@ -128,9 +143,9 @@ class ChatDashboard extends React.Component {
             return createdAt;
     }
 
-    _leaveChannel = (groupChannel) => {
+    _leaveChannel = async (groupChannel) => {
         
-        groupChannel.leave(function(response, error) {
+        await groupChannel.leave(function(response, error) {
             if (error) {
                 return;
             }
@@ -144,18 +159,18 @@ class ChatDashboard extends React.Component {
         this.setState({ list: newList, groupChannelList: ds.cloneWithRows(newList) });
     }
 
-    _clearHistory = (groupChannel) => {
-        groupChannel.resetMyHistory(function(response, error) {
+    _clearHistory = async (groupChannel) => {
+        await groupChannel.resetMyHistory(function(response, error) {
             if (error) {
                 return;
             }
         });
-        groupChannel.refresh(function(response, error) {
+        await groupChannel.refresh(function(response, error) {
             if (error) {
                 return;
             }
         });
-        setTimeout(() => {this.setState({childRefresh: !this.state.childRefresh})}, 500);
+        setTimeout(() => {this.setState({childRefresh: !this.state.childRefresh})}, 1000);
     }
 
     _renderList = (rowData) => {
@@ -169,7 +184,8 @@ class ChatDashboard extends React.Component {
                     }
                 });
                 return null;
-            }
+            } else if(rowData.memberCount === 0)
+                return null;
         }
 
         let lastMessage;
@@ -244,7 +260,8 @@ class ChatDashboard extends React.Component {
                             <Icon name="person-add" style={{color:'#f5ba57'}} onPress={() => 
                                 this.props.navigation.navigate("AddUser", {
                                     userID: userID,
-                                    addChannel: this._addChannel.bind(this)
+                                    addChannel: this._addChannel.bind(this),
+                                    list: this.state.list,
                                 })}
                             />
                         </Button>

@@ -278,7 +278,6 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, 
         console.log(settings);
 
 
-
       await fetch(apiURL + '/user', settings)
         .then((response) => response.json())
         .then(() => populate())
@@ -567,3 +566,24 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, 
     }
   };
   module.exports.sendImage = sendImage;
+
+  _pushNotification = async(token) => {
+    
+    userToken = await Expo.SecureStore.getItemAsync("userToken");
+    //userToken = await AsyncStorage.getItem('userToken');
+
+    if (userToken != null) {
+      var updateUser = {
+        method: 'PUT',
+        headers: {
+          'Authorization': userToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'ExpoUserToken' : token
+          })
+      }
+      await fetch(apiURL + '/user', updateUser).then((response) => console.log(response));
+    }
+  };
+  module.exports._pushNotification = _pushNotification;

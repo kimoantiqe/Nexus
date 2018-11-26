@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Expo from 'expo'
+import {Permissions, Notifications} from 'expo'
 import { LinearGradient } from "expo";
 import {
   StyleSheet,
@@ -33,6 +33,36 @@ export default class Login extends React.Component {
       nickname: "",
       loading: 0,
     };
+  }
+
+   registerForPushNotificationsAsync = async () => {
+    const { status: existingStatus } = await Permissions.askAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+  
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    
+    console.log(finalStatus);
+
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== 'granted') {
+      return;
+    }
+  
+    // Get the token that uniquely identifies this device
+    let token = await Notifications.getExpoPushTokenAsync();
+
+    console.log(token);
+
+    await APIcall._pushNotification(token);
 
   }
 
@@ -67,13 +97,30 @@ export default class Login extends React.Component {
         
       <Content>
       <Background logo= {true}/>
-      <Form style={{paddingHorizontal: width*0.05, justifyContent: 'space-evenly'}}>
+      <Form style={{paddingHorizontal: width*0.05, height: height*0.38}}>
             <Text style={styles.Text}>Email Address</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
-                <Input  style={styles.InputText} onChangeText = {(text)=>this.handleUsername(text)}/>
+            <Item 
+              rounded 
+              style={{
+                    paddingHorizontal: width * 0.02,
+                    borderColor: "white",
+                    borderWidth: 17,
+                    height: height*0.065,
+                    }}>
+                <Input  
+                  style={styles.InputText} 
+                  onChangeText = {(text)=>this.handleUsername(text)}/>
             </Item>
             <Text style={styles.Text}>Password</Text>
-            <Item rounded style={{ paddingHorizontal: width*0.02}}>
+            <Item 
+              rounded
+              style={{
+                paddingHorizontal: width * 0.02,
+                borderColor: "white",
+                borderWidth: 17,
+                height: height*0.065,
+                }}
+              >
                 <Input style={styles.InputText} secureTextEntry onChangeText = {(text)=>this.handlePassword(text)}/>
             </Item>
 
@@ -82,6 +129,7 @@ export default class Login extends React.Component {
                      this.setState({ loading: 1 })
                     await APIcall.login(this.state.username, this.state.password, this.props)
                     this.setState({ loading: 0 })
+                    await this.registerForPushNotificationsAsync();
                   } 
                 }
                   style={styles.button}>
@@ -184,15 +232,15 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   Text:           {
-    color: 'white', 
-    fontSize: 20, 
-    fontWeight: '300', 
-    padding: width*0
-},
+    color: "white",
+    fontSize: 19,
+    fontWeight: "300",
+    padding: width * 0.02
+  },
 InputText:      {
-  color: 'white', 
-  fontSize: 22, 
-  fontWeight: '400'
+  color: "white",
+  fontSize: 22,
+  fontWeight: "400"
 },
   button: {
     width: 200,
