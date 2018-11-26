@@ -479,6 +479,86 @@ module.exports.loginUser4 = (done,chai,server) => {
         });
 };
 
+//Put User 1
+module.exports.pute3 = (done,chai,server) => {
+    let newDetails = {
+        ie :  2,
+        ine : 4,
+        lfe : 3,
+        interests : ['IA', 'IB', 'IC'],
+        lookingFor : ['LB','LC','LD'],
+        industry : ['INA','INB','INC']
+    };
+    chai.request(server)
+        .put('/api/user')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+//Put User 1
+module.exports.pute4 = (done,chai,server) => {
+    let newDetails = {
+        ie :  2,
+        ine : 4,
+        lfe : 3,
+        interests : ['IA', 'IB', 'IC'],
+        lookingFor : ['LB','LC','LD'],
+        industry : ['INA','INB','INC']
+    };
+    chai.request(server)
+        .put('/api/user')
+        .set('Content-Type', 'application/json')
+        .set('Authorization',dummyUser2.token)
+        .send(newDetails)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+          done();
+        });
+};
+
+
+
+//Test populate connections
+module.exports.popconn3 = (done,chai,server) => {
+    chai.request(server)
+        .get('/api/user/popconn')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', dummyUser.token)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+              done();
+        });  
+};
+
+
+//Test populate connections
+module.exports.popconn4 = (done,chai,server) => {
+    chai.request(server)
+        .get('/api/user/popconn')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', dummyUser2.token)
+        .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('success').eql(true);
+              done();
+        });  
+};
+
+
+
+
 
 
 //Test matching already matched Users
@@ -522,6 +602,9 @@ module.exports.deleteUser4 = (done,chai,server) => {
               done();
             });
 };
+
+
+
 
 
 

@@ -48,7 +48,7 @@ const getpotconn =  async function(req, res){
       if(potcon)
 			 await arr.push(potcon);
     }
-    console.log(arr);
+   
     if(!arr.length){
       return  ReE(res, "No more Matches");
     }
@@ -107,6 +107,7 @@ const popconns = async function(req, res){
                }
              }
            }
+          
            let userOb = { "id" : otheruser._id,
            "score" : score,
            "interests" : otheruser.interests,
