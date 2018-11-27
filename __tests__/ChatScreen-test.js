@@ -11,30 +11,12 @@ import Adapter from 'enzyme-adapter-react-16';
 import { Icon } from 'react-native-elements'
 
 import {
-    Header,
-    Left,
-    Right,
-    Body,
-    Title
-  } from "native-base";
-
-import toJson from 'enzyme-to-json';
-
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    Button,
     TextInput,
-    TouchableHighlight,
-    FlatList,
-    Dimensions,
-    KeyboardAvoidingView
   } from 'react-native'
  
 Enzyme.configure({ adapter: new Adapter() });
+
+jest.useFakeTimers();
 
 test('Check if TextInput is present', () => {
 
