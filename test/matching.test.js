@@ -9,6 +9,17 @@ var emailCreated2 = "user2awf123"+Date.now()+"@12345test.com";
 var passwordCreated2 = "test123";
 var dummyUser2 = {};
 
+
+//Dummy user 1
+var emailCreated3 = "user3aawfawfaf21awfawfaafafawf"+Date.now()+"@12345test.com";
+var passwordCreated3 = "test123";
+var dummyUser3 = {};
+
+//Dummy user 2
+var emailCreated4 = "user4awf123"+Date.now()+"@12345test.com";
+var passwordCreated4 = "test123";
+var dummyUser4 = {};
+
 //Register User 1
 module.exports.registerUser1 = (done,chai,server) => {
     let register = {
@@ -404,8 +415,8 @@ module.exports.deleteUser2 = (done,chai,server) => {
 //Register User 1
 module.exports.registerUser3 = (done,chai,server) => {
     let register = {
-          email: emailCreated,
-          password: passwordCreated,
+          email: emailCreated3,
+          password: passwordCreated3,
     };
     chai.request(server)
         .post('/api/user')
@@ -423,8 +434,8 @@ module.exports.registerUser3 = (done,chai,server) => {
 //Register User 2
 module.exports.registerUser4 = (done,chai,server) => {
     let register = {
-          email: emailCreated2,
-          password: passwordCreated2,
+          email: emailCreated4,
+          password: passwordCreated4,
     };
     chai.request(server)
         .post('/api/user')
@@ -443,8 +454,8 @@ module.exports.registerUser4 = (done,chai,server) => {
 //login user 1
 module.exports.loginUser3 = (done,chai,server) => {
     let register = {
-          email: emailCreated,
-          password: passwordCreated
+          email: emailCreated3,
+          password: passwordCreated3
     };
     chai.request(server)
         .post('/api/user/login')
@@ -454,7 +465,7 @@ module.exports.loginUser3 = (done,chai,server) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               res.body.should.have.property('success').eql(true);
-              dummyUser = res.body;
+              dummyUser3 = res.body;
           done();
         });
 };
@@ -463,8 +474,8 @@ module.exports.loginUser3 = (done,chai,server) => {
 //login user 2
 module.exports.loginUser4 = (done,chai,server) => {
     let register = {
-          email: emailCreated2,
-          password: passwordCreated2
+          email: emailCreated4,
+          password: passwordCreated4
     };
     chai.request(server)
         .post('/api/user/login')
@@ -474,7 +485,7 @@ module.exports.loginUser4 = (done,chai,server) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
               res.body.should.have.property('success').eql(true);
-              dummyUser2 = res.body;
+              dummyUser4 = res.body;
           done();
         });
 };
@@ -492,7 +503,7 @@ module.exports.pute3 = (done,chai,server) => {
     chai.request(server)
         .put('/api/user')
         .set('Content-Type', 'application/json')
-        .set('Authorization',dummyUser.token)
+        .set('Authorization',dummyUser3.token)
         .send(newDetails)
         .end((err, res) => {
               res.should.have.status(200);
@@ -515,7 +526,7 @@ module.exports.pute4 = (done,chai,server) => {
     chai.request(server)
         .put('/api/user')
         .set('Content-Type', 'application/json')
-        .set('Authorization',dummyUser2.token)
+        .set('Authorization',dummyUser4.token)
         .send(newDetails)
         .end((err, res) => {
               res.should.have.status(200);
@@ -532,7 +543,7 @@ module.exports.popconn3 = (done,chai,server) => {
     chai.request(server)
         .get('/api/user/popconn')
         .set('Content-Type', 'application/json')
-        .set('Authorization', dummyUser.token)
+        .set('Authorization', dummyUser3.token)
         .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -547,7 +558,7 @@ module.exports.popconn4 = (done,chai,server) => {
     chai.request(server)
         .get('/api/user/popconn')
         .set('Content-Type', 'application/json')
-        .set('Authorization', dummyUser2.token)
+        .set('Authorization', dummyUser4.token)
         .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -564,12 +575,12 @@ module.exports.popconn4 = (done,chai,server) => {
 //Test matching already matched Users
 module.exports.matchSuccess = (done,chai,server) => {
     let newDetails = {
-        id: dummyUser2.user._id
+        id: dummyUser3.user._id
     };
     chai.request(server)
         .put('/api/user/match')
         .set('Content-Type', 'application/json')
-        .set('Authorization',dummyUser.token)
+        .set('Authorization',dummyUser4.token)
         .send(newDetails)
         .end((err, res) => {
               res.body.should.be.a('object');
