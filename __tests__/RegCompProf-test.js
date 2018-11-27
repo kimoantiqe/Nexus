@@ -16,6 +16,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock('WebView', () => 'WebView');
 
+jest.useFakeTimers();
+
 test('Register loading mechanism works', () => {
     const wrapper = shallow(<RegCompleteProfile/>);
   
