@@ -87,8 +87,10 @@ _getImage = () => {
 }
 
 _onRefresh = async () => {
-  this.setState({loading: 1});
-  await this.getInfo();
+  this.setState({loading: 1, refreshing: true});
+  await this.getInfo().then(() => {
+    this.setState({loading: 0, refreshing: false});
+  });
 }
 
 getInfo = async () => {
@@ -113,8 +115,6 @@ getInfo = async () => {
     } catch(error) {
       console.error(error);
     }
-
-    this.setState({loading: 0})
 
 }
 
