@@ -104,6 +104,18 @@ componentWillMount = async () => {
     } catch (error) {
       console.error(error);
     }
+    this._getImage();
+}
+
+_getImage = () => {
+  console.log("askdjflkasjdflkajsdfkl;jals;kdfj")
+  this._getUser().then((user) => {
+      this.setState({loading: 0});
+      if(user.image !== undefined){
+          const imageIn = imageUrl + user.image;
+          this.setState({image: imageIn});
+      }
+  })
 }
 
 doneScroll(p) {
@@ -172,7 +184,8 @@ onPressIndustry(ind) {
 //need to make sure
 _getUser = async () => {
   return new Promise(async (resolve, reject) => {
-      let userToken = Expo.SecureStore.getItemAsync("userToken");
+      let userToken = await Expo.SecureStore.getItemAsync("userToken");
+      console.log(userToken);
       if (userToken != null) {
           var user = {
               method: "GET",
@@ -346,7 +359,7 @@ _sendPicture = async () => {
                     );
                     await this._sendPicture();
                     this.setState({page: 0});
-                    this.setState({ loading: 0 });
+                    this.props.navigation.goBack();
                   }}
                 >
                   <Text style={styles.headerNavText}>Apply</Text>
