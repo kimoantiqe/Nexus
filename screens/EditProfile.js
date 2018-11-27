@@ -75,7 +75,7 @@ componentWillMount = async () => {
       'Authorization': userToken
     }
     };
-  
+
     try {
             let response = await fetch(apiURL + '/user', settings)
             response = await response.json();
@@ -90,15 +90,15 @@ componentWillMount = async () => {
 
             // console.log(JSON.stringify(response) + '       A7AAAAAAAAAAAAAA');
 
-            for (let index = 0; index < response.user.interests.length; index++) 
+            for (let index = 0; index < response.user.interests.length; index++)
               this.state.interests[response.user.interests[index]] = true;
 
-            for (let index = 0; index < response.user.industry.length; index++) 
+            for (let index = 0; index < response.user.industry.length; index++)
               this.state.industry[response.user.industry[index]] = true;
 
-            for (let index = 0; index < response.user.lookingFor.length; index++) 
+            for (let index = 0; index < response.user.lookingFor.length; index++)
               this.state.LF[response.user.lookingFor[index]] = true;
-          
+
             this.setState({loading: 0});
 
     } catch (error) {
@@ -204,8 +204,8 @@ _sendPicture = async () => {
       if(error) {
         console.log("ERror" + error)
         return;
-      } 
-      console.log(response);   
+      }
+      console.log(response);
       });
   }
 }
@@ -223,8 +223,8 @@ _sendPicture = async () => {
                   if(error) {
                       console.log("ERror" + error)
                       return;
-                  } 
-                  console.log(response);   
+                  }
+                  console.log(response);
               });
           })
       })
@@ -242,8 +242,8 @@ _sendPicture = async () => {
                   if(error) {
                       console.log("ERror" + error)
                       return;
-                  } 
-                  console.log(response);   
+                  }
+                  console.log(response);
               });
           })
       })
@@ -286,7 +286,7 @@ _sendPicture = async () => {
       return (
         <Container>
           <View>
-                <LinearGradient 
+                <LinearGradient
                   colors={["#2c2638", "#2c2638"]}
                   locations={[0.0, height * 0.0095]}
                   style={{
@@ -298,7 +298,7 @@ _sendPicture = async () => {
                   }}
                 />
               </View>
-              
+
           <Header
             iosBarStyle="light-content"
             androidStatusBarColor="#ffffff"
@@ -311,7 +311,7 @@ _sendPicture = async () => {
                     this.pager.scrollToPage(this.state.page - 1);
                   }}
                 >
-                  <Icon 
+                  <Icon
                     type='EvilIcons'
                     name='arrow-left'
                     style={{
@@ -326,7 +326,7 @@ _sendPicture = async () => {
             </Body>
             <Right>
             {page >= 4 ? (
-              
+
                 <Button
                   hasText
                   transparent
@@ -358,7 +358,7 @@ _sendPicture = async () => {
                     this.pager.scrollToPage(this.state.page + 1);
                   }}
                 >
-                  <Icon 
+                  <Icon
                     type='EvilIcons'
                     name='arrow-right'
                     style={{
@@ -370,7 +370,7 @@ _sendPicture = async () => {
             </Right>
           </Header>
 
-          
+
 
           <Pages
             ref={ref => {
@@ -381,7 +381,7 @@ _sendPicture = async () => {
             <Content
               contentContainerStyle={{ paddingHorizontal: width * 0.07 }}
             >
-            <Icon 
+            <Icon
               type='Octicons'
               name='person'
               style={{
@@ -392,7 +392,7 @@ _sendPicture = async () => {
                 paddingLeft: width*0.045
               }}
             />
-            <Text 
+            <Text
             style={{
               paddingTop: height * 0.01,
               fontFamily: "BebasNeue",
@@ -504,7 +504,7 @@ _sendPicture = async () => {
                     alignItems: 'flex-start'
                   }}
                 >
-              <Icon 
+              <Icon
                 type='MaterialCommunityIcons'
                 name='lightbulb-on'
                 style={{
@@ -514,7 +514,7 @@ _sendPicture = async () => {
                   paddingTop: height*0.01
                 }}
             />
-              <Text 
+              <Text
               style={{
                 paddingTop: height * 0.01,
                 fontFamily: "BebasNeue",
@@ -561,12 +561,12 @@ _sendPicture = async () => {
                     backgroundColor: 'transparent',
                     borderColor: 'transparent' ,
                     minHeight: height*0.055,
-                    borderWidth: width*0.0015, 
+                    borderWidth: width*0.0015,
                     borderRadius: 30,
                     minWidth: width*0.9,
-                    
+
                     }}>
-              <Slider 
+              <Slider
                 onValueChange={(value) => this.sliding(value, 0)}
                 maximumValue={5}
                 step={1}
@@ -575,7 +575,7 @@ _sendPicture = async () => {
               />
               </Badge>
                 </Item>
-                <Text 
+                <Text
               style={{
                 color: '#f5ba57',
                 fontFamily: "BebasNeue",
@@ -602,7 +602,7 @@ _sendPicture = async () => {
                     paddingTop: height*0.01
                   }}
                 />
-                <Text 
+                <Text
                 style={{
                   paddingTop: height * 0.01,
                   fontFamily: "BebasNeue",
@@ -653,12 +653,12 @@ _sendPicture = async () => {
                     backgroundColor: 'transparent',
                     borderColor: 'transparent' ,
                     minHeight: height*0.055,
-                    borderWidth: width*0.0015, 
+                    borderWidth: width*0.0015,
                     borderRadius: 30,
                     minWidth: width*0.9,
-                    
+
                     }}>
-              <Slider 
+              <Slider
                 onValueChange={(value) => this.sliding(value, 1)}
                 maximumValue={5}
                 step={1}
@@ -667,7 +667,7 @@ _sendPicture = async () => {
               />
               </Badge>
                 </Item>
-                <Text 
+                <Text
               style={{
                 color: '#f5ba57',
                 fontFamily: "BebasNeue",
@@ -694,7 +694,7 @@ _sendPicture = async () => {
                     paddingTop: height*0.01
                   }}
                 />
-                <Text 
+                <Text
                   style={{
                     paddingTop: height * 0.01,
                     fontFamily: "BebasNeue",
@@ -746,12 +746,12 @@ _sendPicture = async () => {
                     backgroundColor: 'transparent',
                     borderColor: 'transparent' ,
                     minHeight: height*0.055,
-                    borderWidth: width*0.0015, 
+                    borderWidth: width*0.0015,
                     borderRadius: 30,
                     minWidth: width*0.9,
-                    
+
                     }}>
-              <Slider 
+              <Slider
                 onValueChange={(value) => this.sliding(value, 2)}
                 maximumValue={5}
                 step={1}
@@ -760,7 +760,7 @@ _sendPicture = async () => {
               />
               </Badge>
                 </Item>
-                <Text 
+                <Text
               style={{
                 color: '#f5ba57',
                 fontFamily: "BebasNeue",
@@ -774,6 +774,7 @@ _sendPicture = async () => {
                 <Lightbox
                     onOpen={() => {this.setState({imageWidth: 0, displayWidth: width})}}
                     willClose={() => {this.setState({imageWidth: width/4, displayWidth: width/2})}}
+                    underlayColor = 'transparent'
                     >
                     <Image
                     style={{ height: this.state.displayWidth, width: this.state.displayWidth, borderRadius: this.state.imageWidth,
@@ -790,7 +791,7 @@ _sendPicture = async () => {
                     initValue="Update Picture"
                     onChange={(option)=>{this._updatePic(option.key)}} />
                 </View>
-                
+
                 </View>
             </Content>
           </Pages>

@@ -260,7 +260,7 @@ export default class HomeScreen extends React.Component {
                       <Text style={styles.numberText}>{thisUser.tasks ? (thisUser.tasks.length ? thisUser.tasks.length : 0) : 0}</Text> }
                       <Text style={styles.titleText}>{(thisUser.tasks && thisUser.tasks.length !=1)  ? "Meetings/Tasks" : "Meeting/Task"}</Text>
                     </View>
-                    <Text style={styles.subTitleText}>coming up!</Text>
+                    <Text style={styles.subTitleText}>were set!</Text>
                   </Body>
                 </Left>
               </CardItem>
