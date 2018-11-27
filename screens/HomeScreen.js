@@ -66,7 +66,7 @@ export default class HomeScreen extends React.Component {
     this.refreshScreen = this.refreshScreen.bind(this);
     this.getUserMatches();
   }
-  
+
 
   //function that grabs a new user and refreshes the screen to update the
   //parameters.
@@ -80,7 +80,7 @@ export default class HomeScreen extends React.Component {
     header: null
   };
 
-  
+
   //Function to get the matches array and store it for use afterwards.
   getUserMatches = async () => {
     let userToken = await AsyncStorage.getItem("userToken");
@@ -95,11 +95,11 @@ export default class HomeScreen extends React.Component {
           Authorization: userToken
         }
       };
-      
+
       await fetch(apiURL + "/user", matches)
         .then(response => response.json())
         .then(async response => {
-        
+
           if (response.success) {
             thisUser = response.user;
             for (var i = 0; i < response.user.matches.length; i++) {
@@ -107,19 +107,19 @@ export default class HomeScreen extends React.Component {
               if(response.user.matches[i])
               await this.getUser(response.user.matches[i]);
             }
-            
+
             this.refreshScreen();
           }
         });
     }
   };
 
-  
+
   getUser = async userid => {
     let userToken = await AsyncStorage.getItem("userToken");
 
     if (userToken != null) {
-      
+
       var user = {
         method: "GET",
         headers: {
@@ -130,14 +130,14 @@ export default class HomeScreen extends React.Component {
         .then(response => response.json())
         .then(response => {
           console.log(response.user._id);
-          matchesArray.push(response.user); 
+          matchesArray.push(response.user);
         });
     }
   };
 
-  
 
- 
+
+
   _onRefresh = async () => {
     this.setState({loading: 1});
     await this.getUserMatches();
@@ -159,9 +159,9 @@ export default class HomeScreen extends React.Component {
               <Title style={styles.headerTitle}>DASHBOARD</Title>
             </Body>
             <Right>
-              <Button transparent>
-                <Icon name="calendar" style={{color:'white'}} onPress={()=>this.props.navigation.navigate('Calendar') } />
-              </Button>
+            <Button transparent>
+              <Icon name="calendar" style={{color:'#f5ba57'}} onPress={()=>this.props.navigation.navigate('Calendar') } />
+            </Button>
             </Right>
           </Header>
           <WaveIndicator
@@ -177,27 +177,29 @@ export default class HomeScreen extends React.Component {
 
     else return (
       <Container>
-          <Header
-            iosBarStyle="light-content"
-            androidStatusBarColor="#ffffff"
-            style={styles.header}
-          >
-            <Left />
-            <Body>
-              <Title style={styles.headerTitle}>DASHBOARD</Title>
-            </Body>
-            <Right>
-              <Button transparent>
-                <Icon name="calendar" style={{color:'#f5ba57'}} onPress={()=>this.props.navigation.navigate('Calendar') } />
-              </Button>
-            </Right>
-          </Header>
-          <Content refreshControl={
+      <Header
+        iosBarStyle="light-content"
+        androidStatusBarColor="#ffffff"
+        style={styles.header}
+      >
+        <Left />
+        <Body>
+          <Title style={styles.headerTitle}>DASHBOARD</Title>
+        </Body>
+        <Right>
+          <Button transparent>
+            <Icon name="calendar" style={{color:'#f5ba57'}} onPress={()=>this.props.navigation.navigate('Calendar') } />
+          </Button>
+        </Right>
+      </Header>
+
+        <Content refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
             onRefresh={this._onRefresh.bind(this)}
           />
         }>
+
           <FlatList
             style={{paddingHorizontal: 5}}
             horizontal

@@ -5,8 +5,6 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  Alert,
-  TextInput,
   TouchableOpacity
 } from "react-native";
 import { Text, Button, Icon, Content, Container, Form, Item, Input } from "native-base";
@@ -29,8 +27,6 @@ export default class Login extends React.Component {
     this.state = {
       username: "",
       password: "",
-      userid: "",
-      nickname: "",
       loading: 0,
     };
   }

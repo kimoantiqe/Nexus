@@ -213,7 +213,10 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, 
     if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
-    } else
+    } else if((interests.length == 0) || (industry.length == 0) || (LF.length == 0))
+    {
+      alert("Please choose at least one of each of the three types of badges");
+    } else 
     {
 
     const userToken = await AsyncStorage.getItem('userToken');
@@ -289,7 +292,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, 
   };
   module.exports.CompleteProfile = CompleteProfile;
 
-  const UpdateProfile = async (first, last, interests, industry, LF, bio, props) => {
+  const UpdateProfile = async (first, last, interests, industry, LF, bio, Ival, INval, LFval, props) => {
 
 
     if (first == "" || last == "")
@@ -350,7 +353,10 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, 
             "interests" : interest,
             "lookingFor": lf,
             "industry"  : ind,
-            "bio" : bio
+            "bio" : bio,
+            "ie" : Ival,
+            "ine" : INval,
+            "lfe" : LFval
         })
         };
 

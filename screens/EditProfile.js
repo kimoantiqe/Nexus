@@ -219,51 +219,43 @@ _sendPicture = async () => {
         return;
       } 
       console.log(response);   
-      });
+    });
+  }else{
+    const sb = SendBird.getInstance();
+    await this._getUser().then(async (user) => {
+      console.log(user);
+      const imageOut = imageUrl + user.image;
+      sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
+        if(error) {
+          console.log("ERror" + error)
+          return;
+        } 
+        console.log(response);   
+     });
+    })
   }
 }
 
-  _updatePic = async(key) => {
-    if(key === 0)
-      await getImageFromCamera().then(async(image) => {
-          this.state.imageAvailable = true;
-          const output = 'data:image/jpeg;base64,' + image;
-          this.setState({image: output})
-          const sb = SendBird.getInstance();
-          await this._getUser().then(async (user) => {
-              const imageOut = imageUrl + user.image;
-              sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
-                  if(error) {
-                      console.log("ERror" + error)
-                      return;
-                  } 
-                  console.log(response);   
-              });
-          })
-      })
-      .catch((error) => {
-          console.log(error);
-      })
-    else
-      await getImageFromLibrary().then(async(image) => {
-          const output = 'data:image/jpeg;base64,' + image;
-          this.setState({image: output})
-          const sb = SendBird.getInstance();
-          await this._getUser().then(async (user) => {
-              const imageOut = imageUrl + user.image;
-              sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
-                  if(error) {
-                      console.log("ERror" + error)
-                      return;
-                  } 
-                  console.log(response);   
-              });
-          })
-      })
-      .catch((error) => {
-          console.log(error);
-      })
-    }
+_updatePic = async(key) => {
+  if(key === 0)
+    await getImageFromCamera().then(async(image) => {
+        this.state.imageAvailable = true;
+        const output = 'data:image/jpeg;base64,' + image;
+        this.setState({image: output})
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+  else
+    await getImageFromLibrary().then(async(image) => {
+        this.state.imageAvailable = true;
+        const output = 'data:image/jpeg;base64,' + image;
+        this.setState({image: output})
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+  }
 
   render() {
     const { industry, interests, LF, page, Ival, INval, LFval } = this.state;

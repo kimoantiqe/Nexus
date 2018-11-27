@@ -1,27 +1,17 @@
 import React from 'react';
 import Login from '../screens/Login';
-import Register from '../screens/Register';
-import Splash from '../screens/SplashScreen';
 import Enzyme from 'enzyme';
 import { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import toJson from 'enzyme-to-json';
-import Alert from 'Alert'
+import { WaveIndicator } from "react-native-indicators";
 
 const APIcall      = require("../API_calls/APIs");
 
-import renderer from 'react-test-renderer';
-
-import {Button, Icon, Container } from 'native-base';
-import {TextInput, View} from 'react-native';
-const console = require('console');
+import {Button, Icon, Input } from 'native-base';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-
-
 jest.mock('WebView', () => 'WebView');
-
 
 test('Login button onPress works', () => {
     const wrapper = shallow(<Login/>);
@@ -52,7 +42,7 @@ test('Login handlePassword works', () => {
 test('Login field email works', () => {
     const wrapper = shallow(<Login/>);
     
-    wrapper.find(TextInput).at(0).prop('onChangeText')('abc');
+    wrapper.find(Input).at(0).prop('onChangeText')('abc');
 
   expect(wrapper.instance().state.username).toEqual('abc');
 });
@@ -60,7 +50,7 @@ test('Login field email works', () => {
 test('Login field password works', () => {
     const wrapper = shallow(<Login/>);
     
-    wrapper.find(TextInput).at(1).prop('onChangeText')('abc');
+    wrapper.find(Input).at(1).prop('onChangeText')('abc');
 
   expect(wrapper.instance().state.password).toEqual('abc');
 });
@@ -79,3 +69,11 @@ test('Login With Facebook button', () => {
   wrapper.find(Button).at(1).props().onPress();
   expect(clickMock).toHaveBeenCalled();
 });
+
+test('Login loading mechanism works', () => {
+  const wrapper = shallow(<Login/>);
+
+  wrapper.setState({loading: 1});
+
+  expect(wrapper.find(WaveIndicator).length).toEqual(1);
+})
