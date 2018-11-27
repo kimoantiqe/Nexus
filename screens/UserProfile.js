@@ -377,10 +377,10 @@ export default class Matches extends React.Component {
                         />
                     </View>
                      
-                     <View
+                    <Text
                       style={{
                         width: width * 0.9,
-                        height:height*0.1,
+                        
                         marginTop:0,
                         marginBottom: 0,
                         marginLeft: 5,
@@ -391,16 +391,12 @@ export default class Matches extends React.Component {
                       }}
                     >
                         <Text style={styles.BIOText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Quisque sed mi ex. Proin luctus, purus non faucibus
-                        bibendum, ligula justo blandit quam, interdum elementum
-                        dui eros sed erat. Aliquam consectetur massa id augue
-                        viverra facilisis.
+                        {item.bio}
                       </Text> 
                         
                        
                       
-                    </View> 
+                    </Text> 
 
                     <View style= {{
                              width: width * 0.9,
