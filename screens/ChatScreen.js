@@ -80,8 +80,10 @@ export default class ChatScreen extends Component {
                 const newMessages = messages.concat(this.state.messages)
                 this.setState({ messages: newMessages })
             }
-            this.state.groupChannel.markAsRead();
         }
+        if(this.state.groupChannel !== Object)
+            this.state.groupChannel.markAsRead();
+        
         this.state.sb.addChannelHandler('ChatScreen', ChannelHandler)
 
         const ConnectionHandler = new this.state.sb.ConnectionHandler()
@@ -110,10 +112,6 @@ export default class ChatScreen extends Component {
     };
 
     _sendPushNotification = async(message) => {
-        console.log("Hello");
-        console.log(message);
-        console.log(this.state.friendToken);
-        console.log("Bye");
           var toPush = {
             method: 'POST',
             headers: {
@@ -134,7 +132,6 @@ export default class ChatScreen extends Component {
     getGroupChannel() {
         this.state.channelUrl = this.props.navigation.getParam('channelUrl', null);
         this.state.userId = this.props.navigation.getParam('userID', null);
-        console.log(this.state.sb.GroupChannel);
         //get groupchannel
         this.state.sb.GroupChannel.getChannel(this.state.channelUrl, (channel, error) => {
             //add alert and go back on press
