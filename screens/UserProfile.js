@@ -213,13 +213,13 @@ export default class Matches extends React.Component {
                                 fontWeight: "400"
                               }}
                             >
-                              {interest == "IA"
-                                ? "INTEREST A"
+                                {interest == "IA"
+                                ? "Technology"
                                 : interest == "IB"
-                                ? "INTEREST B"
+                                ? "Media"
                                 : interest == "IC"
-                                ? "INTEREST C"
-                                : "INTEREST D"}
+                                ? "Politics"
+                                : "Sports"}
                             </Text>
                           </GradientButton>
                         </Item>
@@ -281,13 +281,13 @@ export default class Matches extends React.Component {
                                 fontWeight: "400"
                               }}
                             >
-                              {industry == "INA"
-                                ? "INDUSTRY A"
+                             {industry == "INA"
+                                ? "Software"
                                 : industry == "INB"
-                                ? "INDUSTRY B"
+                                ? "Finance"
                                 : industry == "INC"
-                                ? "INDUSTRY C"
-                                : "INDUSTRY D"}
+                                ? "Academia"
+                                : "Science"}
                             </Text>
                           </GradientButton>
                         </Item>
@@ -343,11 +343,17 @@ export default class Matches extends React.Component {
                             <Text
                               style={{
                                 color: "#f2f2f2",
-                                fontSize: 12,
+                                fontSize: 0.015* height,
                                 fontWeight: "400"
                               }}
                             >
-                              {lf}
+                              {lf == "LA"
+                                ? "Find a Job"
+                                : lf == "LB"
+                                ? "Startup"
+                                : lf == "LC"
+                                ? "Make Connections"
+                                : "Find Investors"}
                             </Text>
                           </GradientButton>
                         </Item>
