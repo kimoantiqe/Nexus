@@ -533,7 +533,7 @@ export default class RegCompleteProfile extends React.Component {
                 alignSelf: 'center'
                   }}
               >INTERESTS</Text>
-                <Text style={styles.Qtext}>Out of the following, choose what you are interested in.</Text>
+                <Text style={styles.Qtext}>Out of the following, choose all that you are interested in.</Text>
                 </View>
               <View
                 style={{
@@ -544,28 +544,28 @@ export default class RegCompleteProfile extends React.Component {
                 }}
               >
                   <SliderBadge
-                    displayName={"Interest A"}
+                    displayName={"Technology"}
                     flag={interests["IA"]}
                     toCall={() => this.onPressInterests("IA")}
                   />
                   <SliderBadge
-                    displayName={"Interest C"}
+                    displayName={"Politics"}
                     flag={interests["IC"]}
                     toCall={() => this.onPressInterests("IC")}
                   />
 
                   <SliderBadge
-                    displayName={"Interest B"}
+                    displayName={"Media"}
                     flag={interests["IB"]}
                     toCall={() => this.onPressInterests("IB")}
                   />
                   <SliderBadge
-                    displayName={"Interest D"}
+                    displayName={"Sports"}
                     flag={interests["ID"]}
                     toCall={() => this.onPressInterests("ID")}
                   />
               </View>
-              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important similar interests are in deciding who to match you with.</Text>
               <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
               <Badge style={{
                     backgroundColor: 'transparent',
@@ -622,7 +622,7 @@ export default class RegCompleteProfile extends React.Component {
                     }}
                 >GOALS</Text>
               <Text style={styles.Qtext}>
-                Out of the following, choose what you are looking for.
+                Out of the following, choose what you are looking for out of this app
               </Text>
               </View>
               <View
@@ -633,12 +633,12 @@ export default class RegCompleteProfile extends React.Component {
               >
                 <Form>
                   <SliderBadge
-                    displayName={"Looking for A"}
+                    displayName={"Find a Job"}
                     flag={LF["LA"]}
                     toCall={() => this.onPressLF("LA")}
                   />
                   <SliderBadge
-                    displayName={"Looking for C"}
+                    displayName={"Make Connections"}
                     flag={LF["LC"]}
                     toCall={() => this.onPressLF("LC")}
                   />
@@ -646,18 +646,18 @@ export default class RegCompleteProfile extends React.Component {
 
                 <Form>
                   <SliderBadge
-                    displayName={"Looking for B"}
+                    displayName={"Startup"}
                     flag={LF["LB"]}
                     toCall={() => this.onPressLF("LB")}
                   />
                   <SliderBadge
-                    displayName={"Looking for D"}
+                    displayName={"Find Investors"}
                     flag={LF["LD"]}
                     toCall={() => this.onPressLF("LD")}
                   />
                 </Form>
               </View>
-              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important similar goals are in deciding who to match you with.</Text>
               <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
               <Badge style={{
                     backgroundColor: 'transparent',
@@ -726,12 +726,12 @@ export default class RegCompleteProfile extends React.Component {
               >
                 <Form>
                   <SliderBadge
-                    displayName={"Industry A"}
+                    displayName={"Software"}
                     flag={industry["INA"]}
                     toCall={() => this.onPressIndustry("INA")}
                   />
                   <SliderBadge
-                    displayName={"Industry C"}
+                    displayName={"Academia"}
                     flag={industry["INC"]}
                     toCall={() => this.onPressIndustry("INC")}
                   />
@@ -739,18 +739,18 @@ export default class RegCompleteProfile extends React.Component {
 
                 <Form>
                   <SliderBadge
-                    displayName={"Industry B"}
+                    displayName={"Finance"}
                     flag={industry["INB"]}
                     toCall={() => this.onPressIndustry("INB")}
                   />
                   <SliderBadge
-                    displayName={"Industry D"}
+                    displayName={"Science"}
                     flag={industry["IND"]}
                     toCall={() => this.onPressIndustry("IND")}
                   />
                 </Form>
               </View>
-              <Text style={styles.Etext}>On a scale of 1 to 5, set how important the above is in deciding who to match you with.</Text>
+              <Text style={styles.Etext}>On a scale of 1 to 5, set how important a similar industry is in deciding who to match you with.</Text>
               <Item style={{borderBottomColor: 'transparent', paddingBottom: height*0.015, alignSelf: 'center'}}>
               <Badge style={{
                     backgroundColor: 'transparent',

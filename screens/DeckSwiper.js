@@ -115,11 +115,12 @@ export default class Matches extends React.Component {
   };
 
   _toggleSubview() {
+    console.log(height);
     this.setState({
       buttonText: !isHidden ? "Show Subview" : "Hide Subview"
     });
 
-    var toValue = -(height/5);
+    var toValue = -(height/8 + 140);
     var toValue2 = 30;
     var toValue3 = 1;
 
@@ -221,22 +222,25 @@ export default class Matches extends React.Component {
               await this.setState({loading: 1});
              await this.getUser();
             } else {
-              await this.setState(
-                { currentIndex: this.state.currentIndex + 1 },
-                () => {
-                  this.position.setValue({ x: 0, y: 0 });
-                }
-              );
+              if(!Users[this.state.currentIndex+1]){
+                Users=[];
+                await this.setState(
+                  { currentIndex: 0, loading:0},
+                  () => {
+                    this.position.setValue({ x: 0, y: 0 });
+                  }
+                );
+              }
+              else{
+                await this.setState(
+                  { currentIndex: this.state.currentIndex + 1 },
+                  () => {
+                    this.position.setValue({ x: 0, y: 0 });
+                  }
+                );
+              }
             }
-            if(!Users[this.state.currentIndex]){
-              Users=[];
-              await this.setState(
-                { currentIndex: 0, loading:0},
-                () => {
-                  this.position.setValue({ x: 0, y: 0 });
-                }
-              );
-            }
+            
           });
         } else if (gestureState.dx < -120) {
           Animated.spring(this.position, {
@@ -288,6 +292,7 @@ export default class Matches extends React.Component {
       );
     }
     if (!Users.length) {
+      console.log(Users);
       return (
       <View>
        <WaveIndicator
@@ -450,12 +455,12 @@ export default class Matches extends React.Component {
                               }}
                             >
                               {interest == "IA"
-                                ? "INTEREST A"
+                                ? "Technology"
                                 : interest == "IB"
-                                ? "INTEREST B"
+                                ? "Media"
                                 : interest == "IC"
-                                ? "INTEREST C"
-                                : "INTEREST D"}
+                                ? "Politics"
+                                : "Sports"}
                             </Text>
                           </GradientButton>
                         </Item>
@@ -518,12 +523,12 @@ export default class Matches extends React.Component {
                               }}
                             >
                               {industry == "INA"
-                                ? "INDUSTRY A"
+                                ? "Software"
                                 : industry == "INB"
-                                ? "INDUSTRY B"
+                                ? "Finance"
                                 : industry == "INC"
-                                ? "INDUSTRY C"
-                                : "INDUSTRY D"}
+                                ? "Academia"
+                                : "Science"}
                             </Text>
                           </GradientButton>
                         </Item>
@@ -561,7 +566,7 @@ export default class Matches extends React.Component {
                             gradientEnd="#f5ba57"
                             gradientDirection="diagonal"
                             height={height*0.03}
-                            width={width/3.9}
+                            width={width/3.3}
                             radius={50 / 4}
                             blueViolet
                             impact
@@ -579,11 +584,17 @@ export default class Matches extends React.Component {
                             <Text
                               style={{
                                 color: "#f2f2f2",
-                                fontSize: 12,
+                                fontSize: 0.015* height,
                                 fontWeight: "400"
                               }}
                             >
-                              {lf}
+                             {lf == "LA"
+                                ? "Find a Job"
+                                : lf == "LB"
+                                ? "Startup"
+                                : lf == "LC"
+                                ? "Make Connections"
+                                : "Find Investors"}
                             </Text>
                           </GradientButton>
                         </Item>
@@ -674,7 +685,7 @@ export default class Matches extends React.Component {
             key={item._id}
             style={[
               {
-                opacity: this.nextCardOpacity,
+                opacity: (i-this.state.currentIndex >1) ? 0 :this.nextCardOpacity,
                 transform: [{ scale: this.nextCardScale }],
                 height: SCREEN_HEIGHT,
                 width: SCREEN_WIDTH,
@@ -804,13 +815,13 @@ export default class Matches extends React.Component {
                                 fontWeight: "400"
                               }}
                             >
-                              {interest == "IA"
-                                ? "INTEREST A"
+                               {interest == "IA"
+                                ? "Technology"
                                 : interest == "IB"
-                                ? "INTEREST B"
+                                ? "Media"
                                 : interest == "IC"
-                                ? "INTEREST C"
-                                : "INTEREST D"}
+                                ? "Politics"
+                                : "Sports"}
                             </Text>
                           </GradientButton>
                         </Item>
@@ -872,12 +883,12 @@ export default class Matches extends React.Component {
                               }}
                             >
                               {industry == "INA"
-                                ? "INDUSTRY A"
+                                ? "Software"
                                 : industry == "INB"
-                                ? "INDUSTRY B"
+                                ? "Finance"
                                 : industry == "INC"
-                                ? "INDUSTRY C"
-                                : "INDUSTRY D"}
+                                ? "Academia"
+                                : "Science"}
                             </Text>
                           </GradientButton>
                         </Item>
@@ -915,7 +926,7 @@ export default class Matches extends React.Component {
                             gradientEnd="#f5ba57"
                             gradientDirection="diagonal"
                             height={height*0.03}
-                            width={width/3.9}
+                            width={width/3.3}
                             radius={50 / 4}
                             blueViolet
                             impact
@@ -933,11 +944,17 @@ export default class Matches extends React.Component {
                             <Text
                               style={{
                                 color: "#f2f2f2",
-                                fontSize: 12,
+                                fontSize: 0.015* height,
                                 fontWeight: "400"
                               }}
                             >
-                              {lf}
+                               {lf == "LA"
+                                ? "Find a Job"
+                                : lf == "LB"
+                                ? "Startup"
+                                : lf == "LC"
+                                ? "Make Connections"
+                                : "Find Investors"}
                             </Text>
                           </GradientButton>
                         </Item>
@@ -987,7 +1004,7 @@ export default class Matches extends React.Component {
                        
                       
                     </Text> 
-                    
+
                     <View style= {{
                              width: width * 0.9,
                              marginTop: 0,
@@ -1161,8 +1178,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   BIO: {
-   
-    height: height*0.4 + 150,
+    height: height*0.47 + 150,
     width: width,
     flexDirection: "row",
     paddingTop: 40,
@@ -1172,7 +1188,7 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     alignSelf: "center",
     position: "absolute",
-    bottom: -height*0.5,
+    bottom: -height*0.63,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
