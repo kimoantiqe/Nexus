@@ -351,6 +351,7 @@ _updatePic = async(key) => {
                     );
                     await this._sendPicture();
                     this.setState({page: 0});
+                    await this.props.navigation.state.params._refresh();
                     this.props.navigation.goBack();
                   }}
                 >
