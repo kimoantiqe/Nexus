@@ -52,45 +52,16 @@ class SettingsScreen extends React.Component {
 
 componentWillMount = async () => {
   this.getInfo();
-  this._getImage();
-}
-
-//need to make sure
-_getUser = async () => {
-  return new Promise(async (resolve, reject) => {
-      let userToken = await AsyncStorage.getItem("userToken");
-      if (userToken != null) {
-          var user = {
-              method: "GET",
-              headers: {
-                  Authorization: userToken
-              }
-          };
-          await fetch(apiURL + "/user", user)
-          .then(response => response.json())
-          .then(response => {
-              resolve(response.user)
-          });
-      }
-  }
-)}
-
-_getImage = () => {
-  this.setState({loading: 1});
-  this._getUser().then((user) => {
-      this.setState({loading: 0});
-      if(user.image !== undefined){
-          const imageIn = imageUrl + user.image;
-          this.setState({image: imageIn});
-      }
-  })
 }
 
 _onRefresh = async () => {
   this.setState({loading: 1, refreshing: true});
-  await this.getInfo().then(() => {
-    this.setState({loading: 0, refreshing: false});
-  });
+  await this.getInfo()
+  this.setState({loading: 0, refreshing: false});
+}
+
+_refresh = () => {
+  this.setState({childRefresh: !this.state.childRefresh});
 }
 
 getInfo = async () => {
@@ -108,9 +79,13 @@ getInfo = async () => {
             let response = await fetch(apiURL + '/user', settings)
             response = await response.json();
 
-            this.state.firstName = response.user.firstName;
-            this.state.lastName = response.user.lastName;
-            this.state.email = response.user.email;
+            if(response.user.image !== undefined){
+              const imageIn = imageUrl + response.user.image;
+              this.setState({image: imageIn, firstName: response.user.firstName, lastName: response.user.lastName, email: response.user.email, loading: 0});
+            }else{
+              this.setState({firstName: response.user.firstName, lastName: response.user.lastName, email: response.user.email, loading: 0});
+            }
+
 
     } catch(error) {
       console.error(error);
@@ -211,7 +186,7 @@ getInfo = async () => {
   };
 
   editProfile = async () => {
-    this.props.navigation.navigate("EditProfileScreen");
+    this.props.navigation.navigate("EditProfileScreen", {_refresh: this._refresh.bind(this)});
   };
 }
 
