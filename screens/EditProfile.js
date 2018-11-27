@@ -104,6 +104,18 @@ componentWillMount = async () => {
     } catch (error) {
       console.error(error);
     }
+    this._getImage();
+}
+
+_getImage = () => {
+  console.log("askdjflkasjdflkajsdfkl;jals;kdfj")
+  this._getUser().then((user) => {
+      this.setState({loading: 0});
+      if(user.image !== undefined){
+          const imageIn = imageUrl + user.image;
+          this.setState({image: imageIn});
+      }
+  })
 }
 
 doneScroll(p) {
@@ -172,7 +184,8 @@ onPressIndustry(ind) {
 //need to make sure
 _getUser = async () => {
   return new Promise(async (resolve, reject) => {
-      let userToken = Expo.SecureStore.getItemAsync("userToken");
+      let userToken = await Expo.SecureStore.getItemAsync("userToken");
+      console.log(userToken);
       if (userToken != null) {
           var user = {
               method: "GET",
@@ -204,53 +217,45 @@ _sendPicture = async () => {
       if(error) {
         console.log("ERror" + error)
         return;
-      }
-      console.log(response);
-      });
+      } 
+      console.log(response);   
+    });
+  }else{
+    const sb = SendBird.getInstance();
+    await this._getUser().then(async (user) => {
+      console.log(user);
+      const imageOut = imageUrl + user.image;
+      sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
+        if(error) {
+          console.log("ERror" + error)
+          return;
+        } 
+        console.log(response);   
+     });
+    })
   }
 }
 
-  _updatePic = async(key) => {
-    if(key === 0)
-      await getImageFromCamera().then(async(image) => {
-          this.state.imageAvailable = true;
-          const output = 'data:image/jpeg;base64,' + image;
-          this.setState({image: output})
-          const sb = SendBird.getInstance();
-          await this._getUser().then(async (user) => {
-              const imageOut = imageUrl + user.image;
-              sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
-                  if(error) {
-                      console.log("ERror" + error)
-                      return;
-                  }
-                  console.log(response);
-              });
-          })
-      })
-      .catch((error) => {
-          console.log(error);
-      })
-    else
-      await getImageFromLibrary().then(async(image) => {
-          const output = 'data:image/jpeg;base64,' + image;
-          this.setState({image: output})
-          const sb = SendBird.getInstance();
-          await this._getUser().then(async (user) => {
-              const imageOut = imageUrl + user.image;
-              sb.updateCurrentUserInfo(user.firstName + " " + user.lastName, imageOut, function(response, error) {
-                  if(error) {
-                      console.log("ERror" + error)
-                      return;
-                  }
-                  console.log(response);
-              });
-          })
-      })
-      .catch((error) => {
-          console.log(error);
-      })
-    }
+_updatePic = async(key) => {
+  if(key === 0)
+    await getImageFromCamera().then(async(image) => {
+        this.state.imageAvailable = true;
+        const output = 'data:image/jpeg;base64,' + image;
+        this.setState({image: output})
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+  else
+    await getImageFromLibrary().then(async(image) => {
+        this.state.imageAvailable = true;
+        const output = 'data:image/jpeg;base64,' + image;
+        this.setState({image: output})
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+  }
 
   render() {
     const { industry, interests, LF, page, Ival, INval, LFval } = this.state;
@@ -346,7 +351,7 @@ _sendPicture = async () => {
                     );
                     await this._sendPicture();
                     this.setState({page: 0});
-                    this.setState({ loading: 0 });
+                    this.props.navigation.goBack();
                   }}
                 >
                   <Text style={styles.headerNavText}>Apply</Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, StyleSheet, View, Alert, ListView, TouchableHighlight, Dimensions, TouchableOpacity} from 'react-native';
+import { AsyncStorage, StyleSheet, View, Alert, ListView, TouchableHighlight, Dimensions, TouchableOpacity, RefreshControl, ScrollView} from 'react-native';
 import { Avatar, ListItem, Badge, Text} from 'react-native-elements'
 import { connect } from 'react-redux'
 import { sbCreateGroupChannelListQuery, sbConnect } from '../sendbirdActions';
@@ -7,8 +7,11 @@ import { getGroupChannelList } from '../actions';
 import Swipeable from 'react-native-swipeable';
 import moment from 'moment'
 import {Notifications} from 'expo'
+import { WaveIndicator } from "react-native-indicators";
 
 import {
+    Container,
+    Content,
     Header,
     Left,
     Right,
@@ -38,6 +41,7 @@ class ChatDashboard extends React.Component {
             list: [],
             groupChannelList: ds.cloneWithRows([]),
             notifictation: {},
+            refreshing: false,
         }
     }
 
@@ -173,6 +177,20 @@ class ChatDashboard extends React.Component {
         setTimeout(() => {this.setState({childRefresh: !this.state.childRefresh})}, 1000);
     }
 
+    _onRefresh = async () => {
+        this.setState({
+            refresh: false,
+            childRefresh: false,
+            groupChannelListQuery: null,
+            list: [],
+            groupChannelList: ds.cloneWithRows([]),
+            notifictation: {},
+            refreshing: true,
+        })
+        this._initGroupChannelList();
+        this.setState({refreshing: false});
+    }
+
     _renderList = (rowData) => {
         
         //Checks made to remove unnessary chanels
@@ -248,6 +266,46 @@ class ChatDashboard extends React.Component {
     }
 
     render() {
+        if (!this.state.list.length) {
+            return (
+            <Container>
+                <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
+                    <Left/>
+                        <Body>
+                            <Title style={styles.headerTitle}>CHAT</Title>
+                        </Body>
+                    <Right>
+                        <Button transparent>
+                            <Icon name="person-add" style={{color:'#f5ba57'}} onPress={() => 
+                                this.props.navigation.navigate("AddUser", {
+                                    userID: userID,
+                                    addChannel: this._addChannel.bind(this),
+                                    list: this.state.list,
+                                })}
+                            />
+                        </Button>
+                    </Right>
+                </Header>
+                <Content refreshControl={
+                    <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh.bind(this)}
+                    />
+                }>
+                <View style={{
+                    flex: 1, alignItems: 'center'}}>
+                    <WaveIndicator
+                        size={80}
+                        color="#2c2638"
+                        style={{ flex: 0, marginTop: height*0.3 }}
+                    />
+                        <Text>You haven't started a chat with someone yet!</Text>
+              </View>
+              </Content>
+            </Container>
+            
+            );
+          }
         return (
             <View>
                 <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
@@ -267,6 +325,15 @@ class ChatDashboard extends React.Component {
                         </Button>
                     </Right>
                 </Header>
+                <ScrollView 
+                    refreshControl={
+                        <RefreshControl
+                          refreshing={this.state.refreshing}
+                          onRefresh={this._onRefresh}
+                        />
+                      }
+                      style={{height: height}}
+                      >
                 <ListView
                     enableEmptySections={true}
                     renderRow={this._renderList}
@@ -275,6 +342,7 @@ class ChatDashboard extends React.Component {
                     onEndReachedThreshold={-50}
                     onScroll={this._handleScroll}
                 />
+                </ScrollView>
             </View>
         )
     }

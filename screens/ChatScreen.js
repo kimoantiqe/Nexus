@@ -81,7 +81,9 @@ export default class ChatScreen extends Component {
                 this.setState({ messages: newMessages })
             }
         }
-        this.state.groupChannel.markAsRead();
+        if(this.state.groupChannel !== Object)
+            this.state.groupChannel.markAsRead();
+        
         this.state.sb.addChannelHandler('ChatScreen', ChannelHandler)
 
         const ConnectionHandler = new this.state.sb.ConnectionHandler()
@@ -110,10 +112,6 @@ export default class ChatScreen extends Component {
     };
 
     _sendPushNotification = async(message) => {
-        console.log("Hello");
-        console.log(message);
-        console.log(this.state.friendToken);
-        console.log("Bye");
           var toPush = {
             method: 'POST',
             headers: {
@@ -134,7 +132,6 @@ export default class ChatScreen extends Component {
     getGroupChannel() {
         this.state.channelUrl = this.props.navigation.getParam('channelUrl', null);
         this.state.userId = this.props.navigation.getParam('userID', null);
-        console.log(this.state.sb.GroupChannel);
         //get groupchannel
         this.state.sb.GroupChannel.getChannel(this.state.channelUrl, (channel, error) => {
             //add alert and go back on press
@@ -224,6 +221,14 @@ export default class ChatScreen extends Component {
         this.setState({ isMeetingModalVisible: !this.state.isMeetingModalVisible });
     }
 
+    _toggleTaskModalClear = () => {
+        this.setState({ isTaskModalVisible: !this.state.isTaskModalVisible, meetingName: '',meetingDescription: '', meetingDate: '', meetingTime: '' });
+    }
+
+    _toggleMeetingModalClear = () => {
+        this.setState({ isMeetingModalVisible: !this.state.isMeetingModalVisible, meetingName: '',meetingDescription: '', meetingDate: '', meetingTime: '' });
+    }
+
     _toggleDateModal = () => {
         this.setState({ isDateModalVisible: !this.state.isDateModalVisible });
     }
@@ -233,24 +238,24 @@ export default class ChatScreen extends Component {
     }
 
     _handleDatePicked = (date, type) => {
-        moment.locale('utc');
+        moment.locale('pst');
         const dateOut = moment(date).format('MM-DD-YYYY').toString();
         dateInit = moment(date).format('YYYY-MM-DD').toString();
         if(type === 'task')
-            this.state.taskDate = dateOut;
+            this.setState({taskDate: dateOut})
         else
-            this.state.meetingDate = dateOut;
+            this.setState({meetingDate: dateOut})
         this._toggleDateModal();
     }
 
     _handleTimePicked = (time, type) => {
-        moment.locale('utc');
+        moment.locale('pst');
         const timeOut = moment(time).format('h:mm A').toString();
         timeInit = moment(time).format('HH:mm:ss.SSS').toString();
         if(type === 'task')
-            this.state.taskTime = timeOut;
+            this.setState({taskTime: timeOut})
         else
-            this.state.meetingTime = timeOut;
+            this.setState({meetingTime: timeOut})
         this._toggleTimeModal();
     }
 
@@ -408,7 +413,7 @@ export default class ChatScreen extends Component {
                 </View>
             </KeyboardAvoidingView>
 
-            <Modal isVisible={this.state.isTaskModalVisible} onBackdropPress={this._toggleTaskModal} avoidKeyboard={true}>
+            <Modal isVisible={this.state.isTaskModalVisible} onBackdropPress={this._toggleTaskModalClear} avoidKeyboard={true}>
                 <View style={{ flex: 1}} style={styles.modalContent}>
                 <Text style={styles.modalHeader}>CREATE YOUR TASK HERE!</Text>
                 <View style={{padding: 10}}>
@@ -492,13 +497,13 @@ export default class ChatScreen extends Component {
                     isVisible={this.state.isDateModalVisible}
                     onConfirm={(date) => this._handleDatePicked(date, 'task')}
                     onCancel={this._toggleDateModal}
-                    minimumDate = {new Date(Date.now())}
+                    //minimumDate = {new Date()}
                 />
 
                 </View>
             </Modal>
-
-            <Modal isVisible={this.state.isMeetingModalVisible} onBackdropPress={this._toggleMeetingModal} avoidKeyboard={true}>
+            
+            <Modal isVisible={this.state.isMeetingModalVisible} onBackdropPress={this._toggleMeetingModalClear} avoidKeyboard={true}>
                 <View style={{ flex: 1}} style={styles.modalContent}>
                 <Text style={styles.modalHeader}>SCHEDULE YOUR MEETING HERE!</Text>
                 <View style={{padding: 10}}>
@@ -581,7 +586,7 @@ export default class ChatScreen extends Component {
                     isVisible={this.state.isDateModalVisible}
                     onConfirm={(date) => this._handleDatePicked(date, 'meeting')}
                     onCancel={this._toggleDateModal}
-                    minimumDate = {new Date(Date.now())}
+                    //minimumDate = {new Date()}
                 />
 
                 </View>

@@ -26,8 +26,8 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const APIcall      = require("../API_calls/APIs");
-
 var apiURL = APIcall.apiURL;
+const imageUrl = apiURL + '/image/';
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -52,6 +52,38 @@ class SettingsScreen extends React.Component {
 
 componentWillMount = async () => {
   this.getInfo();
+  this._getImage();
+}
+
+//need to make sure
+_getUser = async () => {
+  return new Promise(async (resolve, reject) => {
+      let userToken = await AsyncStorage.getItem("userToken");
+      if (userToken != null) {
+          var user = {
+              method: "GET",
+              headers: {
+                  Authorization: userToken
+              }
+          };
+          await fetch(apiURL + "/user", user)
+          .then(response => response.json())
+          .then(response => {
+              resolve(response.user)
+          });
+      }
+  }
+)}
+
+_getImage = () => {
+  this.setState({loading: 1});
+  this._getUser().then((user) => {
+      this.setState({loading: 0});
+      if(user.image !== undefined){
+          const imageIn = imageUrl + user.image;
+          this.setState({image: imageIn});
+      }
+  })
 }
 
 _onRefresh = async () => {

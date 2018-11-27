@@ -1,9 +1,10 @@
 import React from 'react';
 import { List, ListItem, Avatar } from 'react-native-elements'
-import { AsyncStorage, Dimensions, View } from 'react-native'
+import { AsyncStorage, Dimensions, View, Text } from 'react-native'
 import moment from 'moment'
 
 import {
+    Container,
     Header,
     Left,
     Right,
@@ -13,6 +14,8 @@ import {
     Button,
   } from "native-base";
 import { sbConnect, sbCreateChannel } from '../sendbirdActions';
+import { WaveIndicator } from "react-native-indicators";
+
 
 const APIcall      = require("../API_calls/APIs");
 
@@ -113,7 +116,39 @@ export default class AddUser extends React.Component {
 
     //key = {l.avatar_url}
     render() {
-        console.log(this.state.matchesArray)
+        if (!this.state.matchesArray.length) {
+            return (
+            <Container>
+                <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
+                    <Left/>
+                        <Body>
+                            <Title style={styles.headerTitle}>ADD USER</Title>
+                        </Body>
+                    <Right>
+                        <Button transparent>
+                            <Icon name="person-add" style={{color:'#f5ba57'}} onPress={() => 
+                                this.props.navigation.navigate("AddUser", {
+                                    userID: userID,
+                                    addChannel: this._addChannel.bind(this),
+                                    list: this.state.list,
+                                })}
+                            />
+                        </Button>
+                    </Right>
+                </Header>
+                <View style={{
+                    flex: 1}}>
+                    <WaveIndicator
+                        size={80}
+                        color="#2c2638"
+                        style={{ flex: 0, marginTop: height*0.3 }}
+                    />
+                        <Text style={{textAlign: 'center', paddingHorizontal: 20}}>It looks like you haven't matched with anyone yet! Please come back later.</Text>
+              </View>
+            </Container>
+            
+            );
+          }
         return (
             <View>
             <Header  iosBarStyle='light-content' androidStatusBarColor='#ffffff' style={styles.header}>
