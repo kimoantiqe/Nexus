@@ -213,7 +213,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, 
     if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
-    } else if((interests.length == 0) || (industry.length == 0) || (LF.length == 0))
+    } else if(!(Object.values(interests).indexOf(true) > -1) || !(Object.values(industry).indexOf(true) > -1) || !(Object.values(LF).indexOf(true) > -1))
     {
       alert("Please choose at least one of each of the three types of badges");
     } else 
