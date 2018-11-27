@@ -4,10 +4,6 @@ import {Text, Button, Container, Content, Form} from "native-base";
 
 import Background from '../components/Background';
 
-//import actions for login and sendbird
-import { connect } from "react-redux";
-import { sendbirdLogin } from "../actions";
-
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 

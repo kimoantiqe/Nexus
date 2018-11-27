@@ -2,19 +2,13 @@ import React from "react";
 import {
   AsyncStorage,
   Image,
-  Platform,
-  ScrollView,
   StyleSheet,
-  TouchableOpacity,
   View,
   FlatList,
   Dimensions,
   RefreshControl
 } from "react-native";
 import { WaveIndicator } from "react-native-indicators";
-import { WebBrowser } from "expo";
-
-import { MonoText } from "../components/StyledText";
 
 import {
   Container,
@@ -29,12 +23,8 @@ import {
   Left,
   Right,
   Body,
-  List,
   Title,
-  ListItem
 } from "native-base";
-
-import { sbCreateChannel } from "../sendbirdActions/groupChannel";
 
 const APIcall      = require("../API_calls/APIs");
 
@@ -42,17 +32,8 @@ var apiURL = APIcall.apiURL;
 
 var matchesArray = [];
 
-export const user2Token = async () => {
-  let token = await AsyncStorage.getItem("userToken");
-  return token;
-};
-var textToPrint;
-var firstName = [];
-var lastName = [];
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-var thisUser;
-var USERID;
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -61,6 +42,7 @@ export default class HomeScreen extends React.Component {
       lastRefresh: Date(Date.now()).toString(),
       loading: 1 ,
       refreshing: false,
+      thisUser: {}
     };
 
     this.refreshScreen = this.refreshScreen.bind(this);
@@ -101,9 +83,9 @@ export default class HomeScreen extends React.Component {
         .then(async response => {
 
           if (response.success) {
-            thisUser = response.user;
+            this.state.thisUser = response.user;
             for (var i = 0; i < response.user.matches.length; i++) {
-              console.log(thisUser);
+              console.log(this.state.thisUser);
               if(response.user.matches[i])
               await this.getUser(response.user.matches[i]);
             }
@@ -257,10 +239,10 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                      <Text style={styles.numberText}>{thisUser.tasks ? (thisUser.tasks.length ? thisUser.tasks.length : 0) : 0}</Text> }
-                      <Text style={styles.titleText}>{(thisUser.tasks && thisUser.tasks.length !=1)  ? "Meetings/Tasks" : "Meeting/Task"}</Text>
+                      <Text style={styles.numberText}>{this.state.thisUser.tasks ? (this.state.thisUser.tasks.length ? this.state.thisUser.tasks.length : 0) : 0}</Text> }
+                      <Text style={styles.titleText}>{(this.state.thisUser.tasks && this.state.thisUser.tasks.length !=1)  ? "Meetings/Tasks" : "Meeting/Task"}</Text>
                     </View>
-                    <Text style={styles.subTitleText}>were set!</Text>
+                    <Text style={styles.subTitleText}>We're set!</Text>
                   </Body>
                 </Left>
               </CardItem>
@@ -275,8 +257,8 @@ export default class HomeScreen extends React.Component {
                   />
                   <Body style={styles.centerText}>
                     <View style={styles.rowContainer}>
-                      <Text style={styles.numberText}>{thisUser.InstantMatches ? thisUser.InstantMatches.length : 0}</Text>
-                      <Text style={styles.titleText}>{ (thisUser.InstantMatches && thisUser.InstantMatches.length != 1) ? "Instant Matches" : "Instant Match" }</Text>
+                      <Text style={styles.numberText}>{this.state.thisUser.InstantMatches ? this.state.thisUser.InstantMatches.length : 0}</Text>
+                      <Text style={styles.titleText}>{ (this.state.thisUser.InstantMatches && this.state.thisUser.InstantMatches.length != 1) ? "Instant Matches" : "Instant Match" }</Text>
                     </View>
                     <Text style={styles.subTitleText}>so far!</Text>
                   </Body>
@@ -290,15 +272,6 @@ export default class HomeScreen extends React.Component {
   }
 }
 
-const items = [
-  { key: "a" },
-  { key: "b" },
-  { key: "c" },
-  { key: "d" },
-  { key: "e" },
-  { key: "f" },
-  { key: "g" }
-];
 const styles = StyleSheet.create({
   centerCards: {
     flex: 1,
