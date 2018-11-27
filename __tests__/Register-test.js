@@ -3,15 +3,13 @@ import Register from '../screens/Register';
 import Enzyme from 'enzyme';
 import { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { WaveIndicator } from "react-native-indicators";
 
 const APIcall      = require("../API_calls/APIs");
 
 import {Button, Input} from 'native-base';
-const console = require('console');
 
 Enzyme.configure({ adapter: new Adapter() });
-
-
 
 jest.mock('WebView', () => 'WebView');
 
@@ -62,3 +60,11 @@ test('Register field repassword works', () => {
 
   expect(wrapper.instance().state.inputs["Repassword"]).toEqual('abc');
 });
+
+test('Register loading mechanism works', () => {
+  const wrapper = shallow(<Register/>);
+
+  wrapper.setState({loading: 1});
+
+  expect(wrapper.find(WaveIndicator).length).toEqual(1);
+})

@@ -37,10 +37,13 @@ const height = Dimensions.get("window").height;
 export default class RegCompleteProfile extends React.Component {
   static navigationOptions = {
     header: null,
-    title: "RCP"
+    title: "RCP",
+    gesturesEnabled: false,
   };
 
-  state = {
+  constructor(props) {
+  super(props);
+  this.state = {
     Ival: 1,
     INval: 1,
     LFval: 1,
@@ -58,7 +61,7 @@ export default class RegCompleteProfile extends React.Component {
     displayWidth: width/2,
     imageAvailable: false,
   };
-
+  }
   doneScroll(p) {
    this.setState({ page: p });
    Keyboard.dismiss();
@@ -358,17 +361,18 @@ export default class RegCompleteProfile extends React.Component {
                     color: "white",
                     fontSize: 19,
                     fontWeight: "300",
-                    paddingHorizontal: width * 0.02,
+                    paddingHorizontal: width * 0.035,
                     paddingTop: height*0.07,
                     textAlign: "center",
                     flexWrap: "wrap",
+                    paddingBottom: height*0.03,
                   }}
-                >keep swiping to answer the next few questions. Doing so will help us connect you to those that are notable to you in this community.</Text>
+                >Keep swiping to answer the next few questions. Doing so will help us connect you to those that are notable to you in this community.</Text>
                 <Button
                   style={{
                     backgroundColor: 'transparent',
                     height: height*0.09,
-                    alignSelf: 'center'
+                    alignSelf: 'center',
                   }}
                   onPress={() => {
                     this.pager.scrollToPage(this.state.page + 1);
@@ -380,7 +384,6 @@ export default class RegCompleteProfile extends React.Component {
                     style={{
                       fontSize: 57,
                       color: '#f5ba57',
-                      paddingLeft: width*0.02
                     }}
                   />
                 </Button>
@@ -776,8 +779,22 @@ export default class RegCompleteProfile extends React.Component {
                   }}
               >{INval}</Text>
             </Content>
-            <Content>
-            <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}} >
+            <Content contentContainerStyle={{
+                  flex:1,
+                  flexDirection: 'column',
+                }}>
+              <View
+                style={{
+                  flex:1,
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}
+              >
+              <View
+                style={{
+                  paddingBottom: height*0.02,
+                  paddingTop: height*0.1
+                }}>
                 <Lightbox
                     onOpen={() => {this.setState({imageWidth: 0, displayWidth: width})}}
                     willClose={() => {this.setState({imageWidth: width/4, displayWidth: width/2})}}
@@ -788,17 +805,16 @@ export default class RegCompleteProfile extends React.Component {
                     source={{ uri: this.state.image }}
                     />
                 </Lightbox>
-
-                <View style={{padding: 20, justifyContent: 'center', alignItems: 'center'}}>
+                </View>
                 <ModalSelector
                     style={{backgroundColor: 'white', borderRadius: 6}}
                     backdropPressToClose={true}
                     data={data}
                     initValue="Update Picture"
                     onChange={(option)=>{this._updatePic(option.key)}} />
-                </View>
-                
-                </View>
+
+                    <Text style={styles.Qtext}>Take a picture, or choose one from your library, to set as your Profile Picture!</Text>
+                    </View>
             </Content>
           </Pages>
         </Container>
@@ -822,7 +838,7 @@ const styles = StyleSheet.create({
   Qtext: {
     color: "white",
     fontSize: 25,
-    paddingHorizontal: width * 0.02,
+    paddingHorizontal: width * 0.03,
     paddingTop: height*0.02,
     fontFamily: "Folks-Normal",
     textAlign: "center",
