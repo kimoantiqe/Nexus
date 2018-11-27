@@ -2,7 +2,7 @@ import {AsyncStorage} from "react-native"
 import {sbConnect} from "../sendbirdActions"
 import Expo from 'expo';
 
-const apiURL = "https://nexus-restapi.azurewebsites.net/api";
+const apiURL = "http://10.0.0.228:1337/api";
 module.exports.apiURL = apiURL;
 
 var regUserID;
@@ -213,7 +213,7 @@ const CompleteProfile = async (first, last, interests, industry, LF, bio, Ival, 
     if (first == "" || last == "")
     {
         alert("Please enter your first & last name to register");
-    } else if((interests.length == 0) || (industry.length == 0) || (LF.length == 0))
+    } else if(!(Object.values(interests).indexOf(true) > -1) || !(Object.values(industry).indexOf(true) > -1) || !(Object.values(LF).indexOf(true) > -1))
     {
       alert("Please choose at least one of each of the three types of badges");
     } else 

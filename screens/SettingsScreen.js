@@ -1,5 +1,5 @@
 import React from "react";
-import { AsyncStorage, StyleSheet, Dimensions, FlatList,Image,View } from "react-native";
+import { AsyncStorage, StyleSheet, Dimensions, FlatList,Image,View,RefreshControl } from "react-native";
 
 import { connect } from "react-redux";
 import { NavigationActions, StackActions } from "react-navigation";
@@ -20,9 +20,14 @@ import {
   Left,
   Title
 } from "native-base";
+import { WaveIndicator } from "react-native-indicators";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
+
+const APIcall      = require("../API_calls/APIs");
+
+var apiURL = APIcall.apiURL;
 
 class SettingsScreen extends React.Component {
   static navigationOptions = {
@@ -39,12 +44,77 @@ class SettingsScreen extends React.Component {
     imageAvailable: false,
     firstName:"Sherif",
     lastName:"Anas",
-    email:"email@email.com"
+    email:"email@email.com",
+    loading: 1,
+    refreshing: false,
   };
 }
 
+componentWillMount = async () => {
+  this.getInfo();
+}
+
+_onRefresh = async () => {
+  this.setState({loading: 1});
+  await this.getInfo();
+}
+
+getInfo = async () => {
+
+  const userToken = await AsyncStorage.getItem("userToken");
+
+  var settings = {
+    method: 'GET',
+    headers: {
+      'Authorization': userToken
+    }
+    };
+
+    try {
+            let response = await fetch(apiURL + '/user', settings)
+            response = await response.json();
+
+            this.state.firstName = response.user.firstName;
+            this.state.lastName = response.user.lastName;
+            this.state.email = response.user.email;
+
+    } catch(error) {
+      console.error(error);
+    }
+
+    this.setState({loading: 0})
+
+}
+
   render() {
-    return (
+
+    if(this.state.loading){
+      return(
+        <Container>
+        <Content >
+        <Header
+        iosBarStyle="light-content"
+        androidStatusBarColor="#ffffff"
+        style={styles.header}
+      >
+        <Left />
+        <Body>
+          <Title style={styles.headerTitle}>Settings</Title>
+        </Body>
+        <Right />
+      </Header>
+          <WaveIndicator
+            size={80}
+            color="#2c2638"
+            style={{ flex: 0, marginTop: height*0.3 }}
+          />
+
+        </Content>
+      </Container>
+      )
+    }
+
+    else return (
       <Container>
       <Header
         iosBarStyle="light-content"
@@ -57,13 +127,21 @@ class SettingsScreen extends React.Component {
         </Body>
         <Right />
       </Header>
-        <Content style={styles.container}>
+        <Content  
+        refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh.bind(this)}
+                />
+              } 
+        contentContainerStyle={styles.container}>
 
 
         <Lightbox
             onOpen={() => {this.setState({imageWidth: 0, displayWidth: width})}}
             willClose={() => {this.setState({imageWidth: width/4, displayWidth: width/2})}}
             underlayColor = 'transparent'
+            style={{paddingTop: height*0.02}}
             >
             <Image
             style={{ alignSelf:'center', height: this.state.displayWidth, width: this.state.displayWidth, borderRadius: this.state.imageWidth,
@@ -142,7 +220,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop:2,
     fontWeight: "400",
-    color: "#d6d6d6",
+    color: "#4c5a84",
     textAlign:'center'
   }, buttonContainer:{
    flex: 1,
