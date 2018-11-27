@@ -17,6 +17,6 @@
     <img src="https://api.codacy.com/project/badge/Grade/9e090f0a5cf14a5baf72145d284aa1e1"
       alt="Codacy Code Grade" />
   </a>
-  <a href='https://coveralls.io/github/kimoantiqe/Nexus?branch=master'><img src='https://coveralls.io/repos/github/kimoantiqe/Nexus/badge.svg?branch=master' alt='Coverage Status' /></a>
+ <a href='https://coveralls.io/github/kimoantiqe/Nexus?branch=master'><img src='https://coveralls.io/repos/github/kimoantiqe/Nexus/badge.svg?branch=master' alt='Coverage Status' /></a>
 </p>
 <br>
