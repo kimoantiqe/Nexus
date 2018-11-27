@@ -317,13 +317,13 @@ describe('Nexus API test', async () => {
         it('should fail ', (done) => matching.matchAlreadyMatched(done,chai,server));
     });
 
-    describe('/DELETE /api/user', () => {
-        it('it should delete registered user 1', (done) => matching.deleteUser1(done,chai,server));
-    });
+    // describe('/DELETE /api/user', () => {
+    //     it('it should delete registered user 1', (done) => matching.deleteUser1(done,chai,server));
+    // });
 
-    describe('/DELETE /api/user', () => {
-        it('it should delete registered user 2', (done) => matching.deleteUser2(done,chai,server));
-    });
+    // describe('/DELETE /api/user', () => {
+    //     it('it should delete registered user 2', (done) => matching.deleteUser2(done,chai,server));
+    // });
 
     describe('/POST /api/user REGISTER USER 3', () => {
         it('it should register new user 3', (done) => matching.registerUser3(done,chai,server));
@@ -360,13 +360,13 @@ describe('Nexus API test', async () => {
         it('should succeed ', (done) => matching.matchSuccess(done,chai,server));
     });
 
-    describe('/DELETE /api/user', () => {
-        it('it should delete registered user 3', (done) => matching.deleteUser3(done,chai,server));
-    });
+    // describe('/DELETE /api/user', () => {
+    //     it('it should delete registered user 3', (done) => matching.deleteUser3(done,chai,server));
+    // });
 
-    describe('/DELETE /api/user', () => {
-        it('it should delete registered user 4', (done) => matching.deleteUser4(done,chai,server));
-    });
+    // describe('/DELETE /api/user', () => {
+    //     it('it should delete registered user 4', (done) => matching.deleteUser4(done,chai,server));
+    // });
 
 
 });
