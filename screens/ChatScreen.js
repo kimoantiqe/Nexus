@@ -238,9 +238,12 @@ export default class ChatScreen extends Component {
     }
 
     _handleDatePicked = (date, type) => {
+<<<<<<< HEAD
         // moment.locale('pst');
+=======
+>>>>>>> cc03be1bba0a0d64fd6cab6a51955aacbdb92758
         const dateOut = moment(date).format('MM-DD-YYYY').toString();
-        dateInit = moment(date).format('YYYY-MM-DD').toString();
+        dateInit = moment(date).utc().format('YYYY-MM-DD').toString();
         if(type === 'task')
             this.setState({taskDate: dateOut})
         else
@@ -249,9 +252,12 @@ export default class ChatScreen extends Component {
     }
 
     _handleTimePicked = (time, type) => {
+<<<<<<< HEAD
         // moment.locale('pst');
+=======
+>>>>>>> cc03be1bba0a0d64fd6cab6a51955aacbdb92758
         const timeOut = moment(time).format('h:mm A').toString();
-        timeInit = moment(time).format('HH:mm:ss.SSS').toString();
+        timeInit = moment(time).utc().format('HH:mm:ss.SSS').toString();
         if(type === 'task')
             this.setState({taskTime: timeOut})
         else
@@ -497,7 +503,7 @@ export default class ChatScreen extends Component {
                     isVisible={this.state.isDateModalVisible}
                     onConfirm={(date) => this._handleDatePicked(date, 'task')}
                     onCancel={this._toggleDateModal}
-                    //minimumDate = {new Date()}
+                    minimumDate = {new Date()}
                 />
 
                 </View>
@@ -586,7 +592,7 @@ export default class ChatScreen extends Component {
                     isVisible={this.state.isDateModalVisible}
                     onConfirm={(date) => this._handleDatePicked(date, 'meeting')}
                     onCancel={this._toggleDateModal}
-                    //minimumDate = {new Date()}
+                    minimumDate = {new Date()}
                 />
 
                 </View>

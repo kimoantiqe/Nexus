@@ -13,6 +13,8 @@ Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock('WebView', () => 'WebView');
 
+jest.useFakeTimers();
+
 test('Login button onPress works', () => {
     const wrapper = shallow(<Login/>);
     let clickMock = jest.fn();
