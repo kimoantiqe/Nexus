@@ -325,7 +325,7 @@ export default class Matches extends React.Component {
                             gradientEnd="#f5ba57"
                             gradientDirection="diagonal"
                             height={height*0.03}
-                            width={width/3.9}
+                            width={width/3.3}
                             radius={50 / 4}
                             blueViolet
                             impact
