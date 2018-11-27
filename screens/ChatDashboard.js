@@ -83,7 +83,7 @@ class ChatDashboard extends React.Component {
     }
 
     _returnData() {
-        this.setState({refreshing: !this.state.childRefresh});
+        this.setState({childRefresh: !this.state.childRefresh});
     }
 
     _addChannel(channel) {
