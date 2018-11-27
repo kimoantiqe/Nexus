@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'test'
 const chai        = require('chai');
 const landing      = require('./landing.test');
 const user      = require('./user.test');
@@ -10,7 +11,6 @@ const server =  require('../');
 
 chai.should();
 chai.use(chaiHttp);
-
 
 
 describe('Nexus API test', async () => {
