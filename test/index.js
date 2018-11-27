@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'test'
+process.env.NODE_ENV = 'test';
 const chai        = require('chai');
 const landing      = require('./landing.test');
 const user      = require('./user.test');
@@ -96,7 +96,7 @@ describe('Nexus API test', async () => {
   describe('/POST /api/user/login/facebook', () => {
         it('it should login facebookuser , without creating a new account', (done) => facebook.loginSuccessfb(done,chai,server));
   });
-  
+
   describe('/PUT /api/user', () => {
       it('it should fail : blacklisted property entered ', (done) => user.putFail1(done,chai,server));
   });
@@ -321,7 +321,7 @@ describe('Nexus API test', async () => {
     describe('/POST /api/user REGISTER USER 3', () => {
         it('it should register new user 3', (done) => matching.registerUser3(done,chai,server));
         });
-    
+
     describe('/POST /api/user REGISTER USER 4', () => {
         it('it should register new user 4', (done) => matching.registerUser4(done,chai,server));
     });
@@ -353,6 +353,6 @@ describe('Nexus API test', async () => {
         it('should succeed ', (done) => matching.matchSuccess(done,chai,server));
     });
 
-    
+
 
 });

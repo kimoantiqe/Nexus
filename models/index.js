@@ -19,18 +19,13 @@ var files = fs
 
 mongoose.Promise = global.Promise; //set mongo up to use promises
 
-if ( process.env.NODE_ENV === 'test' ) { 
-	mongoose.connect(dbConfig.testurl, { useNewUrlParser: true }).catch((err) => {
-		console.log('*** Can Not Connect to Mongo Server:', dbConfig.testurl);
+const dbURL = ( process.env.NODE_ENV === 'test')? dbConfig.testurl: dbConfig.url;
+
+	mongoose.connect(dbURL, { useNewUrlParser: true }).catch((err) => {
+		console.log('*** Can Not Connect to Mongo Server:', dbURL);
 	});
-	console.log('*** Connected to test database: ', dbConfig.testurl);
-}
-else{
-	mongoose.connect(dbConfig.url, { useNewUrlParser: true }).catch((err) => {
-		console.log('*** Can Not Connect to Mongo Server:', dbConfig.url);
-	});
-	console.log('*** Connected to development database: ', dbConfig.url);
-}
+	console.log('*** Connected to test database: ', dbURL);
+
 
 mongoose.set('useCreateIndex', true);
 
@@ -40,7 +35,7 @@ module.exports.conn = conn;
 
 
 conn.once('open', () => {
-	console.log('Connected to mongoDB at '+dbConfig.url);
+	console.log('Connected to mongoDB at '+dbURL);
 });
 
 conn.on('error', (error) => {
