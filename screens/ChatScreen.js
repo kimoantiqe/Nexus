@@ -35,6 +35,7 @@ var timeInit;
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const APIcall      = require("../API_calls/APIs");
+var apiURL = APIcall.apiURL;
 
 console.disableYellowBox = true
 
@@ -48,12 +49,12 @@ const themeDarkColor = '#287277'
 var messageQuery;
 
 export default class ChatScreen extends Component {
-    
+
     static navigationOptions = {
         title: 'ChatScreen',
         header: null,
     };
-    
+
     constructor(props) {
         super(props)
         this.getGroupChannel = this.getGroupChannel.bind(this)
@@ -109,7 +110,10 @@ export default class ChatScreen extends Component {
     };
 
     _sendPushNotification = async(message) => {
-
+        console.log("Hello");
+        console.log(message);
+        console.log(this.state.friendToken);
+        console.log("Bye");
           var toPush = {
             method: 'POST',
             headers: {
@@ -117,14 +121,14 @@ export default class ChatScreen extends Component {
                 'accept-encoding': 'gzip, deflate',
                 'content-type': 'application/json'
             },
-            body: [{
+            body: JSON.stringify({
                 "to": this.state.friendToken,
                 "title": this.state.friendName,
                 "sound": "default",
                 "body": message,
-              }]
+              })
           }
-          await fetch(apiURL + '/user', toPush)
+          await fetch('https://exp.host/--/api/v2/push/send', toPush).then((response) => console.log(response))
       };
 
     getGroupChannel() {
@@ -139,13 +143,13 @@ export default class ChatScreen extends Component {
                 console.log(error);
                 return;
             }
-            
+
             messageQuery = channel.createPreviousMessageListQuery();
-            
+
             this.state.groupChannel = channel;
-            
+
             if(this.state.userId === null)
-                this.state.friendName = channel.name;            
+                this.state.friendName = channel.name;
             else {
                 if(channel.memberCount == 2){
                     this.state.friendName = channel.members[0].userId === this.state.userId ? channel.members[1].nickname : channel.members[0].nickname;
@@ -156,7 +160,6 @@ export default class ChatScreen extends Component {
                     this.state.friendId = this.state.userId;
                 }
             }
-            console.log(this.state.groupChannel);
             this.getChannelMessage(false);
         })
     }
@@ -172,9 +175,10 @@ export default class ChatScreen extends Component {
                 console.error(error)
                 return
             }
-            //this._sendPushNotification(this.state.text);
+            const messageOut = this.state.text;
             const messages = [].concat([message]).concat(this.state.messages)
             this.setState({ text: '', messages })
+            this._sendPushNotification(messageOut);
         })
 
     }
@@ -339,7 +343,7 @@ export default class ChatScreen extends Component {
                                 type='font-awesome'
                                 color= {themeColor}
                                 size = {20}
-                                onPress={() => this.sendMessage()} 
+                                onPress={() => this.sendMessage()}
                             />
                         </View>
                     </KeyboardAvoidingView>
@@ -380,11 +384,11 @@ export default class ChatScreen extends Component {
                         type='font-awesome'
                         color= {themeColor}
                         size = {20}
-                        onPress={() => this.sendMessage()} 
+                        onPress={() => this.sendMessage()}
                     />
                     <ActionButton buttonColor={themeColor} size={44} offsetX={10} offsetY={6} spacing={40}>
                     <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => this._toggleTaskModal()} size={20}>
-                        <Icon 
+                        <Icon
                             raised
                             name='create'
                             color= {themeColor}
@@ -392,7 +396,7 @@ export default class ChatScreen extends Component {
                         />
                     </ActionButton.Item>
                     <ActionButton.Item buttonColor='#9b59b6' title="Set-up Meeting" onPress={() => this._toggleMeetingModal()} size={20} >
-                        <Icon 
+                        <Icon
                             raised
                             name='group'
                             type='font-awesome'
@@ -408,7 +412,7 @@ export default class ChatScreen extends Component {
                 <View style={{ flex: 1}} style={styles.modalContent}>
                 <Text style={styles.modalHeader}>CREATE YOUR TASK HERE!</Text>
                 <View style={{padding: 10}}>
-                <TextInput 
+                <TextInput
                         style={styles.modalTextInput}
                         placeholder="Task Name"
                         onChangeText={(taskName) => this.setState({ taskName })}
@@ -416,7 +420,7 @@ export default class ChatScreen extends Component {
                     />
                 </View>
                 <View style={{padding: 10}}>
-                <TextInput 
+                <TextInput
                         style={styles.modalTextInput}
                         placeholder="Task Description"
                         onChangeText={(taskDescription) => this.setState({ taskDescription })}
@@ -435,7 +439,7 @@ export default class ChatScreen extends Component {
                         name='access-time'
                         color= {themeColor}
                         size = {20}
-                        onPress={() => this._toggleTimeModal()} 
+                        onPress={() => this._toggleTimeModal()}
                     />
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
@@ -450,12 +454,12 @@ export default class ChatScreen extends Component {
                         name='date-range'
                         color= {themeColor}
                         size = {20}
-                        onPress={() => this._toggleDateModal()} 
+                        onPress={() => this._toggleDateModal()}
                     />
                 </View>
 
                 <View style={{padding: 30, justifyContent: "center", alignContent: 'center',  alignItems: 'center'}}>
-                <Button 
+                <Button
                     buttonStyle={{
                         backgroundColor: themeColor,
                         width: 220,
@@ -493,12 +497,12 @@ export default class ChatScreen extends Component {
 
                 </View>
             </Modal>
-            
+
             <Modal isVisible={this.state.isMeetingModalVisible} onBackdropPress={this._toggleMeetingModal} avoidKeyboard={true}>
                 <View style={{ flex: 1}} style={styles.modalContent}>
                 <Text style={styles.modalHeader}>SCHEDULE YOUR MEETING HERE!</Text>
                 <View style={{padding: 10}}>
-                <TextInput 
+                <TextInput
                         style={styles.modalTextInput}
                         placeholder="Meeting Title"
                         onChangeText={(meetingName) => this.setState({ meetingName })}
@@ -506,7 +510,7 @@ export default class ChatScreen extends Component {
                     />
                 </View>
                 <View style={{padding: 10}}>
-                <TextInput 
+                <TextInput
                         style={styles.modalTextInput}
                         placeholder="This meeting is about..."
                         onChangeText={(meetingDescription) => this.setState({ meetingDescription })}
@@ -525,7 +529,7 @@ export default class ChatScreen extends Component {
                         name='access-time'
                         color= {themeColor}
                         size = {20}
-                        onPress={() => this._toggleTimeModal()} 
+                        onPress={() => this._toggleTimeModal()}
                     />
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 10}}>
@@ -540,12 +544,12 @@ export default class ChatScreen extends Component {
                         name='date-range'
                         color= {themeColor}
                         size = {20}
-                        onPress={() => this._toggleDateModal()} 
+                        onPress={() => this._toggleDateModal()}
                     />
                 </View>
 
                 <View style={{padding: 30, justifyContent: "center", alignContent: 'center', alignItems: 'center'}}>
-                <Button 
+                <Button
                     buttonStyle={{
                         backgroundColor: themeColor,
                         width: 220,

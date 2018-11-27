@@ -29,8 +29,6 @@ export default class Login extends React.Component {
       password: "",
       loading: 0,
     };
-
-    this.registerForPushNotificationsAsync();
   }
 
    registerForPushNotificationsAsync = async () => {
@@ -60,7 +58,7 @@ export default class Login extends React.Component {
 
     console.log(token);
 
-    //await APIcall._pushNotification(token);
+    await APIcall._pushNotification(token);
 
   }
 
@@ -127,6 +125,7 @@ export default class Login extends React.Component {
                      this.setState({ loading: 1 })
                     await APIcall.login(this.state.username, this.state.password, this.props)
                     this.setState({ loading: 0 })
+                    await this.registerForPushNotificationsAsync();
                   } 
                 }
                   style={styles.button}>
