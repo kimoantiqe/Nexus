@@ -58,12 +58,10 @@ class ChatDashboard extends React.Component {
     };
 
     getUserID = async() => {
-        //userID ='5bcf97fd4a5aa600150cc338';
         userID = await AsyncStorage.getItem("userid");
     }
 
     componentDidMount() {
-        //this._connectSb();
         this.getUserID();
         this._initGroupChannelList();
         this._notificationSubscription = Notifications.addListener(this._handleNotification);
@@ -94,9 +92,6 @@ class ChatDashboard extends React.Component {
         this.setState({ list: newList, groupChannelList: ds.cloneWithRows(newList) });
     }
 
-    _connectSb = () => {
-        sbConnect('5bcf97fd4a5aa600150cc338', 'Ahmed');
-    }
 
     _initGroupChannelList = () => {
         this._getGroupChannelList(true);
