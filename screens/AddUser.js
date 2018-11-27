@@ -124,17 +124,7 @@ export default class AddUser extends React.Component {
                         <Body>
                             <Title style={styles.headerTitle}>ADD USER</Title>
                         </Body>
-                    <Right>
-                        <Button transparent>
-                            <Icon name="person-add" style={{color:'#f5ba57'}} onPress={() => 
-                                this.props.navigation.navigate("AddUser", {
-                                    userID: userID,
-                                    addChannel: this._addChannel.bind(this),
-                                    list: this.state.list,
-                                })}
-                            />
-                        </Button>
-                    </Right>
+                    <Right/>
                 </Header>
                 <View style={{
                     flex: 1}}>

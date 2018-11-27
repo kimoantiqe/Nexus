@@ -172,7 +172,7 @@ class ChatDashboard extends React.Component {
         setTimeout(() => {this.setState({childRefresh: !this.state.childRefresh})}, 1000);
     }
 
-    _onRefresh = async () => {
+    _onRefresh = () => {
         this.setState({
             refresh: false,
             childRefresh: false,
@@ -183,7 +183,15 @@ class ChatDashboard extends React.Component {
             refreshing: true,
         })
         this._initGroupChannelList();
-        this.setState({refreshing: false});
+        this.setState({refreshing: false})
+    }
+
+    _refreshChannel = async(channel) => {
+        await channel.refresh(function(response, error) {
+            if (error) {
+                return;
+            }
+        });
     }
 
     _renderList = (rowData) => {
@@ -205,8 +213,9 @@ class ChatDashboard extends React.Component {
         let createdAt;
         let profileUrl;
         let title;
+
+        this._refreshChannel(rowData);
     
-        console.log(rowData.lastMessage);
         if(rowData.memberCount === 2){
             profileUrl = rowData.members[0].userId == userID ? rowData.members[1].profileUrl : rowData.members[0].profileUrl;
             title = rowData.members[0].userId == userID ? rowData.members[1].nickname : rowData.members[0].nickname;
