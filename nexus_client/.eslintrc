@@ -1,0 +1,25 @@
+# Need 'linter' from https://atom.io/packages/linter
+# Need 'linter-eslint' from https://atom.io/packages/linter-eslint
+# Need dev-dependency "eslint"
+# Need dev-dependency "eslint-plugin-react"
+# Need dev-dependency "eslint-config-rmotr"
+
+{
+  plugins: [
+    'react'
+  ],
+
+  extends: ['eslint-config-rmotr/react'],
+
+  rules: {
+    # custom redefined rules
+  },
+
+  globals: {
+    'jest': true,
+    'describe': true,
+    'it': true,
+    'expect': true,
+    'fetch': true
+  }
+}
