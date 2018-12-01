@@ -26,11 +26,11 @@
 </p>
 
 <p align="center" >
-  <img width=200 height=380 src="static/profile.png"/>
-  <img width=200 src="static/chatting.PNG"/>
-  <img width=200 src="static/meeting.png"/>
-  <img width=200 src="static/calendar.PNG"/>
-  <img width=200 src="static/qr.PNG"/>
+  <img width=150 height=285 src="static/profile.png"/>
+  <img width=150 height=285 src="static/chatting.PNG"/>
+  <img width=150 height=285 src="static/meeting.png"/>
+  <img width=150 height=285 src="static/calendar.PNG"/>
+  <img width=150 height=285 src="static/qr.PNG"/>
 </p>
 
 
