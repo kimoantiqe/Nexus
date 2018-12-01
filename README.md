@@ -21,3 +21,4 @@
 <br>
 
 ![](static/GIFmatching.gif)
+![](static/GIFdashboard.gif)
