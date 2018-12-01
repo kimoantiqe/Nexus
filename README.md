@@ -21,4 +21,4 @@
 <br>
 
 ![](static/GIFmatching.gif | width=100)
-![](static/GIFdashboard.gif | width=100)
+![](static/GIFdashboard.gif=100x)
