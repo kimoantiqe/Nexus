@@ -20,5 +20,9 @@
 </p>
 <br>
 
-![](static/GIFmatching.gif | width=100)
-![](static/GIFdashboard.gif=100x)
+<p align="center" >
+  <img width=200 src="static/GIFmatching.gif"/>
+  <img width=200 src="static/GIFdashboard.gif"/>
+</p>
+
+
