@@ -27,8 +27,10 @@
 
 <p align="center" >
   <img width=200 src="static/profile.png"/>
-  <img width=200 src="static/chatting.png"/>
+  <img width=200 src="static/chatting.PNG"/>
   <img width=200 src="static/meeting.png"/>
+  <img width=200 src="static/calendar.PNG"/>
+  <img width=200 src="static/qr.PNG"/>
 </p>
 
 
