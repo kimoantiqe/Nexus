@@ -21,8 +21,8 @@
 <br>
 
 <p align="center" >
-  <img width=200 src="static/GIFmatching.gif"/>
-  <img width=200 src="static/GIFdashboard.gif"/>
+  <img width=300 src="static/GIFdashboard.gif"/>
+  <img width=300 src="static/GIFmatching.gif"/>
 </p>
 
 
