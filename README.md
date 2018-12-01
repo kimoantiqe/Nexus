@@ -20,4 +20,4 @@
 </p>
 <br>
 
-![](assets/GIFmatching.gif)
+![](static/GIFmatching.gif)
