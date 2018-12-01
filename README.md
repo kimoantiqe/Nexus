@@ -5,6 +5,7 @@
 
 <p align="center">
  The up and coming professional networking app 
+ :2nd_place_medal: achieved 2nd place out of the 28 presenting projects.
 </p>
 
 <p align="center">
