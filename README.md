@@ -23,8 +23,13 @@
     <img src="https://api.codacy.com/project/badge/Grade/9e090f0a5cf14a5baf72145d284aa1e1"
       alt="Codacy Code Grade" />
 <a href='https://coveralls.io/github/kimoantiqe/Nexus?branch=master'><img src='https://coveralls.io/repos/github/kimoantiqe/Nexus/badge.svg?branch=master&service=github' alt='Coverage Status' /></a>
+
+<img src = "https://img.shields.io/badge/Docker-ready-blue.svg">
+
+<img src ="https://img.shields.io/badge/Deployment-Azure-blue.svg">
 </p>
 <br>
+
 
 <p align="center" >
   <img width=300 src="static/GIFdashboard.gif"/>
