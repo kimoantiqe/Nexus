@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
- :2nd_place_medal: achieved 2nd place out of the 28 presenting projects in UBC CPEN 321.
+ :2nd_place_medal: Achieved 2nd place out of 28 projects in UBC CPEN 321.
 </p>
 
 
