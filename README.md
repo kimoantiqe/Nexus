@@ -5,8 +5,13 @@
 
 <p align="center">
  The up and coming professional networking app 
- :2nd_place_medal: achieved 2nd place out of the 28 presenting projects.
 </p>
+
+<p align="center">
+ :2nd_place_medal: achieved 2nd place out of the 28 presenting projects in UBC CPEN 321.
+</p>
+
+
 
 <p align="center">
   <a href="https://travis-ci.com/kimoantiqe/Nexus">
