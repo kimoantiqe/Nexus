@@ -34,14 +34,14 @@
 <hr >
 
 <p align="center" >
-  <img width=250 height=475 src="static/profile.png"/>
-  <img width=250 height=475 src="static/chatting.PNG"/>
-  <img width=250 height=475 src="static/meeting.png"/>
+  <img width=280 height=532 src="static/profile.png"/>
+  <img width=280 height=532 src="static/chatting.PNG"/>
+  <img width=280 height=532 src="static/meeting.png"/>
  </p>
  
  <p align="center" >
-  <img width=250 height=475 src="static/calendar.PNG"/>
-  <img width=250 height=475 src="static/qr.PNG"/>
+  <img width=280 height=532 src="static/calendar.PNG"/>
+  <img width=280 height=532 src="static/qr.PNG"/>
  </p>
 
 
