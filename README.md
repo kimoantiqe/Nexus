@@ -19,3 +19,10 @@
 <a href='https://coveralls.io/github/kimoantiqe/Nexus?branch=master'><img src='https://coveralls.io/repos/github/kimoantiqe/Nexus/badge.svg?branch=master&service=github' alt='Coverage Status' /></a>
 </p>
 <br>
+
+<p align="center" >
+  <img width=300 src="static/GIFdashboard.gif"/>
+  <img width=300 src="static/GIFmatching.gif"/>
+</p>
+
+
