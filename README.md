@@ -26,7 +26,7 @@
 </p>
 
 <p align="center" >
-  <img width=200 height=400 src="static/profile.png"/>
+  <img width=200 height=350 src="static/profile.png"/>
   <img width=200 src="static/chatting.PNG"/>
   <img width=200 src="static/meeting.png"/>
   <img width=200 src="static/calendar.PNG"/>
