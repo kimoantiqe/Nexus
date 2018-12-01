@@ -25,4 +25,11 @@
   <img width=300 src="static/GIFmatching.gif"/>
 </p>
 
+<p align="center" >
+  <img width=200 src="static/profile.png"/>
+  <img width=200 src="static/chatting.png"/>
+  <img width=200 src="static/meeting.png"/>
+</p>
+
+
 
