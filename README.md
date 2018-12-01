@@ -20,5 +20,5 @@
 </p>
 <br>
 
-![](static/GIFmatching.gif)
-![](static/GIFdashboard.gif)
+![](static/GIFmatching.gif | width=100)
+![](static/GIFdashboard.gif | width=100)
